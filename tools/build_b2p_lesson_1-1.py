@@ -43,6 +43,7 @@ ol.ex li{padding-left:4px}
 textarea.list{font:inherit;font-size:16px;width:100%;max-width:640px;height:110px;padding:8px 10px;border:1px solid #c9cacc;border-radius:4px}
 .sa{background:var(--lg);padding:12px 16px;border-left:5px solid var(--coral);font-size:15.5px;line-height:1.5;display:none;margin-top:10px}
 .sa.show{display:block}
+.bsec{font-weight:600;font-size:20px;color:#77787b;margin:4px 0 12px}.bsec.v{color:var(--mag)}.bsec .sub{color:var(--ink);font-weight:500;font-size:18px;margin-left:8px}
 @media(max-width:700px){.match,.cls{grid-template-columns:1fr}.defs{columns:1}}
 """
 
@@ -188,12 +189,14 @@ body = '''
 <main>
 
 <section id="s1" class="sec">
+ <div class="bsec">Lead-in</div>
  __LVL1__
  <div class="base"><p class="ins"><b>1</b>Discuss these questions.</p>__C_w__</div>
  <div class="plus"><p class="ins"><b>1</b><span class="star">★</span>Discuss. Give reasons and examples from your work.</p>__CP_wp__</div>
 </section>
 
 <section id="s2" class="sec">
+ <div class="bsec v">VIDEO</div>
  <p class="ins"><b>2</b>You are going to watch a video about market research. How many ways can you think of for a company to collect information before it launches a new product? Make a list.</p>
  <textarea class="list" placeholder="online surveys&#10;…"></textarea>
  <div class="ctrl"><button class="c" onclick="sa('a2')">Show possible answers</button></div>
@@ -201,17 +204,20 @@ body = '''
 </section>
 
 <section id="s3" class="sec">
+ <div class="bsec v">VIDEO</div>
  <p class="ins"><b>3</b>Watch the video 1.1.1. Were any of your ideas from Exercise 2 mentioned? Did you hear about any other ways for companies to collect information?</p>
  <div class="ctrl"><button class="c" onclick="sa('a3')">Show the main points</button></div>
  <div class="sa" id="a3"><b>Primary research</b> — gathering new data from customers: (online) surveys, focus groups, in-depth interviews.<br><b>Secondary research</b> (desk research) — data that already exists and is publicly available: government reports, company websites, academic publications.<br>Small businesses can save money with online surveys and a smaller sample size.</div>
 </section>
 
 <section id="s4" class="sec">
+ <div class="bsec v">VIDEO</div>
  <p class="ins"><b>4</b>Watch the video again and decide if these sentences are true (T) or false (F). Correct the false sentences.</p>
  __TF__
 </section>
 
 <section id="s5" class="sec">
+ <div class="bsec v">VIDEO</div>
  __LVL5__
  <div class="base"><p class="ins"><b>5</b>Discuss. Research is expensive — so why do companies still put money into it? What is better: primary research you design yourself, or secondary research you buy? Why?</p>
   <div class="phr"><span>I think companies invest in research because …</span><span>Primary research is more … but …</span><span>Secondary research is cheaper, although …</span><span>It depends on …</span></div></div>
@@ -220,6 +226,7 @@ body = '''
 </section>
 
 <section id="s6" class="sec">
+ <div class="bsec">Vocabulary<span class="sub">Terms in market research</span></div>
  <p class="ins"><b>6A</b>Complete the sentences with the words in the box to make collocations from the video.</p>
  <div class="box"><span>customer</span><span>desk</span><span>focus</span><span>in-depth</span><span>launch</span><span>online</span><span>sample</span><span>target</span></div>
  __GAPS__
@@ -229,6 +236,7 @@ body = '''
 </section>
 
 <section id="s7" class="sec">
+ <div class="bsec">Vocabulary<span class="sub">Terms in market research</span></div>
  __LVL7__
  <div class="base"><p class="ins"><b>7</b>Match the words and phrases (1–10) with the definitions (a–j).</p>
   __DEFS__ __MATCH__
@@ -237,12 +245,14 @@ body = '''
 </section>
 
 <section id="s8" class="sec">
+ <div class="bsec">Vocabulary<span class="sub">Terms in market research</span></div>
  __LVL8__
  <div class="base"><p class="ins"><b>8</b>Choose the best option to complete the explanations of the underlined words and phrases.</p>__OPT__</div>
  <div class="plus"><p class="ins"><b>8</b><span class="star">★</span>Which verbs go with it? Say as many as you can, then make a sentence about your work.</p>__CPR_op__</div>
 </section>
 
 <section id="s9" class="sec">
+ <div class="bsec">Vocabulary<span class="sub">Terms in market research</span></div>
  __LVL9__
  <div class="base"><p class="ins"><b>9</b>Discuss. Is it important to do market research before launching a new product? What kind of information would a company need? Use vocabulary from Exercises 6A and 7.</p>
   __V12__</div>
@@ -251,9 +261,10 @@ body = '''
 </section>
 
 <section id="s10" class="sec">
+ <div class="bsec">PROJECT<span class="sub">How market research affects brands</span></div>
  __LVL10__
  <div class="base">
-  <p class="ins"><b>10A</b>PROJECT: How market research affects brands. Think of an everyday product or app you use. Choose two well-known brands for it and create a profile of each one.</p>
+  <p class="ins"><b>10A</b>Think of an everyday product or app you use. Choose two well-known brands for it and create a profile of each one.</p>
   <div class="chips"><span>Notion vs Obsidian</span><span>Duolingo vs Babbel</span><span>Spotify vs Apple Music</span><span>Revolut vs Monobank</span><span>Slack vs Microsoft Teams</span><span>Figma vs Canva</span></div>
   <div class="cats">
    <div><b>Attract</b>How does the brand attract customers? What does it offer them?</div>
@@ -282,7 +293,8 @@ body = '''
 </section>
 
 <section id="s11" class="sec">
- <p class="ins"><b>Self-assessment</b> How well have you achieved the lesson outcome? 0 = I need more practice, 5 = I know this well.</p>
+ <div class="bsec">Self-assessment</div>
+ <p class="ins">How well have you achieved the lesson outcome? 0 = I need more practice, 5 = I know this well.</p>
  <div class="score" id="score"><button onclick="sc(this)">0</button><button onclick="sc(this)">1</button><button onclick="sc(this)">2</button><button onclick="sc(this)">3</button><button onclick="sc(this)">4</button><button onclick="sc(this)">5</button></div>
  <p class="ins" style="margin-top:24px">My phrases: write 5 phrases from today you want to remember — the whole phrase, not one word: <i>gauge interest in a feature</i>, not <i>gauge</i>.</p>
  <div class="mine" id="mine"><input placeholder="1. …"><input placeholder="2. …"><input placeholder="3. …"><input placeholder="4. …"><input placeholder="5. …"></div>
