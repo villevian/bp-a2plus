@@ -52,6 +52,30 @@ textarea.list{font:inherit;font-size:16px;width:100%;max-width:640px;height:110p
 .yt{position:relative;width:100%;max-width:640px;aspect-ratio:16/9;margin:0 0 8px}.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:4px}
 button.mini{font:inherit;font-size:12.5px;border:1px solid var(--coral);color:var(--coral);background:#fff;border-radius:12px;padding:1px 9px;cursor:pointer;margin-left:6px}
 .sa.fa{padding:6px 12px;margin:4px 0 2px;font-size:15px;line-height:1.4}
+
+.subnav{display:flex;gap:6px;margin:0 0 14px}.subnav button{font:inherit;font-weight:600;border:1.5px solid var(--coral);background:#fff;color:var(--coral);padding:5px 14px;border-radius:6px;cursor:pointer}.subnav button.on{background:var(--coral);color:#fff}
+.sp10{display:none}.sp10.on{display:block}
+table.form{border-collapse:collapse;width:100%;max-width:960px;font-size:15px;background:#fff;margin:4px 0 8px}
+table.form th,table.form td{border:1px solid #c9cacc;padding:6px 8px;vertical-align:top;text-align:left}
+table.form th{background:var(--lg);font-weight:600}
+table.form input,table.form textarea{font:inherit;font-size:15px;width:100%;border:0;padding:4px;background:transparent;resize:vertical}
+table.form input.hd{font-weight:600}
+table.form td.lab{width:32%;background:#fafafa}
+table.form .q{color:#4d4d4f;font-size:13.5px}
+table.form .w{font-size:13px;color:var(--coral);margin-top:4px}
+table.sv td:first-child{width:30px;text-align:center}table.sv select{width:100%}
+.use2{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:6px 0 10px}
+.use2 button{font:inherit;font-size:14px;background:#fff;border:1.5px solid var(--coral);border-radius:16px;padding:3px 11px;cursor:pointer;color:var(--ink)}
+.use2 button.on{background:var(--coral);color:#fff}.use2 button.on::before{content:"✓ "}
+.bad{color:#b3261e;text-decoration:line-through;text-decoration-color:#e8a8a3}
+input.fixin{font:inherit;font-size:15px;width:min(560px,100%);padding:5px 8px;border:1px solid #c9cacc;border-radius:4px;margin-top:4px}
+details.tch{border:1px dashed var(--gold);border-radius:6px;padding:8px 12px;margin:10px 0;background:#fffcf3}details.tch summary{cursor:pointer;font-weight:600;color:#9a6b00}
+details.tch .cats{grid-template-columns:repeat(3,1fr);margin-top:10px}details.tch .cats div{border-top-color:var(--gold);background:#fdf7e6}
+.bingo{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;max-width:640px}
+.bingo button{font:inherit;font-size:14.5px;min-height:64px;border:1.5px solid var(--mag);background:#fff;border-radius:6px;cursor:pointer;padding:6px}
+.bingo button.on{background:var(--mag);color:#fff}
+.fbk{display:grid;grid-template-columns:1fr 1fr;gap:6px 18px;max-width:820px;font-size:15.5px}.fbk label{cursor:pointer}
+@media(max-width:700px){.bingo,.fbk{grid-template-columns:1fr 1fr}details.tch .cats{grid-template-columns:1fr}}
 @media(max-width:700px){.match,.cls{grid-template-columns:1fr}.defs{columns:1}}
 """
 
@@ -106,6 +130,14 @@ D = {
   ["___ feedback", "get / collect / act on / ignore"],
   ["___ a product", "launch / test / roll out / pull"],
   ["___ the impact", "gauge / measure / assess"]],
+"ch": [
+  ["“Is that hard data, or just compliments?”", ""],
+  ["“Five people? That’s not a sample size.”", ""],
+  ["“Aren’t you focusing on features instead of problems?”", ""],
+  ["“Why should we pay to solve this? Is it really a burning problem?”", ""],
+  ["“Who’s your target audience, exactly?”", ""],
+  ["“Can’t AI just do this research for us?”", ""],
+  ["“Our competitor is formidable. Why would users move off their tool?”", ""]],
  "pp": [
   ["You have one week and no budget. Find out why trial users don’t upgrade.", "Make a plan: method, sample, what you’ll ask, how you’ll report it."],
   ["Your CEO wants to launch in the US next quarter. What do you research first — and how?", ""],
@@ -223,6 +255,28 @@ OPT = [
  ("To <u>gauge</u> how users may react to a new feature, you can", ["watch their reactions to a prototype", "ask them if they have already bought it"], 0, "."),
 ]
 
+PROFILE = [("Attract", "How does the brand attract customers? What does it offer them?", ["target audience", "launch a product"]),
+           ("Promise", "What does the brand promise to do?", ["customer satisfaction", "viable"]),
+           ("Visibility", "What makes it visible or memorable?", ["impact", "a formidable competitor"]),
+           ("Ideal customer", "Who is the ideal customer for the brand?", ["pain points", "early adopter", "beta tester"])]
+USE_A = ["target audience", "launch a product", "customer satisfaction", "viable", "impact", "a formidable competitor", "pain points", "early adopter", "beta tester", "gauge"]
+FIX = [("Would you use an app that summarises your meetings?", "Tell me about the last meeting you had to summarise. How did you do it?"),
+       ("Do you like our idea?", "What’s the hardest part about … at the moment?"),
+       ("Which features do you want?", "What have you tried so far to solve this? What don’t you love about it?"),
+       ("You’d pay $10 a month for this, wouldn’t you?", "What are you paying for tools like this right now? (Careful: a question tag can bias their answer!)")]
+PERSONAS = [("Megan", "Product manager at a US SaaS company, Austin", "Spends every Friday afternoon collecting status updates from Jira, Slack, Notion and email for her VP. The data is always out of date by Monday. Tried Notion templates and Zapier — “they broke after two weeks.”"),
+            ("Oleh", "Freelance product designer in Lviv, clients in the US", "Can’t get clear feedback from clients: endless Slack threads and comments in Figma that contradict each other. Tried recording Loom videos — clients don’t watch them. Works late because of the time difference."),
+            ("Priya", "Growth marketer at a fintech start-up, London", "Has 400 open-ended survey answers and no time to analyse them. Tried ChatGPT but didn’t trust the results — “it invented a quote.” Her manager wants insights by Monday.")]
+BINGO = ["Tell me about the last time …", "What’s the hardest part about …?", "Why was it hard?",
+         "What have you tried so far?", "Didn’t pitch the idea", "Can you dive deeper into that?",
+         "What don’t you love about …?", "Took notes / listened, not talked", "Is there anything else I should have asked?"]
+PRES = [("1", "Our target audience is …", "Our target audience is "),
+        ("2", "The respondents admitted / suggested / raised concerns that …", "Over half of the respondents "),
+        ("3", "The burning problem is … It warrants solving because …", "The burning problem is "),
+        ("4", "Next step: we’ll roll out an MVP / run an A/B test / do more interviews …", "As a next step, we’ll ")]
+FBK = ["They listened more than they talked.", "They didn’t pitch the idea too early.", "They asked about my real experience, not hypotheticals.",
+       "They found my real pain point.", "The new product solves my problem.", "They used words from the lesson."]
+
 def card(k, plus=False, reveal=False, label="Show answer", shuffle=True):
     pc = " pluscard" if plus else ""
     sh = '<button class="l" onclick="shuf(\'%s\')">Shuffle</button>' % k if shuffle else ""
@@ -272,6 +326,21 @@ match_html = '<div class="match">' + "".join(
 opt_html = '<ol class="ex">' + "".join(
     '<li>%s <span class="opt" data-a="%s">%s</span>%s</li>' % (a, o[c], " ".join('<button onclick="pick(this)">%s</button>' % x for x in o), end)
     for a, o, c, end in OPT) + '</ol>'
+
+def useset(words, sid):
+    return ('<div class="use2" data-g="%s">' % sid + "".join('<button onclick="used(this)">%s</button>' % w for w in words)
+            + '<span class="pt cnt2"></span></div>')
+profile_html = "".join('<tr><td class="lab"><b>%s</b><br><span class="q">%s</span><div class="w">Use: %s</div></td><td><textarea rows="2"></textarea></td><td><textarea rows="2"></textarea></td></tr>'
+                       % (h, q, ", ".join("<i>%s</i>" % w for w in ws)) for h, q, ws in PROFILE)
+fix_html = '<ol class="ex">' + "".join('<li><span class="bad">✗ %s</span><br><input class="fixin" placeholder="✓ Your better question …"> <button class="mini" onclick="sa(\'fx%d\')">compare</button><span class="sa fa" id="fx%d">✓ %s</span></li>' % (b, k, k, g) for k, (b, g) in enumerate(FIX)) + '</ol>'
+TYPES = ["—", "open-ended", "yes/no", "rating (1–10)", "multiple-choice"]
+survey_html = "".join('<tr><td>%d</td><td><input class="sq"></td><td><select class="sel st">%s</select></td><td><select class="sel sd"><option>—</option><option>qualitative</option><option>quantitative</option></select></td></tr>'
+                      % (n, "".join("<option>%s</option>" % t for t in TYPES)) for n in range(1, 7))
+personas_html = '<div class="cats">' + "".join('<div><b>%s</b><span class="q">%s</span><br>%s</div>' % (n, r, pain) for n, r, pain in PERSONAS) + '</div>'
+notes_html = "".join('<tr><td><input></td><td><input></td><td style="width:110px;text-align:center"><input type="checkbox"></td></tr>' for _ in range(4))
+bingo_html = "".join('<button onclick="bng(this)">%s</button>' % b for b in BINGO)
+pres_html = "".join('<tr><td class="lab"><b>%s</b> %s</td><td><textarea rows="2" class="ps">%s</textarea></td></tr>' % (n, h, start) for n, h, start in PRES)
+fbk_html = "".join('<label><input type="checkbox"> %s</label>' % f for f in FBK)
 
 body = '''
 <header><div class="n">1.1</div><h1>Research in tech</h1><div class="t">LESSON</div></header>
@@ -378,31 +447,60 @@ body = '''
  <div class="bsec">PROJECT<span class="sub">How market research affects brands</span></div>
  __LVL10__
  <div class="base">
-  <p class="ins"><b>10A</b>Think of an everyday product or app you use. Choose two well-known brands for it and create a profile of each one.</p>
+ <div class="subnav"><button class="on" onclick="sub10(this,'p10a')">10A</button><button onclick="sub10(this,'p10b')">10B</button><button onclick="sub10(this,'p10c')">10C</button><button onclick="sub10(this,'p10d')">10D</button></div>
+
+ <div class="sp10 on" id="p10a">
+  <p class="ins"><b>10A</b>Think of an everyday product or app you use. Choose two well-known brands for it and fill in the brand profile. Use the words under each question.</p>
   <div class="chips"><span>Notion vs Obsidian</span><span>Duolingo vs Babbel</span><span>Spotify vs Apple Music</span><span>Revolut vs Monobank</span><span>Slack vs Microsoft Teams</span><span>Figma vs Canva</span></div>
-  <div class="cats">
-   <div><b>Attract</b>How does the brand attract customers? What does it offer them?</div>
-   <div><b>Promise</b>What does the brand promise to do?</div>
-   <div><b>Visibility</b>What makes it visible or memorable?</div>
-   <div><b>Ideal customer</b>Who is the ideal customer for the brand?</div>
-  </div>
-  <p class="ins"><b>B</b>Come up with a new product or feature related to the original one. Write questions for a survey to find out what customers feel about it and what they would like.</p>
-  <div class="tip">Mix question types: open, closed (yes/no), rating (1–10) and multiple-choice. Start general, then get more specific.</div>
-  <div class="mine q"><input placeholder="1. …"><input placeholder="2. …"><input placeholder="3. …"><input placeholder="4. …"><input placeholder="5. …"><input placeholder="6. …"></div>
-  <p class="ins" style="margin-top:18px"><b>C</b>Take turns playing the respondent and the researcher. Ask your teacher your questions and take notes; then answer your teacher’s questions.</p>
-  <p class="ins"><b>D</b>Use the answers to create a brand profile for your new product. Present it to the respondent and get feedback: how well did you include their wishes and needs?</p>
-  <div class="phr"><span>According to the survey, …</span><span>The respondent said / suggested that …</span><span>Based on the answers, we’ll …</span><span>We decided not to … because …</span></div>
+  <table class="form"><tr><th></th><th><input class="hd" placeholder="Brand 1 …"></th><th><input class="hd" placeholder="Brand 2 …"></th></tr>
+   __PROFILE__
+  </table>
+  <p class="ins" style="margin-top:16px">Click a word when you use it while you speak.</p>
+  __USE_A__
  </div>
- <div class="plus">
-  <p class="ins"><b>10</b><span class="star">★</span>Do 10A as in Base. Then, instead of a survey (10B–C), run a five-minute user interview with your teacher. Follow these rules.</p>
-  <div class="cats g">
+
+ <div class="sp10" id="p10b">
+  <p class="ins"><b>10B</b>Come up with a new product or feature related to the original one. Then write a survey to find out what customers feel about it and what they would like.</p>
+  <table class="form"><tr><td class="lab">My new product / feature:</td><td><input placeholder="e.g. an AI meeting summary inside Slack"></td></tr>
+   <tr><td class="lab">Target audience:</td><td><input placeholder="Who is it for?"></td></tr>
+   <tr><td class="lab">Sample size:</td><td><input placeholder="How many respondents will you survey? Why that number?"></td></tr></table>
+  <p class="ins" style="margin-top:18px">Step 1. Fix the bad questions. They are leading, hypothetical or about features. Rewrite them, then compare.</p>
+  __FIX__
+  <p class="ins" style="margin-top:18px">Step 2. Write your survey. For each question, choose the type.</p>
+  <table class="form sv"><tr><th>#</th><th>Question</th><th>Type</th><th>Data</th></tr>__SURVEY__</table>
+  <div class="ctrl"><button class="c" onclick="mix()">Check my mix</button><span class="pt" id="mixr"></span></div>
+ </div>
+
+ <div class="sp10" id="p10c">
+  <p class="ins"><b>10C</b>Take turns playing the respondent and the researcher. Interview your teacher and take notes. Then answer your teacher’s questions.</p>
+  <div class="cats g" style="grid-template-columns:repeat(4,1fr)">
    <div><b>Their life, not your idea</b>Don’t pitch the feature. Ask how they do things now.</div>
    <div><b>The past, not the future</b>“Tell me about the last time you …” — not “Would you use …?”</div>
-   <div><b>Listen more</b>Talk 20%, listen 80%. Ask “Why?” and “What happened next?”</div>
+   <div><b>Listen, not talk</b>Let them open up. Dive deeper with follow-up questions.</div>
    <div><b>Compliments are not data</b>“Great idea!” tells you nothing. Ask what they actually did.</div>
   </div>
-  <div class="phr g"><span>✗ Would you use an app that …?</span><span>✓ How do you … at the moment?</span><span>✗ Do you like our idea?</span><span>✓ What’s the hardest part about …?</span><span>✓ Is there anything else I should have asked?</span></div>
-  <p class="ins">Then present your insights (10D) to a US stakeholder — your teacher. They will challenge you: “Five people? That’s not data.” Defend your findings.</p>
+  <div class="phr"><span>Tell me about the last time you …</span><span>What’s the hardest part about …?</span><span>Why was it hard?</span><span>What have you tried so far?</span><span>What don’t you love about …?</span><span>Can you dive deeper into that?</span><span>Is there anything else I should have asked?</span></div>
+  <details class="tch"><summary>For the teacher: choose a respondent</summary>__PERSONAS__</details>
+  <p class="ins" style="margin-top:14px">Interview notes</p>
+  <table class="form"><tr><th>My question</th><th>What they said</th><th>Pain point?</th></tr>__NOTES__</table>
+  <p class="ins" style="margin-top:18px">Phrase bingo — the teacher clicks a square when the researcher does it.</p>
+  <div class="bingo" id="bingo">__BINGO__</div><div class="pt" id="bingor" style="margin:6px 0 0"></div>
+ </div>
+
+ <div class="sp10" id="p10d">
+  <p class="ins"><b>10D</b>Use the answers to create a brand profile for your new product. Prepare a two-minute presentation, then get feedback from the respondent: how well did you include their wishes and needs?</p>
+  <table class="form">__PRES__</table>
+  <div class="ctrl"><button class="c" onclick="script()">Build my script</button><button class="l" onclick="copyScript()">Copy</button><span class="msg" id="smsg"></span></div>
+  <div class="sa" id="scr"></div>
+  <p class="ins" style="margin-top:18px">Feedback from the respondent</p>
+  <div class="fbk">__FBK__</div>
+ </div>
+ </div>
+
+ <div class="plus">
+  <p class="ins"><b>10</b><span class="star">★</span>Do 10A–10C as in Base. In 10D, present to a sceptical US stakeholder — your teacher. Answer each challenge with words from today’s lesson.</p>
+  __CP_ch__
+  <div class="phr g" style="margin-top:12px"><span>That’s a fair point, but …</span><span>It’s a small sample, but the pattern was clear: …</span><span>This isn’t a compliment — it’s what they actually did: …</span><span>It warrants solving because …</span><span>The next step would be to roll out …</span><span>To get hard data, we’ll …</span></div>
  </div>
 </section>
 
@@ -410,7 +508,10 @@ body = '''
  <div class="bsec">Self-assessment</div>
  <p class="ins">How well have you achieved the lesson outcome? 0 = I need more practice, 5 = I know this well.</p>
  <div class="score" id="score"><button onclick="sc(this)">0</button><button onclick="sc(this)">1</button><button onclick="sc(this)">2</button><button onclick="sc(this)">3</button><button onclick="sc(this)">4</button><button onclick="sc(this)">5</button></div>
- <p class="ins" style="margin-top:24px">My phrases: write 5 phrases from today you want to remember — the whole phrase, not one word: <i>gauge interest in a feature</i>, not <i>gauge</i>.</p>
+ <p class="ins" style="margin-top:22px">Words I used today. Click every word or phrase you actually used in the lesson.</p>
+ __USE_ALL__
+ <div class="ctrl"><button class="c" onclick="toMine()">Put words I haven’t used into My phrases</button><span class="msg" id="tmsg"></span></div>
+ <p class="ins" style="margin-top:22px">My phrases: write 5 phrases from today you want to remember — the whole phrase, not one word: <i>gauge interest in a feature</i>, not <i>gauge</i>.</p>
  <div class="mine" id="mine"><input placeholder="1. …"><input placeholder="2. …"><input placeholder="3. …"><input placeholder="4. …"><input placeholder="5. …"></div>
  <div class="ctrl"><button class="c" onclick="copyMine()">Copy my phrases</button><span class="msg" id="cmsg"></span></div>
 </section>
@@ -421,7 +522,7 @@ body = '''
 NAV = "".join('<button data-s="s%d"%s>%d</button>' % (i, ' class="on"' if i == 1 else "", i) for i in range(1, 11)) + '<button data-s="s11">✓</button>'
 LABELS = {"op": "Show verbs", "p": "Show a suggestion"}
 rep = {"__VSW__": VSW, "__VHA__": vhead(VA), "__VHB__": vhead(VB), "__FA__": frags("A", VA), "__FB__": frags("B", VB), "__VVA__": "".join('<div class="pl">Part %d · %s</div>' % (i + 1, FRAG["A"][i][0]) + chips(p) for i, p in enumerate(VOC_PARTS["A"])), "__VVB__": "".join('<div class="pl">Part %d · %s</div>' % (i + 1, FRAG["B"][i][0]) + chips(p) for i, p in enumerate(VOC_PARTS["B"])), "__V1__": chips(VOC_BOOK), "__V2__": chips(VOC_7), "__V3__": chips(VOC_UP, " g"), "__V12__": chips(VOC_BOOK + VOC_7),
-       "__NAV__": NAV, "__TF__": tf_html, "__GAPS__": gaps_html, "__CLS__": cls_html, "__DEFS__": defs_html,
+       "__NAV__": NAV, "__PROFILE__": profile_html, "__USE_A__": useset(USE_A, "a"), "__FIX__": fix_html, "__SURVEY__": survey_html, "__PERSONAS__": personas_html, "__NOTES__": notes_html, "__BINGO__": bingo_html, "__PRES__": pres_html, "__FBK__": fbk_html, "__USE_ALL__": useset(VOC_BOOK + VOC_7 + VOC_VA + VOC_VB + VOC_UP, "all"), "__TF__": tf_html, "__GAPS__": gaps_html, "__CLS__": cls_html, "__DEFS__": defs_html,
        "__MATCH__": match_html, "__OPT__": opt_html}
 for n in (1, 5, 7, 8, 9, 10):
     rep["__LVL%d__" % n] = lvl("s%d" % n)
@@ -443,7 +544,7 @@ function render(k){const d=D[k][ord[k][st[k]]];$(k+"n").textContent=(st[k]+1)+" 
  else if(k=="bp"){w.textContent=d[0];h.textContent="What’s the word?";a.innerHTML="<b>"+d[1]+"</b> — "+d[2]}
  else if(k=="op"){w.textContent=d[0];h.textContent="Which verbs can you use?";a.textContent=d[1]}
  else if(k=="p"){w.textContent=d[0];h.textContent="Which method would you choose?";a.textContent=d[1]}
- else if(k=="pp"){w.textContent=d[0];h.innerHTML=d[1]?big(d[1]):""}
+ else if(k=="pp"||k=="ch"){w.textContent=d[0];h.innerHTML=d[1]?big(d[1]):(k=="ch"?"Answer the stakeholder.":"")}
 }
 function step(k,n){const L=D[k].length;st[k]=(st[k]+n+L)%L;render(k)}
 function rev(k){$(k+"a").classList.toggle("show")}
@@ -458,6 +559,22 @@ function tf(b,v){const s=b.parentNode,li=s.parentNode,r=String(v)==s.dataset.a;
  s.querySelectorAll("button").forEach(x=>x.className="");b.className=r?"ok":"no";li.querySelector(".fb").textContent=r?(s.dataset.a=="0"?"✓ False. ":"✓ True. ")+s.dataset.c:"Not quite — listen again."}
 function vid(k){document.body.classList.toggle("vb",k=="B");document.querySelectorAll(".vsw button").forEach(x=>x.classList.toggle("on",x.classList.contains(k.toLowerCase())))}
 function pick(b){const s=b.parentNode,r=b.textContent==s.dataset.a;s.querySelectorAll("button").forEach(x=>x.className="");b.className=r?"ok":"no"}
+
+function sub10(b,id){b.parentNode.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.classList.add("on");document.querySelectorAll("#s10 .sp10").forEach(x=>x.classList.toggle("on",x.id==id))}
+function used(b){b.classList.toggle("on");cnt2(b.parentNode)}
+function cnt2(g){const a=g.querySelectorAll("button").length,o=g.querySelectorAll("button.on").length;g.querySelector(".cnt2").textContent=o+" / "+a+" used"}
+document.querySelectorAll(".use2").forEach(cnt2);
+function mix(){const t=[...document.querySelectorAll("#p10b .st")].map(x=>x.value),q=[...document.querySelectorAll("#p10b .sq")].filter(x=>x.value.trim()).length;
+ const need=["open-ended","yes/no","rating (1–10)","multiple-choice"],miss=need.filter(n=>!t.includes(n));
+ const d=[...document.querySelectorAll("#p10b .sd")].map(x=>x.value);const ql=d.filter(x=>x=="qualitative").length,qn=d.filter(x=>x=="quantitative").length;
+ mixr.textContent=q+" questions · "+ql+" qualitative, "+qn+" quantitative · "+(miss.length?"Missing: "+miss.join(", "):"Great mix of question types ✓")}
+function bng(b){b.classList.toggle("on");const c=[...document.querySelectorAll("#bingo button")].map(x=>x.classList.contains("on"));
+ const L=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];const n=L.filter(l=>l.every(i=>c[i])).length;
+ bingor.textContent=c.every(Boolean)?"FULL HOUSE! 🎉":n?"BINGO! "+n+" line"+(n>1?"s":""):c.filter(Boolean).length+" / 9"}
+function script(){const t=[...document.querySelectorAll("#p10d .ps")].map(x=>x.value.trim()).filter(Boolean);scr.innerHTML=t.map(x=>"<p style='margin:0 0 8px'>"+x.replace(/</g,"&lt;")+"</p>").join("");scr.classList.add("show")}
+function copyScript(){const t=scr.innerText.trim();if(!t){smsg.textContent="Build your script first.";return}try{navigator.clipboard.writeText(t).then(()=>smsg.textContent="Copied!",()=>smsg.textContent="Select and copy manually.")}catch(e){smsg.textContent="Select and copy manually."}}
+function toMine(){const un=[...document.querySelectorAll('.use2[data-g="all"] button:not(.on)')].map(x=>x.textContent);const ins=[...document.querySelectorAll("#mine input")];let k=0;
+ ins.forEach(i=>{if(!i.value.trim()&&k<un.length)i.value=un[k++]});tmsg.textContent=un.length?"Added "+k+" phrases you haven’t used yet.":"You used them all! 🎉"}
 function copyMine(){const t=[...document.querySelectorAll("#mine input")].map(x=>x.value.trim()).filter(Boolean).join("\n");if(!t){cmsg.textContent="Write your phrases first.";return}
  try{navigator.clipboard.writeText(t).then(()=>cmsg.textContent="Copied!",()=>cmsg.textContent="Select the text and copy it manually.")}catch(e){cmsg.textContent="Select the text and copy it manually."}}
 function sc(b){document.querySelectorAll("#score button").forEach(x=>x.classList.remove("on"));b.classList.add("on")}
