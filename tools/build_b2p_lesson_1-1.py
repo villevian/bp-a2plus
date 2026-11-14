@@ -44,6 +44,14 @@ textarea.list{font:inherit;font-size:16px;width:100%;max-width:640px;height:110p
 .sa{background:var(--lg);padding:12px 16px;border-left:5px solid var(--coral);font-size:15.5px;line-height:1.5;display:none;margin-top:10px}
 .sa.show{display:block}
 .bsec{font-weight:600;font-size:20px;color:#77787b;margin:4px 0 12px}.bsec.v{color:var(--mag)}.bsec .sub{color:var(--ink);font-weight:500;font-size:18px;margin-left:8px}
+.vsw{display:inline-flex;border:1.5px solid var(--mag);border-radius:20px;overflow:hidden;margin:0 0 12px 0}
+.vsw button{font:inherit;font-weight:500;border:0;background:#fff;color:var(--mag);padding:6px 16px;cursor:pointer}.vsw button.on{background:var(--mag);color:#fff}
+.vB{display:none}body.vb .vB{display:block}body.vb .vA{display:none}
+.vt{background:#fbeef5;border-left:5px solid var(--mag);padding:10px 14px;margin:0 0 14px}.vt b{display:block;font-size:22px;font-weight:500;margin-bottom:2px}.vt span{font-size:14px;color:#4d4d4f}.vt a{color:var(--mag)}
+.frag{margin:0 0 22px}.fh{font-size:16px;margin:0 0 8px}.fh b{color:var(--mag)}.tc{color:var(--grey)}
+.yt{position:relative;width:100%;max-width:640px;aspect-ratio:16/9;margin:0 0 8px}.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:4px}
+button.mini{font:inherit;font-size:12.5px;border:1px solid var(--coral);color:var(--coral);background:#fff;border-radius:12px;padding:1px 9px;cursor:pointer;margin-left:6px}
+.sa.fa{padding:6px 12px;margin:4px 0 2px;font-size:15px;line-height:1.4}
 @media(max-width:700px){.match,.cls{grid-template-columns:1fr}.defs{columns:1}}
 """
 
@@ -95,6 +103,56 @@ D = {
   ["Your manager says: “Just ask ChatGPT what our users want.” Respond.", "Agree with part of it, then explain the limits."],
   ["A focus group of 8 people hated the new design. Should you cancel the launch?", "Think about sample size and who was in the group."]],
 }
+
+VA = dict(id="z1iF1c8w5Lg", title="How To Talk To Users | Startup School", who="Gustaf Alströmer, Y Combinator · 2022", slogan="Best founders learn from their users")
+VB = dict(id="MT4Ig2uqjTc", title="How to Talk to Users", who="Eric Migicovsky, Y Combinator · 2019", slogan="Write code. Talk to users.")
+FRAG = {
+ "A": [
+  ("00:42–03:23", 42, 203, "Why the best founders talk to users", [
+    ("When do great founders start talking to users?", "Before they even have a product — and they keep learning from users throughout the life of the company."),
+    ("Why do users and customers “keep you honest”?", "They are the only stakeholders who actually pay you, so they will tell you the truth."),
+    ("Who are the only stakeholders who actually pay the company?", "Users and customers.")]),
+  ("05:58–09:42", 358, 582, "How to interview", [
+    ("What is the best format for a user interview?", "A video or phone call (or in person)."),
+    ("Why shouldn’t you pitch your idea at the start?", "You’ll get polite reactions to your idea instead of real information about the user’s problems."),
+    ("What is your role in the interview?", "To listen, not to talk — and to ask open-ended follow-up questions.")]),
+  ("09:42–14:37", 582, 877, "Questions to ask and to avoid", [
+    ("Which types of questions should you avoid?", "Yes/no questions, “Would you use this?” and “Which features do you want?”"),
+    ("What is the “one big danger” during interviews?", "Focusing on features instead of problems."),
+    ("What does he mean by “good problems, bad solutions”?", "Users know their problems well, but their ideas for solutions are often bad. Finding the solution is your job."),
+    ("How can you tell that a problem is valuable?", "People already pay for solutions to it; free tools like spreadsheets aren’t strong competitors; the audience is easy to sell to.")])],
+ "B": [
+  ("00:27–02:43", 27, 163, "A direct connection to users", [
+    ("What do the best founders do throughout the life of their company?", "They maintain a direct connection to their users."),
+    ("What are the two things founders should do, according to the YC motto?", "Write code and talk to users.")]),
+  ("02:43–05:56", 163, 356, "Three common mistakes", [
+    ("What are the three common mistakes?", "Talking about your idea instead of the user’s life; asking about hypotheticals instead of specifics; talking instead of listening."),
+    ("Why are hypothetical questions dangerous?", "People are too optimistic about the future. Their answers don’t show what they will actually do.")]),
+  ("05:56–14:16", 356, 856, "Five great questions", [
+    ("What are the five questions?", "What’s the hardest part about…? When was the last time you encountered…? Why was it hard? What have you done to solve it? What don’t you love about the solutions you’ve tried?"),
+    ("Which question helps you find out if the problem is real?", "“What have you done to solve it?” If they haven’t tried anything, the problem may not be painful enough."),
+    ("Why does he ask about the last time, not “usually”?", "A specific real event gives you facts; “usually” gives you general and often inaccurate answers.")])],
+}
+TFA = [
+ ("Only very young start-ups need to talk to users.", False, "The best founders learn from their users throughout the life of the company."),
+ ("You can start with people you know and former colleagues.", True, "Your network, former colleagues and communities like LinkedIn, Slack or Discord are good places to start."),
+ ("Interviews work best by email or online forms.", False, "Use video or phone calls."),
+ ("It’s a good idea to pitch your idea at the start of an interview.", False, "Don’t pitch early. Listen more than you talk."),
+ ("“Would you use this?” is a useful interview question.", False, "Avoid yes/no and hypothetical questions. Focus on problems, not features."),
+ ("If people already pay for solutions to a problem, the problem is probably valuable.", True, "Paying for solutions is a sign that the problem matters."),
+]
+TFB = [
+ ("As a company grows, founders should leave user conversations to the sales team.", False, "The best founders keep a direct connection to their users throughout the life of the company."),
+ ("His main advice is: write code and talk to users.", True, "That is the YC motto he quotes."),
+ ("You should ask users about things that have already happened, not hypotheticals.", True, "Specifics from the past give you better information."),
+ ("In an interview you should talk more than the user, so they understand your product.", False, "Listen, don’t talk — and take notes."),
+ ("One of his five questions is “What’s the hardest part about doing this?”", True, "It’s the first of the five questions."),
+ ("Compliments from users are useful data.", False, "Compliments and hypotheticals are bad data — discard them."),
+]
+VOC_VA = ["learn from users", "future customers", "keep you honest", "stakeholders", "run an interview", "pitch your idea",
+          "open-ended questions", "follow-up questions", "yes/no questions", "focus on problems, not features", "a valuable problem", "pay for a solution"]
+VOC_VB = ["maintain a direct connection", "write code and talk to users", "talk specifics, not hypotheticals", "take notes",
+          "the hardest part about …", "encounter a problem", "solve a problem", "discard bad data"]
 
 # Ex 4: true/false (statement, answer, correction)
 TF = [
@@ -160,9 +218,27 @@ def lvl(sid):
 
 chips = lambda xs, g="": '<div class="vocab%s">%s</div>' % (g, "".join("<span>%s</span>" % x for x in xs))
 
-tf_html = '<ol class="ex">' + "".join(
-    '<li>%s <span class="tfx" data-a="%s"><button onclick="tf(this,1)">T</button><button onclick="tf(this,0)">F</button></span><span class="fb"></span></li>'
-    % (st, "1" if a else "0") for st, a, c in TF) + '</ol>'
+def tf_list(items):
+    return '<ol class="ex">' + "".join(
+        '<li>%s <span class="tfx" data-a="%s" data-c="%s"><button onclick="tf(this,1)">T</button><button onclick="tf(this,0)">F</button></span><span class="fb"></span></li>'
+        % (st, "1" if a else "0", c.replace('"', "&quot;")) for st, a, c in items) + '</ol>'
+tf_html = '<div class="vA">' + tf_list(TFA) + '</div><div class="vB">' + tf_list(TFB) + '</div>'
+
+def yt(v, a, b):
+    return ('<div class="yt"><iframe src="https://www.youtube-nocookie.com/embed/%s?start=%d&end=%d&rel=0" '
+            'title="video" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>' % (v, a, b))
+def frags(key, v):
+    out = ""
+    for i, (tc, a, b, name, qs) in enumerate(FRAG[key]):
+        out += '<div class="frag"><div class="fh"><b>Part %d</b> · %s · <span class="tc">%s</span></div>' % (i + 1, name, tc)
+        out += yt(v["id"], a, b) + '<ol class="ex">'
+        for j, (q, ans) in enumerate(qs):
+            out += '<li>%s <button class="mini" onclick="sa(\'f%s%d%d\')">answer</button><span class="sa fa" id="f%s%d%d">%s</span></li>' % (q, key, i, j, key, i, j, ans)
+        out += '</ol></div>'
+    return out
+def vhead(v):
+    return '<div class="vt"><b>“%s”</b><span>%s — %s · <a href="https://www.youtube.com/watch?v=%s" target="_blank" rel="noopener">open on YouTube</a></span></div>' % (v["slogan"], v["title"], v["who"], v["id"])
+VSW = '<div class="vsw"><button class="a on" onclick="vid(\'A\')">Video A</button><button class="b" onclick="vid(\'B\')">Video B</button></div>'
 gaps_html = '<ol class="ex">' + "".join(
     '<li>%s <input class="gap" data-a="%s" autocomplete="off"> <b>%s</b></li>' % (a, ans, b) for a, b, ans in GAPS) + '</ol>'
 cls_html = '<div class="cls">' + "".join(
@@ -180,6 +256,8 @@ body = '''
 <header><div class="n">1.1</div><h1>Research in tech</h1><div class="t">LESSON</div></header>
 <div class="outc"><b>Lesson outcome</b>You can use a range of vocabulary related to market and user research.</div>
 <div class="vbox"><details open><summary>📖 Vocabulary of this lesson — click to hide / show</summary><div class="in">
+ <h4>From the video (Exercises 2–5) — Video A</h4>__VVA__
+ <h4>From the video — Video B</h4>__VVB__
  <h4>Collocations (Exercise 6)</h4>__V1__
  <h4>Words and phrases (Exercise 7)</h4>__V2__
  <h4>★ Level up: research words people use in tech</h4>__V3__
@@ -197,37 +275,41 @@ body = '''
 
 <section id="s2" class="sec">
  <div class="bsec v">VIDEO</div>
- <p class="ins"><b>2</b>You are going to watch a video about market research. How many ways can you think of for a company to collect information before it launches a new product? Make a list.</p>
- <textarea class="list" placeholder="online surveys&#10;…"></textarea>
- <div class="ctrl"><button class="c" onclick="sa('a2')">Show possible answers</button></div>
- <div class="sa" id="a2">Street or online surveys, focus groups, personal interviews, observation, field trials. In tech also: A/B tests, analytics, usability tests, social listening (reviews, Reddit), AI analysis of feedback.</div>
+ __VSW__
+ <div class="vA">__VHA__<p class="ins"><b>2</b>You are going to watch parts of a talk by a Y Combinator partner who used to work at Airbnb. Who should a start-up talk to before it builds a product? What would you ask them? Make a list.</p></div>
+ <div class="vB">__VHB__<p class="ins"><b>2</b>You are going to watch parts of a talk by the founder of Pebble, one of the first smartwatches. What mistakes do people make when they talk to users? Make a list.</p></div>
+ <textarea class="list" placeholder="…"></textarea>
 </section>
 
 <section id="s3" class="sec">
  <div class="bsec v">VIDEO</div>
- <p class="ins"><b>3</b>Watch the video 1.1.1. Were any of your ideas from Exercise 2 mentioned? Did you hear about any other ways for companies to collect information?</p>
- <div class="ctrl"><button class="c" onclick="sa('a3')">Show the main points</button></div>
- <div class="sa" id="a3"><b>Primary research</b> — gathering new data from customers: (online) surveys, focus groups, in-depth interviews.<br><b>Secondary research</b> (desk research) — data that already exists and is publicly available: government reports, company websites, academic publications.<br>Small businesses can save money with online surveys and a smaller sample size.</div>
+ __VSW__
+ <p class="ins"><b>3</b>Watch the parts of the video. Were any of your ideas from Exercise 2 mentioned? Answer the questions for each part.</p>
+ <div class="vA">__FA__</div>
+ <div class="vB">__FB__</div>
 </section>
 
 <section id="s4" class="sec">
  <div class="bsec v">VIDEO</div>
- <p class="ins"><b>4</b>Watch the video again and decide if these sentences are true (T) or false (F). Correct the false sentences.</p>
+ __VSW__
+ <p class="ins"><b>4</b>Watch again and decide if these sentences are true (T) or false (F). Correct the false sentences.</p>
  __TF__
 </section>
 
 <section id="s5" class="sec">
  <div class="bsec v">VIDEO</div>
  __LVL5__
- <div class="base"><p class="ins"><b>5</b>Discuss. Research is expensive — so why do companies still put money into it? What is better: primary research you design yourself, or secondary research you buy? Why?</p>
-  <div class="phr"><span>I think companies invest in research because …</span><span>Primary research is more … but …</span><span>Secondary research is cheaper, although …</span><span>It depends on …</span></div></div>
+ <div class="base">__VSW__
+  <div class="vA"><p class="ins"><b>5</b>Discuss. He says users usually have good problems but bad solutions. What does he mean? Has a client or manager ever asked you for a feature that turned out to be the wrong solution? Who talks to users in your company?</p></div>
+  <div class="vB"><p class="ins"><b>5</b>Discuss. Which of the three mistakes do you make most often at work? Ask your teacher his five questions about a real problem they have at work — then swap.</p></div>
+  <div class="phr"><span>What he means is …</span><span>I think that’s true because …</span><span>In my experience, …</span><span>The hardest part about … is …</span><span>The last time I …</span></div></div>
  <div class="plus"><p class="ins"><b>5</b><span class="star">★</span>Which method would you choose for each research question? Is it primary or secondary, qualitative or quantitative? Explain, then check.</p>__CR_p__
   <div class="phr g" style="margin-top:12px"><span>I’d go for … because …</span><span>This is a qualitative / quantitative question.</span><span>We could carry out … with a sample of …</span><span>Desk research would be cheaper, but …</span></div></div>
 </section>
 
 <section id="s6" class="sec">
  <div class="bsec">Vocabulary<span class="sub">Terms in market research</span></div>
- <p class="ins"><b>6A</b>Complete the sentences with the words in the box to make collocations from the video.</p>
+ <p class="ins"><b>6A</b>Complete the sentences with the words in the box to make collocations.</p>
  <div class="box"><span>customer</span><span>desk</span><span>focus</span><span>in-depth</span><span>launch</span><span>online</span><span>sample</span><span>target</span></div>
  __GAPS__
  <div class="ctrl"><button class="c" onclick="chk('#s6 .gap')">Check</button><button class="l" onclick="showAns('#s6 .gap')">Show answers</button><span class="pt" id="s6pt"></span></div>
@@ -306,7 +388,7 @@ body = '''
 
 NAV = "".join('<button data-s="s%d"%s>%d</button>' % (i, ' class="on"' if i == 1 else "", i) for i in range(1, 11)) + '<button data-s="s11">✓</button>'
 LABELS = {"op": "Show verbs", "p": "Show a suggestion"}
-rep = {"__V1__": chips(VOC_BOOK), "__V2__": chips(VOC_7), "__V3__": chips(VOC_UP, " g"), "__V12__": chips(VOC_BOOK + VOC_7),
+rep = {"__VSW__": VSW, "__VHA__": vhead(VA), "__VHB__": vhead(VB), "__FA__": frags("A", VA), "__FB__": frags("B", VB), "__VVA__": chips(VOC_VA), "__VVB__": chips(VOC_VB), "__V1__": chips(VOC_BOOK), "__V2__": chips(VOC_7), "__V3__": chips(VOC_UP, " g"), "__V12__": chips(VOC_BOOK + VOC_7),
        "__NAV__": NAV, "__TF__": tf_html, "__GAPS__": gaps_html, "__CLS__": cls_html, "__DEFS__": defs_html,
        "__MATCH__": match_html, "__OPT__": opt_html}
 for n in (1, 5, 7, 8, 9, 10):
@@ -319,9 +401,8 @@ def sub(m):
 body = re.sub(r"__C(P?R?)_(\w+)__", sub, body)
 assert "__" not in body.replace("___", ""), re.findall(r"__\w+__", body)
 
-TFC = [c for _, _, c in TF]
 js = r'''
-const D=__D__, TFC=__TFC__;
+const D=__D__;
 const st={},ord={};for(const k in D){st[k]=0;ord[k]=D[k].map((_,i)=>i)}
 const $=id=>document.getElementById(id);
 const big=t=>'<span style="color:var(--ink);font-size:18px;font-weight:400">'+t+'</span>';
@@ -341,15 +422,16 @@ const norm=s=>s.trim().toLowerCase().replace(/[’']/g,"'").replace(/\s+/g," ");
 function chk(q){let ok=0,all=0;document.querySelectorAll(q).forEach(e=>{all++;const r=norm(e.value)==norm(e.dataset.a);e.classList.toggle("ok",r);e.classList.toggle("no",!r&&e.value!=="");if(r)ok++});
  const sec=document.querySelector(q).closest("section");const pt=$(sec.id+"pt");if(pt)pt.textContent=ok+" / "+all}
 function showAns(q){document.querySelectorAll(q).forEach(e=>{e.value=e.dataset.a;e.classList.add("ok");e.classList.remove("no")})}
-function tf(b,v){const s=b.parentNode,li=s.parentNode,i=[...li.parentNode.children].indexOf(li),r=String(v)==s.dataset.a;
- s.querySelectorAll("button").forEach(x=>x.className="");b.className=r?"ok":"no";li.querySelector(".fb").textContent=r?(s.dataset.a=="0"?"✓ False. "+TFC[i]:"✓ True. "+TFC[i]):"Not quite — listen again."}
+function tf(b,v){const s=b.parentNode,li=s.parentNode,r=String(v)==s.dataset.a;
+ s.querySelectorAll("button").forEach(x=>x.className="");b.className=r?"ok":"no";li.querySelector(".fb").textContent=r?(s.dataset.a=="0"?"✓ False. ":"✓ True. ")+s.dataset.c:"Not quite — listen again."}
+function vid(k){document.body.classList.toggle("vb",k=="B");document.querySelectorAll(".vsw button").forEach(x=>x.classList.toggle("on",x.classList.contains(k.toLowerCase())))}
 function pick(b){const s=b.parentNode,r=b.textContent==s.dataset.a;s.querySelectorAll("button").forEach(x=>x.className="");b.className=r?"ok":"no"}
 function copyMine(){const t=[...document.querySelectorAll("#mine input")].map(x=>x.value.trim()).filter(Boolean).join("\n");if(!t){cmsg.textContent="Write your phrases first.";return}
  try{navigator.clipboard.writeText(t).then(()=>cmsg.textContent="Copied!",()=>cmsg.textContent="Select the text and copy it manually.")}catch(e){cmsg.textContent="Select the text and copy it manually."}}
 function sc(b){document.querySelectorAll("#score button").forEach(x=>x.classList.remove("on"));b.classList.add("on")}
 document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.querySelectorAll("nav button,.sec").forEach(x=>x.classList.remove("on"));b.classList.add("on");$(b.dataset.s).classList.add("on")});
 $("s1").classList.add("on");for(const k in D)render(k);
-'''.replace("__D__", json.dumps(D, ensure_ascii=False)).replace("__TFC__", json.dumps(TFC, ensure_ascii=False))
+'''.replace("__D__", json.dumps(D, ensure_ascii=False))
 
 html = ('<!DOCTYPE html>\n<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">\n'
         '<title>1.1 Research in tech — Lesson</title>\n'
