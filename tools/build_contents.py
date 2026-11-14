@@ -1,5 +1,5 @@
 import json, sys
-OUT=sys.argv[1] if len(sys.argv)>1 else '/home/claude/content/index.html'
+OUT=sys.argv[1] if len(sys.argv)>1 else '../index.html'
 # status: ready | soon ; tag: kept | updated | new
 U_A2P = [
  ("1", "Travelling for work", [
@@ -76,7 +76,7 @@ html = r'''<!DOCTYPE html>
 :root{--teal:__ACC__;--teal2:__ACC2__;--mag:#c4127a;--pur:#6b2a8c;--grey:#77787b;--lg:#eeeff0;--ink:#231f20;--gold:#f2b631}
 *{box-sizing:border-box}body{margin:0;font-family:"Fira Sans",system-ui,sans-serif;color:var(--ink);background:#fff;font-weight:300}
 header{display:flex;align-items:stretch;border-bottom:3px solid var(--teal)}
-header .lv{background:linear-gradient(120deg,var(--pur),var(--mag));color:#fff;font-weight:500;font-size:30px;padding:14px 22px}
+header .lv{background:linear-gradient(120deg,__G1__,__G2__);color:#fff;font-weight:500;font-size:30px;padding:14px 22px}
 header h1{margin:0;align-self:center;padding-left:18px;font-weight:500;font-size:28px;color:#4d4d4f}
 header .who{margin-left:auto;align-self:center;margin-right:18px;text-align:right;font-size:14px;color:var(--grey)}
 header .who b{display:block;color:var(--ink);font-weight:600;font-size:16px}
@@ -179,5 +179,6 @@ const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__
 if(STUDENT){fetch(`${SB_URL}/rest/v1/homework_answers?student=eq.${encodeURIComponent(STUDENT.name)}&select=lesson,submitted`,{headers:{apikey:SB_KEY}})
  .then(r=>r.json()).then(rows=>{rows.forEach(r=>{const m=r.lesson.match(/(\d+\.\d+|W\d+)/);if(m)PROGRESS[m[1]]=r.submitted?"done":"progress"});render()}).catch(()=>{})}
 </script></body></html>'''
-html = html.replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
+G=getattr(CFG,"GRAD",("#6b2a8c","#c4127a")) if CFG else ("#6b2a8c","#c4127a")
+html = html.replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
 open(OUT, 'w').write(html)
