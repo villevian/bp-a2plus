@@ -12,7 +12,7 @@ css = (css.replace("--coral:#3fa9ad", "--coral:" + MINT)
           .replace("#e6f4f4", MINT2)
           .replace("linear-gradient(120deg,var(--pur),var(--mag))", "linear-gradient(120deg,#1f7d5c,#4fb58c)")
           .replace("#2a7fa8", "#1f6f8b"))
-css += ".outc{display:flex;align-items:center;gap:14px;background:%s;margin:0;padding:10px 22px;font-size:15px}.outc b{background:%s;color:#fff;padding:4px 10px;border-radius:4px;font-weight:600;font-size:13px}" % (MINT2, MINT)
+css += ".outc{display:flex;align-items:center;gap:14px;background:%s;margin:0;padding:10px 22px;font-size:15px}nav button{min-width:46px;font-size:17px}.outc b{background:%s;color:#fff;padding:4px 10px;border-radius:4px;font-weight:600;font-size:13px}" % (MINT2, MINT)
 css += ".mine.q input{max-width:none}.tip{font-size:14px;color:#4d4d4f;background:#f6f5f1;border:1px solid #e3e1da;border-radius:4px;padding:8px 12px;margin:6px 0 14px}"
 
 D = {
@@ -103,27 +103,24 @@ body = r'''
 <div class="outc"><b>Lesson outcome</b>You can use a range of vocabulary related to market and user research.</div>
 <a href="../../../index.html" style="display:inline-block;margin:12px 22px 0;color:var(--coral);font-weight:500;text-decoration:none;font-size:15px">← Contents</a>
 <nav>
- <button data-s="s1" class="on">1 · Warm-up</button>
- <button data-s="s2">2 · Homework check</button>
- <button data-s="s3">3 · Which method?</button>
- <button data-s="s4">4 · Project: two apps</button>
- <button data-s="s5">5 · My phrases</button>
+ <button data-s="s1" class="on">1</button>
+ <button data-s="s2">2</button>
+ <button data-s="s3">3</button>
+ <button data-s="s4">4</button>
+ <button data-s="s5">5</button>
 </nav>
 <main>
 
 <section id="s1" class="sec">
- <h2>Warm-up</h2>
- <p class="ins"><b>1</b>Answer the question. Speak for about one minute.</p>
  <div class="lvl"><button class="on" onclick="lv('s1',0,this)">Base</button><button class="p" onclick="lv('s1',1,this)">★ Level up</button></div>
- <div class="base">__CARD_w__</div>
- <div class="plus">__CARDP_wp__</div>
+ <div class="base"><p class="ins"><b>1</b>Answer the question. Speak for about one minute.</p>__CARD_w__</div>
+ <div class="plus"><p class="ins"><b>1</b><span class="star">★</span>Answer the question. Give reasons and examples. Speak for 1–2 minutes.</p>__CARDP_wp__</div>
 </section>
 
 <section id="s2" class="sec">
- <h2>Homework check</h2>
  <div class="lvl"><button class="on" onclick="lv('s2',0,this)">Base</button><button class="p" onclick="lv('s2',1,this)">★ Level up</button></div>
  <div class="base">
-  <p class="ins"><b>2A</b>The video. Answer in your own words.</p>
+  <p class="ins"><b>2A</b>The video. Answer the questions in your own words.</p>
   __CARD_v__
   <p class="ins" style="margin-top:26px"><b>B</b>Vocabulary blitz. Read the explanation and say the word. Then use it in a sentence about your work.</p>
   __CARDR_b__
@@ -131,17 +128,16 @@ body = r'''
   __CARDR_o__
  </div>
  <div class="plus">
-  <p class="ins"><span class="star">★</span>The video: go further.</p>
+  <p class="ins"><b>2A</b><span class="star">★</span>The video: go further.</p>
   __CARDP_vp__
-  <p class="ins" style="margin-top:26px"><span class="star">★</span>Research words people use in tech. Say the word, then tell a short story from your work where you use it.</p>
+  <p class="ins" style="margin-top:26px"><b>B</b><span class="star">★</span>Research words people use in tech. Say the word, then tell a short story from your work where you use it.</p>
   __CARDPR_bp__
-  <p class="ins" style="margin-top:26px"><span class="star">★</span>Which verbs go with it? Say as many as you can, then make a sentence.</p>
+  <p class="ins" style="margin-top:26px"><b>C</b><span class="star">★</span>Which verbs go with it? Say as many as you can, then make a sentence.</p>
   __CARDPR_op__
  </div>
 </section>
 
 <section id="s3" class="sec">
- <h2>Which method?</h2>
  <div class="lvl"><button class="on" onclick="lv('s3',0,this)">Base</button><button class="p" onclick="lv('s3',1,this)">★ Level up</button></div>
  <div class="base">
   <p class="ins"><b>3</b>Read the research question. Which method would you choose? Is it qualitative or quantitative, primary or secondary? Explain, then check.</p>
@@ -149,14 +145,13 @@ body = r'''
   <div class="phr" style="margin-top:12px"><span>I’d go for … because …</span><span>This is a qualitative / quantitative question.</span><span>We could carry out … with a sample of …</span><span>Desk research would be cheaper, but …</span><span>It would help us gauge …</span></div>
  </div>
  <div class="plus">
-  <p class="ins"><span class="star">★</span>A real-life problem. Make a research plan in two minutes, then defend it. Your teacher plays a sceptical stakeholder.</p>
+  <p class="ins"><b>3</b><span class="star">★</span>A real-life problem. Make a research plan in two minutes, then defend it. Your teacher plays a sceptical stakeholder.</p>
   __CARDP_pp__
   <div class="phr g" style="margin-top:12px"><span>Given the budget, I’d …</span><span>The risk is that …</span><span>That would give us a rough idea, but …</span><span>To be on the safe side, we could …</span><span>The sample is too small to …</span><span>I’d double-check …</span></div>
  </div>
 </section>
 
 <section id="s4" class="sec">
- <h2>PROJECT: How research affects a product</h2>
  <div class="lvl"><button class="on" onclick="lv('s4',0,this)">Base</button><button class="p" onclick="lv('s4',1,this)">★ Level up</button></div>
  <div class="base">
   <p class="ins"><b>4A</b>Choose an app category and two well-known apps. Describe each one.</p>
@@ -176,7 +171,7 @@ body = r'''
   <div class="phr"><span>According to the survey, …</span><span>The respondent said / suggested that …</span><span>Based on the answers, we’ll …</span><span>We decided not to … because …</span></div>
  </div>
  <div class="plus">
-  <p class="ins"><span class="star">★</span>Instead of a survey, run a five-minute user interview with your teacher. Follow three rules.</p>
+  <p class="ins"><b>4A</b><span class="star">★</span>Choose two apps as in the Base task. Then, instead of a survey, run a five-minute user interview with your teacher. Follow three rules.</p>
   <div class="cats g">
    <div><b>Their life, not your idea</b>Don’t pitch the feature. Ask how they do things now.</div>
    <div><b>The past, not the future</b>“Tell me about the last time you …” — not “Would you use …?”</div>
@@ -184,19 +179,18 @@ body = r'''
    <div><b>Compliments are not data</b>“Great idea!” tells you nothing. Ask what they actually did.</div>
   </div>
   <div class="phr g"><span>✗ Would you use an app that …?</span><span>✓ How do you … at the moment?</span><span>✗ Do you like our idea?</span><span>✓ What’s the hardest part about …?</span><span>✓ What have you tried so far?</span><span>✓ Is there anything else I should have asked?</span></div>
-  <p class="ins"><span class="star">★</span>Present your insights to a US stakeholder (your teacher). They will challenge you: “Five people? That’s not data.” Defend your findings.</p>
+  <p class="ins"><b>B</b><span class="star">★</span>Present your insights to a US stakeholder (your teacher). They will challenge you: “Five people? That’s not data.” Defend your findings.</p>
   <div class="phr g"><span>It’s a small sample, but …</span><span>The pattern was clear: …</span><span>Three out of five users admitted that …</span><span>The next step would be to …</span></div>
  </div>
 </section>
 
 <section id="s5" class="sec">
- <h2>My phrases</h2>
- <p class="ins"><b>5</b>Write 5 phrases from today you want to remember. Write the whole phrase, not one word: <i>gauge interest in a feature</i>, not <i>gauge</i>.</p>
+ <p class="ins"><b>5A</b>Write 5 phrases from today you want to remember. Write the whole phrase, not one word: <i>gauge interest in a feature</i>, not <i>gauge</i>.</p>
  <div class="mine" id="mine"><input placeholder="1. …"><input placeholder="2. …"><input placeholder="3. …"><input placeholder="4. …"><input placeholder="5. …"></div>
  <div class="ctrl"><button class="c" onclick="copyMine()">Copy my phrases</button><span class="msg" id="cmsg"></span></div>
- <p class="ins" style="margin-top:24px"><b>✓</b>How well can you use vocabulary related to market and user research? 0 = I need more practice, 5 = I know this well.</p>
+ <p class="ins" style="margin-top:24px"><b>B</b>How well can you use vocabulary related to market and user research? 0 = I need more practice, 5 = I know this well.</p>
  <div class="score" id="score"><button onclick="sc(this)">0</button><button onclick="sc(this)">1</button><button onclick="sc(this)">2</button><button onclick="sc(this)">3</button><button onclick="sc(this)">4</button><button onclick="sc(this)">5</button></div>
- <p class="ins" style="margin-top:20px"><span class="star">★</span>Level up: Without stopping, speak for one minute. Explain to a friend outside tech how your company finds out what users want. Use at least 6 words from today.</p>
+ <p class="ins" style="margin-top:20px"><b>C</b><span class="star">★</span>Without stopping, speak for one minute. Explain to a friend outside tech how your company finds out what users want. Use at least 6 words from today.</p>
 </section>
 </main>
 <footer style="max-width:980px;margin:0 auto;padding:0 22px 30px;font-size:12px;color:var(--grey)">Valentyna Hordiienko · Middle Learning Architect</footer>
