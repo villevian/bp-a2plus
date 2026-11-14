@@ -84,9 +84,10 @@ function render(){
   let ud=0;
   const cells=vis.map(([n,t,d,tag,st,cl])=>{
    tot++;const pr=PROGRESS[n]||"none";if(pr==="done"){done++;ud++}
-   let tr=ASSIGNED?ASSIGNED[n]:track;if(!(VARIANTS[n]||["all"]).includes(tr))tr="all";const ready=st==="ready";
+   const A=ASSIGNED&&ASSIGNED[n];let tr=A?(A.track||A):track;const PG=(A&&A.pages)||["lesson","hw","extra"];if(!(VARIANTS[n]||["all"]).includes(tr))tr="all";const ready=st==="ready";
    const ws=n.startsWith("W");
-   const L3=(t2,lab)=>`<div class="links">${lab?`<span class="vl">${lab}</span>`:""}<a href="${path(n,t2,"lesson")}">Lesson</a><a href="${path(n,t2,"hw")}">Homework</a><a href="${path(n,t2,"extra")}">Extra</a></div>`;
+   const NM={lesson:"Lesson",hw:"Homework",extra:"Extra"};
+   const L3=(t2,lab)=>`<div class="links">${lab?`<span class="vl">${lab}</span>`:""}${PG.map(p=>`<a href="${path(n,t2,p)}">${NM[p]}</a>`).join("")}</div>`;
    const links=ready?(cl?L3(tr,"Updated")+L3(tr+"-classic","Classic"):L3(tr,""))+`
      <div class="st"><span class="dot ${pr==="done"?"d":pr==="progress"?"p":""}"></span>${pr==="done"?"Done":pr==="progress"?"In progress":"Not started"}</div>`
      :`<div class="soon">Coming soon</div>`;
