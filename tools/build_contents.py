@@ -144,7 +144,7 @@ const TRACKS=__TRACKS__;
 const STUDENT=__STUDENT__;            // e.g. {name:"Larysa", track:"all"}
 const ASSIGNED=__ASSIGNED__;
 const SHOW_ALL=__SHOWALL__;  // student page: show the whole level, open only assigned lessons           // e.g. {"1.1":"all","1.2":"all"} — null = show all
-const PROGRESS={};
+const PROGRESS={};const COMMENTS={};
 const VARIANTS=__VAR__;  // which track versions exist; missing → "all"             // filled from Supabase: {"1.1":"done","1.2":"progress"}
 let track=(STUDENT&&STUDENT.track)||"all";
 const path=(n,t,f)=>`lessons/${n.replace(".","-").toLowerCase()}/${t}/${f}.html`;
@@ -161,7 +161,7 @@ function render(){
    const L3=(t2,lab)=>`<div class="links">${lab?`<span class="vl">${lab}</span>`:""}${PG.map(p=>`<a href="${path(n,t2,p)}">${NM[p]}</a>`).join("")}</div>`;
    const open=ready&&(!ASSIGNED||A);
    const links=open?(cl?L3(tr,"Updated")+L3(tr+"-classic","Classic"):L3(tr,""))+`
-     <div class="st"><span class="dot ${pr==="done"?"d":pr==="progress"?"p":""}"></span>${pr==="done"?"Done":pr==="progress"?"In progress":"Not started"}</div>`
+     <div class="st"><span class="dot ${pr==="done"?"d":pr==="progress"?"p":""}"></span>${pr==="done"?"Done":pr==="progress"?"In progress":"Not started"}${COMMENTS[n]?" · 💬 teacher’s comment":""}</div>`
      :`<div class="soon">Coming soon</div>`;
    return `<div class="ls ${ws?"ws":""}"><div class="lh"><span class="n">${ws?"Workshop "+n.slice(1):n}</span><span class="t">${ws?t.replace("Business workshop: ",""):t}</span></div>
      <div class="lb"><span class="tag ${tag}">${tag==="both"?"Classic + Updated":tag}</span><br>${cl?`<div class="ver"><b>💬 Updated</b>${d}</div><div class="ver cl"><b>✉️ Classic</b>${cl}</div>`:d}</div><div class="lf">${links}</div></div>`}).join("");
@@ -176,8 +176,8 @@ TRACKS.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=
 render();
 /* Progress from Supabase (student pages only) */
 const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
-if(STUDENT){fetch(`${SB_URL}/rest/v1/homework_answers?student=eq.${encodeURIComponent(STUDENT.name)}&select=lesson,submitted`,{headers:{apikey:SB_KEY}})
- .then(r=>r.json()).then(rows=>{rows.forEach(r=>{const m=r.lesson.match(/(\d+\.\d+|W\d+)/);if(m)PROGRESS[m[1]]=r.submitted?"done":"progress"});render()}).catch(()=>{})}
+if(STUDENT&&STUDENT.code){fetch(`${SB_URL}/rest/v1/rpc/get_my_progress`,{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify({p_code:STUDENT.code})})
+ .then(r=>r.json()).then(rows=>{(rows||[]).forEach(r=>{const m=r.lesson.match(/(\d+\.\d+|W\d+)/);if(m){PROGRESS[m[1]]=r.submitted?"done":"progress";if(r.has_comment)COMMENTS[m[1]]=1}});render()}).catch(()=>{})}
 </script></body></html>'''
 G=getattr(CFG,"GRAD",("#6b2a8c","#c4127a")) if CFG else ("#6b2a8c","#c4127a")
 html = html.replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))

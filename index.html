@@ -6,7 +6,7 @@
 :root{--teal:#3fa9ad;--teal2:#e6f4f4;--mag:#c4127a;--pur:#6b2a8c;--grey:#77787b;--lg:#eeeff0;--ink:#231f20;--gold:#f2b631}
 *{box-sizing:border-box}body{margin:0;font-family:"Fira Sans",system-ui,sans-serif;color:var(--ink);background:#fff;font-weight:300}
 header{display:flex;align-items:stretch;border-bottom:3px solid var(--teal)}
-header .lv{background:linear-gradient(120deg,var(--pur),var(--mag));color:#fff;font-weight:500;font-size:30px;padding:14px 22px}
+header .lv{background:linear-gradient(120deg,#6b2a8c,#c4127a);color:#fff;font-weight:500;font-size:30px;padding:14px 22px}
 header h1{margin:0;align-self:center;padding-left:18px;font-weight:500;font-size:28px;color:#4d4d4f}
 header .who{margin-left:auto;align-self:center;margin-right:18px;text-align:right;font-size:14px;color:var(--grey)}
 header .who b{display:block;color:var(--ink);font-weight:600;font-size:16px}
@@ -74,7 +74,7 @@ const TRACKS=[["all", "For everyone"], ["it", "IT"], ["pm", "Project managers"],
 const STUDENT=null;            // e.g. {name:"Larysa", track:"all"}
 const ASSIGNED=null;
 const SHOW_ALL=false;  // student page: show the whole level, open only assigned lessons           // e.g. {"1.1":"all","1.2":"all"} — null = show all
-const PROGRESS={};
+const PROGRESS={};const COMMENTS={};
 const VARIANTS={"1.1": ["all"]};  // which track versions exist; missing → "all"             // filled from Supabase: {"1.1":"done","1.2":"progress"}
 let track=(STUDENT&&STUDENT.track)||"all";
 const path=(n,t,f)=>`lessons/${n.replace(".","-").toLowerCase()}/${t}/${f}.html`;
@@ -91,7 +91,7 @@ function render(){
    const L3=(t2,lab)=>`<div class="links">${lab?`<span class="vl">${lab}</span>`:""}${PG.map(p=>`<a href="${path(n,t2,p)}">${NM[p]}</a>`).join("")}</div>`;
    const open=ready&&(!ASSIGNED||A);
    const links=open?(cl?L3(tr,"Updated")+L3(tr+"-classic","Classic"):L3(tr,""))+`
-     <div class="st"><span class="dot ${pr==="done"?"d":pr==="progress"?"p":""}"></span>${pr==="done"?"Done":pr==="progress"?"In progress":"Not started"}</div>`
+     <div class="st"><span class="dot ${pr==="done"?"d":pr==="progress"?"p":""}"></span>${pr==="done"?"Done":pr==="progress"?"In progress":"Not started"}${COMMENTS[n]?" · 💬 teacher’s comment":""}</div>`
      :`<div class="soon">Coming soon</div>`;
    return `<div class="ls ${ws?"ws":""}"><div class="lh"><span class="n">${ws?"Workshop "+n.slice(1):n}</span><span class="t">${ws?t.replace("Business workshop: ",""):t}</span></div>
      <div class="lb"><span class="tag ${tag}">${tag==="both"?"Classic + Updated":tag}</span><br>${cl?`<div class="ver"><b>💬 Updated</b>${d}</div><div class="ver cl"><b>✉️ Classic</b>${cl}</div>`:d}</div><div class="lf">${links}</div></div>`}).join("");
@@ -106,6 +106,6 @@ TRACKS.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=
 render();
 /* Progress from Supabase (student pages only) */
 const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
-if(STUDENT){fetch(`${SB_URL}/rest/v1/homework_answers?student=eq.${encodeURIComponent(STUDENT.name)}&select=lesson,submitted`,{headers:{apikey:SB_KEY}})
- .then(r=>r.json()).then(rows=>{rows.forEach(r=>{const m=r.lesson.match(/(\d+\.\d+|W\d+)/);if(m)PROGRESS[m[1]]=r.submitted?"done":"progress"});render()}).catch(()=>{})}
+if(STUDENT&&STUDENT.code){fetch(`${SB_URL}/rest/v1/rpc/get_my_progress`,{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify({p_code:STUDENT.code})})
+ .then(r=>r.json()).then(rows=>{(rows||[]).forEach(r=>{const m=r.lesson.match(/(\d+\.\d+|W\d+)/);if(m){PROGRESS[m[1]]=r.submitted?"done":"progress";if(r.has_comment)COMMENTS[m[1]]=1}});render()}).catch(()=>{})}
 </script></body></html>

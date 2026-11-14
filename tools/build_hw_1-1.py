@@ -52,6 +52,8 @@ textarea.sm{min-height:44px}
 .cats div b{display:block;font-weight:600;font-size:14.5px;margin-bottom:3px}
 .cats textarea{margin-left:0;width:100%}
 .selfa{display:flex;margin-top:30px}
+.tcom{display:none;margin-top:16px;background:#fdf0d5;border-left:4px solid #f2b631;padding:10px 14px;border-radius:4px;font-size:15px;white-space:pre-wrap}
+.tcom b{display:block;margin-bottom:4px;font-weight:600}
 .selfa .l{background:var(--coral);color:#fff;font-weight:600;padding:14px 18px;display:flex;align-items:center}
 .selfa .r{flex:1;background:var(--lg);padding:12px 16px}
 .score{display:flex;gap:6px;margin-top:8px}
@@ -122,13 +124,14 @@ html = f'''<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>1.1 Business travel — Homework</title>
 <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>{css}</style></head><body>
 <header><div class="n">1.1</div><h1>Business travel</h1><div class="t">HOMEWORK</div></header>
-<div class="bar"><b>Your name:</b><input id="who" placeholder="e.g. Larysa"><button class="btn" id="go">Start / continue</button><span class="st" id="st">Write your name to save your answers.</span></div>
+<div class="bar"><span class="st" id="st">Loading…</span></div>
+<a href="../../../index.html" style="display:inline-block;margin:12px 22px 0;color:#3fa9ad;font-weight:500;text-decoration:none;font-size:15px">← Contents</a>
 <main>
 <div class="outcome"><div class="l">Lesson outcome</div><div class="r">Learners can use vocabulary related to business travel.</div></div>
 
+<div class="tcom" id="tcom"><b>💬 Teacher’s comment</b><div id="tcomt"></div></div>
 <div class="lab">Lead-in</div>
 <div class="ex"><div class="q"><span class="n">1</span><span>Tick (✓) the types of transport and accommodation you use when you travel to another country.{L("01")}</span></div>
  <div class="sub">Transport</div>{ticks("e1_t", ["boat","bus","car","coach","motorcycle","plane","taxi","train"])}
@@ -188,16 +191,14 @@ html = f'''<!DOCTYPE html>
 <div class="done" id="done">✓ Your homework has been sent. You can still change your answers — they save automatically.</div>
 </main>
 <script>
-/* ===== SETTINGS: paste your Supabase project URL and anon (public) key ===== */
-const SUPABASE_URL = "https://zuegojpfhgigsvyrnymt.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
+const SB_URL = "https://zuegojpfhgigsvyrnymt.supabase.co";
+const SB_KEY = "sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
 const LESSON = "BP A2+ 1.1 Business travel";
-/* ========================================================================== */
+const STUDENT_CODE = "__CODE__";   // personal code of the student whose page this is ("" = template preview)
+const rpc=(f,body)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{{method:"POST",headers:{{apikey:SB_KEY,"Content-Type":"application/json"}},body:JSON.stringify(body)}}).then(async r=>{{const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):null}});
 const K6={json.dumps(K6)}, K7A={json.dumps(K7A)}, K7B={json.dumps(K7B)};
 const $=id=>document.getElementById(id);
-let sb=null, student="", timer=null, submitted=false;
-const configured=!SUPABASE_URL.includes("YOUR-PROJECT") && window.supabase;
-if(configured){{ sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY); }}
+let student="", timer=null, submitted=false, ready=false;
 const norm=s=>s.trim().toLowerCase().replace(/\\s+/g," ").replace(/^(a|an|the) /,"");
 
 function collect(){{
@@ -222,24 +223,24 @@ function scores(){{
  return {{e6:s6+"/9",e7a:s7a+"/5",e7b:s7b+"/5"}};
 }}
 function status(t,c=""){{$("st").textContent=t;$("st").className="st "+c}}
-function local(){{try{{localStorage.setItem("hw:"+LESSON+":"+student,JSON.stringify(collect()))}}catch(e){{}}}}
+function local(){{try{{localStorage.setItem("hw:"+LESSON+":"+(STUDENT_CODE||"preview"),JSON.stringify(collect()))}}catch(e){{}}}}
 async function save(){{
- if(!student)return;local();
- if(!sb){{status("Saved on this device (online saving is not set up).");return}}
+ if(!ready)return;local();
+ if(!STUDENT_CODE){{status("Template preview — answers are not sent anywhere.");return}}
  status("Saving…");
- const {{error}}=await sb.from("homework_answers").upsert({{student,lesson:LESSON,answers:collect(),score:scores(),submitted,updated_at:new Date().toISOString()}},{{onConflict:"student,lesson"}});
- error?status("Not saved online: "+error.message+" (saved on this device)","err"):status("Saved ✓ "+new Date().toLocaleTimeString().slice(0,5),"ok");
+ try{{await rpc("save_hw",{{p_code:STUDENT_CODE,p_lesson:LESSON,p_answers:collect(),p_score:scores(),p_submitted:submitted}});status("Saved ✓ "+new Date().toLocaleTimeString().slice(0,5),"ok")}}
+ catch(e){{status("Not saved online — check your internet. Your answers are kept on this device.","err")}}
 }}
 function later(){{clearTimeout(timer);timer=setTimeout(save,1200)}}
 async function start(){{
- student=$("who").value.trim();if(!student){{status("Please write your name.","err");return}}
- try{{localStorage.setItem("hw:name",student)}}catch(e){{}}
  let a=null;
- if(sb){{status("Loading…");const {{data,error}}=await sb.from("homework_answers").select("answers,submitted").eq("student",student).eq("lesson",LESSON).maybeSingle();
-  if(!error&&data){{a=data.answers;submitted=data.submitted;if(submitted)$("done").style.display="block"}}}}
- if(!a){{try{{a=JSON.parse(localStorage.getItem("hw:"+LESSON+":"+student)||"null")}}catch(e){{}}}}
- if(a)fill(a);
- status(a?"Welcome back, "+student+"! Your answers are loaded.":"Hi, "+student+"! Your answers will save automatically.","ok");
+ if(STUDENT_CODE){{try{{const r=await rpc("get_my_hw",{{p_code:STUDENT_CODE,p_lesson:LESSON}});const d=r&&r[0];
+  if(d){{student=d.name;if(d.answers){{a=d.answers;submitted=!!d.submitted;if(submitted)$("done").style.display="block"}}
+   if(d.teacher_comment){{$("tcomt").textContent=d.teacher_comment;$("tcom").style.display="block"}}}}}}catch(e){{}}}}
+ if(!a){{try{{a=JSON.parse(localStorage.getItem("hw:"+LESSON+":"+(STUDENT_CODE||"preview"))||"null")}}catch(e){{}}}}
+ if(a)fill(a);ready=true;
+ if(!STUDENT_CODE)status("Template preview — answers are not sent anywhere.");
+ else status(student?(a?"Welcome back, "+student+"! Your answers are loaded.":"Hi, "+student+"! Your answers save automatically."):"Your answers save automatically.","ok");
 }}
 function mark(el,ok,correct){{el.classList.remove("right","wrong");el.classList.add(ok?"right":"wrong");
  const f=$("fb_"+el.dataset.k);if(!f)return;f.className="fb show "+(ok?"ok":"no");
@@ -251,10 +252,8 @@ document.querySelectorAll(".ticks label").forEach(l=>l.addEventListener("click",
 document.querySelectorAll("#score button").forEach(b=>b.onclick=()=>{{document.querySelectorAll("#score button").forEach(x=>x.classList.remove("on"));b.classList.add("on");later()}});
 document.addEventListener("input",e=>{{if(e.target.closest("main"))later()}});
 document.addEventListener("change",e=>{{if(e.target.closest("main"))later()}});
-$("go").onclick=start;$("who").addEventListener("keydown",e=>{{if(e.key==="Enter")start()}});
-$("submit").onclick=async()=>{{if(!student){{status("Please write your name first.","err");$("who").focus();return}}submitted=true;await save();$("done").style.display="block";$("st2").textContent=""}};
-const p=new URLSearchParams(location.search).get("student");
-let saved="";try{{saved=localStorage.getItem("hw:name")||""}}catch(e){{}}
-if(p||saved){{$("who").value=p||saved;start()}}
+$("submit").onclick=async()=>{{submitted=true;await save();$("done").style.display="block";$("st2").textContent=""}};
+start();
 </script></body></html>'''
-open('/home/claude/hw11/hw_1-1_business_travel.html', 'w').write(html)
+import sys
+open(sys.argv[1], 'w').write(html.replace('__CODE__', sys.argv[2] if len(sys.argv)>2 else ''))
