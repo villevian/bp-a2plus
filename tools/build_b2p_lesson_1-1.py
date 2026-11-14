@@ -48,7 +48,7 @@ textarea.list{font:inherit;font-size:16px;width:100%;max-width:640px;height:110p
 .vsw button{font:inherit;font-weight:500;border:0;background:#fff;color:var(--mag);padding:6px 16px;cursor:pointer}.vsw button.on{background:var(--mag);color:#fff}
 .vB{display:none}body.vb .vB{display:block}body.vb .vA{display:none}
 .vt{background:#fbeef5;border-left:5px solid var(--mag);padding:10px 14px;margin:0 0 14px}.vt b{display:block;font-size:22px;font-weight:500;margin-bottom:2px}.vt span{font-size:14px;color:#4d4d4f}.vt a{color:var(--mag)}
-.frag{margin:0 0 22px}.ytl{font-size:14px;color:#fff;background:var(--mag);border-radius:12px;padding:2px 10px;text-decoration:none;margin-left:6px}.fh{font-size:16px;margin:0 0 8px}.fh b{color:var(--mag)}.tc{color:var(--grey)}
+.pl{font-size:12.5px;color:var(--mag);font-weight:600;margin:6px 0 3px}.lf{display:flex;flex-wrap:wrap;gap:5px;align-items:center;margin:0 0 8px;font-size:14px}.lf b{font-weight:600;color:var(--mag);margin-right:4px}.lf span{background:#fbeef5;border:1px solid #f0c6dc;border-radius:12px;padding:2px 9px}.frag{margin:0 0 22px}.ytl{font-size:14px;color:#fff;background:var(--mag);border-radius:12px;padding:2px 10px;text-decoration:none;margin-left:6px}.fh{font-size:16px;margin:0 0 8px}.fh b{color:var(--mag)}.tc{color:var(--grey)}
 .yt{position:relative;width:100%;max-width:640px;aspect-ratio:16/9;margin:0 0 8px}.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:4px}
 button.mini{font:inherit;font-size:12.5px;border:1px solid var(--coral);color:var(--coral);background:#fff;border-radius:12px;padding:1px 9px;cursor:pointer;margin-left:6px}
 .sa.fa{padding:6px 12px;margin:4px 0 2px;font-size:15px;line-height:1.4}
@@ -126,11 +126,13 @@ FRAG = {
     ("What is the best format for a user interview?", "A video or phone call (or in person)."),
     ("Why shouldn’t you pitch your idea at the start?", "You’ll get polite reactions to your idea instead of real information about the user’s problems."),
     ("What is your role in the interview?", "To listen, not to talk — and to ask open-ended follow-up questions.")]),
-  ("09:42–14:37", 582, 877, "Questions to ask and to avoid", [
+  ("09:42–17:04", 582, 1024, "Questions to ask and to avoid · testing a prototype", [
     ("Which types of questions should you avoid?", "Yes/no questions, “Would you use this?” and “Which features do you want?”"),
     ("What is the “one big danger” during interviews?", "Focusing on features instead of problems."),
     ("What does he mean by “good problems, bad solutions”?", "Users know their problems well, but their ideas for solutions are often bad. Finding the solution is your job."),
-    ("How can you tell that a problem is valuable?", "People already pay for solutions to it; free tools like spreadsheets aren’t strong competitors; the audience is easy to sell to.")])],
+    ("How can you tell that a problem is valuable?", "People already pay for solutions to it; free tools like spreadsheets aren’t strong competitors; the audience is easy to sell to."),
+    ("What should you do while a user clicks through your prototype?", "Watch without giving instructions and ask them to think aloud."),
+    ("How can you keep interviewees involved after the research?", "For example, in a shared group chat: share your progress and make them feel special.")])],
  "B": [
   ("00:27–02:43", 27, 163, "A direct connection to users", [
     ("What do the best founders do throughout the life of their company?", "They maintain a direct connection to their users."),
@@ -159,10 +161,18 @@ TFB = [
  ("One of his five questions is “What’s the hardest part about doing this?”", True, "It’s the first of the five questions."),
  ("Compliments from users are useful data.", False, "Compliments and hypotheticals are bad data — discard them."),
 ]
-VOC_VA = ["learn from users", "future customers", "keep you honest", "stakeholders", "run an interview", "pitch your idea",
-          "open-ended questions", "follow-up questions", "yes/no questions", "focus on problems, not features", "a valuable problem", "pay for a solution"]
-VOC_VB = ["maintain a direct connection", "write code and talk to users", "talk specifics, not hypotheticals", "take notes",
-          "the hardest part about …", "encounter a problem", "solve a problem", "discard bad data"]
+VOC_PARTS = {
+ "A": [
+  ["throughout the lifetime of the company", "keep you honest", "figure out who to talk to", "reach out to", "don’t be afraid of rejection", "outside your personal circles", "build personal connections with"],
+  ["feel comfortable", "open up", "open-ended questions", "take notes", "bias someone’s answers", "listen, not talk", "dive deep into", "derail the interview", "concrete and real examples"],
+  ["focus on features instead of problems", "over-intellectualise", "bucket ideas into categories", "be in the space", "a formidable competitor", "move someone off (a tool)", "notoriously difficult", "open to trying new things", "click through a prototype", "keep interviewees involved", "make them feel special"]],
+ "B": [
+  ["maintain a direct connection", "at all different stages", "outsource the research", "the go-between", "people skills", "easier said than done", "one of the critical factors", "at the core"],
+  ["pitch your idea", "sell someone on something", "in the first place", "talk about hypotheticals", "company-changing decisions", "hard data"],
+  ["the hardest part about …", "put yourself back in the position of …", "pain points", "on a regular basis", "warrant solving", "end up duplicating work", "get at the root of", "a burning problem", "roll out a solution", "feature set"]],
+}
+VOC_VA = [w for part in VOC_PARTS["A"] for w in part]
+VOC_VB = [w for part in VOC_PARTS["B"] for w in part]
 
 # Ex 4: true/false (statement, answer, correction)
 TF = [
@@ -242,7 +252,7 @@ def frags(key, v):
     for i, (tc, a, b, name, qs) in enumerate(FRAG[key]):
         out += ('<div class="frag"><div class="fh"><b>Part %d</b> · %s · <span class="tc">%s</span> '
                 '<a class="ytl" href="https://www.youtube.com/watch?v=%s&t=%ds" target="_blank" rel="noopener">▶ watch on YouTube</a></div>' % (i + 1, name, tc, v["id"], a))
-        out += yt(v["id"], a, b) + '<ol class="ex">'
+        out += yt(v["id"], a, b) + '<div class="lf"><b>Listen for:</b> ' + "".join("<span>%s</span>" % w for w in VOC_PARTS[key][i]) + '</div><ol class="ex">'
         for j, (q, ans) in enumerate(qs):
             out += '<li>%s <button class="mini" onclick="sa(\'f%s%d%d\')">answer</button><span class="sa fa" id="f%s%d%d">%s</span></li>' % (q, key, i, j, key, i, j, ans)
         out += '</ol></div>'
@@ -267,8 +277,8 @@ body = '''
 <header><div class="n">1.1</div><h1>Research in tech</h1><div class="t">LESSON</div></header>
 <div class="outc"><b>Lesson outcome</b>You can use a range of vocabulary related to market and user research.</div>
 <div class="vbox"><details open><summary>📖 Vocabulary of this lesson — click to hide / show</summary><div class="in">
- <h4>From the video (Exercises 2–5) — Video A</h4>__VVA__
- <h4>From the video — Video B</h4>__VVB__
+ <h4>From the video (Exercises 2–5) — Video A: How To Talk To Users</h4>__VVA__
+ <h4>From the video — Video B: Eric Migicovsky</h4>__VVB__
  <h4>Collocations (Exercise 6)</h4>__V1__
  <h4>Words and phrases (Exercise 7)</h4>__V2__
  <h4>Book word → what people in tech often say today</h4>
@@ -410,7 +420,7 @@ body = '''
 
 NAV = "".join('<button data-s="s%d"%s>%d</button>' % (i, ' class="on"' if i == 1 else "", i) for i in range(1, 11)) + '<button data-s="s11">✓</button>'
 LABELS = {"op": "Show verbs", "p": "Show a suggestion"}
-rep = {"__VSW__": VSW, "__VHA__": vhead(VA), "__VHB__": vhead(VB), "__FA__": frags("A", VA), "__FB__": frags("B", VB), "__VVA__": chips(VOC_VA), "__VVB__": chips(VOC_VB), "__V1__": chips(VOC_BOOK), "__V2__": chips(VOC_7), "__V3__": chips(VOC_UP, " g"), "__V12__": chips(VOC_BOOK + VOC_7),
+rep = {"__VSW__": VSW, "__VHA__": vhead(VA), "__VHB__": vhead(VB), "__FA__": frags("A", VA), "__FB__": frags("B", VB), "__VVA__": "".join('<div class="pl">Part %d · %s</div>' % (i + 1, FRAG["A"][i][0]) + chips(p) for i, p in enumerate(VOC_PARTS["A"])), "__VVB__": "".join('<div class="pl">Part %d · %s</div>' % (i + 1, FRAG["B"][i][0]) + chips(p) for i, p in enumerate(VOC_PARTS["B"])), "__V1__": chips(VOC_BOOK), "__V2__": chips(VOC_7), "__V3__": chips(VOC_UP, " g"), "__V12__": chips(VOC_BOOK + VOC_7),
        "__NAV__": NAV, "__TF__": tf_html, "__GAPS__": gaps_html, "__CLS__": cls_html, "__DEFS__": defs_html,
        "__MATCH__": match_html, "__OPT__": opt_html}
 for n in (1, 5, 7, 8, 9, 10):
