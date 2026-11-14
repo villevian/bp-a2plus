@@ -23,7 +23,7 @@ css += """
 .vbox .in{padding:0 14px 12px}
 .vbox h4{margin:10px 0 6px;font-weight:600;font-size:14px;color:#4d4d4f}
 .vbox .vocab{margin-bottom:6px}
-.vbox .vocab.g span{background:#fdf7e6}
+.vbox .vocab.g span{background:#fdf7e6}.map{max-width:760px;font-size:14.5px}.map td:first-child{width:28%}
 .box{display:inline-flex;flex-wrap:wrap;gap:10px;border:1.5px solid #a7a9ac;padding:8px 14px;margin:4px 0 14px;font-size:16px}
 .gap{font:inherit;font-size:16px;width:130px;padding:3px 6px;border:none;border-bottom:2px solid #a7a9ac;background:#fafafa;margin:0 3px}
 .gap.ok,.sel.ok{border-color:var(--green);background:var(--gbg)}.gap.no,.sel.no{border-color:#d6322f;background:var(--rbg)}
@@ -48,7 +48,7 @@ textarea.list{font:inherit;font-size:16px;width:100%;max-width:640px;height:110p
 .vsw button{font:inherit;font-weight:500;border:0;background:#fff;color:var(--mag);padding:6px 16px;cursor:pointer}.vsw button.on{background:var(--mag);color:#fff}
 .vB{display:none}body.vb .vB{display:block}body.vb .vA{display:none}
 .vt{background:#fbeef5;border-left:5px solid var(--mag);padding:10px 14px;margin:0 0 14px}.vt b{display:block;font-size:22px;font-weight:500;margin-bottom:2px}.vt span{font-size:14px;color:#4d4d4f}.vt a{color:var(--mag)}
-.frag{margin:0 0 22px}.fh{font-size:16px;margin:0 0 8px}.fh b{color:var(--mag)}.tc{color:var(--grey)}
+.frag{margin:0 0 22px}.ytl{font-size:14px;color:#fff;background:var(--mag);border-radius:12px;padding:2px 10px;text-decoration:none;margin-left:6px}.fh{font-size:16px;margin:0 0 8px}.fh b{color:var(--mag)}.tc{color:var(--grey)}
 .yt{position:relative;width:100%;max-width:640px;aspect-ratio:16/9;margin:0 0 8px}.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0;border-radius:4px}
 button.mini{font:inherit;font-size:12.5px;border:1px solid var(--coral);color:var(--coral);background:#fff;border-radius:12px;padding:1px 9px;cursor:pointer;margin-left:6px}
 .sa.fa{padding:6px 12px;margin:4px 0 2px;font-size:15px;line-height:1.4}
@@ -59,19 +59,29 @@ VOC_BOOK = ["online surveys", "focus group", "customer satisfaction", "in-depth 
             "launch a product", "target audience", "sample size", "primary research", "secondary research"]
 VOC_7 = ["quantitative", "qualitative", "product tester", "impact", "respondent", "gauge", "researcher",
          "gather", "viable", "data analysis"]
-VOC_UP = ["A/B test", "churn rate", "user interview", "usability test", "insight", "synthesis", "NPS", "MVP"]
+VOC_UP = ["A/B test", "churn rate", "user interview", "usability test", "insight", "synthesis", "NPS", "MVP", "product-market fit", "early adopter", "beta tester", "think aloud"]
 
 D = {
  "w": [
   "Why do you think companies need market research?",
   "Have you ever completed a market research survey — after a flight, a hotel stay, an app update? What was it about?",
-  "What kind of information do companies try to get about their products and the people who use them?"],
+  "What kind of information do companies try to get about their products and the people who use them?",
+  "Think of an app you deleted recently. Why did you delete it? Did the company ever ask you why?",
+  "Do you leave ratings or reviews? When and why — or why not?",
+  "How does your team find out if a new feature or change was a success?",
+  "If you could ask your users or clients just one question, what would it be?",
+  "Who in your company actually talks to users or clients? Is it enough?"],
  "wp": [
   "“If I had asked people what they wanted, they would have said faster horses.” Is user research overrated?",
   "Some teams now let AI summarise hundreds of user interviews in minutes. What could go wrong?",
   "A survey says 80% of users ‘love’ a new feature, but almost nobody uses it. How is that possible?",
   "Who should talk to users in a tech company: researchers, PMs, designers or engineers? Why?",
-  "Data or gut feeling: what usually decides things in your team?"],
+  "Data or gut feeling: what usually decides things in your team?",
+  "Do customers really know what they want — or only what they don’t want?",
+  "Data shows what people do, not why they do it. Can numbers ever tell you the truth about people?",
+  "Is it ethical for apps to collect so much data about users, even if it makes the product better?",
+  "Should a company listen to its users, or build something bold that nobody asked for? Think of the iPhone or ChatGPT.",
+  "Will AI ‘synthetic users’ ever replace talking to real people? Would you trust research done that way?"],
  "p": [
   ["Why do users cancel their subscription after the first month?", "In-depth user interviews — qualitative, primary. You need the ‘why’."],
   ["Which sign-up button gets more clicks: ‘Start free’ or ‘Get started’?", "A/B test — quantitative, primary."],
@@ -230,14 +240,15 @@ def yt(v, a, b):
 def frags(key, v):
     out = ""
     for i, (tc, a, b, name, qs) in enumerate(FRAG[key]):
-        out += '<div class="frag"><div class="fh"><b>Part %d</b> · %s · <span class="tc">%s</span></div>' % (i + 1, name, tc)
+        out += ('<div class="frag"><div class="fh"><b>Part %d</b> · %s · <span class="tc">%s</span> '
+                '<a class="ytl" href="https://www.youtube.com/watch?v=%s&t=%ds" target="_blank" rel="noopener">▶ watch on YouTube</a></div>' % (i + 1, name, tc, v["id"], a))
         out += yt(v["id"], a, b) + '<ol class="ex">'
         for j, (q, ans) in enumerate(qs):
             out += '<li>%s <button class="mini" onclick="sa(\'f%s%d%d\')">answer</button><span class="sa fa" id="f%s%d%d">%s</span></li>' % (q, key, i, j, key, i, j, ans)
         out += '</ol></div>'
     return out
 def vhead(v):
-    return '<div class="vt"><b>“%s”</b><span>%s — %s · <a href="https://www.youtube.com/watch?v=%s" target="_blank" rel="noopener">open on YouTube</a></span></div>' % (v["slogan"], v["title"], v["who"], v["id"])
+    return '<div class="vt"><b>“%s”</b><span>%s — %s · <a href="https://www.youtube.com/watch?v=%s" target="_blank" rel="noopener">▶ open the whole video on YouTube</a></span></div>' % (v["slogan"], v["title"], v["who"], v["id"])
 VSW = '<div class="vsw"><button class="a on" onclick="vid(\'A\')">Video A</button><button class="b" onclick="vid(\'B\')">Video B</button></div>'
 gaps_html = '<ol class="ex">' + "".join(
     '<li>%s <input class="gap" data-a="%s" autocomplete="off"> <b>%s</b></li>' % (a, ans, b) for a, b, ans in GAPS) + '</ol>'
@@ -260,6 +271,15 @@ body = '''
  <h4>From the video — Video B</h4>__VVB__
  <h4>Collocations (Exercise 6)</h4>__V1__
  <h4>Words and phrases (Exercise 7)</h4>__V2__
+ <h4>Book word → what people in tech often say today</h4>
+ <table class="sp map"><tr><th>In the book</th><th>In tech today</th></tr>
+ <tr><td>focus group</td><td>user interviews, usability tests (focus groups are still used in marketing)</td></tr>
+ <tr><td>product tester</td><td>beta tester, early adopter</td></tr>
+ <tr><td>desk research</td><td>competitor analysis, market research reports, social listening</td></tr>
+ <tr><td>customer satisfaction</td><td>CSAT, NPS, app ratings</td></tr>
+ <tr><td>online surveys</td><td>in-app surveys, pop-up polls</td></tr>
+ <tr><td>viable</td><td>MVP (minimum viable product), product-market fit</td></tr>
+ </table>
  <h4>★ Level up: research words people use in tech</h4>__V3__
 </div></details></div>
 <a href="../../../index.html" style="display:inline-block;margin:12px 22px 0;color:var(--coral);font-weight:500;text-decoration:none;font-size:15px">← Contents</a>
@@ -284,6 +304,7 @@ body = '''
 <section id="s3" class="sec">
  <div class="bsec v">VIDEO</div>
  __VSW__
+ <div class="vA">__VHA__</div><div class="vB">__VHB__</div>
  <p class="ins"><b>3</b>Watch the parts of the video. Were any of your ideas from Exercise 2 mentioned? Answer the questions for each part.</p>
  <div class="vA">__FA__</div>
  <div class="vB">__FB__</div>
@@ -292,6 +313,7 @@ body = '''
 <section id="s4" class="sec">
  <div class="bsec v">VIDEO</div>
  __VSW__
+ <div class="vA">__VHA__</div><div class="vB">__VHB__</div>
  <p class="ins"><b>4</b>Watch again and decide if these sentences are true (T) or false (F). Correct the false sentences.</p>
  __TF__
 </section>
