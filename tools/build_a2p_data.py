@@ -1,0 +1,58 @@
+U = [
+ ("1", "Travelling for work", [
+  ("1.1", "Business travel", "Vocabulary: transport, accommodation · Project: helping a business traveller", "kept", "ready"),
+  ("1.2", "Events management", "Comparatives & superlatives · Choosing a venue for a team event or offsite", "updated", "soon"),
+  ("1.3", "Small talk", "Small talk before a video call and at events · Showing interest", "kept", "soon"),
+  ("1.4", "Dealing with problems", "Explaining and solving IT problems in a support chat or video call", "kept", "soon"),
+  ("1.5", "Writing: Asking for information", "Slack / messenger message asking for information · can / could", "both", "soon", "Email asking for information · can / could"),
+  ("W1", "Business workshop: A business trip", "Video call to arrange a trip · Task: rearrange plans", "updated", "soon")]),
+ ("2", "Business location", [
+  ("2.1", "Office, hybrid or coworking?", "Vocabulary: location · Choosing where a team works", "updated", "soon"),
+  ("2.2", "Visiting Singapore", "enough / too · Describing problems in a new city", "kept", "soon"),
+  ("2.3", "Checking and clarifying", "Clarifying in video meetings and chats", "kept", "soon"),
+  ("2.4", "Starting a meeting", "Opening an online meeting, agenda, purpose", "kept", "soon"),
+  ("2.5", "Writing: Short messages", "Slack / Teams messages · Abbreviations: ASAP, FYI, EOD, WFH", "both", "soon", "Informal and formal short messages · Present Continuous"),
+  ("W2", "Business workshop: A new location", "Choose a hub for a hybrid team", "updated", "soon")]),
+ ("3", "Retail", [
+  ("3.1", "Unusual business models", "Subscriptions, pay-per-minute, marketplaces", "updated", "soon"),
+  ("3.2", "The online shopping experience", "Past Simple & Continuous · Shopping online vs offline", "updated", "soon"),
+  ("3.3", "Solving workflow problems", "Solving problems with Jira tickets and in team chats", "kept", "soon"),
+  ("3.4", "Presenting results", "Signposting a presentation · Dashboards", "kept", "soon"),
+  ("3.5", "Writing: An online review", "App, Google and marketplace reviews · Adverbs", "both", "soon", "An online review form · Types of adverbs"),
+  ("W3", "Business workshop: Pop-up stores", "Launch a pop-up or an online shop", "kept", "soon")]),
+ ("4", "Work patterns", [
+  ("4.1", "My working life", "Remote, hybrid, 4-day week · Jobs and contracts", "updated", "soon"),
+  ("4.2", "Burnout and work-life balance", "Present Perfect · A real problem of millennials at work", "new", "soon"),
+  ("4.3", "Making group decisions", "Facilitating a decision-making meeting", "kept", "soon"),
+  ("4.4", "Changing arrangements", "Rescheduling on a video call, in chat and in the calendar", "kept", "soon"),
+  ("4.5", "Writing: Confirming arrangements", "Calendar invites and Slack messages · Prepositions of time", "both", "soon", "Emails confirming arrangements · Prepositions of time"),
+  ("W4", "Business workshop: An async-first company", "Negotiate changes to work patterns", "updated", "soon")]),
+ ("5", "Money", [
+  ("5.1", "Going cashless", "Money vocabulary · Apple Pay, banking apps", "kept", "soon"),
+  ("5.2", "Subscriptions and spending", "First conditional · Too many subscriptions?", "updated", "soon"),
+  ("5.3", "Negotiating team roles", "Agreeing on team roles in meetings", "kept", "soon"),
+  ("5.4", "Presenting facts and figures", "Numbers, figures, quoting data", "kept", "soon"),
+  ("5.5", "Writing: A price change announcement", "Message to clients about a new price · because, so, so that", "both", "soon", "Formal letter about a price increase · because, so, so that"),
+  ("W5", "Business workshop: Local economy boost", "Choose and present a project", "kept", "soon")]),
+ ("6", "Teamwork", [
+  ("6.1", "Working together remotely", "Teamwork vocabulary · Remote team habits", "updated", "soon"),
+  ("6.2", "Team building online and offline", "Pronouns with some- / every-", "updated", "soon"),
+  ("6.3", "Supporting a colleague", "Encouraging and motivating", "kept", "soon"),
+  ("6.4", "Being positive in meetings", "Supporting, building on and questioning ideas", "kept", "soon"),
+  ("6.5", "Writing: Making requests", "Requests in Slack and Jira comments · Sequencing words", "both", "soon", "Email making a request · Linking words for sequence"),
+  ("W6", "Business workshop: Rearrange team roles", "Reassign tasks on a Jira board", "updated", "soon")]),
+ ("7", "Research & development", [
+  ("7.1", "A nimble company", "Agile, MVP, product testing", "updated", "soon"),
+  ("7.2", "AI at work", "can, have to, need to · Using AI tools in your job", "new", "soon"),
+  ("7.3", "Giving explanations", "Explaining how to use an app or an AI tool", "kept", "soon"),
+  ("7.4", "Dealing with technical problems", "Technical problems in an online meeting", "kept", "soon"),
+  ("7.5", "Writing: Preparing slides", "Slides in Google Slides / Canva, with AI help · Wh- questions", "both", "soon", "Presentation slides · Wh- questions"),
+  ("W7", "Business workshop: Prioritising the backlog", "Plan a sprint in Jira · Explain the decision in a message", "updated", "soon")]),
+ ("8", "Green solutions", [
+  ("8.1", "Green business", "The environment · Greenwashing or real change?", "updated", "soon"),
+  ("8.2", "Transport solutions", "should and could for advice", "kept", "soon"),
+  ("8.3", "Giving and receiving feedback", "Feedback in a review meeting", "kept", "soon"),
+  ("8.4", "Managing questions", "A Q&A session in a webinar", "kept", "soon"),
+  ("8.5", "Writing: A company update", "Notion / Slack company update · Future forms", "both", "soon", "Intranet update · Future forms"),
+  ("W8", "Business workshop: A greener office", "Present ideas on waste and energy", "kept", "soon")]),
+]
