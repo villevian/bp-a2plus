@@ -2,6 +2,7 @@ LEVEL = "B2+"
 ACC, ACC2 = "#2f9a74", "#dcf0e6"          # mint
 GRAD = ("#1f7d5c", "#4fb58c")             # level badge gradient (mint)
 VARIANTS = {"1.1": ["all"]}
+TEACHER = True   # show Teacher’s Book link on the template Contents
 PAGES = {"1.1": ["lesson"]}   # hw / extra not built yet
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [

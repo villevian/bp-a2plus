@@ -122,7 +122,7 @@ footer{max-width:1180px;margin:0 auto;padding:0 22px 30px;font-size:12px;color:v
 @media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}.ls:nth-child(3n){border-right:0}.ls{border-bottom:1px solid #d5d6d7}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}.ls{border-right:0}}
 </style></head><body>
-<header><div class="lv">__LVL__</div><h1>Business Partner · Contents</h1><div class="who" id="who">Template<b>All lessons</b></div></header>
+<header><div class="lv">__LVL__</div><h1>Business Partner · Contents</h1><div class="who" id="who">Template<b>All lessons</b></div>__TLINK__</header>
 <div class="top">
  <div class="tracks" id="tracks"></div>
  <div class="prog"><span id="ptxt">0 / 0 done</span><div class="bar"><i id="pbar"></i></div></div>
@@ -148,7 +148,7 @@ const PROGRESS={};const COMMENTS={};
 const VARIANTS=__VAR__;
 const PAGES=__PAGES__;  // pages ready per lesson in the template; missing → all three  // which track versions exist; missing → "all"             // filled from Supabase: {"1.1":"done","1.2":"progress"}
 let track=(STUDENT&&STUDENT.track)||"all";
-const path=(n,t,f)=>`lessons/${n.replace(".","-").toLowerCase()}/${t}/${f}.html`;
+const path=(n,t,f)=>`lessons/${n.replace(".","-").toLowerCase()}/${t}/${f}.html?v=__BUILD__`;
 function render(){
  const box=document.getElementById("units");box.innerHTML="";let tot=0,done=0;
  DATA.units.forEach(([u,title,ls])=>{
@@ -181,5 +181,8 @@ if(STUDENT&&STUDENT.code){fetch(`${SB_URL}/rest/v1/rpc/get_my_progress`,{method:
  .then(r=>r.json()).then(rows=>{(rows||[]).forEach(r=>{const m=r.lesson.match(/(\d+\.\d+|W\d+)/);if(m){PROGRESS[m[1]]=r.submitted?"done":"progress";if(r.has_comment)COMMENTS[m[1]]=1}});render()}).catch(()=>{})}
 </script></body></html>'''
 G=getattr(CFG,"GRAD",("#6b2a8c","#c4127a")) if CFG else ("#6b2a8c","#c4127a")
-html = html.replace("__PAGES__", json.dumps(getattr(CFG,"PAGES",{}) if CFG else {})).replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
+import time
+BUILD=time.strftime("%Y%m%d%H%M")
+TLINK='<a href="teacher/index.html" style="margin-left:14px;font-size:14px;color:#9a6b00;font-weight:600;text-decoration:none">📘 Teacher’s Book</a>' if (CFG and getattr(CFG,"TEACHER",False)) else ""
+html = html.replace("__BUILD__", BUILD).replace("__TLINK__", TLINK).replace("__PAGES__", json.dumps(getattr(CFG,"PAGES",{}) if CFG else {})).replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
 open(OUT, 'w').write(html)
