@@ -1,11 +1,12 @@
 LEVEL = "B2+"
 ACC, ACC2 = "#2f9a74", "#dcf0e6"          # mint
 GRAD = ("#1f7d5c", "#4fb58c")             # level badge gradient (mint)
-VARIANTS = {}
+VARIANTS = {"1.1": ["all"]}
+PAGES = {"1.1": ["lesson"]}   # hw / extra not built yet
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [
  ("1", "User & market research", [
-  ("1.1", "Research in tech", "Vocabulary: market research · Interviews, analytics, A/B tests, AI for analysing feedback · Project: how research changed a product", "updated", "soon"),
+  ("1.1", "Research in tech", "Vocabulary: market research · Interviews, analytics, A/B tests, AI for analysing feedback · Project: how research changed a product", "updated", "ready"),
   ("1.2", "Talking to users", "Question tags · User interviews: why ‘Do you like it?’ is a bad question", "updated", "soon"),
   ("1.3", "Carrying out a needs analysis", "Leading and open questions · Agreeing details of a corporate event", "kept", "soon"),
   ("1.4", "Tough questions at a demo", "Handling stakeholder questions at a sprint review · ‘I’ll get back to you’", "updated", "soon"),
