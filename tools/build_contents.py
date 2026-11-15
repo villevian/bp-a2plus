@@ -122,15 +122,15 @@ footer{max-width:1180px;margin:0 auto;padding:0 22px 30px;font-size:12px;color:v
 @media(max-width:1000px){.grid{grid-template-columns:repeat(3,1fr)}.ls:nth-child(3n){border-right:0}.ls{border-bottom:1px solid #d5d6d7}}
 @media(max-width:620px){.grid{grid-template-columns:1fr}.ls{border-right:0}}
 </style></head><body>
-<header><div class="lv">__LVL__</div><h1>Business Partner · Contents</h1><div class="who" id="who">Template<b>All lessons</b></div>__TLINK__</header>
+<header><div class="lv">__LVL__</div><h1>Business Partner · Contents</h1><div class="who" id="who">Template<b>All lessons</b></div></header>__TLINK__
 <div class="top">
  <div class="tracks" id="tracks"></div>
  <div class="prog"><span id="ptxt">0 / 0 done</span><div class="bar"><i id="pbar"></i></div></div>
 </div>
 <div class="legend">
  <span><span class="tag kept" style="margin:0">Kept</span> as in the book</span>
- <span><span class="tag updated" style="margin:0">Updated</span> modern context: video calls, Slack, Jira</span>
- <span><span class="tag new" style="margin:0">New</span> new topic: AI, current problems</span>
+ <span><span class="tag updated" style="margin:0">Updated</span> __LEG_UPD__</span>
+ <span><span class="tag new" style="margin:0">New</span> __LEG_NEW__</span>
  <span><span class="tag both" style="margin:0">Classic + Updated</span> writing: book email/letter + modern chat version</span>
  <span><span class="dot"></span> not started</span><span><span class="dot p"></span> in progress</span><span><span class="dot d"></span> done</span>
 </div>
@@ -173,6 +173,8 @@ function render(){
 }
 const tb=document.getElementById("tracks");
 if(STUDENT){document.getElementById("who").innerHTML=`Student<b>${STUDENT.name}</b>`;tb.style.display="none"}
+const CLIENT=__CLIENT__;  // corporate client template, e.g. "Zvenyhora": no track switch
+if(CLIENT&&!STUDENT){document.getElementById("who").innerHTML=`Client<b>${CLIENT}</b>`;tb.style.display="none"}
 TRACKS.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;if(k===track)b.className="on";b.onclick=()=>{track=k;tb.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.className="on";render()};tb.appendChild(b)});
 render();
 /* Progress from Supabase (student pages only) */
@@ -183,6 +185,7 @@ if(STUDENT&&STUDENT.code){fetch(`${SB_URL}/rest/v1/rpc/get_my_progress`,{method:
 G=getattr(CFG,"GRAD",("#6b2a8c","#c4127a")) if CFG else ("#6b2a8c","#c4127a")
 import time
 BUILD=time.strftime("%Y%m%d%H%M")
-TLINK='<a href="teacher/index.html" style="margin-left:14px;font-size:14px;color:#9a6b00;font-weight:600;text-decoration:none">📘 Teacher’s Book</a>' if (CFG and getattr(CFG,"TEACHER",False)) else ""
-html = html.replace("__BUILD__", BUILD).replace("__TLINK__", TLINK).replace("__PAGES__", json.dumps(getattr(CFG,"PAGES",{}) if CFG else {})).replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
+TLINK='<div style="text-align:right;padding:8px 22px 0"><a href="teacher/index.html" style="font-size:14px;color:#9a6b00;font-weight:600;text-decoration:none;border:1.5px solid #f2b631;border-radius:14px;padding:3px 12px">📘 Teacher’s Book</a></div>' if (CFG and getattr(CFG,"TEACHER",False)) else ""
+LEG=getattr(CFG,"LEGEND",("modern context: video calls, Slack, Jira","new topic: AI, current problems")) if CFG else ("modern context: video calls, Slack, Jira","new topic: AI, current problems")
+html = html.replace("__LEG_UPD__", LEG[0]).replace("__LEG_NEW__", LEG[1]).replace("__CLIENT__", json.dumps(getattr(CFG,"CLIENT",None) if CFG else None, ensure_ascii=False)).replace("__BUILD__", BUILD).replace("__TLINK__", TLINK).replace("__PAGES__", json.dumps(getattr(CFG,"PAGES",{}) if CFG else {})).replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
 open(OUT, 'w').write(html)

@@ -1,7 +1,8 @@
 """Teacher's Book contents for B2+: lists lessons, links ready teacher pages (teacher/<n>.html)."""
 import sys, os, importlib
 OUT = sys.argv[1]; ROOT = os.path.dirname(os.path.abspath(OUT))
-cfg = importlib.import_module("cfg_b2plus")
+cfg = importlib.import_module(sys.argv[2] if len(sys.argv) > 2 else "cfg_b2plus")
+CLIENT = getattr(cfg, "CLIENT", None)
 rows = ""
 for u, title, ls in cfg.U:
     rows += '<h2>Unit %s · %s</h2><div class="g">' % (u, title)
@@ -20,6 +21,6 @@ main{max-width:1100px;margin:0 auto;padding:10px 22px 40px}h2{font-weight:600;fo
 .g{display:grid;grid-template-columns:repeat(6,1fr);border:1px solid #d5d6d7}.c{padding:10px;border-right:1px solid #d5d6d7;text-decoration:none;color:#231f20;font-size:14px;line-height:1.3;background:#dcf0e6}
 .c b{display:block;font-weight:600;color:#1f7d5c}.c.off{background:#fff;color:#b5b6b8}.c.off b{color:#b5b6b8}.top{padding:12px 22px 0}.top a{color:#2f9a74;font-weight:500;text-decoration:none}
 footer{max-width:1100px;margin:0 auto;padding:0 22px 30px;font-size:12px;color:#77787b}@media(max-width:900px){.g{grid-template-columns:repeat(3,1fr)}}</style></head><body>
-<header><div class="n">B2+</div><h1>Business Partner · Teacher’s Book</h1><div class="t">TEACHER</div></header>
+<header><div class="n">B2+</div><h1>Business Partner · Teacher’s Book""" + (" · " + CLIENT if CLIENT else "") + """</h1><div class="t">TEACHER</div></header>
 <div class="top"><a href="../index.html">← Student Contents</a></div><main>""" + rows + """</main><footer>Valentyna Hordiienko · Middle Learning Architect</footer></body></html>"""
 open(OUT, "w").write(html); print("ok")
