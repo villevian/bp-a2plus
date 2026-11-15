@@ -3,18 +3,18 @@ ACC, ACC2 = "#2f9a74", "#dcf0e6"          # mint, same as B2+
 GRAD = ("#1f7d5c", "#4fb58c")
 TEACHER = True
 CLIENT = "Zvenyhora"
-LEGEND = ("adapted to the dairy business: shoppers, retail chains, production", "new topic for the dairy industry")
+LEGEND = ("adapted to the cheese business: shoppers, retail chains, production", "new topic for the dairy industry")
 VARIANTS = {"1.1": ["all"]}
 PAGES = {"1.1": ["lesson"]}
-# Business Partner B2+ adapted for a dairy producer (Zvenyhora): FMCG, retail, production
+# Business Partner B2+ adapted for Zveni Hora (Savencia group, Ukraine): hard cheese, retail, production
 U = [
- ("1", "Market research in dairy", [
-  ("1.1", "Market research in dairy", "Vocabulary: market research · Taste tests, retail data, the Chobani story · Project: two dairy brands", "updated", "ready"),
-  ("1.2", "Working with a focus group", "Question tags · A focus group about a new yoghurt · Small talk with a buyer", "updated", "soon"),
+ ("1", "Market research: hard cheese", [
+  ("1.1", "Market research: hard cheese", "Vocabulary: market research · Why parmesan is so expensive, research on cheese buyers · Project: two cheese brands", "updated", "ready"),
+  ("1.2", "Working with a focus group", "Question tags · A focus group about a new cheese · Small talk with a buyer", "updated", "soon"),
   ("1.3", "Carrying out a needs analysis", "Leading and open questions · Agreeing details of a corporate event", "kept", "soon"),
   ("1.4", "Dealing with questions", "Questions from a retail chain after a product presentation", "updated", "soon"),
-  ("1.5", "Writing: Research findings", "Summary of a tasting / shopper survey for management · Reporting verbs", "both", "soon", "Summary findings from a report · Reporting verb patterns"),
-  ("W1", "Business workshop: Improving the image", "Complaints about quality on social media · Plan research to win back trust", "updated", "soon")]),
+  ("1.5", "Writing: Research findings", "Summary of a cheese tasting / shopper survey for management · Reporting verbs", "both", "soon", "Summary findings from a report · Reporting verb patterns"),
+  ("W1", "Business workshop: Improving the image", "Complaints about cheese quality on social media · Plan research to win back trust", "updated", "soon")]),
  ("2", "Give and take", [
   ("2.1", "Manager or mentor?", "Vocabulary: giving back · Developing shift leaders and new staff", "updated", "soon"),
   ("2.2", "Kindness or success?", "Cleft sentences · Feedback culture on the production floor", "updated", "soon"),
@@ -28,16 +28,16 @@ U = [
   ("3.3", "Presentation styles", "Fact-based and emotion-based presentations", "kept", "soon"),
   ("3.4", "Defending your ideas", "Defending a new product or price to management", "kept", "soon"),
   ("3.5", "Writing: A complaint", "Complaint to a supplier about late or faulty deliveries · Participle clauses", "both", "soon", "Formal letter of complaint · Participle clauses"),
-  ("W3", "Business workshop: Value for money", "Shoppers on a tight budget · Choose products and price points", "updated", "soon")]),
+  ("W3", "Business workshop: Value for money", "Shoppers on a tight budget: cheese vs ‘cheese products’ · Choose price points", "updated", "soon")]),
  ("4", "Challenges", [
   ("4.1", "Sustainable dairy", "Collocations: the environment · Packaging waste, water, energy", "updated", "soon"),
-  ("4.2", "Food safety and cyber risks", "Perfect aspect · Recalls, fake products, cyberattacks on factories", "updated", "soon"),
+  ("4.2", "Food safety and cyber risks", "Perfect aspect · Recalls, counterfeit cheese, cyberattacks on factories", "updated", "soon"),
   ("4.3", "Saying ‘no’ firmly and politely", "Managing challenging negotiations", "kept", "soon"),
   ("4.4", "Challenging conversations", "A difficult conversation with a retail buyer", "kept", "soon"),
   ("4.5", "Writing: Recommendations", "Recommendations to management · Compound nouns and adjectives", "both", "soon", "Recommendations section of a proposal · Compound nouns and adjectives"),
   ("W4", "Business workshop: Business challenges", "Present a proposal about a dairy-industry challenge", "updated", "soon")]),
  ("5", "Global mobility", [
-  ("5.1", "Going international", "Vocabulary: relocation · Export markets and trade fairs", "updated", "soon"),
+  ("5.1", "Going international", "Vocabulary: relocation · Working with the French head office, export and trade fairs", "updated", "soon"),
   ("5.2", "Keeping good people", "Inversion · Staff shortages and retention", "updated", "soon"),
   ("5.3", "Giving feedback on performance", "Conducting a performance review", "kept", "soon"),
   ("5.4", "Presentations", "Making the case for a new export market", "updated", "soon"),
@@ -47,11 +47,11 @@ U = [
   ("6.1", "Strategic alliances", "Vocabulary: alliances · Retail chains, distributors, private label", "updated", "soon"),
   ("6.2", "Business partnerships", "Past modals · A partnership that didn’t go to plan", "kept", "soon"),
   ("6.3", "Diffusing conflict", "Conflict between an organiser and a sponsor", "kept", "soon"),
-  ("6.4", "Learning from mistakes", "Lessons from a product recall or a failed launch", "updated", "soon"),
+  ("6.4", "Learning from mistakes", "Lessons from a recall or a failed cheese launch", "updated", "soon"),
   ("6.5", "Writing: A report extract", "Report on a launch or an incident · Expressing the future", "both", "soon", "Formal report extract · Expressing the future"),
   ("W6", "Business workshop: Growing the business", "SWOT · New category, export or private label?", "updated", "soon")]),
  ("7", "Risk", [
-  ("7.1", "Managing risk at the plant", "Vocabulary: risk · Power cuts, supply of raw milk · Project: emergency protocol", "updated", "soon"),
+  ("7.1", "Managing risk at the plant", "Vocabulary: risk · Power cuts, raw milk supply, maturation rooms · Project: emergency protocol", "updated", "soon"),
   ("7.2", "Risk in investment", "Conditionals · Investing in new equipment", "updated", "soon"),
   ("7.3", "Dealing with risk", "Managing risks for an upcoming event", "kept", "soon"),
   ("7.4", "Analysing risk", "Supply-chain risks on a probability-impact matrix", "updated", "soon"),
