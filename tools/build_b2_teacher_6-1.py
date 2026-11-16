@@ -232,5 +232,24 @@ for i, sec in enumerate(S):
     sid = sec[sec.index('id="') + 4: sec.index('"', sec.index('id="') + 4)]
     k = sec.index('<div class="two">')
     S[i] = sec[:k] + intro_html(sid) + sec[k:]
+START = {
+ "s1": "Let’s start with you. Look at the label on what you’re wearing right now. Where was it made? … OK, now let’s talk about how you buy clothes.",
+ "s2": "A Shein dress can cost €4. Who do you think pays the rest of the price? Let’s see what a French TV team found in the factories in Guangzhou. Listen for five people — who says what?",
+ "s3": "You know the main story now. Let’s look closer — numbers and facts. Read the summary first and guess what’s missing. Then we’ll watch again and check.",
+ "s4": "That was the factory side. But Shein and Temu are apps — and apps are designed by people like you. Read this case file: find one problem from the factories and three from the app.",
+ "s5": "Quick vocabulary check. One word from the video goes with all four of these words. What is it?",
+ "s6": "Now let’s collect strong word partners for talking about ethics. Turn the dials until every pair sounds right — the example is already done.",
+ "s7": "These verbs always come with the same preposition — and people often get them wrong. Complete the questions first, then I’ll really ask you them.",
+ "s8": "Here is a campaign against manipulative shopping apps. Choose the right word in each pair — then tell me: would this campaign work?",
+ "s9": "Now let’s get real data. You’re going to ask real people how ethical their clothes and apps are. First we write the questions together — and I’m your first respondent.",
+ "s10": "You have your data — now let’s turn it into a short report, like the ones you see at work. Choose: a classic report or a Slack summary.",
+ "s11": "Let’s finish. Give yourself a score from 0 to 5 — and tell me why. Then choose five phrases you want to keep."}
+def start_html(sid):
+    return block("tgt", T("How to start (say this to the student)", "Як почати вправу (скажіть студентці)"), "<p><i>“%s”</i></p>" % START[sid])
+for i, sec in enumerate(S):
+    if i == 0: continue
+    sid = sec[sec.index('id="') + 4: sec.index('"', sec.index('id="') + 4)]
+    k = sec.index('<div class="blk out"')
+    S[i] = sec[:k] + start_html(sid) + sec[k:]
 '''
 exec(compile(head.replace("OUT = sys.argv[1]", "OUT = sys.argv[1]") + content + tail, "build_b2_teacher_6-1", "exec"), {"__name__": "__main__"})
