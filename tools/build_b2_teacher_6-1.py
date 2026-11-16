@@ -181,5 +181,56 @@ S.append(step("s11", "Self-assessment · ✓", "3–5 min",
  ol([("Ask for the score with a reason. Words not ticked go into the next lesson’s warm-up.", "Попросіть оцінку з поясненням. Невідмічені слова — у розминку наступного уроку.")]),
  "",
  "<p>%s</p>" % T("No fixed answers. If the score is 0–2, repeat 6–7 next lesson.", "Фіксованих відповідей немає. Якщо 0–2 — повторіть 6–7 на наступному уроці.")))
+INTRO_LESSON = block("aim", T("Introduction: how to start the lesson", "Інтродакшн: як почати урок"),
+  "<p>%s</p>" % T("Say it in your own words (1–2 minutes). The goal is to create curiosity and show the student where the lesson is going.", "Скажіть своїми словами (1–2 хвилини). Мета — викликати інтерес і показати студентці, куди йде урок.") +
+  "<p class='fp'><b>%s</b></p><p><i>“Today’s topic is ethics in business. We’ll start with something simple — a dress for €4. Who pays the rest of the price? We’ll watch a short report from the factories that make clothes for Shein, then look at the app side: the tricks that make us buy more. By the end of the lesson you’ll be able to discuss ethical choices in business, and you’ll design a short survey for your colleagues. And because you work in IT, we’ll keep asking one question: what does this mean for the people who build apps?”</i></p>" % T("Script (in English for the student):", "Скрипт (англійською для студентки):") +
+  "<p class='fp'><b>%s</b></p>" % T("Warm-up questions before Exercise 1:", "Розминкові питання перед вправою 1:") +
+  "<ul><li><i>What was the last thing you bought online? Why did you buy it?</i></li><li><i>Do you think you can buy anything ethically today?</i></li><li><i>What does ‘ethical’ mean to you in one sentence?</i></li></ul>")
+INTROS = {
+ "s1": ("We talk about our own shopping habits: where we buy clothes, what labels say, which brands we avoid.", "Говоримо про власні звички: де купуємо одяг, що на етикетках, яких брендів уникаємо.",
+        "To make the topic personal before the facts arrive; you learn what the student already thinks.", "Щоб тема стала особистою ще до фактів; ви дізнаєтесь, що студентка вже думає.",
+        ["Have you ever stopped buying from a brand? Why?", "Is cheap always bad?", "Would you pay 30% more for clothes made in fair conditions?", "Do you know anyone who works in fashion or retail?"]),
+ "s2": ("We watch the FRANCE 24 report and decide who says what.", "Дивимось репортаж FRANCE 24 і визначаємо, хто що каже.",
+        "To understand the main points and the different voices: job seeker, producer, worker, expert, company.", "Щоб зрозуміти головне і різні голоси: шукач роботи, виробник, працівниця, експертка, компанія.",
+        ["Whose point of view surprised you most?", "Who do you believe more: the expert or Shein’s statement? Why?", "What questions would you ask the garment worker?", "Is the reporter neutral?"]),
+ "s3": ("We watch again and complete a summary with facts and numbers.", "Дивимось ще раз і доповнюємо summary фактами й цифрами.",
+        "To catch detail and the key collocations of the video (paid per piece, profit margins…).", "Щоб вловити деталі й ключові колокації відео (paid per piece, profit margins…).",
+        ["Which number is the most shocking? Why?", "Can you explain the on-demand model in your own words?", "Why are workers paid per piece, not per hour?", "Who wins and who loses when Shein orders from several factories?"]),
+ "s4": ("We read the case file about the apps and discuss who is responsible.", "Читаємо кейс про застосунки й обговорюємо, хто відповідає.",
+        "To move from fashion to product design and give opinions with reasons — the core B2 skill.", "Щоб перейти від моди до продуктового дизайну й висловлювати думку з аргументами — ключова навичка B2.",
+        ["Have you seen these tricks in apps you use?", "Have you ever built or designed something you didn’t feel good about?", "Who should decide: the product manager, the designer or the law?", "Is a fine of €40 million big for a company like Shein?"]),
+ "s5": ("We find the word that goes with all four words, then use the collocations.", "Знаходимо слово, яке поєднується з усіма чотирма, потім вживаємо колокації.",
+        "To notice how English builds word partnerships — and remember them in groups.", "Щоб помітити, як в англійській працюють словосполучення, і запам’ятати їх групами.",
+        ["Can you name a fashion retailer and a fashion designer?", "What else can be ‘fast’ in business? (fast delivery, fast growth…)", "Is ‘fast’ positive or negative in your company?"]),
+ "s6": ("We turn the dials to build strong collocations about business ethics.", "Крутимо «диски», щоб зібрати сильні колокації про етику.",
+        "To get ready-made chunks for speaking and writing (tough conditions, unethical conduct…).", "Щоб отримати готові блоки для мовлення й письма (tough conditions, unethical conduct…).",
+        ["Use two collocations to describe the video.", "Which collocation can you use about the IT industry?", "Is there ‘unethical conduct’ in tech? Give an example."]),
+ "s7": ("We complete questions with verbs + prepositions and then really discuss them.", "Доповнюємо питання дієсловами з прийменниками і справді їх обговорюємо.",
+        "Accuracy with prepositions + fluency in a real conversation.", "Точність із прийменниками + вільне мовлення в живій розмові.",
+        ["Who is responsible for the content on a marketplace: the platform or the seller?", "What are you not aware of when you use free apps?", "What campaign would you join?"]),
+ "s8": ("We choose the correct words in a campaign text against manipulative apps.", "Вибираємо правильні слова в тексті кампанії проти маніпулятивних застосунків.",
+        "To check accuracy in context and see the unit vocabulary in a persuasive text.", "Щоб перевірити точність у контексті й побачити лексику юніту в переконливому тексті.",
+        ["Would this campaign work? Why / Why not?", "Which point of the five-point plan is the most realistic for an app company?", "Would you install the browser extension?", "How would you write a campaign for your own product?"]),
+ "s9": ("We write survey questions and collect real answers.", "Пишемо питання для опитування і збираємо реальні відповіді.",
+        "To turn the topic into real data and practise question forms (Have you ever…? How often…?).", "Щоб перетворити тему на реальні дані й потренувати форми питань (Have you ever…? How often…?).",
+        ["Which question will give the most interesting answers?", "Which question is too personal? How can you make it softer?", "How will you send the survey: Google Form, Slack, in person?"]),
+ "s10": ("The student writes a report or a Slack summary of her survey.", "Студентка пише звіт або Slack-summary свого опитування.",
+        "To report findings clearly with numbers and reporting language — a real work skill.", "Щоб чітко подати результати з цифрами й мовою звітів — реальна робоча навичка.",
+        ["What is your main finding in one sentence?", "What would you recommend to your colleagues after this survey?", "Who in your company would be interested in these results?"]),
+ "s11": ("Self-assessment and five phrases to keep.", "Самооцінка і п’ять фраз, які забираємо собі.",
+        "To reflect, see progress and plan what to review.", "Щоб відрефлексувати, побачити прогрес і спланувати повторення.",
+        ["What was new for you today?", "Which phrase will you use at work this week?", "What would you change in the lesson?"])}
+def intro_html(sid):
+    a, b, c, d, qs = INTROS[sid]
+    return block("out", T("Intro: what we do and why", "Інтро: що робимо і для чого"),
+        "<p><b>%s</b> %s</p><p><b>%s</b> %s</p><p class='fp'><b>%s</b></p><ul>%s</ul>" % (T("What:", "Що:"), T(a, b), T("Why:", "Для чого:"), T(c, d), T("Extra questions:", "Додаткові питання:"), "".join("<li><i>%s</i></li>" % q for q in qs)))
+for i, sec in enumerate(S):
+    if i == 0:
+        k = sec.index("</div>") + 6
+        S[i] = sec[:k] + INTRO_LESSON + sec[k:]
+        continue
+    sid = sec[sec.index('id="') + 4: sec.index('"', sec.index('id="') + 4)]
+    k = sec.index('<div class="two">')
+    S[i] = sec[:k] + intro_html(sid) + sec[k:]
 '''
 exec(compile(head.replace("OUT = sys.argv[1]", "OUT = sys.argv[1]") + content + tail, "build_b2_teacher_6-1", "exec"), {"__name__": "__main__"})
