@@ -2,6 +2,7 @@ LEVEL = "B2"
 ACC, ACC2 = "#5b5fc7", "#e8e9fa"          # indigo
 GRAD = ("#4044a8", "#7b7fe0")
 VARIANTS = {"6.1": ["all"]}
+TEACHER = True   # Teacher’s Book link on the template Contents
 PAGES = {"6.1": ["lesson"]}   # hw / extra not built yet
 LEGEND = ("modern IT context: remote teams, Slack, Jira, Notion, Figma", "new topic: AI, new ways of working")
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
