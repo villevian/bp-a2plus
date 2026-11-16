@@ -13,8 +13,59 @@ tail = (tail.replace("<title>1.1 Research in tech — Teacher’s Book</title>",
 
 content = r'''
 S = []
-S.append("""<section id="s0" class="sec on"><div class="bsec">%s</div>%s%s%s%s</section>""" % (
- T("Overview", "Огляд уроку"),
+IDEA = block("aim", T("The big idea of the lesson", "Головна ідея уроку"), "<p>%s</p><p>%s</p>" % (
+  T("<b>A low price is never the whole price.</b> Someone always pays the rest: garment workers (long hours, pay per piece), the planet (clothes made not to last) and the shopper (apps designed to make us buy more than we need). The lesson asks: <i>who is responsible — the brand, the factory, the app designers or us?</i>",
+    "<b>Низька ціна — ніколи не вся ціна.</b> Решту завжди хтось платить: швачки (довгі години, оплата за штуку), планета (одяг, зроблений не на довго) і покупець (застосунки, спроєктовані, щоб ми купували більше, ніж треба). Урок ставить питання: <i>хто відповідає — бренд, фабрика, дизайнери застосунку чи ми самі?</i>"),
+  T("<b>Why it matters for an IT student:</b> the book’s fashion topic becomes a product-design topic. The same ethical question — <i>is it OK to make money this way?</i> — applies to the apps, interfaces and growth tactics that IT people build every day.",
+    "<b>Чому це важливо для студентки з IT:</b> тема моди з книги стає темою продуктового дизайну. Те саме етичне питання — <i>чи нормально так заробляти?</i> — стосується застосунків, інтерфейсів і growth-тактик, які айтівці роблять щодня.")))
+BG = block("run", T("Background you need (5-minute read)", "Що треба знати з теми (читання на 5 хвилин)"),
+  "<h4>%s</h4>%s<h4>%s</h4>%s<h4>%s</h4>%s" % (
+  T("1. Fast vs ultra-fast fashion", "1. Fast fashion vs ultra-fast fashion"),
+  ul([("<b>Fast fashion</b> (Zara, H&M): new trends in shops every few weeks, cheap, made quickly.", "<b>Fast fashion</b> (Zara, H&M): нові тренди в магазинах кожні кілька тижнів, дешево, швидко."),
+      ("<b>Ultra-fast fashion</b> (Shein, Temu): online only, thousands of new items every day, prices from about €4, delivery in a few days.", "<b>Ultra-fast fashion</b> (Shein, Temu): лише онлайн, тисячі нових речей щодня, ціни від приблизно €4, доставка за кілька днів.")]),
+  T("2. How Shein’s model works (from the video)", "2. Як працює модель Shein (з відео)"),
+  ol([("Shein owns no factories. It uses a network of <b>independent workshops</b> in Guangzhou (about 50,000 clothes businesses in the city).", "Shein не має власних фабрик. Працює з мережею <b>незалежних цехів</b> у Гуанчжоу (у місті близько 50 000 швейних бізнесів)."),
+      ("<b>On-demand model:</b> small batches of 50–100 pieces are tested online; real-time sales data goes back to suppliers; items that sell are reordered at once.", "<b>On-demand модель:</b> малі партії по 50–100 штук тестують онлайн; дані продажів у реальному часі йдуть постачальникам; те, що продається, одразу дозамовляють."),
+      ("When an item goes viral, Shein orders it from <b>several factories</b> → competition → lower prices → thin <b>profit margins</b> → low wages.", "Коли річ стає вірусною, Shein замовляє її в <b>кількох фабриках</b> → конкуренція → нижчі ціни → тонкі <b>profit margins</b> → низькі зарплати."),
+      ("Workers are often <b>paid per piece</b> (6–24 cents per item, China Labor Watch). Busy months can bring €1,600, but only with work until midnight. Shein’s own limit is 60 hours a week; some work more than 75.", "Працівникам часто <b>платять за штуку</b> (6–24 центи за річ, China Labor Watch). У сезон можна заробити €1 600, але лише працюючи до опівночі. Власний ліміт Shein — 60 годин на тиждень; дехто працює понад 75."),
+      ("Shein’s position: the on-demand model <b>reduces waste</b> (less unsold stock), and suppliers must follow local labour law.", "Позиція Shein: on-demand модель <b>зменшує відходи</b> (менше непроданого товару), а постачальники мусять дотримуватися місцевого трудового законодавства.")]),
+  T("3. Dark patterns: the app side", "3. Dark patterns: бік застосунку"),
+  "<p>%s</p>" % T("<b>Dark patterns</b> are interface tricks that push users to do what the company wants, not what they planned. Examples linked to Shein and Temu in EU complaints and decisions (2025–2026):", "<b>Dark patterns</b> — трюки інтерфейсу, які штовхають користувача робити те, що вигідно компанії, а не те, що він планував. Приклади, які у скаргах і рішеннях ЄС (2025–2026) пов’язують із Shein і Temu:") +
+  '<table class="tt"><tr><th>Pattern</th><th>%s</th></tr>' % T("What it does", "Що робить") + "".join("<tr><td><b>%s</b></td><td>%s</td></tr>" % (a, T(b, c)) for a, b, c in [
+   ("fake discount", "shows a ‘was’ price that never really existed", "показує «стару» ціну, якої насправді не було"),
+   ("pressure selling / countdown timer", "‘Only 2 hours left!’ — a false deadline to make you buy now", "«Залишилось 2 години!» — фальшивий дедлайн, щоб купили зараз"),
+   ("low-stock message", "‘Only 3 left!’ — may not be true", "«Лишилось 3 штуки!» — може бути неправдою"),
+   ("endless scroll", "the feed never ends, so you never stop looking", "стрічка ніколи не закінчується, тож ви не зупиняєтесь"),
+   ("gamification", "spin-the-wheel discounts, coins, daily rewards", "колесо знижок, монетки, щоденні бонуси"),
+   ("confirm-shaming", "‘No thanks, I don’t like saving money’", "«Ні, дякую, я не люблю економити»")]) + "</table>" +
+  "<p>%s</p>" % T("<b>What regulators did:</b> the EU told Shein to stop fake discounts and pressure selling (May 2025); France fined Shein €40 million for misleading discounts (July 2025); the EU fined Temu €200 million under the Digital Services Act for failing to assess the risk of illegal products (2026).",
+                  "<b>Що зробили регулятори:</b> ЄС вимагав від Shein припинити фальшиві знижки й pressure selling (травень 2025); Франція оштрафувала Shein на €40 млн за оманливі знижки (липень 2025); ЄС оштрафував Temu на €200 млн за Digital Services Act — через неналежну оцінку ризику незаконних товарів (2026).")))
+ARG = block("tgt", T("Both sides — so you can play devil’s advocate", "Обидві сторони — щоб ви могли грати «адвоката диявола»"),
+  '<table class="tt"><tr><th>%s</th><th>%s</th></tr>' % (T("For ultra-fast fashion", "За ultra-fast fashion"), T("Against", "Проти")) + "".join("<tr><td>%s</td><td>%s</td></tr>" % (T(a, b), T(c, d)) for a, b, c, d in [
+   ("Fashion becomes affordable for people with low incomes.", "Мода стає доступною людям із невисокими доходами.", "Someone pays the real price: workers with 75-hour weeks and pay per piece.", "Реальну ціну платить хтось інший: працівники з 75-годинним тижнем і оплатою за штуку."),
+   ("On-demand production means less unsold stock and waste.", "On-demand виробництво — менше непроданого товару й відходів.", "Low quality + huge volume = clothes that are thrown away fast (disposability).", "Низька якість + величезний обсяг = одяг, який швидко викидають (disposability)."),
+   ("Jobs for thousands of people in Guangzhou; some earn double the average wage.", "Робота для тисяч людей у Гуанчжоу; дехто заробляє вдвічі більше за середнє.", "Those wages need work until midnight; the brand’s own 60-hour limit is broken.", "Такі гроші — лише з роботою до опівночі; власний ліміт бренду в 60 годин порушують."),
+   ("Users choose freely; nobody forces them to buy.", "Користувачі вибирають самі; ніхто не змушує купувати.", "Dark patterns are designed to weaken free choice.", "Dark patterns саме для того й створені, щоб послабити вільний вибір.")]) + "</table>" +
+  "<p>%s</p>" % T("The expert in the video says <b>responsibility is shared</b>: brands produce, but consumers in the West drive the demand. This is the key idea for the final discussion.", "Експертка у відео каже, що <b>відповідальність спільна</b>: бренди виробляють, але попит створюють споживачі на Заході. Це ключова думка для фінальної дискусії."))
+VMAP = block("watch", T("Video map (FRANCE 24, 6:10)", "Карта відео (FRANCE 24, 6:10)"),
+  '<table class="tt"><tr><th>⏱</th><th>%s</th></tr>' % T("What happens", "Що відбувається") + "".join("<tr><td>%s</td><td>%s</td></tr>" % (a, T(b, c)) for a, b, c in [
+   ("0:00–0:58", "Guangzhou morning: workers look for jobs; they choose by the price per piece.", "Ранок у Гуанчжоу: люди шукають роботу; вибирають за ціною за штуку."),
+   ("0:58–2:25", "Shein’s network of independent workshops; a producer shows stretchy clothes; the on-demand model.", "Мережа незалежних цехів Shein; виробник показує одяг, що тягнеться; on-demand модель."),
+   ("2:25–3:47", "Viral items, competition between factories, thin margins, pay per piece, work until midnight, 60 vs 75 hours.", "Вірусні речі, конкуренція фабрик, тонкі маржі, оплата за штуку, робота до опівночі, 60 vs 75 годин."),
+   ("3:47–5:07", "Delivery in days, €4 items; the expert from Redress: low quality, disposability, shared responsibility.", "Доставка за кілька днів, речі за €4; експертка з Redress: низька якість, disposability, спільна відповідальність."),
+   ("5:07–6:10", "Shein’s statement: less waste, suppliers follow local law. Night: factory lights still on.", "Заява Shein: менше відходів, постачальники дотримуються закону. Ніч: у цехах досі світло.")]) + "</table>")
+GLOS = block("ans", T("Glossary", "Глосарій"),
+  '<table class="tt"><tr><th>Word</th><th>%s</th></tr>' % T("Meaning", "Значення / переклад") + "".join("<tr><td><b>%s</b></td><td>%s</td></tr>" % (a, T(b, c)) for a, b, c in [
+   ("garment", "a piece of clothing", "предмет одягу"), ("supplier / supplier factory", "a company that makes goods for a brand", "постачальник / фабрика-постачальник"),
+   ("supply chain", "all the steps and companies from raw material to the shopper", "ланцюг постачання"), ("sweatshop", "a factory with very long hours, low pay and bad conditions", "потогонне виробництво"),
+   ("paid per piece", "money for each item you make, not for hours", "оплата за штуку (відрядна)"), ("profit margin", "the part of the price that is profit", "маржа, прибуток з одиниці"),
+   ("on-demand model", "producing only what customers are buying now", "виробництво під попит"), ("labour law", "laws about working hours, pay and rights", "трудове законодавство"),
+   ("ethically sourced", "made or bought in a fair, responsible way", "етично закуплений / вироблений"), ("fair-trade cotton", "cotton bought at a fair price from farmers", "бавовна fair trade (справедлива торгівля)"),
+   ("unethical conduct", "wrong, dishonest behaviour", "неетична поведінка"), ("disposability", "the idea that things are cheap and can be thrown away", "одноразовість, «викинути не шкода»"),
+   ("polluter", "a company that damages the environment", "забруднювач"), ("dark patterns", "design tricks that push users to act against their interests", "маніпулятивні патерни інтерфейсу"),
+   ("pressure selling", "making people buy quickly with false urgency", "продаж під тиском"), ("be accused of", "people say you did something wrong", "бути звинуваченим у")]) + "</table>")
+S.append("""<section id="s0" class="sec on"><div class="bsec">%s</div>%s%s%s%s%s%s%s%s%s</section>""" % (
+ T("Overview", "Огляд уроку"), IDEA, BG, VMAP, ARG, GLOS,
  block("aim", T("Lesson outcome", "Outcome уроку"), "<p>%s</p>" % T(
   "The student can use language related to ethics in business: talk about working conditions, supply chains and manipulative app design, ask and answer questions about ethical choices, run a short survey and report the findings.",
   "Студент вживає мову про етику в бізнесі: говорить про умови праці, ланцюги постачання та маніпулятивний дизайн застосунків, ставить і відповідає на питання про етичний вибір, проводить коротке опитування і пише звіт про результати.")),
