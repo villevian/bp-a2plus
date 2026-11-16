@@ -94,7 +94,7 @@ main{max-width:1180px;margin:0 auto;padding:10px 22px 40px}
 .uh{display:flex;align-items:center;background:#4d4d4f;color:#fff}
 .uh b{padding:8px 16px;font-weight:600;font-size:17px;letter-spacing:.3px;text-transform:uppercase}
 .uh .done{margin-left:auto;margin-right:14px;font-size:13px;opacity:.85}
-.grid{display:grid;grid-template-columns:repeat(6,1fr)}
+.grid{display:grid;grid-template-columns:repeat(__COLS__,1fr)}
 .ls{border-right:1px solid #d5d6d7;display:flex;flex-direction:column;min-height:210px;background:#fff}
 .ls:last-child{border-right:0}
 .ls.ws{background:var(--teal2)}
@@ -157,14 +157,14 @@ function render(){
   const cells=vis.map(([n,t,d,tag,st,cl])=>{
    tot++;const pr=PROGRESS[n]||"none";if(pr==="done"){done++;ud++}
    const A=ASSIGNED&&ASSIGNED[n];let tr=A?(A.track||A):track;const PG=(A&&A.pages)||PAGES[n]||["lesson","hw","extra"];if(!(VARIANTS[n]||["all"]).includes(tr))tr="all";const ready=st==="ready";
-   const ws=n.startsWith("W");
+   const ws=n.startsWith("W")||t.startsWith("Business workshop");
    const NM={lesson:"Lesson",hw:"Homework",extra:"Extra"};
    const L3=(t2,lab)=>`<div class="links">${lab?`<span class="vl">${lab}</span>`:""}${PG.map(p=>`<a href="${path(n,t2,p)}">${NM[p]}</a>`).join("")}</div>`;
    const open=ready&&(!ASSIGNED||A);
    const links=open?(cl?L3(tr,"Updated")+L3(tr+"-classic","Classic"):L3(tr,""))+`
      <div class="st"><span class="dot ${pr==="done"?"d":pr==="progress"?"p":""}"></span>${pr==="done"?"Done":pr==="progress"?"In progress":"Not started"}${COMMENTS[n]?" · 💬 teacher’s comment":""}</div>`
      :`<div class="soon">Coming soon</div>`;
-   return `<div class="ls ${ws?"ws":""}"><div class="lh"><span class="n">${ws?"Workshop "+n.slice(1):n}</span><span class="t">${ws?t.replace("Business workshop: ",""):t}</span></div>
+   return `<div class="ls ${ws?"ws":""}"><div class="lh"><span class="n">${n.startsWith("W")?"Workshop "+n.slice(1):n}</span><span class="t">${ws?t.replace("Business workshop: ",""):t}</span></div>
      <div class="lb"><span class="tag ${tag}">${tag==="both"?"Classic + Updated":tag}</span><br>${cl?`<div class="ver"><b>💬 Updated</b>${d}</div><div class="ver cl"><b>✉️ Classic</b>${cl}</div>`:d}</div><div class="lf">${links}</div></div>`}).join("");
   box.insertAdjacentHTML("beforeend",`<section class="unit"><div class="uh"><b>Unit ${u} › ${title}</b><span class="done">${ud} / ${vis.length} done</span></div><div class="grid">${cells}</div><div class="rev">Review</div></section>`);
  });
@@ -187,5 +187,5 @@ import time
 BUILD=time.strftime("%Y%m%d%H%M")
 TLINK='<div style="text-align:right;padding:8px 22px 0"><a href="teacher/index.html" style="font-size:14px;color:#9a6b00;font-weight:600;text-decoration:none;border:1.5px solid #f2b631;border-radius:14px;padding:3px 12px">📘 Teacher’s Book</a></div>' if (CFG and getattr(CFG,"TEACHER",False)) else ""
 LEG=getattr(CFG,"LEGEND",("modern context: video calls, Slack, Jira","new topic: AI, current problems")) if CFG else ("modern context: video calls, Slack, Jira","new topic: AI, current problems")
-html = html.replace("__LEG_UPD__", LEG[0]).replace("__LEG_NEW__", LEG[1]).replace("__CLIENT__", json.dumps(getattr(CFG,"CLIENT",None) if CFG else None, ensure_ascii=False)).replace("__BUILD__", BUILD).replace("__TLINK__", TLINK).replace("__PAGES__", json.dumps(getattr(CFG,"PAGES",{}) if CFG else {})).replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
+html = html.replace("__COLS__", str(getattr(CFG,"COLS",6) if CFG else 6)).replace("__LEG_UPD__", LEG[0]).replace("__LEG_NEW__", LEG[1]).replace("__CLIENT__", json.dumps(getattr(CFG,"CLIENT",None) if CFG else None, ensure_ascii=False)).replace("__BUILD__", BUILD).replace("__TLINK__", TLINK).replace("__PAGES__", json.dumps(getattr(CFG,"PAGES",{}) if CFG else {})).replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
 open(OUT, 'w').write(html)

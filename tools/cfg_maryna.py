@@ -1,7 +1,4 @@
-from build_a2p_data import U  # A2+ units
-LEVEL = "A2+"
-ACC, ACC2 = "#3fa9ad", "#e6f4f4"
-VARIANTS = {"1.1": ["all"]}
+from cfg_a2 import *   # Maryna studies A2
 STUDENT = {"name": "Maryna", "track": "all", "code": "e53224bedc2405525d9750dbd7fb59b1"}
-ASSIGNED = {"1.1": {"track": "all", "pages": ["lesson", "hw", "extra"]}}
+ASSIGNED = {}
 SHOW_ALL = True

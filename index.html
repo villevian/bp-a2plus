@@ -75,9 +75,10 @@ const STUDENT=null;            // e.g. {name:"Larysa", track:"all"}
 const ASSIGNED=null;
 const SHOW_ALL=false;  // student page: show the whole level, open only assigned lessons           // e.g. {"1.1":"all","1.2":"all"} — null = show all
 const PROGRESS={};const COMMENTS={};
-const VARIANTS={"1.1": ["all"]};  // which track versions exist; missing → "all"             // filled from Supabase: {"1.1":"done","1.2":"progress"}
+const VARIANTS={"1.1": ["all"]};
+const PAGES={};  // pages ready per lesson in the template; missing → all three  // which track versions exist; missing → "all"             // filled from Supabase: {"1.1":"done","1.2":"progress"}
 let track=(STUDENT&&STUDENT.track)||"all";
-const path=(n,t,f)=>`lessons/${n.replace(".","-").toLowerCase()}/${t}/${f}.html`;
+const path=(n,t,f)=>`lessons/${n.replace(".","-").toLowerCase()}/${t}/${f}.html?v=202611161135`;
 function render(){
  const box=document.getElementById("units");box.innerHTML="";let tot=0,done=0;
  DATA.units.forEach(([u,title,ls])=>{
@@ -85,15 +86,15 @@ function render(){
   let ud=0;
   const cells=vis.map(([n,t,d,tag,st,cl])=>{
    tot++;const pr=PROGRESS[n]||"none";if(pr==="done"){done++;ud++}
-   const A=ASSIGNED&&ASSIGNED[n];let tr=A?(A.track||A):track;const PG=(A&&A.pages)||["lesson","hw","extra"];if(!(VARIANTS[n]||["all"]).includes(tr))tr="all";const ready=st==="ready";
-   const ws=n.startsWith("W");
+   const A=ASSIGNED&&ASSIGNED[n];let tr=A?(A.track||A):track;const PG=(A&&A.pages)||PAGES[n]||["lesson","hw","extra"];if(!(VARIANTS[n]||["all"]).includes(tr))tr="all";const ready=st==="ready";
+   const ws=n.startsWith("W")||t.startsWith("Business workshop");
    const NM={lesson:"Lesson",hw:"Homework",extra:"Extra"};
    const L3=(t2,lab)=>`<div class="links">${lab?`<span class="vl">${lab}</span>`:""}${PG.map(p=>`<a href="${path(n,t2,p)}">${NM[p]}</a>`).join("")}</div>`;
    const open=ready&&(!ASSIGNED||A);
    const links=open?(cl?L3(tr,"Updated")+L3(tr+"-classic","Classic"):L3(tr,""))+`
      <div class="st"><span class="dot ${pr==="done"?"d":pr==="progress"?"p":""}"></span>${pr==="done"?"Done":pr==="progress"?"In progress":"Not started"}${COMMENTS[n]?" · 💬 teacher’s comment":""}</div>`
      :`<div class="soon">Coming soon</div>`;
-   return `<div class="ls ${ws?"ws":""}"><div class="lh"><span class="n">${ws?"Workshop "+n.slice(1):n}</span><span class="t">${ws?t.replace("Business workshop: ",""):t}</span></div>
+   return `<div class="ls ${ws?"ws":""}"><div class="lh"><span class="n">${n.startsWith("W")?"Workshop "+n.slice(1):n}</span><span class="t">${ws?t.replace("Business workshop: ",""):t}</span></div>
      <div class="lb"><span class="tag ${tag}">${tag==="both"?"Classic + Updated":tag}</span><br>${cl?`<div class="ver"><b>💬 Updated</b>${d}</div><div class="ver cl"><b>✉️ Classic</b>${cl}</div>`:d}</div><div class="lf">${links}</div></div>`}).join("");
   box.insertAdjacentHTML("beforeend",`<section class="unit"><div class="uh"><b>Unit ${u} › ${title}</b><span class="done">${ud} / ${vis.length} done</span></div><div class="grid">${cells}</div><div class="rev">Review</div></section>`);
  });
@@ -102,6 +103,8 @@ function render(){
 }
 const tb=document.getElementById("tracks");
 if(STUDENT){document.getElementById("who").innerHTML=`Student<b>${STUDENT.name}</b>`;tb.style.display="none"}
+const CLIENT=null;  // corporate client template, e.g. "Zvenyhora": no track switch
+if(CLIENT&&!STUDENT){document.getElementById("who").innerHTML=`Client<b>${CLIENT}</b>`;tb.style.display="none"}
 TRACKS.forEach(([k,l])=>{const b=document.createElement("button");b.textContent=l;if(k===track)b.className="on";b.onclick=()=>{track=k;tb.querySelectorAll("button").forEach(x=>x.classList.remove("on"));b.className="on";render()};tb.appendChild(b)});
 render();
 /* Progress from Supabase (student pages only) */
