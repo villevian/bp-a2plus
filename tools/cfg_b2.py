@@ -42,7 +42,7 @@ U = [
   ("5.5", "Writing: A performance review", "Self-review and peer feedback in a review tool · Phrasal verbs", "both", "soon", "Performance review summary · Phrasal verbs"),
   ("W5", "Business workshop: Changing expectations", "What Gen Z and millennials expect at work · Negotiating changes in benefits", "updated", "soon")]),
  ("6", "Ethics", [
-  ("6.1", "Ethical choices", "Video: Ethics in the fashion industry · Ultra-fast fashion apps (Shein, Temu): dark patterns · Vocabulary: business ethics · Project: survey — how ethical are your clothes and apps?", "updated", "ready"),
+  ("6.1", "Ethical choices", "Video: Inside Shein’s factories (FRANCE 24, 2026) · Ultra-fast fashion apps (Shein, Temu): dark patterns · Vocabulary: business ethics · Project: survey — how ethical are your clothes and apps?", "updated", "ready"),
   ("6.2", "The triple bottom line", "Third conditional · Sustainability and green tech · Discussing a company’s ethical performance", "kept", "soon"),
   ("6.3", "Communication skills: Transparency in business", "Video: Transparency in business · Voicing and responding to concerns", "kept", "soon"),
   ("6.4", "Business skills: Sales and selling", "Selling a SaaS product at a meetup or demo · Promoting a product or service", "updated", "soon"),
