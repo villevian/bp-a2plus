@@ -195,11 +195,87 @@ S43.append(("s10", "10", step("s10", "10 · TASK: supplier meets client", "15 х
  ["Did you go with the flow or stay on track? Why?", "What would you do differently next time?", "In your real job, who is your ‘Mateo’?"],
  "<p>Відкрита відповідь. Критерії: вжито ≥ 4 фрази з 7; ввічлива інтонація; зустріч дійшла до продукту/ціни/наступного кроку.</p>")))
 
+
+# ======================= 4.4 =======================
+O44 = ('<div class="bsec">Огляд уроку</div>' +
+ blk("big", "Сенс уроку — яку ідею розкриваємо",
+  "<p><b>Консенсус — це не «всі погодились з менеджером», а рішення, яке група може прийняти разом.</b> Менеджер у записі ставить дві умови: <b>кожен залучений і має шанс говорити</b>, і <b>думка кожного має однакову вагу</b>. "
+  "Далі група вирішує навіть не «що», а «як» (process): один великий гурт, малі групи чи пари — і поступово <b>звужує варіанти</b> (narrowing down).</p>"
+  "<p><b>Навіщо Каті як PM:</b> ретро, планування спринту, вибір інструменту, домовленості про гібридний графік — це щоденне «будування консенсусу». Їй потрібні м’які фрази для згоди/незгоди і пропозицій, щоб не тиснути, але довести обговорення до рішення.</p>"
+  "<p><b>Ключ до мови:</b> ввічлива незгода (<i>I’m afraid I disagree / I’m not sure I agree with you on that</i>) і «м’яка» реакція на пропозицію (<i>That’s not a bad idea, but…</i>).</p>") +
+ blk("aim", "Outcome", "<p>Студентка вживає вирази згоди, незгоди, пропозиції та реакції на пропозицію, щоб дійти згоди в обговоренні знайомої теми.</p>") +
+ blk("run", "Аудіо", "<p>Записів 4.01 і 4.02 у нас немає, тому на сторінці уроку кнопка <b>▶ Listen</b> читає аудіоскрипт голосами браузера (різні голоси для Manager, Jose, Tanya, Sam, Dorothy; є швидкість «slower») і <b>Show script</b>. Якщо маєте оригінальні mp3 — надішліть, вставлю.</p>") +
+ blk("tgt", "Таймінг (≈ 60–70 хв)", '<table class="tt"><tr><th>Етап</th><th>Що</th><th>Час</th></tr>' + "".join("<tr><td>%s</td><td>%s</td><td>%s</td></tr>" % r for r in [
+  ("1", "Lead-in: що таке консенсус", "7 хв"), ("2–3", "Аудіо 4.01: принципи", "8 хв"), ("4–5", "Аудіо 4.02: зустріч", "10 хв"), ("6–7", "Фрази: порядок діалогу, категорії, linking", "15 хв"), ("8", "TASK: дійти згоди", "15–20 хв")]) + "</table>"))
+S44 = []
+S44.append(("s1", "1", step("s1", "1 · Lead-in", "7 хв",
+ "<p>Розібрати саме поняття: консенсус ≠ більшість ≠ рішення менеджера. Питання 4 — про культури (у когось «так» означає «я почув», а не «я згоден»).</p>",
+ ["How do you usually make decisions in your team — does the manager decide, do you vote, or do you discuss until everyone agrees?", "Is a majority enough for consensus?"],
+ ul(["Спершу її приклади з роботи, потім питання з книги.", "Розігрів з TB: поставте питання, де немає однозначної відповіді (best tool: Jira or Trello?), і покажіть, що таке <i>majority</i>."]),
+ ["When was the last time your team couldn’t agree? What happened?", "Is it the PM’s job to decide or to facilitate?", "Have you worked with a culture where ‘yes’ doesn’t mean ‘I agree’?"], "")))
+S44.append(("s2", "2–3", step("s2", "2–3 · Listening 4.01", "8 хв",
+ "<p>Почути ідею уроку з уст фасилітатора: група важливіша за індивідуальні бажання; meet halfway / find the middle ground; дві базові умови консенсусу.</p>",
+ ["Listen to a manager starting a meeting. What does she want to do today?"],
+ ul(["2 — один раз слухаємо, 2 питання.", "3 — заповнити пропуски, потім ще раз слухати. Поясніть <i>of equal weight</i> = однаково важливо."]),
+ ["What does ‘meet halfway’ mean? Give an example from your work.", "Which principle is hardest in real meetings?"],
+ "<p>2: 1 focus on ways of building consensus · 2 finding what the group wants to do, not what each individual wants.</p><p>3: 1 involved, chance · 2 respected, important</p>")))
+S44.append(("s4", "4–5", step("s4", "4–5 · Listening 4.02", "10 хв",
+ "<p>Живий приклад: група обирає формат роботи. Показує, як звучить незгода і як ідея (talking sticks) змінює хід обговорення. Група ще <b>не</b> дійшла консенсусу — але <b>звузила варіанти</b>.</p>",
+ ["Now listen to the meeting. Have they reached a consensus?"],
+ ul(["4 — загальне розуміння + обґрунтування цитатою.", "5 — деталі; слова <i>process</i>, <i>narrowing down</i>, <i>talking sticks</i>."]),
+ ["Would talking sticks work in your team?", "Who dominates meetings in your team? How do you deal with it?"],
+ "<p>4: No — ‘we’re already narrowing down the options and moving towards consensus. Not everybody has spoken…’</p><p>5: 1 one large group, small groups, pairs · 2 a way of controlling who speaks · 3 how they will reach consensus · 4 getting closer by removing options</p>")))
+S44.append(("s6", "6–7", step("s6", "6–7 · Functional language", "15 хв",
+ "<p>Структурувати фрази за функціями: згода, незгода, пропозиція, реакція на пропозицію. 7B додає сильніші/м’якші варіанти. Linking (Pronunciation bank) — щоб фрази звучали природно: <i>not‿a bad‿idea</i>.</p>",
+ ["Put the conversation in order — who speaks after whom?", "Now look at the phrases in bold. Which ones agree, disagree, suggest or react?"],
+ ul(["6 — порядок 1–11, потім ▶ Listen для перевірки.", "7A/7B — категорії, кнопка Check.", "Linking: кнопки 🔊 у блоці вимови; попросіть повторити 3–4 фрази."]),
+ ["Which phrase is the most polite way to disagree?", "Make a suggestion for your next retro using ‘How about if…’."],
+ "<p>6: Manager 1 · Jose 2 · Tanya 3 · Sam 4 · Dorothy 5 · Jose 6 · Sam 7 · Jose 8 · Sam 9 · Jose 10 · Dorothy 11</p>"
+ "<p>7A: agreement — Yes, I agree, too / I agree that / I agree with · disagreement — I’m afraid I disagree · suggestion — I think we should · reacting — So we need to / I don’t think / that’s not a bad idea</p>"
+ "<p>7B: agreement 1 · disagreement 2, 5 · suggestion 3, 6 · reacting 4</p>",
+ "<p>«I don’t think my idea is that bad» — це реакція на чужу реакцію; студенти часто плутають з «disagreement». Обидва варіанти можна прийняти, якщо пояснить.</p>")))
+S44.append(("s8", "8", step("s8", "8 · TASK", "15–20 хв",
+ "<p>Пройти всю процедуру консенсусу: ідеї → нотатки → вподобання → обговорення → рішення. 1:1 — ви граєте «групу» з різними позиціями.</p>",
+ ["Choose a topic. Take two minutes to write your ideas. Then we follow the four steps and try to agree."],
+ ul(["Для Каті краще власна тема: <i>the best hybrid schedule</i>, <i>max number of meetings a day</i>.", "Ви навмисно не погоджуйтесь 2–3 рази — вона має вжити фрази з 6–7.", "8C — рефлексія: які фрази вжила."]),
+ ["What compromise did we reach?", "What would you do if one person still says no?"], "")))
+# ======================= 4.5 =======================
+O45 = ('<div class="bsec">Огляд уроку</div>' +
+ blk("big", "Сенс уроку — яку ідею розкриваємо",
+  "<p><b>Підтвердження замовлення — це «страховка» для обох сторін:</b> письмово фіксуємо, що саме, скільки, за якою ціною, коли й куди, і як оплачується. Якщо деталі розмиті («скоро», «знижка як домовлялись»), саме тут з’являються конфлікти.</p>"
+  "<p><b>Дві версії:</b> <b>Classic</b> — лист з книги (формальна структура: Greeting → Opening → Order → Delivery → Payment → Enclosures → Ending → Closing). <b>Updated</b> — та сама структура в сучасному форматі: повідомлення клієнту в спільному Slack-каналі (Slack Connect) або шаблон з CRM. Інформація та сама — змінюється тон і форма (короткі рядки, буліти, «attached 📎»).</p>"
+  "<p><b>Навіщо Каті:</b> вона пише клієнтам і підрядникам у чатах; вправа вчить писати коротко, але без втрати важливих деталей.</p>") +
+ blk("aim", "Outcome", "<p>Classic: студентка пише лист-підтвердження замовлення. Updated: пише професійне повідомлення-підтвердження клієнту в Slack / CRM.</p>") +
+ blk("run", "Порядок", ul(["Рекомендую: <b>Updated</b> на уроці, <b>Classic</b> (або тільки 3B) — додому. Або навпаки, якщо їй потрібні формальні листи.", "Сторінки 129/130 книги (поганий лист і бланк замовлення) на сайті замінені нашими: «поганий» лист / чат-повідомлення і бланк замовлення WT3488 для Ms Liang — дані збігаються з модельною відповіддю TB.", "На 3B є лічильник слів і перевірка, чи є всі частини листа (Greeting… Closing)."])))
+S45 = []
+S45.append(("s1", "1", step("s1", "1 · Lead-in", "7 хв",
+ "<p>Прочитати зразок і помітити, яку інформацію він підтверджує (товар, кількість, графік доставки, ціна зі знижкою, оплата).</p>",
+ ["When do you get confirmations? (booking a flight, an online order…) What information do they always have?", "Read the letter/message. What exactly does it confirm?"],
+ ul(["Classic: лист; Updated: Slack-повідомлення з тими самими даними.", "Поясніть <i>hesitate</i> = вагатися, <i>enclose</i> (лист) vs <i>attach</i> (email/чат)."]),
+ ["What could go wrong if the confirmation is not sent?", "Do you confirm orders or agreements in writing at work?"],
+ "<p>Classic: 1 order · 2 received · 3 agreed · 4 Payment · 5 enclose · 6 thank · 7 hesitate · 8 sincerely</p><p>Updated: 1 order · 2 received · 3 agreed · 4 Payment · 5 attached · 6 Thanks · 7 hesitate · 8 regards</p>")))
+S45.append(("s2", "2", step("s2", "2 · Functional language", "10 хв",
+ "<p>Структура підтвердження: 8 функцій. В Updated — таблиця «лист → чат»: що змінюється, а що лишається (усі деталі!). Граматика: verbs + prepositions з листа.</p>",
+ ["Which part of the letter is this phrase from — the greeting, the payment terms, the ending…?"],
+ ul(["Перевірка кнопкою Check.", "Правило: <b>Dear Mr X → Yours sincerely</b>, <b>Dear Sir/Madam → Yours faithfully</b>.", "Пояснити: cash on delivery, payment in advance, T&Cs."]),
+ ["Which phrases would sound too formal in Slack?", "Which emoji are OK with a client, and which are not?"],
+ "<p>Greeting: Dear Mr Chahal, Dear Sir/Madam · Opening: we are writing to confirm / this is to confirm / we are pleased to confirm · Order details: order number…, order no 01 for five chairs · Delivery: to your factory in Mumbai, first delivery 05/11, to your head office · Payment: $4,000 monthly, 30 days after invoice, cash on delivery, payment in advance · Enclosures: we enclose T&Cs, details of our new range are enclosed · Ending: we thank you…, do not hesitate…, we look forward to supplying you… · Closing: Yours sincerely / faithfully</p>")))
+S45.append(("s3", "3", step("s3", "3 · TASK", "20 хв / вдома",
+ "<p>3A — побачити типові помилки (занадто неформально, без деталей). 3B — написати власне підтвердження за бланком. 3C — порівняти мову.</p>",
+ ["What’s wrong with this letter/message? Let’s make a list.", "Now use the order form and write your own confirmation to Ms Liang."],
+ ul(["3A — обговорення, потім Show ideas.", "3B — Classic ~150 слів, Updated 60–90 слів; лічильник частин підсвічує, чого бракує.", "3C — 1:1: ви пишете свою версію, обмінюєтесь і порівнюєте."]),
+ ["Which version is better for a new client, and which for a client you know well?"],
+ "<p>Модель Classic (TB): Dear Ms Liang, We are writing to confirm your order number WT3488 for 100 PR765 printers, which we received this morning. The unit price is €230. … discount of 8 percent for any orders over 80 units. We will deliver the goods to your warehouse in Felton Business Park on 5 May. … payment terms are 30 days after the date of the invoice. We enclose our business terms and conditions… Yours sincerely,</p><p>Модель Updated — на сторінці уроку (Show model answer).</p>")))
+
 open(os.path.join(OUT, "4-2.html"), "w").write(pagef("4.2", "Back to the office?", "../lessons/4-2/all/lesson.html", O42, S42))
 open(os.path.join(OUT, "4-3.html"), "w").write(pagef("4.3", "Managing conversations", "../lessons/4-3/all/lesson.html", O43, S43))
+open(os.path.join(OUT, "4-4.html"), "w").write(pagef("4.4", "Building consensus", "../lessons/4-4/all/lesson.html", O44, S44))
+open(os.path.join(OUT, "4-5.html"), "w").write(pagef("4.5", "Confirming an order", "../lessons/4-5/all/lesson.html", O45, S45))
 IDX = ('<div class="bsec">Business Partner B1 · Teacher’s Book</div>' + blk("aim", "Готові уроки", ul([
   '<a href="4-2.html"><b>4.2 Back to the office?</b></a> — віддалена робота vs офіс · Present & Past Simple passive · Extra: have something done',
-  '<a href="4-3.html"><b>4.3 Managing conversations</b></a> — змінити тему і тримати фокус · відео Beata & Mateo (YouTube)'])))
+  '<a href="4-3.html"><b>4.3 Managing conversations</b></a> — змінити тему і тримати фокус · відео Beata & Mateo (YouTube)',
+  '<a href="4-4.html"><b>4.4 Building consensus</b></a> — згода, незгода, пропозиції · аудіо 4.01/4.02 (голосом браузера)',
+  '<a href="4-5.html"><b>4.5 Confirming an order</b></a> — Classic: лист · Updated: Slack Connect / CRM'])))
 open(os.path.join(OUT, "index.html"), "w").write(TPL.replace("__NUM__", "B1").replace("__TITLE__", "Teacher’s Book").replace("__URL__", "../index.html").replace("__NAV__", "")
                                                   .replace("__BODY__", '<section class="sec on">%s</section>' % IDX).replace('<a href="index.html">← Teacher’s Book: зміст</a>', '').replace("📄 Відкрити урок студента", "← Contents"))
 print("ok")

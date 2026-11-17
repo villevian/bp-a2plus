@@ -61,4 +61,47 @@ VOCAB = [
    ("business relationship", "ділові стосунки", "the connection between business partners", "Going with the flow can build the business relationship."),
   ]),
  ]),
+ ("4.4", "Building consensus", [
+  ("Building consensus", [
+   ("build consensus", "досягати консенсусу", "reach an agreement that the whole group accepts", "Building consensus is about group needs."),
+   ("majority", "більшість", "most of the people in a group", "Is a majority enough, or does everyone have to agree?"),
+   ("meet halfway", "піти на компроміс, зустрітися посередині", "each side gives up something to agree", "Sometimes we need to meet halfway."),
+   ("find the middle ground", "знайти золоту середину", "find a solution between two positions", "Let’s try to find the middle ground."),
+   ("be involved in", "бути залученим до", "take part in something", "Everybody must be involved in the conversation."),
+   ("of equal weight", "однаково важливий", "equally important", "Everybody’s opinion is of equal weight."),
+   ("process", "процес, спосіб роботи", "the way we do something step by step", "We need to decide on the process first."),
+   ("narrow down the options", "звузити варіанти", "remove some options to get closer to a decision", "We’re already narrowing down the options."),
+   ("dominate", "домінувати", "control a conversation or a group", "In a big group one or two people always dominate."),
+  ]),
+  ("Agreeing and disagreeing", [
+   ("I agree with …", "Я згодна з …", "say you have the same opinion as someone", "I agree with Tanya."),
+   ("Yes, I think you’re right.", "Так, думаю, ти маєш рацію.", "agree politely", "Yes, I think you’re right. Let’s do it."),
+   ("I’m afraid I disagree.", "Боюся, я не погоджуюсь.", "disagree politely", "I’m afraid I disagree. Small groups are better."),
+   ("I’m not sure I agree with you on that.", "Не впевнена, що згодна з тобою в цьому.", "a soft way to disagree", "I’m not sure I agree with you on that."),
+  ]),
+  ("Suggesting and reacting", [
+   ("I think we should …", "Думаю, нам варто …", "make a suggestion", "I think we should stay as one big group."),
+   ("Why don’t we …?", "Чому б нам не …?", "make a suggestion", "Why don’t we work in pairs?"),
+   ("How about if we …?", "А що, якщо ми …?", "make a suggestion", "How about if we break into small groups?"),
+   ("That’s not a bad idea.", "Це непогана ідея.", "react positively, but carefully", "Actually, that’s not a bad idea."),
+  ]),
+ ]),
+ ("4.5", "Confirming an order", [
+  ("Order confirmation", [
+   ("confirm an order", "підтвердити замовлення", "say in writing that an order is accepted", "We are writing to confirm your order."),
+   ("unit price", "ціна за одиницю", "the price of one item", "The unit price is €230."),
+   ("payment terms", "умови оплати", "when and how the customer must pay", "Payment terms: 30 days after the invoice date."),
+   ("invoice", "рахунок-фактура", "a document asking for payment", "Please pay within 30 days of the invoice."),
+   ("terms and conditions (T&Cs)", "умови та положення", "the rules of the agreement", "Our T&Cs are attached."),
+   ("cash on delivery", "оплата при доставці", "pay when you receive the goods", "We accept cash on delivery."),
+   ("payment in advance", "передоплата", "pay before the goods are delivered", "New customers make payment in advance."),
+   ("enclose / attach", "вкласти (в лист) / прикріпити", "send with a letter / with an email or message", "We enclose our terms. / The invoice is attached."),
+  ]),
+  ("Useful phrases", [
+   ("As agreed, …", "Як домовлялися, …", "refer to an earlier agreement", "As agreed at our meeting, there is an 8% discount."),
+   ("Please do not hesitate to contact us.", "Будь ласка, звертайтеся без вагань.", "a formal offer of help", "If you have any queries, please do not hesitate to contact us."),
+   ("We look forward to supplying you again.", "Сподіваємося на подальшу співпрацю.", "a polite ending for a supplier", "We look forward to supplying you again in the future."),
+   ("Yours sincerely / faithfully", "З повагою", "formal closing (name known / not known)", "Dear Ms Liang … Yours sincerely,"),
+  ]),
+ ]),
 ]

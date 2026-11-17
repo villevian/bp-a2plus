@@ -1,8 +1,8 @@
 LEVEL = "B1"
 ACC, ACC2 = "#e8894a", "#fbeadb"
-VARIANTS = {"4.2": ["all"], "4.3": ["all"]}
+VARIANTS = {"4.2": ["all"], "4.3": ["all"], "4.4": ["all"], "4.5": ["all"]}
 GRAD = ("#c4642a", "#f2a66e")
-PAGES = {"4.2": ["lesson", "extra"], "4.3": ["lesson"]}
+PAGES = {"4.2": ["lesson", "extra"], "4.3": ["lesson"], "4.4": ["lesson"], "4.5": ["lesson"]}
 TEACHER = True
 VOCAB = True
 # (number, title, focus, tag kept|updated|new, status ready|soon)
@@ -32,8 +32,8 @@ U = [
   ("4.1", "One size fits all?", "Global markets vocabulary · Adapt a product to a new market", "kept", "soon"),
   ("4.2", "Back to the office?", "Present Simple & Past Simple passive · Remote vs office work: Zoom, Slack, Notion, Jira · Extra: have something done", "updated", "ready"),
   ("4.3", "Managing conversations", "Changing the subject and staying on track · Video: Beata & Mateo", "kept", "ready"),
-  ("4.4", "Building consensus", "Reaching agreement in meetings and async threads", "kept", "soon"),
-  ("4.5", "Writing: Confirming an order", "Order confirmation in chat / CRM · Verbs + prepositions", "both", "soon", "Letter confirming an order · Verbs + prepositions"),
+  ("4.4", "Building consensus", "Reaching agreement in meetings and async threads", "kept", "ready"),
+  ("4.5", "Writing: Confirming an order", "Order confirmation in chat / CRM · Verbs + prepositions", "both", "ready", "Letter confirming an order · Verbs + prepositions"),
   ("W4", "Business workshop: Going global online", "Sell abroad via Etsy / Shopify · Choose a strategy", "updated", "soon")]),
  ("5", "Design and innovation", [
   ("5.1", "AI-powered products", "Technological innovation · Describing innovative products", "new", "soon"),
