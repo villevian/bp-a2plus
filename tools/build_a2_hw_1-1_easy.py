@@ -72,9 +72,9 @@ for i, (a, ch) in enumerate(SEN):
     k = "sen_%d" % (i + 1)
     h.append('<div class="row"><b>%d.</b>%s%s</div>' % (i + 1, "".join('<label class="opt"><input type="radio" name="sen%d" data-k="%s" value="%s"> %s</label>' % (i, k, c, c) for c in ch), fb(k)))
 h.append('<div class="ctl"><button class="btn" onclick="chkRad(\'sen\')">Check</button><span class="res" id="r_sen"></span></div></section>')
-h.append('<section><h2><span>8</span>About me</h2><p class="ins">Complete the sentences about you. Grey words are examples.</p>%s<div class="my">' % ua("Допиши речення про себе. Сірі слова — це приклади, напиши своє."))
+h.append('<section><h2><span>8</span>About me</h2><p class="ins">Complete the sentences about you.</p>%s<div class="my">' % ua("Допиши речення про себе."))
 for i, (pre, ex, post, u) in enumerate(MY):
-    h.append('<div class="row">%s <input class="g" data-k="my_%d" placeholder="%s" style="width:220px">%s <span class="uah">%s</span></div>' % (pre, i + 1, ex, post, u))
+    h.append('<div class="row">%s <input class="g" data-k="my_%d" style="width:220px">%s <span class="uah">%s</span></div>' % (pre, i + 1, post, u))
 h.append('</div></section>')
 body = "".join(h)
 
