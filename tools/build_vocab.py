@@ -11,7 +11,8 @@ items, lessons = [], []
 for num, title, groups in V:
     lessons.append({"n": num, "t": title, "g": [g for g, _ in groups]})
     for g, ws in groups:
-        for i, (en, uk, df, ex) in enumerate(ws):
+        for i, w in enumerate(ws):
+            en, uk, df, ex = w[:4]
             items.append({"id": "%s|%s" % (num, en), "l": num, "g": g, "en": en, "uk": uk, "df": df, "ex": ex})
 
 html = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
