@@ -152,10 +152,16 @@ s8 = ('<div class="bsec wr">Writing</div><p class="ins"><b class="x">8</b>Write 
       '<div class="res" id="wc8"></div><div class="chk2" id="chk8"></div>' + show("m8", "Show model post", MODEL8) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well can you talk about things that annoy you and complain politely?"))
 
-VOC = [("How annoyed are you?", ["it bugs me", "it gets on my nerves", "it winds me up", "I can’t stand", "it grates on me", "infuriating", "it drives me up the wall", "it does my head in", "it makes my blood boil", "I’ve had it up to here with"]),
-       ("Idioms & adjectives", ["my pet peeve / pet hate", "it grinds my gears", "it rubs me the wrong way", "the last straw", "a bugbear", "petty", "inconsiderate", "oblivious", "passive-aggressive", "the ick"]),
-       ("Grammar", ["He’s always + -ing", "keep + -ing", "He WILL …", "I wish people would …", "What really gets me is …", "The thing that drives me mad is …"]),
-       ("Saying it nicely", ["I don’t know if you’ve noticed, but …", "This might sound a bit petty, but …", "It’s probably just me, but …", "Would you mind (not) + -ing?", "eavesdrop / overhear", "etiquette"])]
+VOC = [("How annoyed are you?", [("it bugs me", "мене це дратує"), ("it gets on my nerves", "це діє мені на нерви"), ("it winds me up", "мене це заводить"), ("I can’t stand", "терпіти не можу"),
+         ("it grates on me", "мене це коробить"), ("infuriating", "шалено дратівливий"), ("it drives me up the wall", "це доводить до сказу"), ("it does my head in", "мене це вибішує"),
+         ("it makes my blood boil", "аж кров закипає"), ("I’ve had it up to here with", "з мене досить"), ("I’m fed up with", "мені набридло")]),
+       ("Idioms & adjectives", [("my pet peeve / pet hate", "те, що мене особливо дратує"), ("it grinds my gears", "мене це бісить"), ("it rubs me the wrong way", "мені це якось не подобається"),
+         ("the last straw", "остання крапля"), ("a bugbear", "постійне подразнення"), ("petty", "дріб’язковий"), ("inconsiderate", "неуважний до інших"), ("oblivious", "що нічого не помічає"),
+         ("passive-aggressive", "пасивно-агресивний"), ("the ick", "відраза, «фу»")]),
+       ("Grammar", [("He’s always + -ing", "він вічно …"), ("keep + -ing", "постійно щось робити"), ("He WILL …", "він обов’язково (знову) …"), ("I wish people would …", "хотілося б, щоб люди …"),
+         ("What really gets me is …", "що мене найбільше бісить, так це …"), ("The thing that drives me mad is …", "найбільше мене дратує …")]),
+       ("Saying it nicely", [("I don’t know if you’ve noticed, but …", "не знаю, чи ти помітив, але …"), ("This might sound a bit petty, but …", "може, це дріб’язково, але …"),
+         ("It’s probably just me, but …", "може, це тільки мені так, але …"), ("Would you mind (not) + -ing?", "ти не проти (не) …?"), ("eavesdrop", "підслуховувати"), ("overhear", "випадково почути"), ("etiquette", "етикет")])]
 PH = json.dumps([["bugs me", "bug me"], ["nerves"], ["winds me up", "wind me up"], ["can't stand", "can't bear"], ["grates", "grate on"], ["infuriating", "maddening", "exasperating"], ["up the wall"], ["head in"], ["blood boil"], ["up to here"],
                  ["pet peeve", "pet hate"], ["grinds my gears", "grind my gears"], ["wrong way"], ["last straw"], ["bugbear"], ["petty"], ["inconsiderate"], ["oblivious"], ["passive-aggressive", "passive aggressive"], ["the ick"], ["fed up"], ["drives me mad", "drive me mad", "drives me crazy"]])
 ST = json.dumps([["always / constantly + -ing", ["always [a-z]+ing", "constantly [a-z]+ing", "forever [a-z]+ing"]], ["keep + -ing", ["keeps? [a-z]+ing", "kept [a-z]+ing"]], ["I wish … would", ["wish [a-z ]{0,30}would"]],

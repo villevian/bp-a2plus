@@ -10,7 +10,7 @@ def page(num, title, tag, outcome, lesson_key, code, sections, key, vocab=None, 
     voc = ""
     if vocab:
         voc = '<details class="voc" open><summary>📖 Vocabulary of this lesson — click to hide / show</summary><div class="vgs">%s</div></details>' % "".join(
-            '<div class="vg"><h4>%s</h4>%s</div>' % (t, "".join("<span>%s</span>" % w for w in ws)) for t, ws in vocab)
+            '<div class="vg"><h4>%s</h4>%s</div>' % (t, "".join(('<span>%s <em class="tr">— %s</em></span>' % w) if isinstance(w, tuple) else "<span>%s</span>" % w for w in ws)) for t, ws in vocab)
     h = TPL
     for a, b in (("__NUM__", num), ("__TITLE__", title), ("__TAG__", tag), ("__OUT__", outcome), ("__VOC__", voc), ("__NAV__", nav), ("__BODY__", body),
                  ("__FOOT__", footer), ("__LESSON__", lesson_key), ("__CODE__", code), ("__KEY__", json.dumps(key, ensure_ascii=False)), ("__XJS__", extra_js)):
@@ -25,7 +25,7 @@ header h1{margin:0;align-self:center;padding-left:18px;font-weight:500;font-size
 .out1{display:flex;align-items:center;gap:14px;background:#e6e7e8;padding:8px 22px;font-size:15px}.out1 b{background:ACC;color:#fff;font-weight:600;padding:3px 10px;border-radius:3px;font-size:13px}
 .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
 details.voc{margin:12px 0 0;border:1.5px solid ACC;border-radius:6px}details.voc summary{cursor:pointer;padding:8px 16px;color:DARK;font-weight:500}
-.vgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:6px 16px 14px}.vg h4{margin:4px 0 6px;color:DARK;font-weight:600;font-size:14px;text-transform:uppercase}.vg span{display:inline-block;background:ACC2;border-radius:12px;padding:2px 10px;margin:2px;font-size:14px}
+.vgs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;padding:6px 16px 14px}.vg h4{margin:4px 0 6px;color:DARK;font-weight:600;font-size:14px;text-transform:uppercase}.vg em.tr{font-style:normal;color:#77787b;font-size:13px}.vg span{display:inline-block;background:ACC2;border-radius:12px;padding:2px 10px;margin:2px;font-size:14px}
 .top{display:flex;justify-content:space-between;align-items:center;margin-top:10px;flex-wrap:wrap;gap:8px}.top a{color:DARK;text-decoration:none;font-weight:500;font-size:15px}
 .bar{background:ACC2;padding:6px 14px;border-radius:6px;font-size:14.5px}.st.ok{color:#2e7d4f}.st.err{color:#c0392b}
 .tcom{display:none;margin-top:10px;background:#fdf0d5;border-left:4px solid #f2b631;padding:10px 14px;border-radius:4px;font-size:15px;white-space:pre-wrap}.tcom b{display:block;font-weight:600}
