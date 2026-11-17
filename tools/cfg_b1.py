@@ -1,6 +1,8 @@
 LEVEL = "B1"
 ACC, ACC2 = "#e8894a", "#fbeadb"
-VARIANTS = {}
+VARIANTS = {"4.2": ["all"]}
+GRAD = ("#c4642a", "#f2a66e")
+PAGES = {"4.2": ["lesson", "extra"]}
 # (number, title, focus, tag kept|updated|new, status ready|soon)
 U = [
  ("1", "Career choices", [
@@ -26,7 +28,7 @@ U = [
   ("W3", "Business workshop: Prioritising a launch", "Understand priorities · Hold a project meeting", "updated", "soon")]),
  ("4", "Global markets", [
   ("4.1", "One size fits all?", "Global markets vocabulary · Adapt a product to a new market", "kept", "soon"),
-  ("4.2", "Online markets", "Present Simple & Past Simple passive · Marketplaces and e-commerce", "updated", "soon"),
+  ("4.2", "Back to the office?", "Present Simple & Past Simple passive · Remote vs office work: Zoom, Slack, Notion, Jira · Extra: have something done", "updated", "ready"),
   ("4.3", "Managing conversations", "Changing the subject and staying on track", "kept", "soon"),
   ("4.4", "Building consensus", "Reaching agreement in meetings and async threads", "kept", "soon"),
   ("4.5", "Writing: Confirming an order", "Order confirmation in chat / CRM · Verbs + prepositions", "both", "soon", "Letter confirming an order · Verbs + prepositions"),
