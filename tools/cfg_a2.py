@@ -2,8 +2,8 @@ LEVEL = "A2"
 ACC, ACC2 = "#3b7dd8", "#e3eefb"          # blue
 GRAD = ("#2a5fb0", "#4f9be8")
 COLS = 5                                   # A2 book: 5 lessons per unit, x.5 = business workshop
-VARIANTS = {"1.1": ["all"]}
-PAGES = {"1.1": ["lesson", "hw"]}   # extra not built yet
+VARIANTS = {"1.1": ["all"], "7.2": ["all"]}
+PAGES = {"1.1": ["lesson", "hw"], "7.2": ["lesson"]}   # extra not built yet
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [
  ("1", "Working day", [
@@ -44,7 +44,7 @@ U = [
   ("6.5", "Business workshop: Buy natural", "Ethical products · Placing an order · A complaint in a support chat", "updated", "soon")]),
  ("7", "Competition", [
   ("7.1", "Should I upgrade?", "Comparatives · Upgrading a phone, laptop or software plan", "updated", "soon"),
-  ("7.2", "Services and subscriptions", "Vocabulary: fees · Pricing pages: Free, Pro, Business", "updated", "soon"),
+  ("7.2", "Services and subscriptions", "Vocabulary: fees and hidden fees · Reading: Adobe, Microsoft, Amazon · Listening: recruitment agencies · An honest pricing page", "both", "ready", "Advertisement for a courier agency"),
   ("7.3", "The best providers", "Superlatives · Comparing tools and services · Survey results in Slack", "both", "soon", "Email summarising survey results"),
   ("7.4", "Work skills: Presentations", "Video: Our products and services · Presenting", "kept", "soon"),
   ("7.5", "Business workshop: The big contract", "A trade show · Giving a presentation · A recommendation message", "updated", "soon")]),
