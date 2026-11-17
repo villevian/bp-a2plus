@@ -67,7 +67,20 @@ block(3, "Tasks", "Choose the correct verb.", "Обери правильне д�
 block(4, "He / she + -s", "Choose the correct word.", "Він / вона → додаємо <b>-s</b>: I work → she work<b>s</b>. Обери правильне слово.", S3, "s")
 block(5, "am / is / are", "Choose am, is or are.", "I → <b>am</b> · he / she / it → <b>is</b> · we / you / they → <b>are</b>", BE, "be")
 block(6, "don’t / doesn’t", "Choose don’t or doesn’t.", "I / we / you / they → <b>don’t</b> · he / she → <b>doesn’t</b> (не)", NEG, "neg")
-h.append('<section><h2><span>7</span>Which sentence is correct?</h2><p class="ins">Choose the correct sentence.</p>%s' % ua("Обери правильне речення. Слова <i>always, never, usually, sometimes</i> стоять перед дієсловом, але після <i>am / is / are</i>."))
+ADV = [("always", "завжди", "100%"), ("usually", "зазвичай", "90%"), ("often", "часто", "70%"), ("sometimes", "іноді", "50%"), ("rarely", "рідко", "10%"), ("never", "ніколи", "0%")]
+def blk(w, c): return '<span class="wb %s">%s</span>' % (c, w)
+PICT = ('<div class="pic"><div class="pt">How often? · Як часто?</div><div class="scale2">%s</div>'
+        '<div class="pt" style="margin-top:14px">Word order · Порядок слів</div>'
+        '<div class="ordr"><div class="lab">1. Звичайне дієслово → adverb <b>ПЕРЕД</b> дієсловом</div>%s</div>'
+        '<div class="ordr"><div class="lab">2. am / is / are → adverb <b>ПІСЛЯ</b></div>%s</div>'
+        '<div class="ordr"><div class="lab">3. don’t / doesn’t → adverb <b>МІЖ</b> ними</div>%s</div>'
+        '<div class="legend">%s хто · %s як часто · %s дія · %s решта</div></div>') % (
+    "".join('<div class="ad" style="--w:%s"><div class="bar"><i></i></div><b>%s</b><span>%s</span><em>%s</em></div>' % (p, e, u, p) for e, u, p in ADV),
+    blk("I", "s") + blk("always", "a") + blk("start", "v") + blk("work at 9.", "r") + '<br>' + blk("She", "s") + blk("often", "a") + blk("goes", "v") + blk("to meetings.", "r"),
+    blk("I", "s") + blk("am", "v") + blk("always", "a") + blk("busy.", "r") + '<br>' + blk("He", "s") + blk("is", "v") + blk("never", "a") + blk("late.", "r"),
+    blk("She", "s") + blk("doesn’t", "v") + blk("usually", "a") + blk("work", "v") + blk("at the weekend.", "r"),
+    blk("I / she", "s"), blk("always", "a"), blk("start", "v"), blk("…", "r"))
+h.append('<section><h2><span>7</span>Which sentence is correct?</h2><p class="ins">Choose the correct sentence.</p>%s' % (PICT + ua("Обери правильне речення. Слова <i>always, never, usually, sometimes</i> стоять перед дієсловом, але після <i>am / is / are</i>.")))
 for i, (a, ch) in enumerate(SEN):
     k = "sen_%d" % (i + 1)
     h.append('<div class="row"><b>%d.</b>%s%s</div>' % (i + 1, "".join('<label class="opt"><input type="radio" name="sen%d" data-k="%s" value="%s"> %s</label>' % (i, k, c, c) for c in ch), fb(k)))
@@ -109,6 +122,12 @@ textarea{width:100%;min-height:170px;font:inherit;font-size:16px;border:1.5px so
 .selfa{display:flex;margin-top:14px;border-radius:6px;overflow:hidden}.selfa .l{background:#d9746f;color:#fff;font-weight:600;padding:12px 16px}.selfa .r{flex:1;background:#f6f6f7;padding:10px 16px;font-size:15px}
 .score button{width:42px;height:42px;border-radius:50%;border:2px solid #e1e2e3;background:#fff;font-size:16px;margin:6px 6px 0 0;cursor:pointer}.score button.on{border-color:ACC;background:ACC2}
 .send{margin-top:18px}.done{display:none;margin-top:10px;background:#eaf7ee;color:#1e6b3d;padding:10px 14px;border-radius:6px}
+.pic{border:2px solid #cfe0f6;border-radius:10px;padding:14px 18px;margin:8px 0 16px;background:#fbfdff}.pt{font-weight:600;color:DARK;margin-bottom:8px}
+.scale2{display:grid;grid-template-columns:repeat(6,1fr);gap:8px}.ad{text-align:center}.ad .bar{height:70px;background:#eef3fa;border-radius:6px;position:relative;overflow:hidden}.ad .bar i{position:absolute;left:0;right:0;bottom:0;height:var(--w);background:linear-gradient(#7fb0ec,ACC)}
+.ad b{display:block;font-weight:600;margin-top:4px}.ad span{display:block;font-size:13.5px;color:#6d6e70}.ad em{font-size:12.5px;color:#9a9b9d;font-style:normal}
+.ordr{margin:8px 0}.ordr .lab{font-size:14.5px;color:#4d4d4f;margin-bottom:4px}.wb{display:inline-block;padding:4px 10px;margin:3px 4px 3px 0;border-radius:5px;font-size:17px}
+.wb.s{background:#e8eaed}.wb.a{background:#ffe08a;font-weight:600}.wb.v{background:#cfe3fb;font-weight:500}.wb.r{background:#f3f4f5}.legend{font-size:13px;color:#6d6e70;margin-top:6px}.legend .wb{font-size:12.5px;padding:1px 6px}
+@media(max-width:700px){.scale2{grid-template-columns:repeat(3,1fr)}}
 .ua{display:block;color:#6d6e70;font-size:14.5px;margin:-4px 0 8px}.uah{color:#9a9b9d;font-size:13.5px;margin-left:6px}
 .tipbox{background:#fff8e6;border-left:4px solid #f2b631;padding:10px 14px;border-radius:4px;margin:10px 0}.tipbox .ua{margin:4px 0 0}
 .row.big{font-size:18px}.row .w{min-width:190px}label.opt{display:block;margin:4px 0 4px 22px;cursor:pointer;font-size:17.5px}.my .row{font-size:18px}
