@@ -32,3 +32,8 @@ def lesson(num):
         if n == num:
             return t, groups
     raise KeyError(num)
+
+# Trainer: all lessons from the updated glossary (1.2 keeps its own groups above)
+from glossary_a2p import trainer_vocab as _tv
+VOCAB = [x for x in _tv() if x[0] != "1.2"] + VOCAB
+VOCAB.sort(key=lambda x: (x[0].startswith("W"), x[0]))

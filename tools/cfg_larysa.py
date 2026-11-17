@@ -6,3 +6,4 @@ STUDENT = {"name": "Larysa", "track": "all", "code": "eea83833e26343c1"}
 ASSIGNED = {"1.1": {"track": "all", "pages": ["lesson", "hw", "extra"]}, "1.2": {"track": "all", "pages": ["lesson", "hw", "extra"]}}
 SHOW_ALL = True
 VOCAB = True
+GLOSSARY = True
