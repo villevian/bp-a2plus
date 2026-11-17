@@ -1,4 +1,4 @@
 from cfg_a2 import *   # Maryna studies A2
 STUDENT = {"name": "Maryna", "track": "all", "code": "e53224bedc2405525d9750dbd7fb59b1"}
-ASSIGNED = {"1.1": {"track": "all", "pages": ["lesson"]}}
+ASSIGNED = {"1.1": {"track": "all", "pages": ["lesson", "hw"]}}
 SHOW_ALL = True
