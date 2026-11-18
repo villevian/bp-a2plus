@@ -34,6 +34,29 @@ s1 = ('<div class="bsec">Lead-in</div><p class="ins"><b class="x">1</b><b>A</b> 
       "".join('<div class="row"><span style="display:inline-block;min-width:430px">%s</span>%s %%</div>' % (t, inp("gu_%d" % (i + 1), 70, "?")) for i, (t, a) in enumerate(GUESS)) +
       show("m1d", "Show the real numbers", "".join('%s — <b>%s%%</b><br>' % (t, a) for t, a in GUESS) + '<span class="hint">Source: YouGov, 28 April 2025, ‘Littering, loudspeakers and Lime bikes: what public nuisances bother Britons most’.</span>'))
 
+
+# Full list of pet peeves in the Cut video (in order, with time codes; English only)
+ALLPP = [("0:00", ["people who don’t wash their hands after using the toilet (⚠️ rude jokes 0:00–0:20)"]),
+ ("0:22", ["snoring", "nose picking", "people touching my face", "uncleanliness", "singing a song when you don’t know the words", "chewing loudly with your mouth open"]),
+ ("0:46", ["cutting in line at a coffee shop", "a soaking-wet bathroom floor after someone’s shower"]),
+ ("0:55", ["the smell of lots of different foods cooking at the same time", "clothes hangers on the floor", "wasting time"]),
+ ("1:02", ["sniffling", "whistling", "chewing gum / popping gum", "slurping", "people who complain about every little thing", "people who flake out on you (cancel plans)",
+           "people who complain about things they do all the time", "dirty fingernails", "licking your fingers", "leaving only one thing in the packet", "snails on the pavement that you might step on"]),
+ ("1:30", ["someone using the toilet stall right next to you when all the others are free", "not flushing the toilet", "leaving the cap off the toothpaste", "not washing your hands before you eat",
+           "people who ask you a question and then interrupt", "people who brag", "flaky people", "not knocking before coming in", "lots of cat hair on your clothes", "farting in public", "loud people"]),
+ ("2:00", ["very loud music in the car when I’m trying to talk", "loud noises", "people who stop in the middle of the pavement", "drivers who brake on the motorway when there’s no traffic",
+           "cyclists who don’t signal", "drivers who don’t use their indicator", "squeaky brakes", "people who comment on everything during a film", "talking during films",
+           "flossing your teeth in public", "people rolling their eyes at me", "friend requests from strangers on Facebook", "leaving DVDs out of their case", "customers asking ‘What size do you think I wear?’ (a shop assistant)"]),
+ ("2:40", ["shaking your leg under the table", "people pointing out that I’m sweaty", "holding a drink while dancing", "being told to do something more than once", "ignorant people", "rude people",
+           "lying", "talking too much", "not respecting personal space / walking too close to me", "children touching me"]),
+ ("3:15", ["people who overreact", "people staring at me at the gym", "people who can’t do their job", "people who ask too many questions", "not keeping to the right on the escalator", "people who cut me off (in traffic)"])]
+def _ts(t):
+    m, s_ = t.split(":"); return int(m) * 60 + int(s_)
+ALL_HTML = ('<details class="ad" style="margin-top:14px"><summary>📋 All the pet peeves in the video (%d) — open after you check</summary>' % sum(len(x) for _, x in ALLPP) +
+            "".join('<p style="margin:10px 0 2px"><a href="https://www.youtube.com/watch?v=sAvIKc3dxug&t=%ds" target="_blank" style="font-weight:600;color:#9e2d55;text-decoration:none">▶ %s</a></p><ul style="margin:0 0 6px;padding-left:22px">%s</ul>'
+                    % (_ts(t), t, "".join("<li>%s</li>" % x for x in xs)) for t, xs in ALLPP) +
+            '<p class="hint">Auto-captions are unclear in a couple of places, so a few short phrases are not in the list.</p></details>')
+
 # 2 Video 1 -------------------------------------------------------------
 HEARD = [("people who cut in line at a coffee shop", True), ("leaving the cap off the toothpaste", True), ("people who flake out on you (cancel plans)", True),
          ("people who ask a question and then interrupt you", True), ("people who brag", True), ("not knocking before coming in", True),
@@ -45,6 +68,7 @@ for i, (t, h) in enumerate(HEARD): K["h2_%d" % (i + 1)] = ["yes" if h else "no"]
 s2 = ('<div class="bsec" style="color:#c2185b">VIDEO</div><p class="ins"><b class="x">2</b><b>A</b> Watch 100 people talk about their pet peeves. It’s fast! Which of these do you hear? Choose ✓ or ✗.</p>'
       '<p class="hint">⚠️ Real people, real language — a few rude words about the bathroom at the beginning.</p>' + video("cut") +
       '<div class="two">' + "".join('<div class="row">%d. %s %s%s</div>' % (i + 1, t, sel("h2_%d" % (i + 1), ["yes", "no"], 70), fb("h2_%d" % (i + 1))) for i, (t, h) in enumerate(HEARD)) + '</div>' + ctl("h2") +
+      ALL_HTML +
       '<p class="ins" style="margin-top:24px"><b>B</b> Which pet peeves in the video are fair, and which are just <i>petty</i>? Which one do you secretly do yourself? 🙈</p>' + ta("v2b", "Fair: … / Petty: … / I’m guilty of …", 80))
 
 # 3 Vocabulary ----------------------------------------------------------
