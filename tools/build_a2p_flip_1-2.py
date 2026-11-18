@@ -53,11 +53,25 @@ s1 = ('<div class="bsec">A · Words</div>' +
       "".join(hid("srt_%d" % i) for i in range(len(SW))) +
       '<div class="ctl"><button class="btn" onclick="sortChk()">Check</button><span class="res" id="r_srt"></span></div>')
 
+AGREE = [("After a work trip, it’s a good idea to <b>stay for the weekend</b>.", "stay"),
+         ("It’s easy to <b>manage a budget</b> for a big party.", "manage"),
+         ("An events manager must <b>pay attention to detail</b>: small things are very important.", "pay"),
+         ("A party is better if you <b>invite three hundred guests</b>, not thirty.", "invite"),
+         ("It’s more fun to <b>attend a conference</b> in another city than in your home town.", "attend"),
+         ("For an events manager, it’s more important to <b>get on with people</b> than to be organised.", "get on"),
+         ("I’d like to <b>plan an event</b> for three hundred people.", "plan"),
+         ("At a team party, the boss should <b>arrange the food and the tables</b>, not the team.", "arrange")]
+sAG = ('<div class="bsec">A · Words</div>' +
+       how('<p>Прочитайте твердження. Ви згодні? Натисніть 👍 або 👎. Правильних відповідей тут немає, це ваша думка. Якщо хочете, допишіть коротко чому.</p>'
+           '<p>Зверніть увагу на <b>виділені фрази</b>. Це колокації: слова, які завжди ходять разом. Запам’ятайте їх, у наступному завданні треба буде скласти ці пари <b>з пам’яті</b>.</p>') +
+       '<p class="ins"><b class="x">A2</b>Do you agree? Click 👍 or 👎. Look at the phrases in <b>bold</b>.</p>' +
+       "".join('<div class="agr" data-i="%d"><span class="q">%d.</span> <span class="st">%s</span><span class="th"><button data-v="up">👍</button><button data-v="down">👎</button></span>%s%s</div>' % (
+           i, i + 1, t, hid("ag_%d" % i), inp("agw_%d" % i, 360, "Why? (optional)")) for i, (t, _) in enumerate(AGREE)))
 PAIRS = [("plan", "an event"), ("attend", "a conference"), ("manage", "a budget"), ("pay", "attention to detail"),
          ("get on", "with people"), ("stay", "for the weekend"), ("arrange", "the food and the tables"), ("invite", "three hundred guests")]
 s2 = ('<div class="bsec">A · Words</div>' +
-      how('<p>Слова живуть «парами» — колокаціями. Натисніть дієслово зліва, потім його пару справа. Правильна пара стане зеленою. Усі ці пари ви почуєте в подкасті.</p>') +
-      '<p class="ins"><b class="x">A2</b>Make pairs. Click a verb, then the words that go with it.</p>'
+      how('<p>Тепер <b>з пам’яті</b>: не повертайтесь до A2. Натисніть дієслово зліва, потім його пару справа. Правильна пара стане зеленою. Усі ці пари ви почуєте в подкасті.</p>') +
+      '<p class="ins"><b class="x">A3</b>From memory: make the pairs from A2. Click a verb, then the words that go with it.</p>'
       '<div class="pairs"><div class="pl">%s</div><div class="pr">%s</div></div>' % (
           "".join('<button class="pb" data-i="%d" data-s="L">%s</button>' % (i, a) for i, (a, _) in shuf(list(enumerate(PAIRS)))),
           "".join('<button class="pb" data-i="%d" data-s="R">%s</button>' % (i, b) for i, (_, b) in shuf(list(enumerate(PAIRS))))) +
@@ -71,7 +85,7 @@ ODD = [(["guest", "venue", "client", "staff"], "venue", "The others are people. 
        (["expensive", "organised", "gets on with people", "pays attention to detail"], "expensive", "The others are skills of an events manager.")]
 s3 = ('<div class="bsec">A · Words</div>' +
       how('<p>Яке слово «зайве»? Натисніть на нього — одразу побачите, чи правильно, і пояснення.</p>') +
-      '<p class="ins"><b class="x">A3</b>Odd one out. Which word is different?</p>' +
+      '<p class="ins"><b class="x">A4</b>Odd one out. Which word is different?</p>' +
       "".join('<div class="odd" data-i="%d" data-a="%s" data-e="%s"><span class="q">%d.</span> %s<div class="oe"></div></div>%s' % (
           i, a, e, i + 1, "".join('<button class="ob">%s</button>' % w for w in ws), hid("odd_%d" % i)) for i, (ws, a, e) in enumerate(ODD)))
 
@@ -97,7 +111,7 @@ for line in CTX:
     t, n = ctxline(line, n); CH += "<p>%s</p>" % t
 s4 = ('<div class="bsec">A · Words</div>' +
       how('<p>Тепер ті самі слова в реальному повідомленні. Прочитайте повідомлення колеги в Slack і натисніть правильне слово в кожній парі. Потім — Check.</p>') +
-      '<p class="ins"><b class="x">A4</b>Read the message from your colleague Marta. Choose the correct words.</p>'
+      '<p class="ins"><b class="x">A5</b>Read the message from your colleague Marta. Choose the correct words.</p>'
       '<div class="slack"><div class="sh"><span class="av">M</span><b>Marta Vidal</b> <span>10:42</span></div>%s</div>' % CH +
       "".join(hid("ctx_%d" % i) for i in range(len(CK))) +
       '<div class="ctl"><button class="btn" onclick="ctxChk()">Check</button><span class="res" id="r_ctx"></span></div>')
@@ -106,7 +120,7 @@ A3Q = ["What was the last event you attended? (a conference, a product launch, a
        "How many guests were there? Was there any entertainment?", "Have you ever stayed for the weekend after a work trip? Where?"]
 s5 = ('<div class="bsec">A · Words</div>' +
       how('<p>Тепер про <b>вас</b>. Коротко, 1–2 речення. На уроці розмова почнеться саме з цих питань.</p>') +
-      '<p class="ins"><b class="x">A5</b>Answer about you. Use the new words.</p>' +
+      '<p class="ins"><b class="x">A6</b>Answer about you. Use the new words.</p>' +
       "".join('<p class="ins"><span class="q">%d.</span> %s</p>%s' % (i + 1, q, ta("a3_%d" % (i + 1), "", 45)) for i, q in enumerate(A3Q)))
 WJS = "const SW=%s,SG=%s,PN=%d,CK=%s;" % (json.dumps(SW), json.dumps(SG), len(PAIRS), json.dumps(CK))
 
@@ -206,6 +220,7 @@ XJS = VJS + r"""
 document.head.insertAdjacentHTML("beforeend",`<style>.aud{display:flex;flex-wrap:wrap;gap:10px;align-items:center;background:#e6f4f4;padding:8px 12px;border-radius:6px;margin:8px 0}.aud .an{font-weight:600;color:#2b8185}.aud audio{height:36px}
 .sub2{font-size:14px;color:#6d6e70;margin-top:6px}
 .how{background:#fff8e6;border-left:4px solid #f2b631;border-radius:6px;padding:10px 16px;margin:10px 0 16px;font-size:15px}.how>b{display:block;margin-bottom:4px;color:#9a6b00}.how ol{margin:4px 0;padding-left:20px}.how li{margin:3px 0}.how p{margin:4px 0}
+.agr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;padding:9px 0;border-bottom:1px solid #eee}.agr .st{flex:1 1 380px}.agr .st b{color:#2b8185}.agr .th button{font-size:18px;padding:2px 10px;margin-left:4px;border:1.5px solid #c8c9cb;border-radius:16px;background:#fff;cursor:pointer;filter:grayscale(1);opacity:.7}.agr .th button.on{filter:none;opacity:1;border-color:#3fa9ad;background:#e6f4f4}.agr input{flex-basis:100%}
 .pool{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;padding:10px;border:1.5px dashed #c8c9cb;border-radius:8px;margin:8px 0 12px}
 .chip{background:#fff;border:1.5px solid #3fa9ad;color:#2b8185;border-radius:18px;padding:5px 13px;cursor:pointer;font-size:15px;user-select:none}.chip.sel{background:#3fa9ad;color:#fff}.chip.ok{border-color:#2e9b57;background:#e7f6ec;color:#1e7a43}.chip.no{border-color:#d9534f;background:#fdecec;color:#b52b27}
 .bins{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}@media(max-width:700px){.bins{grid-template-columns:1fr}}.bin{border:1.5px solid #c8c9cb;border-radius:8px;padding:8px;min-height:120px;cursor:pointer;background:#fafbfb}.bin:hover{border-color:#3fa9ad}.bin b{display:block;color:#2b8185;margin-bottom:6px}.bin .in{display:flex;flex-wrap:wrap;gap:6px}
@@ -227,6 +242,8 @@ document.addEventListener("click",e=>{const c=e.target.closest(".chip");if(c){e.
  const b=e.target.closest(".bin");if(b&&csel){const w=csel.dataset.w;chipTo(csel,b.dataset.g);setH("srt_"+SW.indexOf(w),b.dataset.g);csel=null}},true);
 function sortChk(){let n=0,left=$a("#pool .chip").length;$a(".bin .chip").forEach(c=>{const ok=SG[c.dataset.w]===c.closest(".bin").dataset.g;c.classList.add(ok?"ok":"no");if(ok)n++});
  $q("#r_srt").textContent=n+" / "+SW.length+(left?" · "+left+" words are not sorted yet":n===SW.length?" ✓ Well done!":" · Red words are in the wrong group")}
+/* A2 agree */
+document.addEventListener("click",e=>{const b=e.target.closest(".agr .th button");if(!b)return;const r=b.closest(".agr");$a(".th button",r).forEach(x=>x.classList.toggle("on",x===b));setH("ag_"+r.dataset.i,b.dataset.v)});
 /* A2 pairs */
 let psel=null,pdone=new Set();
 function prSave(){setH("prs",[...pdone].join(","));$q("#r_prs").textContent=pdone.size+" / "+PN+(pdone.size===PN?" ✓ Well done!":"")}
@@ -246,11 +263,12 @@ function ctxChk(){let n=0,t=0;$a(".tg").forEach(g=>{const v=hv("ctx_"+g.dataset.
 /* restore saved answers */
 function wRestore(){SW.forEach((w,i)=>{const g=hv("srt_"+i),c=$q(`.chip[data-w="${w}"]`);if(c)chipTo(c,g||null)});
  (hv("prs")||"").split(",").filter(Boolean).forEach(prMark);pdone.size&&($q("#r_prs").textContent=pdone.size+" / "+PN);
+ $a(".agr").forEach(r=>{const v=hv("ag_"+r.dataset.i);$a(".th button",r).forEach(x=>x.classList.toggle("on",x.dataset.v===v))});
  $a(".odd").forEach(r=>{const v=hv("odd_"+r.dataset.i);if(v)oddShow(r,v)});
  $a(".tg").forEach(g=>{const v=hv("ctx_"+g.dataset.n);$a("button",g).forEach(x=>x.classList.toggle("on",x.textContent===v))})}
 window.afterFill=wRestore;
 """
-secs = [("Start", s0), ("A1", s1), ("A2", s2), ("A3", s3), ("A4", s4), ("A5", s5), ("B", sB), ("C", sC), ("D", s6), ("E", s7), ("F1–2", s8), ("F3", s9), ("G", s10)]
+secs = [("Start", s0), ("A1", s1), ("A2", sAG), ("A3", s2), ("A4", s3), ("A5", s4), ("A6", s5), ("B", sB), ("C", sC), ("D", s6), ("E", s7), ("F1–2", s8), ("F3", s9), ("G", s10)]
 h = page("1.2", "Events management", "BEFORE CLASS", "At home: meet the words, listen to the interview, notice comparatives and superlatives, prepare to speak.",
          "BP A2+ 1.2 Events management · Before class", CODE, secs, K, VOC, acc=ACC, acc2=ACC2, dark=DARK, grad2=GR2,
          footer="Flipped classroom: do this before the lesson. Audio 1.01: AI voices. ", extra_js=XJS)
