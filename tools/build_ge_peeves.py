@@ -14,7 +14,7 @@ def video(k):
     y, t, d, short = VID[k]
     cls = "vbox short" if short else "vbox"
     return ('<div class="%s"><div class="vt"><span class="vn">▶</span> %s <span class="vd">%s</span> <a href="https://www.youtube.com/watch?v=%s" target="_blank">open on YouTube</a></div>'
-            '<div class="fr"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1" allowfullscreen loading="lazy"></iframe></div></div>') % (cls, t, d, y, y)
+            '<div class="fr"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1&cc_lang_pref=en&hl=en" allowfullscreen loading="lazy"></iframe></div></div>') % (cls, t, d, y, y)
 def show(id_, label, body): return '<button class="btn l" onclick="model(\'%s\')" style="margin-top:6px">%s</button><div class="model" id="%s">%s</div>' % (id_, label, id_, body)
 K = {}
 
@@ -52,7 +52,8 @@ ALLPP = [("0:00", ["people who don’t wash their hands after using the toilet (
  ("3:15", ["people who overreact", "people staring at me at the gym", "people who can’t do their job", "people who ask too many questions", "not keeping to the right on the escalator", "people who cut me off (in traffic)"])]
 def _ts(t):
     m, s_ = t.split(":"); return int(m) * 60 + int(s_)
-ALL_HTML = ('<details class="ad" style="margin-top:14px"><summary>📋 All the pet peeves in the video (%d) — open after you check</summary>' % sum(len(x) for _, x in ALLPP) +
+ALL_HTML = ('<p class="hint" style="margin-top:14px">📝 <b>Need the script?</b> English subtitles are on in the video. For the full text, <a href="https://www.youtube.com/watch?v=sAvIKc3dxug" target="_blank" style="color:#9e2d55">open the video on YouTube</a> → click <i>…more</i> under the video → <i>Show transcript</i>. Click any line to jump to that moment.</p>' +
+            '<details class="ad" style="margin-top:8px"><summary>📋 All the pet peeves in the video (%d) — open after you check</summary>' % sum(len(x) for _, x in ALLPP) +
             "".join('<p style="margin:10px 0 2px"><a href="https://www.youtube.com/watch?v=sAvIKc3dxug&t=%ds" target="_blank" style="font-weight:600;color:#9e2d55;text-decoration:none">▶ %s</a></p><ul style="margin:0 0 6px;padding-left:22px">%s</ul>'
                     % (_ts(t), t, "".join("<li>%s</li>" % x for x in xs)) for t, xs in ALLPP) +
             '<p class="hint">Auto-captions are unclear in a couple of places, so a few short phrases are not in the list.</p></details>')
