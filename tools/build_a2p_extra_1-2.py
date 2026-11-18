@@ -6,11 +6,15 @@ from bp_page import page, fb, sel, inp, ta, ctl, SELF
 OUT = sys.argv[1]; CODE = sys.argv[2] if len(sys.argv) > 2 else ""
 ACC, ACC2, DARK, GR2 = "#3fa9ad", "#e6f4f4", "#2b8185", "#5cc1c4"
 K = {}
-BOX = ["arrange", "client", "guests", "manage", "organise", "plan", "staff", "venue"]
-A = [("I help companies ", " events: conferences, product launches and team offsites.", "plan"), ("About ninety percent of my work is for a corporate ", ".", "client"),
-     ("For a cheap event, we choose the least expensive ", " possible.", "venue"), ("We had about three hundred ", " at the party.", "guests"),
-     ("We also ", " the food, the tables and chairs.", "arrange"), ("I usually ", " a sound system for the speeches and music.", "organise"),
-     ("The boat restaurant has 18 ", ", so the service is fast.", "staff"), ("If you can’t ", " a budget — forget it!", "manage")]
+BOX = ["arrange", "clients", "guests", "manage", "organised", "plan", "staff", "venue"]
+A = [("I help them ", " an event, like a big annual conference, a product launch, or a fun team offsite.", "plan"),
+     ("About ninety percent of my corporate ", " are businesses.", "clients"),
+     ("How do you ", " a budget?", "manage"),
+     ("For a cheap event, we choose the least expensive ", " possible.", "venue"),
+     ("We rented a fantastic rooftop and invited about three hundred ", ".", "guests"),
+     ("You have to ", " all the food, tables and chairs.", "arrange"),
+     ("… coordinate the ", ", and check every single thing.", "staff"),
+     ("You have to be ", " and pay attention to detail.", "organised")]
 for i, (_, _, a) in enumerate(A): K["a_%d" % (i + 1)] = [a]
 s1 = ('<div class="bsec">Extra activities</div><p class="ins"><b class="x">A</b>Complete the sentences from Alicia’s interview with the words in the box. Then listen again and check.</p><div class="box">%s</div>' % " · ".join(BOX) +
       '<div class="aud"><span class="an">🔊 1.01</span><audio controls preload="none" src="../audio/1-01.mp3"></audio></div>' +

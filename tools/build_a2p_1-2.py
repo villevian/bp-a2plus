@@ -34,14 +34,14 @@ def player(i):
 
 # 3–4 Listening
 CAT = ["The types of events she plans", "Important things to think about", "Important skills for an Events Manager", "What is new in her job in 2026"]
-s2 = ('<div class="bsec">Listening</div><p class="ins"><b class="x">3</b>You are going to listen to an interview with Alicia, an Events Manager in Barcelona, on the podcast <i>World of Work</i>. Think of one or two things she will talk about for each category.</p>' +
+s2 = ('<div class="bsec">Listening</div><p class="ins"><b class="x">3</b>You are going to listen to an interview with Alicia, an Events Manager in Barcelona, on a podcast. Think of one or two things she will talk about for each category.</p>' +
       "".join('<p class="ins"><span class="q">•</span>%s</p>%s' % (c, ta("p3_%d" % (i + 1), "", 40)) for i, c in enumerate(CAT)) +
       '<p class="ins" style="margin-top:22px"><b class="x">4</b>Listen to the interview. Did Alicia talk about any of your ideas from Exercise 3? Did you hear any other ideas?</p>' + player(1) +
       '<button class="btn l" onclick="model(\'m4\')">Show answers</button><div class="model" id="m4">'
-      '<b>Types of events:</b> conferences, product launches, team offsites, hybrid events, parties for companies (not weddings), welcoming new employees<br>'
-      '<b>Important things:</b> type of event, timing, budget, location / venue, an original idea, entertainment, food (vegan, gluten-free), tables and chairs, sound system, livestream<br>'
-      '<b>Skills:</b> organisation, attention to detail, people skills, managing a budget<br>'
-      '<b>New in 2026:</b> guests stay for the weekend (bleisure), QR-code registration, an AI tool for the schedule, streaming talks online, higher prices</div>')
+      '<b>Types of events:</b> events for companies (not weddings): conferences, product launches, team offsites, hybrid events, a company anniversary party<br>'
+      '<b>Important things:</b> the budget, the location / venue, entertainment (a DJ), food (vegan, gluten-free), food, tables and chairs, staff, the weather (outdoor events)<br>'
+      '<b>Skills:</b> get on with people, be organised, pay attention to detail; the top priority is client satisfaction<br>'
+      '<b>New in 2026:</b> hybrid events, QR-code registration, an AI tool for the schedule, streaming the talks live, higher prices, guests stay for the weekend (bleisure)</div>')
 
 TF5 = [("She helps people plan weddings.", "F", "She doesn’t plan weddings — wedding planners do those."), ("Most of her clients are businesses.", "T", ""),
        ("In the first meeting, she never talks about money.", "F", "She always talks about the budget at the first meeting."),
