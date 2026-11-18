@@ -18,9 +18,14 @@ def radio(k, opts):
     return "".join('<label class="opt" style="display:inline;margin:0 10px 0 0"><input type="radio" name="%s" data-k="%s" value="%s"> %s</label>' % (k, k, o, o) for o in opts)
 
 # 1 Lead-in
+LQ = ["What was the last event you attended? Was it a conference, a product launch, a team offsite or a party?", "Who organised it? Did they pay attention to detail?",
+      "What was the venue like? Was it better or worse than other venues you know?", "How many guests were there? Did you get on with the other guests?",
+      "Was there any entertainment? What was the best part?", "Have you ever attended a hybrid event? Do you prefer online or in the room? Why?",
+      "Who arranges events in your company? Is there a budget for team events?", "Have you ever stayed for the weekend after a work trip? Where? What did you do?"]
 EV = ["a conference", "a product launch", "a team offsite", "a hybrid event (in the room + online)", "a networking evening", "a company anniversary party", "a farewell party for a colleague", "a wedding"]
 s1 = ('<div class="bsec">Lead-in</div><p class="ins"><b class="x">1</b>Work in pairs. Which of these events have you been to? Which was the best? Why?</p>'
       '<div class="chips">%s</div>' % "".join("<span>%s</span>" % e for e in EV) + ta("l1", "I went to a … in … It was …", 70) +
+      '<div class="card"><b>Talk about it.</b> Use the words from the lesson vocabulary.<ol style="margin:6px 0 0;padding-left:22px">%s</ol></div>' % "".join("<li>%s</li>" % q for q in LQ) +
       '<p class="ins" style="margin-top:22px"><b class="x">2</b><b>A</b> Which of the skills and personal qualities below are useful for planning events? Why?</p>'
       '<p>You need to be: organised / able to cook food for a lot of people / good at telling jokes / able to pay attention to details / good with budgets / good with online tools / calm when plans change at the last minute</p>' +
       ta("l2a", "I think you need to be … because …", 60) +
@@ -34,7 +39,7 @@ def player(i):
 
 # 3–4 Listening
 CAT = ["The types of events she plans", "Important things to think about", "Important skills for an Events Manager", "What is new in her job in 2026"]
-s2 = ('<div class="bsec">Listening</div><p class="ins"><b class="x">3</b>You are going to listen to an interview with Alicia, an Events Manager in Barcelona, on a podcast. Think of one or two things she will talk about for each category.</p>' +
+s2 = ('<div class="bsec">Listening</div>' + '<div class="card">🏠 You did this listening at home (Before class). In class: quick check — tell the teacher your answers and what you remember.</div>' + '<p class="ins"><b class="x">3</b>You are going to listen to an interview with Alicia, an Events Manager in Barcelona, on a podcast. Think of one or two things she will talk about for each category.</p>' +
       "".join('<p class="ins"><span class="q">•</span>%s</p>%s' % (c, ta("p3_%d" % (i + 1), "", 40)) for i, c in enumerate(CAT)) +
       '<p class="ins" style="margin-top:22px"><b class="x">4</b>Listen to the interview. Did Alicia talk about any of your ideas from Exercise 3? Did you hear any other ideas?</p>' + player(1) +
       '<button class="btn l" onclick="model(\'m4\')">Show answers</button><div class="model" id="m4">'

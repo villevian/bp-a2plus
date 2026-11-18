@@ -25,7 +25,7 @@ A2P_101 = [('M', "Welcome back to the podcast! I'm Marek, and today we are live 
  ('M', 'Ah, corporate life! So who are your main clients?'),
  ('A', 'About ninety percent of my corporate clients are businesses — tech companies, banks, and start-ups. I help them plan an event, like a big annual conference, a product launch, or a fun team offsite.'),
  ('M', 'Sounds busy! And how does it work in 2026? Everything is digital now, right?'),
- ('A', 'Totally. Most events now are a hybrid event — you have people in the room and people online. We use QR-code registration at the door, an AI tool for the schedule, and we are streaming the talks live. Plus, we always make sure we have plenty of vegan and gluten-free food for every guest.'),
+ ('A', 'Totally. Most events now are a hybrid event — you have people in the room and people online. We use QR-code registration at the door, an AI tool for the schedule, and we are streaming the talks live. Plus, we always make sure we have a lot of vegan and gluten-free food for every guest.'),
  ('M', 'Wow, high-tech! And what about money? How do you manage a budget?'),
  ('A', "Well, we talk about the budget at the first meeting. Prices are higher than they were five years ago. So it's tricky. I can't choose the most expensive hotel in Barcelona for a client with a small budget."),
  ('M', 'Makes sense! And what about the opposite?'),
