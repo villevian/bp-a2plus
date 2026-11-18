@@ -68,6 +68,7 @@ HEARD = [("people who cut in line at a coffee shop", True), ("leaving the cap of
 for i, (t, h) in enumerate(HEARD): K["h2_%d" % (i + 1)] = ["yes" if h else "no"]
 s2 = ('<div class="bsec" style="color:#c2185b">VIDEO</div><p class="ins"><b class="x">2</b><b>A</b> Watch 100 people talk about their pet peeves. It’s fast! Which of these do you hear? Choose ✓ or ✗.</p>'
       '<p class="hint">⚠️ Real people, real language — a few rude words about the bathroom at the beginning.</p>' + video("cut") +
+      '<p style="margin:4px 0 14px"><a href="pet-peeves-extra.html" style="display:inline-block;padding:6px 14px;border:1.5px solid #c2416b;border-radius:16px;color:#9e2d55;text-decoration:none;font-weight:500">📝 Extra homework: collocations from this video →</a></p>' +
       '<div class="two">' + "".join('<div class="row">%d. %s %s%s</div>' % (i + 1, t, sel("h2_%d" % (i + 1), ["yes", "no"], 70), fb("h2_%d" % (i + 1))) for i, (t, h) in enumerate(HEARD)) + '</div>' + ctl("h2") +
       ALL_HTML +
       '<p class="ins" style="margin-top:24px"><b>B</b> Which pet peeves in the video are fair, and which are just <i>petty</i>? Which one do you secretly do yourself? 🙈</p>' + ta("v2b", "Fair: … / Petty: … / I’m guilty of …", 80))
