@@ -4,7 +4,7 @@ GRAD = ("#4044a8", "#7b7fe0")
 VARIANTS = {"1.2": ["all"], "6.1": ["all"]}
 TEACHER = True
 VOCAB = True     # “My vocabulary” trainer (vocab.html)   # Teacher’s Book link on the template Contents
-PAGES = {"1.2": ["lesson", "hw", "extra"], "6.1": ["lesson", "hw"]}   # extra not built yet
+PAGES = {"1.2": ["lesson", "hw", "extra", "games"], "6.1": ["lesson", "hw"]}   # extra not built yet
 LEGEND = ("modern IT context: remote teams, Slack, Jira, Notion, Figma", "new topic: AI, new ways of working")
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [

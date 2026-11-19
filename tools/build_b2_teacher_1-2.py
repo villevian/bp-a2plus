@@ -134,7 +134,9 @@ S.append(step("s8", "Homework & Extra", "home",
  "",
  ol([("HW A–D are checked automatically; read E (her comment) and comment in the admin.", "HW A–D перевіряються автоматично; прочитайте E (її коментар) і залиште відгук в адмінці."),
      ("Comments 1–4 are retold from real Reddit comments; 5–6 were written for the course. Tell the student this if she asks.", "Коментарі 1–4 — переказ реальних коментарів з Reddit; 5–6 написані для курсу. Скажіть студентці, якщо спитає."),
-     ("Extra 5B (IBM vs Salesforce) = the warm-up for the next lesson.", "Extra 5B (IBM vs Salesforce) — розминка наступного уроку.")]),
+     ("Extra 5B (IBM vs Salesforce) = the warm-up for the next lesson.", "Extra 5B (IBM vs Salesforce) — розминка наступного уроку."),
+     ("<b>In-lesson ★ screens</b> (after 4): Chunk hunt — she clicks 11 chunks in the article; Talk with a chunk — 60-second answers that must use a given chunk.", "<b>★ екрани в уроці</b> (після 4): Chunk hunt — клікає 11 блоків у статті; Talk with a chunk — відповідь 60 секунд з обов’язковим блоком."),
+     ("<b>Speaking &amp; Games</b>: 1 Chunk tennis (you serve the first half, 5 s to return) · 2 Would you rather · 3 $1M budget simulation (fast-forward to 2028, then she presents with Future Perfect) · 4 Board meeting — she picks a role with a secret, you play the rest and draw a twist card every 2–3 min · 5 Stay interview — you hold the developer’s secret · 6 Rehire call negotiation · 7 Taboo.", "<b>Speaking &amp; Games</b>: 1 Chunk tennis (ви подаєте початок, 5 с на відповідь) · 2 Would you rather · 3 симуляція бюджету $1M (перемотка у 2028, потім презентація з Future Perfect) · 4 Board meeting — вона бере роль із секретом, ви граєте решту й тягнете twist-картку кожні 2–3 хв · 5 Stay interview — секрет розробниці знаєте ви · 6 переговори Rehire call · 7 Taboo.")]),
  "",
  "<p><b>HW A:</b> 1 friend · 2 friend · 3 lost own job · 4 lost own job · 5 manager · 6 customer<br><b>HW B:</b> 1 F · 2 T · 3 F · 4 F · 5 F · 6 T<br>"
  "<b>HW C:</b> was let go · was laid off · took him back as a consultant · was amazed by · legacy system · picked up<br><b>HW D:</b> 1 or 5 · 2 or 5 · 3 · 6<br>"

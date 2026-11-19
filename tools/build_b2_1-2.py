@@ -84,10 +84,54 @@ for i, (_, a, _) in enumerate(EX7): K["s7_%d" % (i + 1)] = alts(a)
 s7 = ('<div class="bsec wr">Speaking</div><p class="ins"><b class="x">7</b><b>A</b> Complete the questions with the Future Continuous or Future Perfect Simple forms of the verbs in brackets.</p>' +
       "".join('<div class="row">%d. %s %s %s%s</div>' % (i + 1, a, inp("s7_%d" % (i + 1), 210), b, fb("s7_%d" % (i + 1))) for i, (a, _, b) in enumerate(EX7)) + ctl("s7") +
       '<p class="ins" style="margin-top:22px"><b>B</b> In pairs or small groups, ask and answer the questions in Exercise 7A.</p>'
-      '<div class="card"><b>Extra questions:</b> Will AI have changed your job by 2030? How? · Who made the smarter decision — IBM (more juniors) or Salesforce (4,000 fewer support staff)? Why? · What will your company be doing to keep good people?</div>' +
+      '<div class="card">🎮 After this, open <b>Speaking &amp; Games</b> for the board-meeting simulation and the $1M budget game.</div><div class="card"><b>Extra questions:</b> Will AI have changed your job by 2030? How? · Who made the smarter decision — IBM (more juniors) or Salesforce (4,000 fewer support staff)? Why? · What will your company be doing to keep good people?</div>' +
       ta("s7b", "Notes for your answers …", 80) + '<div style="margin-top:20px">%s</div>' % (SELF % "I can use the Future Continuous and Future Perfect Simple to talk about the future. How well can you do this now?"))
 
-XJS = VJS + r"""
+
+# ★ In-lesson vocabulary + speaking (extra, after the coursebook reading)
+import re, html as _h
+HUNT = ["pause hiring", "tripling its entry-level hiring", "poaching mid-level staff", "let 45 call-centre staff go", "reversed its decision",
+        "made people redundant", "rehired staff", "a cost-cutting exercise", "institutional knowledge leaves with them", "menial tasks", "augment people, not replace them"]
+def hunt_html():
+    out = ""
+    for p in ARTICLE:
+        p = re.sub(r"</?u>", "", p)
+        for i, c in enumerate(HUNT):
+            p = p.replace(c, "\x00%d\x00" % i)
+        parts = re.split("\x00", p); res = ""
+        for j, part in enumerate(parts):
+            if j % 2 == 1: res += '<span class="ck" data-c="%s">%s</span>' % (part, HUNT[int(part)])
+            else: res += re.sub(r"(\S+)", r'<span class="wd">\1</span>', part)
+        out += "<p>%s</p>" % res
+    return out
+for c in HUNT: assert any(c in re.sub(r"</?u>", "", p) for p in ARTICLE), c
+sCH = ('<div class="bsec">★ Vocabulary</div><p class="ins"><b class="x">★</b>Chunk hunt. Find <b>%d chunks</b> in the article about <i>cutting jobs</i>, <i>bringing people back</i> or <i>keeping people</i>. Click on a chunk — if it’s a target, it turns green.</p>' % len(HUNT) +
+       '<div class="art hunt">%s</div><div class="tbar"><span class="tm" id="hs">0 / %d found</span><button class="btn l" onclick="huntHint()">💡 Hint</button><button class="btn l" onclick="huntShow()">Show all</button></div>' % (hunt_html(), len(HUNT)) +
+       '<p class="hint" id="hh"></p>')
+TALKQ = [("Would you stay in a company that has just laid off 20% of its staff?", "stay out of fear, not loyalty"),
+         ("Is it smart to stop hiring juniors because AI can do their tasks?", "build the talent pipeline"),
+         ("Your company replaced support agents with a bot. Customers are angry. What now?", "reverse a decision"),
+         ("What do experienced people take with them when they leave?", "institutional knowledge"),
+         ("What would you do with a month-long paid sabbatical?", "take a sabbatical"),
+         ("Which menial tasks in your job could AI take over tomorrow?", "take over menial tasks"),
+         ("Is ‘we’re cutting jobs because of AI’ always true?", "AI washing"),
+         ("A rival offers your best developer +30%. What do you do?", "poach staff")]
+sTK = ('<div class="bsec wr">★ Speaking</div><p class="ins"><b class="x">★</b>Talk with a chunk. Take a card and answer for 60 seconds. You <b>must</b> use the chunk on the card — and try to add one more from the lesson.</p>'
+       '<div class="qc"><div id="tkq">Click “New card”</div><div class="must" id="tkm"></div></div>'
+       '<div class="tbar"><button class="btn" onclick="tkNew()">🔀 New card</button><button class="btn l" onclick="tkT()">⏱ 60 s</button><span class="tm" id="tkt">60</span></div>')
+XJS_ADD = r"""
+const HUNT=__HUNT__,TALKQ=__TALKQ__;let hf=new Set();
+document.addEventListener("click",e=>{const c=e.target.closest(".hunt .ck");if(c){c.classList.add("got");hf.add(c.dataset.c);document.getElementById("hs").textContent=hf.size+" / "+HUNT.length+" found"+(hf.size===HUNT.length?" ✓ Well done!":"");return}
+ const w=e.target.closest(".hunt .wd");if(w){w.classList.add("miss");setTimeout(()=>w.classList.remove("miss"),500)}});
+function huntHint(){const left=HUNT.map((c,i)=>[c,i]).filter(([c,i])=>!hf.has(String(i)));if(!left.length)return;const[c]=left[Math.floor(Math.random()*left.length)];document.getElementById("hh").textContent="💡 Look for a chunk that starts with “"+c.split(" ")[0]+" …”"}
+function huntShow(){document.querySelectorAll(".hunt .ck").forEach(c=>c.classList.add("show"))}
+let tki=-1,tkq=[...TALKQ].sort(()=>Math.random()-.5),tkI=null;function tkNew(){tki=(tki+1)%tkq.length;document.getElementById("tkq").textContent=tkq[tki][0];document.getElementById("tkm").innerHTML="Must use: <b>"+tkq[tki][1]+"</b>"}
+function tkT(){clearInterval(tkI);let t=60;const el=document.getElementById("tkt");el.textContent=t;tkI=setInterval(()=>{t--;el.textContent=t;if(t<=0){clearInterval(tkI);el.textContent="⏰"}},1000)}
+document.head.insertAdjacentHTML("beforeend",`<style>.hunt span{cursor:pointer;border-radius:3px}.hunt .wd.miss{background:#fdecec}.hunt .ck.got{background:#c9f0d6;font-weight:600}.hunt .ck.show:not(.got){background:#fff3c4}
+.tbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:10px 0}.tm{font-weight:600;color:#4044a8;background:#e8e9fa;border-radius:6px;padding:4px 12px}
+.qc{background:#4044a8;color:#fff;border-radius:12px;padding:22px;text-align:center;font-size:21px;margin:10px 0}.qc .must{margin-top:10px;font-size:16px;color:#ffe08a}</style>`);"""
+
+XJS = VJS + XJS_ADD.replace('__HUNT__', __import__('json').dumps(HUNT)).replace('__TALKQ__', __import__('json').dumps(TALKQ, ensure_ascii=False)) + r"""
 document.head.insertAdjacentHTML("beforeend",`<style>
 .art{background:#fdf6ec;border:1px solid #f0dcc0;border-radius:8px;padding:14px 22px;margin:12px 0;font-family:Georgia,serif;font-size:16.5px;line-height:1.6}
 .art .ah{font-size:24px;font-weight:700;line-height:1.25;margin-bottom:8px}.art p{margin:8px 0}.art u{text-decoration-color:#4044a8;text-decoration-thickness:2px}.art .src{font-family:"Fira Sans",sans-serif;font-size:13px;color:#888}
@@ -95,7 +139,7 @@ details.rd summary{cursor:pointer;color:#4044a8;font-weight:500;margin:6px 0}
 .tl{display:grid;grid-template-columns:1fr 1fr;gap:16px;border:1.5px solid #c8c9cb;border-radius:8px;padding:12px 16px;margin:10px 0;font-size:15px}@media(max-width:700px){.tl{grid-template-columns:1fr}}
 .tl .ax{font-family:monospace;color:#4044a8;margin:8px 0;white-space:nowrap;overflow:auto}.tl i{color:#4044a8}
 .eg{color:#4044a8}.box{border:1.5px solid #c8c9cb;border-radius:6px;padding:6px 12px;display:inline-block;margin:6px 0 10px}</style>`);"""
-secs = [("1–2", s1), ("3", s2), ("4", s3), ("5A", s4), ("5B–C", s5), ("6", s6), ("7", s7)]
+secs = [("1–2", s1), ("3", s2), ("4", s3), ("★ Chunks", sCH), ("★ Talk", sTK), ("5A", s4), ("5B–C", s5), ("6", s6), ("7", s7)]
 h = page("1.2", "Employee retention", "LESSON", "Learners can use the Future Continuous and the Future Perfect Simple to talk about events that are taking place or that have finished at a point in the future.",
          "BP B2 1.2 Employee retention · Lesson", CODE, secs, K, VOC, acc=ACC, acc2=ACC2, dark=DARK, grad2=GR2,
          footer="Article written for this course from 2025–2026 news reports. ", extra_js=XJS)
