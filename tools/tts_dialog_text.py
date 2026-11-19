@@ -56,3 +56,22 @@ A2_101 = [("I", "Hi, Dan. Have you got a minute?"),
  ("I", "Yes, that’s fine. Then we can go for lunch after the meeting."),
  ("D", "OK, so the new sprint planning meeting is at one o’clock on Friday the 29th. I’ll update the invite in Google Calendar. See you then."),
  ("I", "Thanks. See you then!")]
+
+
+# Outcomes A1 8B Extra (A2+): radio street interviews about town plans. R = reporter Kate, T = Tom, A = Anna, G = George
+OA_8B = [("R", "Good morning! This is Our Town Today. The council has three big plans this year, and we want to know what you think. Excuse me, have you got a minute?"),
+ ("T", "Sure."),
+ ("R", "The council is going to switch off the street lights from one to five in the morning, to save money. What do you think?"),
+ ("T", "I don’t think it’s a good idea. I walk my dog late at night, and the streets are going to be very dark. It’s going to be bad for safety."),
+ ("R", "Thank you. And you? What do you think?"),
+ ("A", "Actually, I think it’s a good idea. It’s going to save money, and it’s good for the environment. And I’d like to see the stars at night!"),
+ ("R", "In a small town in Germany, you can call a number on your phone, and the street lights come on for fifteen minutes."),
+ ("A", "Ha! That’s brilliant. I’d really like that here."),
+ ("R", "The second plan is a new stadium by the river. It’s going to cost forty million euros."),
+ ("G", "Forty million? That’s not a good use of money. They’re going to close the library on Sundays, but they have money for a stadium? Our kids need more schools and a bigger library, not more football."),
+ ("R", "So you’re against it."),
+ ("G", "Yes. And the roads are already crowded. On match days, it’s going to be terrible."),
+ ("R", "And the last plan: a new metro line to the airport. It’s going to take six years to complete."),
+ ("T", "Six years! That’s a long time. But I agree with the plan. It’s going to save time for everyone, and it’s going to employ a lot of local people."),
+ ("A", "I agree. Now it takes an hour to get to the airport by bus."),
+ ("R", "Thank you, everyone! And what do you think? Write to us on our page.")]
