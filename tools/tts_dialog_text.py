@@ -42,3 +42,17 @@ A2P_101 = [('M', "Welcome back to the podcast! I'm Marek, and today we are live 
  ('A', 'Well, you need to get on with people, be totally organised, and have great attention to detail. But the top priority is client satisfaction. Honestly, you need all the skills together!'),
  ('M', 'Perfect summary. Alicia, thank you so much!'),
  ('A', 'De nada, Marek! See you at the next venue!')]
+
+
+# A2 1.01 (updated, IT): Ira (project manager) calls Dan (developer) to reschedule the sprint planning meeting
+A2_101 = [("I", "Hi, Dan. Have you got a minute?"),
+ ("D", "Oh, hi, Ira. Sure. How are things?"),
+ ("I", "Fine, thanks. But we need to change the date of the sprint planning meeting, sorry. Are you available on Friday the 29th, in the morning?"),
+ ("D", "Sorry, no, I’m not. I have a demo for a client on Friday morning, until eleven. Let me check my calendar… Then I have a call with the Berlin team at twelve, for an hour. I’m available in the afternoon. How about Friday afternoon?"),
+ ("I", "Sorry, I’m afraid I’m busy then. I meet clients on Friday afternoon from two o’clock. Wait… How about lunchtime on Friday?"),
+ ("D", "Friday lunchtime is good. I’m available. What time, exactly?"),
+ ("I", "I usually have lunch at one o’clock. How about then?"),
+ ("D", "Sounds good. Shall we meet in the meeting room Kyiv?"),
+ ("I", "Yes, that’s fine. Then we can go for lunch after the meeting."),
+ ("D", "OK, so the new sprint planning meeting is at one o’clock on Friday the 29th. I’ll update the invite in Google Calendar. See you then."),
+ ("I", "Thanks. See you then!")]

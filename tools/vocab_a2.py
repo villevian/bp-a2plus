@@ -2,6 +2,31 @@
 Each item: (en, uk, definition, example, collocations). Used by lesson pages (click a word -> card) and the vocab trainer.
 """
 VOCAB = [
+ ("1.2", "A work plan", [
+  ("Meetings", [
+   ("budget meeting", "нарада про бюджет", "a meeting about money: how much we can spend", "In the budget meeting we talk about money for the new app.", ["the budget for…", "a small budget"]),
+   ("client meeting", "зустріч із клієнтом", "a meeting with a customer", "I have a client meeting on Tuesday morning.", ["meet clients", "a client demo"]),
+   ("planning meeting", "нарада з планування", "a meeting to plan the work", "The sprint planning meeting is on Friday.", ["sprint planning", "plan the week"]),
+   ("project meeting", "нарада по проєкту", "a meeting about a project", "We have a project meeting every Thursday.", ["a project update"]),
+   ("management meeting", "нарада керівництва", "a meeting of managers", "My boss is at a management meeting all day.", ["managers", "the management team"]),
+  ]),
+  ("Work tasks", [
+   ("book a meeting room", "забронювати переговорну", "reserve a room for a meeting", "Can you book a meeting room for Friday?", ["book a room", "book a call"]),
+   ("send out the agenda", "розіслати порядок денний", "send the list of topics for a meeting to everyone", "I send out the agenda before the meeting.", ["the agenda for the meeting"]),
+   ("create a brief", "створити бриф (опис завдання)", "write a short document: the task and what the client wants", "The designer needs a brief from the client.", ["write a brief", "a design brief"]),
+   ("prepare a presentation", "підготувати презентацію", "make slides for a talk", "I prepare a presentation for the client demo.", ["make slides", "give a presentation"]),
+   ("get an update", "отримати оновлення (новини)", "ask somebody for new information about their work", "Can I get an update from the QA team?", ["give an update", "a quick update"]),
+   ("calculate costs", "розрахувати витрати", "find out how much something will cost", "We calculate costs for the new server.", ["costs", "the price"]),
+  ]),
+  ("Scheduling", [
+   ("Are you available on…?", "Ти вільний / вільна у…?", "a question: do you have time then?", "Are you available on Friday morning?", ["I’m available after lunch."]),
+   ("I’m busy then.", "Я тоді зайнятий / зайнята.", "I don’t have time at that time", "Sorry, I’m afraid I’m busy then.", ["I’m not available."]),
+   ("How about…?", "Як щодо…?", "a way to suggest a time or a day", "How about Thursday at 2 p.m.?", ["What about…?"]),
+   ("Shall we…?", "Давай…? / Може…?", "a polite way to suggest something", "Shall we meet in the meeting room?", ["Let’s…"]),
+   ("That’s fine.", "Це підходить.", "yes, it’s OK for me", "Thursday at 2 p.m.? Yes, that’s fine.", ["Sounds good.", "Perfect!"]),
+   ("See you then.", "Тоді до зустрічі.", "a way to finish when you agree a time", "OK, Friday at one. See you then.", ["See you on Friday."]),
+  ]),
+ ]),
  ("7.2", "Services and subscriptions", [
   ("Fees", [
    ("fee", "плата, збір", "money you pay for a service", "What is the fee for this course?", ["pay a fee", "charge a fee", "a small / high fee", "the fee includes …"]),

@@ -2,13 +2,13 @@ LEVEL = "A2"
 ACC, ACC2 = "#3b7dd8", "#e3eefb"          # blue
 GRAD = ("#2a5fb0", "#4f9be8")
 COLS = 5                                   # A2 book: 5 lessons per unit, x.5 = business workshop
-VARIANTS = {"1.1": ["all"], "7.2": ["all"]}
-PAGES = {"1.1": ["lesson", "hw"], "7.2": ["lesson", "hw", "extra", "games"]}   # extra not built yet
+VARIANTS = {"1.1": ["all"], "1.2": ["all"], "7.2": ["all"]}
+PAGES = {"1.1": ["lesson", "hw"], "1.2": ["lesson", "hw"], "7.2": ["lesson", "hw", "extra", "games"]}   # extra not built yet
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [
  ("1", "Working day", [
   ("1.1", "Daily tasks", "Vocabulary: jobs and tasks · Present Simple: facts and routines · Introducing yourself on a video call", "updated", "ready"),
-  ("1.2", "A work plan", "Vocabulary: work tasks · Planning and prioritising the week · Scheduling a meeting in Slack / Google Calendar", "both", "soon", "Email to schedule a meeting"),
+  ("1.2", "A work plan", "Vocabulary: work tasks and meetings · Review of 1.1 · Scheduling a meeting in Slack / Google Calendar", "both", "ready", "Email to schedule a meeting"),
   ("1.3", "A survey", "Questions · An employee survey (Google Forms) about the office and remote work", "updated", "soon"),
   ("1.4", "Work skills: Talking about people and roles", "Video: What do you do? · Talking about people and roles in a team", "kept", "soon"),
   ("1.5", "Business workshop: We want to meet you…", "A company webpage · Arranging to meet on a video call · Talking about your job", "updated", "soon")]),

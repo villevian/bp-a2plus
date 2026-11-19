@@ -5,9 +5,10 @@ Voices: GitHub release rhasspy/piper v0.0.2 (voice-*.tar.gz) extracted to /tmp/v
 import sys, wave, os, subprocess, tempfile, io
 from piper import PiperVoice
 VD = "/tmp/voices/"
-from tts_dialog_text import A702, A2P_101
+from tts_dialog_text import A702, A2P_101, A2_101
 DIALOGS = {"7-02": (A702, {"E": "en-us-lessac-medium", "T": "en-us-ryan-medium"}),
-           "1-01": (A2P_101, {"A": "en-us-lessac-medium", "M": "en-us-ryan-medium"})}
+           "1-01": (A2P_101, {"A": "en-us-lessac-medium", "M": "en-us-ryan-medium"}),
+           "a2-1-01": (A2_101, {"I": "en-us-lessac-medium", "D": "en-us-ryan-medium"})}
 out = sys.argv[1]; lines, vm = DIALOGS[os.path.basename(out).rsplit(".", 1)[0]]
 voices = {s: PiperVoice.load(VD + m + ".onnx") for s, m in vm.items()}
 tmp = tempfile.mkdtemp(); parts = []
