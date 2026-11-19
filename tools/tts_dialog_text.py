@@ -75,3 +75,19 @@ OA_8B = [("R", "Good morning! This is Our Town Today. The council has three big 
  ("T", "Six years! That’s a long time. But I agree with the plan. It’s going to save time for everyone, and it’s going to employ a lot of local people."),
  ("A", "I agree. Now it takes an hour to get to the airport by bus."),
  ("R", "Thank you, everyone! And what do you think? Write to us on our page.")]
+
+
+# Outcomes A1 8B Extra v2 (A2+): radio phone-in "Good idea, bad idea?" — everyday life (neighbours, train, solar panels). R host, T Tom, A Anna, G George
+OA_8B2 = [("R", "Hello and welcome to Good Idea, Bad Idea? — the show where you call us about your plans. Our first caller is Tom. Hi, Tom!"),
+ ("T", "Hi! So, my neighbours are building a new kitchen. They started in March. It’s November now, and it’s still not complete! Every morning at eight o’clock: bang, bang, bang. And now they’re going to build a room on the roof too."),
+ ("R", "Oh no! What are you going to do?"),
+ ("T", "I’m going to talk to them this weekend. I don’t think it’s a good idea to wait."),
+ ("R", "Good luck, Tom! Our next caller is Anna. Hi, Anna!"),
+ ("A", "Hi! I want to sell my car and go to work by train. It’s good for the environment, and I can read on the train. But my husband doesn’t agree. He says the trains are very crowded in the morning."),
+ ("R", "Hmm. Is the train faster?"),
+ ("A", "Yes! It’s going to save time — about twenty minutes every day. And I’m not going to pay for parking."),
+ ("R", "I think it’s a good idea, Anna! And our last caller is George."),
+ ("G", "Hello. The government is going to pay half of the money for solar panels on houses. My wife wants them. They cost six thousand euros."),
+ ("R", "And is that a good use of money?"),
+ ("G", "I think so. Our electricity bills are very high. And a local company is going to do the work. They employ ten people from our town, so it’s good for the local economy too."),
+ ("R", "Brilliant! Thanks, everyone. Call us again next week!")]
