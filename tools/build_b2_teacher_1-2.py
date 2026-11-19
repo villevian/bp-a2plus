@@ -8,7 +8,7 @@ head = base[:base.index("S = []")]
 tail = base[base.index("NAV = ("):]
 tail = tail[tail.index("CSS = "):]
 tail = ('NAV = (\'<button data-s="s0" class="on">\' + T("Overview", "Огляд") + "</button>" + "".join(\'<button data-s="s%d">%s</button>\' % (i, l) for i, l in '
-        '[(1, "1–2"), (2, "3"), (3, "4"), (4, "5A"), (5, "5B–C"), (6, "6"), (7, "7"), (8, "HW / Extra")]))\n\n' + tail)
+        '[(12, "🗺 Script"), (1, "1–2"), (2, "3"), (3, "4"), (9, "★ Chunks"), (10, "★ Talk"), (4, "5A"), (5, "5B–C"), (6, "6"), (7, "7"), (11, "Games"), (8, "HW / Extra")]))\n\n' + tail)
 tail = (tail.replace("<title>1.1 Research in tech — Teacher’s Book</title>", "<title>1.2 Employee retention — Teacher’s Book</title>")
         .replace('<div class="n">1.1</div><h1>Research in tech</h1>', '<div class="n">1.2</div><h1>Employee retention</h1>')
         .replace("../lessons/1-1/all/lesson.html", "../lessons/1-2/all/lesson.html")
@@ -141,5 +141,87 @@ S.append(step("s8", "Homework & Extra", "home",
  "<p><b>HW A:</b> 1 friend · 2 friend · 3 lost own job · 4 lost own job · 5 manager · 6 customer<br><b>HW B:</b> 1 F · 2 T · 3 F · 4 F · 5 F · 6 T<br>"
  "<b>HW C:</b> was let go · was laid off · took him back as a consultant · was amazed by · legacy system · picked up<br><b>HW D:</b> 1 or 5 · 2 or 5 · 3 · 6<br>"
  "<b>Extra 2:</b> fired · let you go · made redundant · axes · laid off. Never say the bank staff were <i>fired</i> — they did nothing wrong.</p>"))
+
+# ---------- 🗺 Script: the whole lesson at a glance ----------
+ROWS = [
+ ("1–2 Lead-in", "8", "Warm up the topic through her own job; check the 5 book words.", "Щоб тема стала особистою; перевірити 5 слів із книги.",
+  "diverse work · menial tasks · promotion · sabbatical · work-life balance",
+  "Imagine your company says: ‘AI will do 30% of our work next year.’ What would make you stay?"),
+ ("3 Reading (gist)", "7", "First contact with the 2026 story: IBM, Klarna, the bank. Main idea only.", "Перше знайомство з історією 2026: IBM, Klarna, банк. Тільки головна думка.",
+  "lay off · rehire · reverse a decision · AI washing",
+  "Read in 3 minutes. Don’t stop at new words. Find the five words from Exercise 1 and one more idea for keeping people."),
+ ("4 Reading (detail)", "8", "Read closely; correct false sentences with chunks from the text.", "Уважне читання; виправити хибні твердження блоками з тексту.",
+  "made people redundant · admitted an error · replacement cost",
+  "True or false? For every false one, show me the line in the text."),
+ ("★ Chunk hunt", "6", "NOTICE: she finds 11 chunks in the article herself — noticing is step 1 of the lexical approach.", "ПОМІТИТИ: вона сама знаходить 11 блоків у статті — це перший крок лексичного підходу.",
+  "pause hiring · poaching mid-level staff · institutional knowledge · augment people, not replace them",
+  "The article is full of useful chunks. Find eleven — click them. Which ones can you use about your company?"),
+ ("★ Talk with a chunk", "8", "USE: 60-second answers that must include a chunk — from text to her own speech.", "ВЖИТИ: відповідь 60 секунд з обов’язковим блоком — з тексту в її власне мовлення.",
+  "stay out of fear, not loyalty · build the talent pipeline · take over menial tasks",
+  "Take a card. One minute. You must use the chunk on the card — and add one more if you can."),
+ ("5A–C Grammar", "12", "The article’s predictions show Future Continuous / Future Perfect in a real context.", "Прогнози в статті показують Future Continuous / Future Perfect у реальному контексті.",
+  "will be poaching · will have rehired · by 2027 · in five years’ time",
+  "Look at the two timelines: one action in progress, one already finished. Which one is ‘by 2027 companies will have rehired’?"),
+ ("6 Grammar practice", "6", "Controlled practice in IT contexts.", "Контрольована практика в IT-контекстах.",
+  "will be taking · will have promoted",
+  "Same verbs as the book — but about IT teams. In progress or finished?"),
+ ("7A–B Speaking", "12", "Her own future at work + debate IBM vs Salesforce.", "Її власне майбутнє на роботі + дебати IBM vs Salesforce.",
+  "will you be looking for · will you have reached · talent pipeline · cut headcount",
+  "Complete the questions — then ask me, and I’ll ask you. Real plans, not textbook answers."),
+ ("Games (in class or next lesson)", "15–25", "Simulations: she makes decisions and defends them — vocabulary under pressure.", "Симуляції: вона ухвалює рішення й захищає їх — лексика «під тиском».",
+  "all chunks of the lesson", "Pick ONE: the board meeting with twist cards (best for B2) or the $1M budget."),
+ ("Homework + Extra", "home", "Real people’s stories (6 comments) + Lexical lab: practise and personalise.", "Історії людей (6 коментарів) + Lexical lab: потренувати й присвоїти.",
+  "let go · laid off · take back as a consultant · legacy system",
+  "Read six people’s stories. Then write your own comment — as if you were on Reddit."),
+]
+SCRIPT = ('<section id="s12" class="sec"><div class="bsec">%s</div>' % T("Lesson script — what, when, why, which words", "Сценарій уроку — що, коли, навіщо, які слова") +
+  block("aim", T("Logic of the lesson", "Логіка уроку"), "<p>%s</p>" % T(
+   "<b>Facts → Notice → Use → Grammar → Own future → Simulation.</b> She first meets the words in a real story (3–4), then finds them herself (★ Chunk hunt), then has to use them out loud (★ Talk), then the grammar of predictions (5–7), and finally makes decisions in a simulation (Games). Homework brings real people’s voices and her own written comment.",
+   "<b>Факти → Помітити → Вжити → Граматика → Власне майбутнє → Симуляція.</b> Спершу вона зустрічає слова в реальній історії (3–4), потім сама їх знаходить (★ Chunk hunt), потім мусить вжити вголос (★ Talk), далі граматика прогнозів (5–7), і насамкінець ухвалює рішення в симуляції (Games). Домашка — живі голоси людей і її власний коментар.")) +
+  '<table class="tt"><tr><th>%s</th><th>⏱</th><th>%s</th><th>%s</th><th>%s</th></tr>%s</table>' % (
+   T("Stage", "Етап"), T("Why", "Навіщо"), T("Words to push", "Які слова «тягнемо»"), T("Say this", "Скажіть це"),
+   "".join("<tr><td><b>%s</b></td><td>%s</td><td>%s</td><td><i>%s</i></td><td><i>“%s”</i></td></tr>" % (a, b, T(c, d), e, f) for a, b, c, d, e, f in ROWS)) +
+  block("watch", T("If you have 60 minutes", "Якщо у вас 60 хвилин"), ul([
+   ("Do 1–4, ★ Chunk hunt, ★ Talk, 5A–C and 7. Give 6 as homework. Play one game at the start of the next lesson.", "Зробіть 1–4, ★ Chunk hunt, ★ Talk, 5A–C і 7. Вправу 6 — додому. Одну гру — на початку наступного уроку."),
+   ("If you have 90 minutes: everything + the board-meeting simulation.", "Якщо 90 хвилин: усе + симуляція board meeting.")])) +
+  block("tgt", T("Feedback rule", "Правило фідбеку"), ul([
+   ("During speaking, don’t interrupt. Write down: (1) a wrong form (<i>will rehire</i> instead of <i>will have rehired</i>), (2) a single word where a chunk was needed, (3) <i>fire</i> instead of <i>lay off</i>. Give feedback in the last 3 minutes.",
+    "Під час говоріння не перебивайте. Записуйте: (1) неправильну форму (<i>will rehire</i> замість <i>will have rehired</i>), (2) окреме слово там, де потрібен блок, (3) <i>fire</i> замість <i>lay off</i>. Фідбек — в останні 3 хвилини.")])) +
+  "</section>")
+S.append(SCRIPT)
+
+S.append(step("s9", "★ Chunk hunt (after 4)", "6 min",
+ ("Noticing: the student finds lexical chunks in a text she already understands.", "Помічання: студентка знаходить лексичні блоки в тексті, який вона вже розуміє."),
+ ("find 11 chunks and sort them mentally into cutting / bringing back / keeping people.", "знайти 11 блоків і подумки розкласти їх: скорочення / повернення / утримання."),
+ chips(["pause hiring", "poaching mid-level staff", "let 45 staff go", "reversed its decision", "made people redundant", "rehired staff", "a cost-cutting exercise", "institutional knowledge", "menial tasks", "augment people, not replace them"]),
+ say("You already know what the article says. Now let’s steal its language. There are eleven useful chunks — click them. A word that’s not part of a chunk turns red.") +
+ ol([("She clicks; a found chunk turns green. Use 💡 Hint if she is stuck for more than a minute.", "Вона клікає; знайдений блок стає зеленим. Якщо застрягла більше ніж на хвилину — 💡 Hint."),
+     ("After she finds them all, ask: which three will you really use at work? She says a sentence with each.", "Коли знайде всі, спитайте: які три ви справді вживатимете на роботі? Речення з кожним.")]) +
+ qs(["Which chunk is the most negative? The most positive?", "Which chunk would your CEO use? Which one would a union use?"]),
+ ul([("Students often click single words (<i>hiring</i>). Push for the whole chunk: <i>pause hiring</i>.", "Студенти часто клікають окремі слова (<i>hiring</i>). Тягніть до цілого блоку: <i>pause hiring</i>.")]),
+ "<p>pause hiring · tripling its entry-level hiring · poaching mid-level staff · let 45 call-centre staff go · reversed its decision · made people redundant · rehired staff · a cost-cutting exercise · institutional knowledge leaves with them · menial tasks · augment people, not replace them</p>"))
+
+S.append(step("s10", "★ Talk with a chunk", "8 min",
+ ("Move the chunks from the text into her own speech.", "Перенести блоки з тексту в її власне мовлення."),
+ ("answer for 60 seconds using the chunk on the card correctly.", "відповісти 60 секунд, правильно вживши блок із картки."),
+ "",
+ say("Take a card. You have one minute. You must use the chunk on the card — I’m listening for it. Then it’s my turn: you choose a card for me.") +
+ ol([("3–4 cards for her, 1–2 for you (you model good answers).", "3–4 картки їй, 1–2 вам (ви показуєте зразок)."),
+     ("If she avoids the chunk, stop the timer and ask: ‘Where’s your chunk?’", "Якщо вона уникає блоку — зупиніть таймер: ‘Where’s your chunk?’")]) +
+ qs(["Is that true for your company?", "What would you do in that situation?"]),
+ "", "<p>No fixed answers. Success = the chunk is used correctly at least once, with a reason.</p>"))
+
+S.append(step("s11", "Speaking & Games", "15–25 min",
+ ("Use the vocabulary and future forms under pressure in simulations.", "Вживати лексику й майбутні форми «під тиском» у симуляціях."),
+ ("make and defend decisions about keeping people, using chunks and Future Perfect.", "ухвалювати й захищати рішення про утримання людей, вживаючи блоки та Future Perfect."),
+ "",
+ say("Today you’re not a student — you’re on the board of a tech company. Choose your role and read your secret. Don’t show it to me!") +
+ ol([("<b>Chunk tennis</b> (3 min, warm-up): you serve the first half, she returns the rest in 5 s.", "<b>Chunk tennis</b> (3 хв, розминка): ви подаєте початок, вона «відбиває» продовження за 5 с."),
+     ("<b>Board meeting</b> (15 min, best for B2): she picks a role; you play the others. Draw a twist card every 2–3 min — she must change or defend her position. End with a vote and her 3-line Slack message.", "<b>Board meeting</b> (15 хв, найкраще для B2): вона бере роль; ви граєте решту. Кожні 2–3 хв тягніть twist-картку — вона змінює або захищає позицію. Кінець — голосування і її Slack-повідомлення на 3 рядки."),
+     ("<b>$1M budget</b> (10 min): she moves the sliders, presses Fast-forward to 2028, then presents to you (the CEO) with <i>By 2028 we will have…</i>", "<b>Бюджет $1M</b> (10 хв): вона рухає повзунки, тисне Fast-forward to 2028 і презентує вам (CEO) з <i>By 2028 we will have…</i>"),
+     ("<b>Stay interview / Rehire call</b>: you hold the secret (Teacher only). Reward good questions with information.", "<b>Stay interview / Rehire call</b>: секрет у вас (Teacher only). Винагороджуйте хороші питання інформацією.")]) +
+ qs(["What was the hardest twist card? Why?", "What would you do differently next time?"]),
+ ul([("Don’t correct during the simulation. Collect 3–4 mistakes for the end.", "Не виправляйте під час симуляції. Зберіть 3–4 помилки на кінець.")]),
+ "<p>Open activities. Success = she uses at least 5 chunks and 2 future forms, and gives reasons.</p>"))
 '''
 exec(compile(head + content + tail, "build_b2_teacher_1-2", "exec"), {"__name__": "__main__"})
