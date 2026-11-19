@@ -18,8 +18,9 @@ STUDENTS = [
  ("Violeta", "B2", "bp-violeta", "6.1", True, False),
  ("Daria", "B2", "bp-daria", "1.2, 6.1", True, False),
 ]
+OUT_ST = [("Maria Razladova", "Outcomes A1", "outcomes-elementary-course/maria", "Unit 8: opener, 8A (+ Extra), 8B, 8C", "maria")]
 GE = [("Anna", "General English B1", "ge-anna", "Gerund vs infinitive: Reddit drama"), ("Yana", "General English B2+", "ge-yana", "Pet peeves (+ extra homework)")]
-OTHER = [("Outcomes Elementary (A1)", G + "outcomes-elementary-course/", "Interactive Outcomes materials, Unit 8"),
+OTHER = [("Outcomes Elementary — old course map (units 1–6)", G + "outcomes-elementary-course/", "Old Outcomes system: student dashboard, admin, tests"), ("Outcomes A1 Unit 8 — template", G + "outcomes-elementary-course/a1-unit8/", "Opener, 8A–8C, Extra 8A"),
          ("Français A1", G + "francais-A1/", "French classroom tool"),
          ("B2 Unit 6 plan", "https://claude.ai/artifact/MctrHNzzRTjr5xortL5tM4", "Topics and changes for Unit 6")]
 
@@ -36,6 +37,8 @@ for nm, lv, repo, rd, vocab, gloss in STUDENTS:
     base = G + repo + "/"
     links = a(base, "🏠 Site") + (a(base + "vocab.html", "🔤 Vocabulary") if vocab else "") + (a(base + "glossary.html", "📖 Glossary") if gloss else "") + a(G + "bp-admin/#s/" + repo[3:], "📊 Answers")
     studs += '<div class="st" data-s="%s"><div><b>%s</b> <span class="tag">%s</span><br><small>Open: %s</small></div><div class="ln">%s</div></div>' % (html.escape((nm + " " + lv + " " + rd).lower()), nm, lv, rd, links)
+studs += "".join('<div class="st" data-s="%s"><div><b>%s</b> <span class="tag">%s</span><br><small>Open: %s</small></div><div class="ln">%s</div></div>' % (
+    html.escape((n + " " + l + " " + rd).lower()), n, l, rd, a(G + r + "/", "🏠 Site") + a(G + "bp-admin/#s/" + sl, "📊 Answers")) for n, l, r, rd, sl in OUT_ST)
 ge = "".join('<div class="st" data-s="%s"><div><b>%s</b> <span class="tag">%s</span><br><small>%s</small></div><div class="ln">%s</div></div>' % (
     html.escape((n + " " + l + " " + t).lower()), n, l, t, a(G + r + "/", "🏠 Site")) for n, l, r, t in GE)
 oth = "".join('<div class="st" data-s="%s"><div><b>%s</b><br><small>%s</small></div><div class="ln">%s</div></div>' % (html.escape((n + " " + d).lower()), n, d, a(u, "Open")) for n, u, d in OTHER)
