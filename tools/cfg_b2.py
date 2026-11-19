@@ -1,16 +1,16 @@
 LEVEL = "B2"
 ACC, ACC2 = "#5b5fc7", "#e8e9fa"          # indigo
 GRAD = ("#4044a8", "#7b7fe0")
-VARIANTS = {"6.1": ["all"]}
+VARIANTS = {"1.2": ["all"], "6.1": ["all"]}
 TEACHER = True
 VOCAB = True     # “My vocabulary” trainer (vocab.html)   # Teacher’s Book link on the template Contents
-PAGES = {"6.1": ["lesson", "hw"]}   # extra not built yet
+PAGES = {"1.2": ["lesson", "hw", "extra"], "6.1": ["lesson", "hw"]}   # extra not built yet
 LEGEND = ("modern IT context: remote teams, Slack, Jira, Notion, Figma", "new topic: AI, new ways of working")
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [
  ("1", "Corporate culture", [
   ("1.1", "Workplace culture", "Video: A culture of equal pay · Vocabulary: corporate culture · Remote-first, async and flat teams · Project: a team working agreement", "updated", "soon"),
-  ("1.2", "Employee retention", "Future Continuous & Future Perfect · Why people leave tech jobs: burnout, career paths, 4-day week · Where do you see yourself in five years?", "updated", "soon"),
+  ("1.2", "Employee retention", "Fired by AI, hired back: AI layoffs, rehiring and what really keeps people (IBM, Klarna) · Future Continuous & Future Perfect · Lexical lab: chunks for cutting and keeping jobs", "updated", "ready"),
   ("1.3", "Communication skills: Building relationships", "Video: Building relationships · Building trust · Choosing a candidate", "kept", "soon"),
   ("1.4", "Business skills: Presenting yourself", "Presenting yourself to a new project team · Intro at a kick-off call, on LinkedIn and in Slack", "updated", "soon"),
   ("1.5", "Writing: A company news update", "Team update in Slack / Notion · Phrases with be", "both", "soon", "A company news blog · Phrases with be"),

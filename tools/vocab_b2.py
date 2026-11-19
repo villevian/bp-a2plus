@@ -1,5 +1,40 @@
 """Vocabulary data for Business Partner B2 (per lesson). Each item: (en, uk, definition, example)."""
 VOCAB = [
+ ("1.2", "Employee retention", [
+  ("From the coursebook", [
+   ("diverse work", "різноманітна робота", "jobs and tasks that are very different from each other", "Juniors stay longer when they get diverse work, not the same ticket every day.", ["offer diverse work", "a mix of projects", "rotate between teams"]),
+   ("menial tasks", "рутинні, примітивні завдання", "work that needs little skill", "AI can take over menial tasks like formatting reports.", ["do / take over menial tasks", "boring, repetitive work", "automate menial tasks"]),
+   ("promotion", "підвищення (на посаді)", "getting a better-paid, more responsible job", "Clear promotion paths keep people in the company.", ["get / be up for a promotion", "promote somebody to senior", "a promotion path"]),
+   ("sabbatical", "оплачувана тривала відпустка (sabbatical)", "an agreed break from your job for a fixed period", "Meta gives a 30-day paid break after five years.", ["take a sabbatical", "a month-long paid sabbatical", "go on sabbatical"]),
+   ("work-life balance", "баланс роботи й особистого життя", "giving the right time and energy to work and to your life outside work", "Good work-life balance is still a top reason to stay.", ["improve work-life balance", "a healthy balance", "switch off after work"]),
+  ]),
+  ("Cutting jobs", [
+   ("lay off staff", "звільняти (через скорочення)", "end people’s jobs because the company needs fewer workers, not because of their performance", "The bank laid off 45 call-centre staff.", ["mass layoffs", "be laid off", "a wave of layoffs"]),
+   ("let somebody go", "звільнити (м’яко)", "a polite way to say somebody loses their job", "Her manager decided AI could do her job and let her go.", ["let 45 people go", "we had to let him go"]),
+   ("make somebody redundant", "скоротити (посаду)", "(formal, UK) end somebody’s job because it is no longer needed", "Leaders who made people redundant because of AI now regret it.", ["redundancy", "a redundancy package", "the role became redundant"]),
+   ("cut headcount", "скоротити штат", "reduce the number of people a company employs", "Salesforce cut its support headcount from 9,000 to 5,000.", ["reduce / rebalance headcount", "a headcount freeze", "headcount costs"]),
+   ("a cost-cutting exercise", "захід для економії", "an action whose real aim is to save money", "The union called it a cynical cost-cutting exercise.", ["cost-cutting measures", "cut costs", "save money"]),
+   ("AI washing", "«AI-вошинг»: прикривати скорочення ІІ", "saying job cuts are about AI when the real reason is money", "Analysts warn that some layoffs are just AI washing.", ["dress up job cuts as innovation", "blame AI for cuts"]),
+  ]),
+  ("Bringing people back", [
+   ("rehire staff", "знову найняти людей", "employ people again after letting them go", "A third of companies have already rehired staff.", ["rehire for similar roles", "a wave of rehiring", "hire back"]),
+   ("reverse a decision", "скасувати рішення", "change a decision to the opposite", "The bank reversed its decision after calls went up.", ["reverse course", "do a U-turn", "backtrack on a plan"]),
+   ("bring somebody back as a consultant", "повернути когось як консультанта", "employ an ex-employee again, often for more money", "They brought him back as a consultant at $300 an hour.", ["take somebody back", "a contractor", "on a freelance basis"]),
+   ("a backlash", "хвиля критики, негативна реакція", "a strong negative reaction from many people", "The cuts caused a backlash from customers and unions.", ["face a backlash", "a social media backlash", "a backlash against AI"]),
+   ("admit a mistake", "визнати помилку", "say that you were wrong", "The CEO admitted the strategy had gone too far.", ["admit an error", "own a mistake", "learn from a mistake"]),
+  ]),
+  ("Keeping people", [
+   ("employee retention", "утримання працівників", "keeping your staff in the company", "Employee retention is cheaper than hiring.", ["improve retention", "a retention strategy", "retention rates"]),
+   ("replacement cost", "вартість заміни працівника", "the money a company spends to replace somebody who leaves", "The replacement cost can be up to twice a salary.", ["the cost of replacing an employee", "hiring costs", "lost productivity"]),
+   ("institutional knowledge", "знання, що тримаються на людях", "what experienced staff know about clients, systems and history of the company", "When people leave, institutional knowledge leaves with them.", ["lose institutional knowledge", "pass on knowledge", "undocumented know-how"]),
+   ("entry-level hiring", "найм джунів / початківців", "employing people for their first jobs", "IBM is tripling its entry-level hiring.", ["junior roles", "triple / freeze hiring", "a graduate scheme"]),
+   ("talent pipeline", "кадровий резерв", "the flow of people who will become future specialists and managers", "No juniors today means no managers tomorrow — the talent pipeline is empty.", ["build / hollow out the pipeline", "invest in talent", "succession planning"]),
+   ("poach staff", "переманювати працівників", "take employees from another company by offering more", "Companies will be poaching mid-level staff at a 30% premium.", ["at a premium", "poach talent from rivals", "headhunt"]),
+   ("job hugging", "«job hugging»: триматися за роботу зі страху", "staying in your job out of fear, not loyalty", "57% of US workers say they are job hugging.", ["stay out of fear, not loyalty", "cling to your job", "quiet quitting"]),
+   ("augment, not replace", "посилювати, а не заміняти", "help people do more, not take their jobs", "AI should augment people, not replace them.", ["work alongside AI", "AI as a tool", "human in the loop"]),
+   ("legacy system", "застаріла (успадкована) система", "old software that a company still depends on", "Nobody left understands our legacy system.", ["maintain a legacy system", "legacy code", "migrate from a legacy system"]),
+  ]),
+ ]),
  ("6.1", "Ethical choices", [
   ("Business ethics", [
    ("ethical", "етичний", "morally right and fair", "Is it ethical to use fake discounts?"),
@@ -51,3 +86,11 @@ VOCAB = [
    ("none of the participants", "жоден з учасників", "zero people", "None of the participants read the terms."),
    ("the findings suggest that", "результати свідчать, що", "the results show (carefully) that", "The findings suggest that people are not aware of dark patterns.")])]),
 ]
+
+
+def lesson(num):
+    """(title, groups) for vcard; 4-tuple items get an empty collocation list."""
+    for n, t, gs in VOCAB:
+        if n == num:
+            return t, [(g, [tuple(w) if len(w) == 5 else tuple(w) + ([],) for w in ws]) for g, ws in gs]
+    raise KeyError(num)
