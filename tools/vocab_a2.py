@@ -61,6 +61,42 @@ VOCAB = [
    ("guarantee", "гарантія", "a promise from a company that something will be OK", "They offer a six-month guarantee on candidates.", ["a money-back guarantee", "a three-month guarantee"]),
   ]),
  ]),
+ ("7.3", "The best providers", [
+  ("Providers", [
+   ("mobile operator", "мобільний оператор", "a company that gives you a phone number, calls and mobile internet", "Kyivstar is the biggest mobile operator in Ukraine.", ["choose a mobile operator", "change your operator", "a mobile phone contract"]),
+   ("internet provider", "інтернет-провайдер", "a company that gives you internet at home or in the office", "Our internet provider is very reliable.", ["home internet", "change your internet provider"]),
+   ("energy provider", "постачальник електроенергії", "a company that sells electricity or gas", "We changed our energy provider to save money.", ["electricity", "an energy bill"]),
+   ("service provider", "постачальник послуг", "a company that provides a service to other companies or people", "We need a new service provider for office cleaning.", ["choose a service provider", "the best provider"]),
+   ("eSIM", "eSIM (електронна SIM-картка)", "a SIM card inside the phone — no plastic card", "The company gives every new employee an eSIM.", ["activate an eSIM", "a corporate eSIM"]),
+   ("business plan / tariff", "бізнес-тариф", "a price plan for companies, not for one person", "The business tariff includes 50 GB of mobile internet.", ["a corporate tariff", "a business plan for 25 users"]),
+  ]),
+  ("What is important?", [
+   ("network coverage", "покриття мережі", "where your phone works: in cities, villages, the metro", "SkyMobile has the best network coverage — it works everywhere.", ["good / bad coverage", "coverage in the metro"]),
+   ("download speed", "швидкість завантаження", "how fast you get files and pages from the internet", "LineUp has the fastest download speed.", ["upload speed", "fast / slow internet", "Mbps"]),
+   ("value for money", "співвідношення ціни та якості", "you get a lot for the price you pay", "Volt is the best value for money.", ["good / bad value for money", "the worst value for money"]),
+   ("service reliability", "надійність сервісу", "the service works every day without problems", "Service reliability is the most important thing for us.", ["a reliable service", "the most reliable provider"]),
+   ("staff knowledge", "знання персоналу", "how much the support team knows", "Their support staff are the most knowledgeable.", ["knowledgeable staff", "friendly staff"]),
+   ("problem solving", "вирішення проблем", "how well and how fast a company fixes your problem", "Problem solving is their worst area.", ["solve a problem", "fix a problem quickly"]),
+   ("satisfied customers", "задоволені клієнти", "customers who are happy with the service", "Volt has the most satisfied customers.", ["customer satisfaction", "a customer survey"]),
+   ("quality of communication", "якість комунікації", "how clear and fast a company talks to you", "The quality of communication is very good.", ["clear communication", "answer quickly"]),
+   ("easy to access", "легкий доступ", "it is easy to contact the company or use the service", "Their support is easy to access — in a chat, 24/7.", ["easy to contact", "24/7 support"]),
+  ]),
+  ("Superlatives", [
+   ("the best", "найкращий", "superlative of good", "SkyMobile has the best coverage.", ["the best value", "the best service"]),
+   ("the worst", "найгірший", "superlative of bad", "LineUp has the worst support.", ["the worst problem solving"]),
+   ("the fastest", "найшвидший", "superlative of fast", "Which operator has the fastest internet?", ["the fastest download speed"]),
+   ("the cheapest", "найдешевший", "superlative of cheap", "Volt is the cheapest operator.", ["the cheapest plan"]),
+   ("the most reliable", "найнадійніший", "superlative of reliable", "SkyMobile is the most reliable provider.", ["the most reliable service"]),
+   ("the longest wait", "найдовше очікування", "you wait more time than with other companies", "LineUp has the longest wait for support.", ["wait for support", "a long wait"]),
+   ("the highest / the lowest", "найвищий / найнижчий", "superlatives of high and low", "Volt has the lowest prices and the highest number of satisfied customers.", ["the highest prices", "the lowest price"]),
+  ]),
+  ("Email phrases", [
+   ("Please find attached …", "У вкладенні …", "you send a file with the email", "Please find attached the survey results.", ["Please find attached a copy of …"]),
+   ("Please find a summary below.", "Нижче — короткий підсумок.", "the main information is in the email, under this line", "We compared three operators. Please find a summary below.", ["a short summary"]),
+   ("If you have any questions, please let me know.", "Якщо будуть питання — дайте знати.", "a polite way to offer more help", "If you have any questions, please let me know.", ["Let me know if …"]),
+   ("Best regards,", "З повагою,", "a way to end a business email", "Best regards, Iryna", ["Kind regards,"]),
+  ]),
+ ]),
 ]
 
 def lesson(num):
