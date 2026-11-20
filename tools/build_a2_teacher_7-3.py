@@ -103,5 +103,5 @@ S.append(("s10", "Extra", step("s10", "Extra · ключі", "",
 S.append(("s11", "Games", step("s11", "Speaking & Games", "",
  "<p>Окрема сторінка: розмова за картками (60 с), Memory, Definition race, Unscramble, Strength or area of improvement?, Taboo, 3 рольові ігри (продаж оператора, вибір коворкінгу, скарга).</p>",
  ["Let’s play! Take a card and talk for a minute."], ul(["У рольових іграх картка B — ваша."]), [], "")))
-open(os.path.join(OUT, "7-3.html"), "w").write(pagef("7.3", "The best providers", BASE + "lesson.html", overview, S))
+open(os.path.join(OUT, "7-3.html"), "w").write(pagef("7.3", "The best providers", BASE + "lesson.html", overview, S).replace("студентці", "студенту"))
 print("ok", OUT)

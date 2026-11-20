@@ -122,7 +122,7 @@ S.append(("s12", "Extra", step("s12", "Extra · ключі", "",
  "2A: 1 an hour · 2 per month · 3 at no extra cost · 4 of charge; 2B: €8 per user per month · $2.5 billion · £399 · 10–15% · €159 a year<br>"
  "3A: 1 up · 2 increase · 3 save · 4 down · 5 from</p>")))
 
-open(os.path.join(OUT, "7-2.html"), "w").write(pagef("7.2", "Services and subscriptions", BASE + "lesson.html", overview, S))
+open(os.path.join(OUT, "7-2.html"), "w").write(pagef("7.2", "Services and subscriptions", BASE + "lesson.html", overview, S).replace("студентці", "студенту"))
 idx = ('<section id="s0" class="sec on"><div class="bsec">Business Partner A2 · Teacher’s Book</div>'
        + blk("aim", "Unit 7 Competition", ul(['<a href="7-2.html">7.2 Services and subscriptions — hidden fees (Adobe, Microsoft, Amazon)</a> · Lesson · Homework · Extra', '<a href="7-3.html">7.3 The best providers — mobile operators for company eSIMs (superlatives)</a> · Lesson · Homework · Extra · Games']))
        + "</section>")
