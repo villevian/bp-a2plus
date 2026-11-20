@@ -2,8 +2,8 @@ LEVEL = "A2"
 ACC, ACC2 = "#3b7dd8", "#e3eefb"          # blue
 GRAD = ("#2a5fb0", "#4f9be8")
 COLS = 5                                   # A2 book: 5 lessons per unit, x.5 = business workshop
-VARIANTS = {"1.1": ["all"], "1.2": ["all"], "7.2": ["all"], "7.3": ["all"]}
-PAGES = {"1.1": ["lesson", "hw"], "1.2": ["lesson", "hw"], "7.2": ["lesson", "hw", "extra", "games"], "7.3": ["lesson", "hw", "extra", "games"]}   # extra not built yet
+VARIANTS = {"1.1": ["all"], "1.2": ["all"], "7.2": ["all"], "7.3": ["all"], "7.4": ["all"]}
+PAGES = {"1.1": ["lesson", "hw"], "1.2": ["lesson", "hw"], "7.2": ["lesson", "hw", "extra", "games"], "7.3": ["lesson", "hw", "extra", "games"], "7.4": ["present"]}   # extra not built yet
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [
  ("1", "Working day", [
@@ -46,7 +46,7 @@ U = [
   ("7.1", "Should I upgrade?", "Comparatives · Upgrading a phone, laptop or software plan", "updated", "soon"),
   ("7.2", "Services and subscriptions", "Vocabulary: fees and hidden fees · Reading: Adobe, Microsoft, Amazon · Listening: recruitment agencies · An honest pricing page", "both", "ready", "Advertisement for a courier agency"),
   ("7.3", "The best providers", "Superlatives · Mobile operators for company eSIMs · A recommendation in Slack", "both", "ready", "Email comparing services (Travel Care)"),
-  ("7.4", "Work skills: Presentations", "Video: Our products and services · Presenting", "kept", "soon"),
+  ("7.4", "Work skills: Presentations", "Video: Our products and services · Presenting online: share your screen · Presentation kit", "updated", "ready"),
   ("7.5", "Business workshop: The big contract", "A trade show · Giving a presentation · A recommendation message", "updated", "soon")]),
  ("8", "Jobs", [
   ("8.1", "Work experience", "Talking about experience (Present Perfect) · Skills and personal qualities", "kept", "soon"),

@@ -15,6 +15,7 @@ python3 $T/build_a2_extra_7-3.py $D/lessons/7-3/all/extra.html $C
 python3 $T/build_a2_games_7-3.py $D/lessons/7-3/all/games.html $C
 cp $D/lessons/7-3/all/hw.html $D/lessons/7-3/all/extra.html $D/lessons/7-3/all/games.html $D/lessons/7-3/all-classic/
 rm -f $D/lessons/7-3/index.html
+python3 $T/build_a2_present_7-4.py $D/lessons/7-4/all/present.html
 python3 $T/build_vocab.py $D/vocab.html vocab_a2 A2 "$C" "#3b7dd8" "#e3eefb" "#2a5fb0"
 printf "# Business Partner A2 — Pavlo\n\nStudent site (GitHub Pages). Built by bp-a2plus/tools/make_pavlo.sh\n" > $D/README.md
 echo built $D
