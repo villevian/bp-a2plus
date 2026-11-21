@@ -79,6 +79,6 @@ S.append(("s10", "Extra", step("s10", "Extra · ключі", "", "<p>A–B — E
 
 open(os.path.join(OUT, "1-2.html"), "w").write(pagef("1.2", "Events management", BASE + "lesson.html", overview, S))
 idx = ('<section id="s0" class="sec on"><div class="bsec">Business Partner A2+ · Teacher’s Book</div>' +
-       blk("aim", "Unit 1 Travelling for work (bleisure, Barcelona)", ul(['<a href="1-2.html">1.2 Events management — Lesson · Homework · Extra</a>'])) + "</section>")
+       blk("aim", "Unit 1 Travelling for work (bleisure, Barcelona)", ul(['<a href="1-2.html">1.2 Events management — Lesson · Homework · Extra</a>', '<a href="1-2-speak.html">1.2 Speaking: business situations — твоя роль, приблизний діалог, «якщо вона… → ти…»</a>'])) + "</section>")
 open(os.path.join(OUT, "index.html"), "w").write(TPL.replace("__NUM__", "A2+").replace("__TITLE__", "Teacher’s Book").replace("__URL__", "../index.html").replace("__NAV__", "").replace("__BODY__", idx))
 print("ok", OUT)
