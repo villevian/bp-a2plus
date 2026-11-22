@@ -1,0 +1,132 @@
+"""Student home page in a learning-platform style (replaces the contents table on STUDENT sites only; level templates keep build_contents.py).
+No coursebook name, no level, no teacher tags (kept/updated). Sidebar · greeting · stat cards · continue learning · homework · my course.
+Data: cfg module (U, STUDENT, ASSIGNED, PAGES, VARIANTS, GLOSSARY, VOCAB) + Supabase (get_my_cabinet, get_my_progress).
+Usage: python3 build_student_home.py OUT.html cfg_larysa
+"""
+import sys, json, importlib, time
+OUT = sys.argv[1]; CFG = importlib.import_module(sys.argv[2])
+ST = CFG.STUDENT; ASG = getattr(CFG, "ASSIGNED", {}) or {}
+units = []
+for u, title, ls in CFG.U:
+    rows = []
+    for l in ls:
+        n, t, d, tag, status = l[:5]; cl = l[5] if len(l) > 5 else None
+        a = ASG.get(n)
+        tr = (a.get("track") if isinstance(a, dict) else a) or ST.get("track", "all") if a else None
+        pages = (a.get("pages") if isinstance(a, dict) else None) or getattr(CFG, "PAGES", {}).get(n) or ["lesson", "hw", "extra"]
+        if a and tr not in getattr(CFG, "VARIANTS", {}).get(n, ["all"]): tr = "all"
+        rows.append({"n": n, "t": t.replace("Business workshop: ", "Workshop: "), "d": d, "open": bool(a and status == "ready"), "tr": tr, "pages": pages if a else [], "classic": bool(cl)})
+    units.append({"u": u, "t": title, "ls": rows})
+import os
+_d = os.path.dirname(os.path.abspath(OUT))
+LINKS = []
+if getattr(CFG, "VOCAB", False) or os.path.exists(os.path.join(_d, "vocab.html")): LINKS.append(("vocab.html", "📚", "My vocabulary"))
+if getattr(CFG, "GLOSSARY", False) or os.path.exists(os.path.join(_d, "glossary.html")): LINKS.append(("glossary.html", "📖", "Glossary"))
+DATA = {"units": units, "student": {"name": ST["name"], "code": ST.get("code", "")}, "links": LINKS, "build": time.strftime("%Y%m%d%H%M")}
+
+HTML = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>__NAME__ · My English</title><meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--or:#ff6b3d;--or2:#fff1ea;--ink:#1f2a44;--mut:#8a92a6;--line:#e8ebf2;--bg:#f5f7fb;--ok:#23824a;--ok2:#e7f6ec;--wa:#b26b00;--wa2:#fff4e0;--bl:#3b5bdb;--bl2:#eef3ff;--bad:#c0392b}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg);font-size:15px;line-height:1.45}
+a{color:inherit}.app{display:grid;grid-template-columns:240px 1fr;min-height:100vh}
+aside{background:#fff;border-right:1px solid var(--line);padding:22px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:4px}
+.me{display:flex;align-items:center;gap:10px;padding:0 8px 18px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#ff8a5c,#ff6b3d);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex:none}
+.me b{display:block;font-size:15px}.me span{font-size:12.5px;color:var(--mut)}
+aside a.nv{display:flex;align-items:center;gap:10px;text-decoration:none;color:#5b6478;padding:9px 10px;border-radius:10px;font-weight:500;font-size:14.5px}
+aside a.nv:hover{background:var(--bg)}aside a.nv.on{background:var(--or2);color:var(--or)}aside a.nv i{font-style:normal;width:20px;text-align:center}
+aside .sp{flex:1}.tch{font-size:12.5px;color:var(--mut);padding:10px;border-top:1px solid var(--line)}.tch b{display:block;color:var(--ink);font-weight:600;font-size:13px}
+main{padding:28px 34px 50px;max-width:1180px;width:100%}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;margin-bottom:20px}.top h1{margin:0;font-size:26px;font-weight:700}.top p{margin:4px 0 0;color:var(--mut)}
+.ring{display:flex;align-items:center;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:8px 14px}.ring svg{width:46px;height:46px}.ring b{display:block;font-size:15px}.ring span{font-size:12.5px;color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(var(--n,4),minmax(0,1fr));gap:14px;margin-bottom:18px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:16px 18px;box-shadow:0 2px 10px rgba(31,42,68,.04)}
+.card h3{margin:0 0 10px;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;color:var(--mut);font-weight:600;display:flex;align-items:center;gap:6px}
+.big{font-size:20px;font-weight:700;line-height:1.25}.sub{color:#5b6478;font-size:14px;margin-top:3px}
+.num{font-size:40px;font-weight:700;line-height:1}.bar{height:8px;background:#eef0f4;border-radius:6px;overflow:hidden;margin-top:10px}.bar i{display:block;height:100%;border-radius:6px;background:var(--or)}
+.pill{display:inline-block;font-size:12.5px;font-weight:600;border-radius:8px;padding:2px 9px}
+.p-ok{background:var(--ok2);color:var(--ok)}.p-wa{background:var(--wa2);color:var(--wa)}.p-no{background:#f1f2f6;color:#6b7387}.p-new{background:var(--bl2);color:var(--bl)}.p-bad{background:#fdecec;color:var(--bad)}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;background:var(--or);color:#fff;text-decoration:none;border-radius:10px;padding:8px 14px;font-weight:600;font-size:14px;border:0;cursor:pointer}
+.btn.l{background:#fff;color:var(--ink);border:1.5px solid var(--line)}.btn.l:hover{border-color:var(--or);color:var(--or)}
+.mid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:14px;margin-bottom:26px}
+.hero .no{display:inline-block;background:var(--or2);color:var(--or);font-weight:700;border-radius:10px;padding:4px 10px;font-size:14px;margin-bottom:8px}
+.hero h2{margin:0 0 6px;font-size:24px}.hero p{margin:0 0 14px;color:#5b6478}.hero .bs{display:flex;flex-wrap:wrap;gap:8px}
+.msg{margin-top:14px;background:#fffaf0;border:1px solid #f6dfb5;border-radius:14px;padding:12px 16px;color:#5b4a2a}
+.hw{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-top:1px solid #f1f2f6}.hw:first-of-type{border-top:0}.hw a{text-decoration:none;font-weight:600}.hw small{display:block;color:var(--mut);font-weight:400}
+h2.sec{font-size:20px;margin:0 0 12px}
+.unit{background:#fff;border:1px solid var(--line);border-radius:18px;margin-bottom:12px;overflow:hidden}
+.uh{display:flex;align-items:center;gap:14px;padding:14px 18px;cursor:pointer}.uh .ub{width:38px;height:38px;border-radius:12px;background:var(--bl2);color:var(--bl);font-weight:700;display:flex;align-items:center;justify-content:center}
+.uh .ut{flex:1}.uh .ut b{display:block;font-size:16px}.uh .ut span{font-size:13px;color:var(--mut)}.uh .ub2{width:140px}.uh .chev{color:var(--mut);transition:.2s}.unit.open .chev{transform:rotate(90deg)}
+.ls{display:none;border-top:1px solid var(--line)}.unit.open .ls{display:block}
+.l{display:grid;grid-template-columns:48px 1fr auto;gap:12px;align-items:center;padding:12px 18px;border-top:1px solid #f3f4f8}.l:first-child{border-top:0}
+.l .ln{width:40px;height:40px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:13px;color:#5b6478}
+.l.done .ln{background:var(--ok2);border-color:var(--ok2);color:var(--ok)}.l.cur .ln{border-color:var(--or);color:var(--or)}
+.l b{font-weight:600}.l p{margin:2px 0 6px;font-size:13.5px;color:var(--mut)}.l .pg{display:flex;flex-wrap:wrap;gap:6px}.l .pg a{font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid var(--line);border-radius:9px;padding:3px 10px;color:var(--ink)}.l .pg a:hover{border-color:var(--or);color:var(--or)}
+.l.lock{opacity:.55}.l.lock .ln{border-style:dashed}
+.empty{color:var(--mut);font-size:14px}
+footer{color:var(--mut);font-size:12.5px;margin-top:30px}
+@media(max-width:1000px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.mid{grid-template-columns:1fr}}
+@media(max-width:760px){.app{grid-template-columns:minmax(0,1fr)}aside{position:sticky;top:0;z-index:5;height:auto;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:10px 12px;gap:2px}aside a.nv{white-space:nowrap;padding:8px}.ring{display:none}.hero .bs .btn{white-space:normal}.me{border:0;padding:0 8px 0 0;margin:0}aside .sp,.tch{display:none}main{padding:18px 16px 40px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.uh .ub2{display:none}.l{grid-template-columns:40px 1fr}.l>.st{grid-column:2}}
+</style></head><body><div class="app">
+<aside><div class="me"><div class="av" id="av"></div><div><b id="nm"></b><span>Student</span></div></div>
+<a class="nv on" href="#top"><i>🏠</i>Dashboard</a><a class="nv" href="#course"><i>📘</i>My course</a><a class="nv" href="#homework"><i>📝</i>Homework</a><span id="xl"></span>
+<div class="sp"></div><div class="tch">Your teacher<b>Valentyna Hordiienko</b>Middle Learning Architect</div></aside>
+<main id="top"><div class="top"><div><h1 id="hi"></h1><p id="today"></p></div><div class="ring" id="ring"></div></div>
+<div class="stats" id="stats"></div>
+<div class="mid"><div><div class="card hero" id="hero"></div><div id="msg"></div></div><div class="card" id="homework"><h3>📝 Homework</h3><div id="hwl"><p class="empty">Loading…</p></div></div></div>
+<h2 class="sec" id="course">My course</h2><div id="units"></div>
+<footer>Valentyna Hordiienko · Middle Learning Architect</footer></main></div>
+<script>
+const D=__DATA__;const SB="https://zuegojpfhgigsvyrnymt.supabase.co",SK="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
+const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const rpc=(f,b)=>fetch(SB+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SK,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(r=>r.ok?r.json():Promise.reject(r.status));
+const NM={flip:"Before class",lesson:"Lesson",hw:"Homework",extra:"Extra practice",games:"Speaking & games",present:"Presentation kit",speak:"Speaking practice"};
+const path=(n,tr,p)=>`lessons/${n.replace(".","-").toLowerCase()}/${tr}/${p}.html?v=${D.build}`;
+const first=D.student.name.split(" ")[0];$("av").textContent=first[0];$("nm").textContent=D.student.name;
+const h=new Date().getHours();$("hi").textContent=(h<12?"Good morning":h<18?"Good afternoon":"Good evening")+", "+first+"! 👋";
+$("today").textContent=new Date().toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"long"});
+$("xl").innerHTML=D.links.map(([u,i,t])=>`<a class="nv" href="${u}"><i>${i}</i>${t}</a>`).join("");
+const OPEN=[];D.units.forEach(u=>u.ls.forEach(l=>{if(l.open)OPEN.push(l)}));
+let PROG={},HWD={},CAB={};
+function status(n){return PROG[n]||"new"}
+function pageLinks(l,cls){const out=[];l.pages.forEach(p=>{out.push(`<a class="${cls||""}" href="${path(l.n,l.tr,p)}">${NM[p]||p}</a>`);if(l.classic&&p==="lesson")out.push(`<a class="${cls||""}" href="${path(l.n,l.tr+"-classic",p)}">Lesson · email version</a>`)});return out.join("")}
+function pill(s){return s==="done"?'<span class="pill p-ok">✓ Done</span>':s==="progress"?'<span class="pill p-wa">In progress</span>':'<span class="pill p-new">New</span>'}
+function render(){
+ const cur=OPEN.find(l=>CAB.current_lesson&&CAB.current_lesson.startsWith(l.n))||OPEN[OPEN.length-1];
+ const done=OPEN.filter(l=>status(l.n)==="done").length,pct=OPEN.length?Math.round(done/OPEN.length*100):0;
+ $("ring").innerHTML=`<svg viewBox="0 0 36 36"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#eef0f4" stroke-width="4"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="#ff6b3d" stroke-width="4" stroke-linecap="round" stroke-dasharray="${pct*0.974} 100" transform="rotate(-90 18 18)"/></svg><div><b>${pct}%</b><span>${done} of ${OPEN.length} lessons done</span></div>`;
+ // stats
+ const S=[];
+ if(CAB.next_lesson){const d=new Date(CAB.next_lesson),ms=d-new Date(),days=Math.round(ms/864e5),w=ms<0?"":ms<36e5?"in "+Math.max(1,Math.round(ms/6e4))+" min":ms<864e5?"in "+Math.round(ms/36e5)+" h":days===1?"tomorrow":"in "+days+" days";
+  S.push(`<div class="card"><h3>📅 Next lesson</h3><div class="big">${d.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"short"})}</div><div class="sub">${d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})} ${w?'· <span class="pill p-new">'+w+"</span>":""}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank">Join the call</a></div>`:""}</div>`)}
+ else S.push(`<div class="card"><h3>📅 Lessons</h3><div class="big">${esc(CAB.schedule||"—")}</div><div class="sub">${CAB.schedule?"your usual time":"Your teacher will set the next date"}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank">Join the call</a></div>`:""}</div>`);
+ const hwOpen=OPEN.filter(l=>l.pages.includes("hw")),hwLeft=hwOpen.filter(l=>!HWD[l.n]).length;
+ S.push(`<div class="card"><h3>📝 Homework</h3><div class="num" style="color:${hwLeft?"#b26b00":"#23824a"}">${hwLeft}</div><div class="sub">${hwLeft?"to do":"all done — great!"}${CAB.homework_due?" · due "+new Date(CAB.homework_due+"T12:00").toLocaleDateString("en-GB",{day:"numeric",month:"short"}):""}</div></div>`);
+ if((CAB.payment||"private")==="private"&&CAB.lessons_left!=null){const n=CAB.lessons_left,c=n<=0?"#c0392b":n<=2?"#e08a00":"#23824a";
+  S.push(`<div class="card"><h3>🎟 Lessons left</h3><div class="num" style="color:${c}">${n}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,n*10))}%;background:${c}"></i></div><div class="sub" style="margin-top:6px">${n<=0?"Time to top up your package":n<=2?"Only a few lessons left":"in your package"}</div></div>`)}
+ S.push(`<div class="card"><h3>📈 Progress</h3><div class="num">${done}<span style="font-size:18px;color:#8a92a6"> / ${OPEN.length}</span></div><div class="bar"><i style="width:${pct}%"></i></div><div class="sub" style="margin-top:6px">lessons completed</div></div>`);
+ $("stats").innerHTML=S.join("");$("stats").style.setProperty("--n",S.length);
+ // hero
+ $("hero").innerHTML=cur?`<h3>▶ Continue learning</h3><span class="no">${cur.n.startsWith("W")?"Workshop":"Lesson "+esc(cur.n)}</span> ${pill(status(cur.n))}<h2>${esc(cur.t)}</h2><p>${esc(cur.d)}</p><div class="bs">${cur.pages.map(p=>`<a class="btn ${p==="lesson"?"":"l"}" href="${path(cur.n,cur.tr,p)}">${NM[p]||p}</a>`).join("")}${cur.classic?`<a class="btn l" href="${path(cur.n,cur.tr+"-classic","lesson")}">Lesson · email version</a>`:""}</div>`:'<p class="empty">Your first lesson will appear here.</p>';
+ $("msg").innerHTML=CAB.note?`<div class="msg">💬 <b>From your teacher:</b> ${esc(CAB.note)}</div>`:"";
+ // homework list
+ const hl=[];if(CAB.homework||CAB.homework_url)hl.push(`<div class="hw"><div><a href="${esc(CAB.homework_url||"#")}">${esc(CAB.homework||"Homework")}</a><small>${CAB.homework_due?"Due "+new Date(CAB.homework_due+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}):"from your teacher"}</small></div>${pill(HWD[(String(CAB.homework_url||"").match(/lessons\/([^/]+)\//)||[])[1]?.replace("-",".")]?"done":"new")}</div>`);
+ OPEN.slice().reverse().forEach(l=>{if(!l.pages.includes("hw"))return;if(CAB.homework_url&&CAB.homework_url.includes("/"+l.n.replace(".","-")+"/"))return;hl.push(`<div class="hw"><div><a href="${path(l.n,l.tr,"hw")}">${esc(l.n)} ${esc(l.t)}</a><small>Homework</small></div>${HWD[l.n]?'<span class="pill p-ok">✓ Sent</span>':'<span class="pill p-wa">To do</span>'}</div>`)});
+ $("hwl").innerHTML=hl.length?hl.join(""):'<p class="empty">No homework yet.</p>';
+ // course
+ $("units").innerHTML=D.units.map(u=>{const op=u.ls.filter(l=>l.open),dn=op.filter(l=>status(l.n)==="done").length,isCur=cur&&u.ls.includes(cur);
+  return `<div class="unit${isCur?" open":""}"><div class="uh"><div class="ub">${esc(u.u)}</div><div class="ut"><b>${esc(u.t)}</b><span>${op.length?dn+" of "+op.length+" open lessons done":"Coming soon"}</span></div><div class="ub2"><div class="bar" style="margin:0"><i style="width:${op.length?dn/u.ls.length*100:0}%"></i></div></div><div class="chev">›</div></div>
+  <div class="ls">${u.ls.map(l=>{const s=status(l.n);return `<div class="l ${l.open?(s==="done"?"done":""):"lock"} ${cur&&l===cur?"cur":""}"><div class="ln">${l.open&&s==="done"?"✓":esc(l.n.startsWith("W")?"W":l.n)}</div><div><b>${esc(l.t)}</b><p>${esc(l.d)}</p>${l.open?`<div class="pg">${pageLinks(l)}</div>`:""}</div><div class="st">${l.open?pill(s):'<span class="pill p-no">🔒 Soon</span>'}</div></div>`}).join("")}</div></div>`}).join("");
+ document.querySelectorAll(".uh").forEach(x=>x.onclick=()=>x.parentNode.classList.toggle("open"));
+}
+render();
+if(D.student.code){Promise.all([rpc("get_my_cabinet",{p_code:D.student.code}).catch(()=>[]),rpc("get_my_progress",{p_code:D.student.code}).catch(()=>[])]).then(([c,p])=>{
+ CAB=(c&&c[0])||{};(p||[]).forEach(r=>{const m=String(r.lesson).match(/(\d+\.\d+|W\d+)/);if(!m)return;const n=m[1];
+  if(/homework|· hw/i.test(r.lesson)){if(r.submitted)HWD[n]=1}
+  if(/lesson|classic|· updated/i.test(r.lesson)||!/homework|extra|games|speak|before/i.test(r.lesson)){PROG[n]=r.submitted?"done":(PROG[n]==="done"?"done":"progress")}else if(!PROG[n])PROG[n]="progress"});render()})}
+document.querySelectorAll("aside a.nv").forEach(a=>a.addEventListener("click",()=>{document.querySelectorAll("aside a.nv").forEach(x=>x.classList.remove("on"));a.classList.add("on")}));
+</script></body></html>"""
+open(OUT, "w").write(HTML.replace("__DATA__", json.dumps(DATA, ensure_ascii=False)).replace("__NAME__", ST["name"]))
+print("ok", OUT)

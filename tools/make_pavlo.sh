@@ -3,6 +3,7 @@
 set -e; D=$1; C=${2:-}; T=$(dirname "$0"); A2=$T/../../bp-a2
 sed -i "s/\"code\": \"[^\"]*\"/\"code\": \"$C\"/" $T/cfg_pavlo.py
 python3 $T/build_contents.py $D/index.html cfg_pavlo
+python3 $T/build_student_home.py $D/index.html cfg_pavlo
 python3 $T/build_a2_7-2.py $D/lessons/7-2 $C
 python3 $T/build_a2_hw_7-2.py $D/lessons/7-2/all/hw.html $C
 python3 $T/build_a2_extra_7-2.py $D/lessons/7-2/all/extra.html $C
