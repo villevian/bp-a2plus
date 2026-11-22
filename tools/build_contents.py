@@ -190,5 +190,8 @@ _btn='<a href="%s" style="font-size:15px;color:__ACC__;font-weight:600;text-deco
 _links=([ _btn % ("glossary.html","📖 Glossary") ] if (getattr(CFG,"GLOSSARY",False) if CFG else LVL=="A2+") else [])+([ _btn % ("vocab.html","📚 My vocabulary · train words") ] if (CFG and getattr(CFG,"VOCAB",False)) else [])
 VLINK=('<div style="text-align:right;padding:8px 22px 0">'+"".join(_links)+"</div>") if _links else ""
 LEG=getattr(CFG,"LEGEND",("modern context: video calls, Slack, Jira","new topic: AI, current problems")) if CFG else ("modern context: video calls, Slack, Jira","new topic: AI, current problems")
+_stu = getattr(CFG, "STUDENT", None) if CFG else None
+if _stu and _stu.get("code"):
+    html = html.replace("</script></body></html>", '</script><script src="https://villevian.github.io/bp-admin/cabinet.js" data-code="%s" defer></script></body></html>' % _stu["code"])
 html = html.replace("__COLS__", str(getattr(CFG,"COLS",6) if CFG else 6)).replace("__LEG_UPD__", LEG[0]).replace("__LEG_NEW__", LEG[1]).replace("__CLIENT__", json.dumps(getattr(CFG,"CLIENT",None) if CFG else None, ensure_ascii=False)).replace("__BUILD__", BUILD).replace("__TLINK__", TLINK + VLINK).replace("__PAGES__", json.dumps(getattr(CFG,"PAGES",{}) if CFG else {})).replace("__G1__",G[0]).replace("__G2__",G[1]).replace("__SHOWALL__", "true" if (CFG and getattr(CFG,"SHOW_ALL",False)) else "false").replace("__STUDENT__", json.dumps(getattr(CFG,"STUDENT",None) if CFG else None, ensure_ascii=False)).replace("__ASSIGNED__", json.dumps(getattr(CFG,"ASSIGNED",None) if CFG else None)).replace("__LVL__", LVL).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__VAR__", json.dumps(VAR)).replace("__DATA__", data).replace("__TRACKS__", json.dumps(TRACKS))
 open(OUT, 'w').write(html)
