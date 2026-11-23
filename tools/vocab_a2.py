@@ -97,6 +97,33 @@ VOCAB = [
    ("Best regards,", "З повагою,", "a way to end a business email", "Best regards, Iryna", ["Kind regards,"]),
   ]),
  ]),
+ ("7.4", "Work skills: Presentations", [
+  ("Presentation words", [
+   ("give a presentation", "робити презентацію", "speak to a group about a topic, often with slides", "I give a presentation to clients every month.", ["give / do a presentation", "attend a presentation"]),
+   ("attend", "бути присутнім, відвідати", "to be at an event or a meeting", "Thank you for attending this presentation.", ["attend a meeting", "attend a demo"]),
+   ("potential customers", "потенційні клієнти", "people who may buy from you in the future", "We present our product to potential customers.", ["find potential customers", "new customers"]),
+   ("the aim", "мета", "what you want to do or get", "The aim of today’s presentation is to introduce our company.", ["the aim of the meeting", "the main aim"]),
+   ("a session", "частина зустрічі, сесія", "a part of a meeting or an event", "We’ll have a question and answer session at the end.", ["a Q&A session", "a training session"]),
+   ("e-commerce", "електронна комерція", "buying and selling online", "They are the biggest provider of e-commerce services in Europe.", ["an e-commerce website", "e-commerce services"]),
+   ("a provider", "постачальник, провайдер", "a company that gives a product or a service", "We are the biggest provider of payment systems.", ["a service provider", "the biggest provider"]),
+   ("a range of", "низка, різні види", "many different types of something", "We provide a range of products and services.", ["a wide range of", "a range of tools"]),
+   ("a payment system", "платіжна система", "a way to pay online", "We created a secure payment system.", ["a secure payment system", "online payments"]),
+   ("a database", "база даних", "a collection of digital data", "We store customer details in a secure database.", ["store data in a database"]),
+   ("share my screen", "поділитися екраном", "show your screen to people on a video call", "Let me share my screen.", ["Can you see my screen?", "stop sharing"]),
+  ]),
+  ("Presenting: phrases", [
+   ("Good morning, everyone.", "Доброго ранку всім.", "start the presentation", "Good morning, everyone. I’m Pavlo, a project manager at PixelForge.", ["Good afternoon, everyone."]),
+   ("Thank you for attending.", "Дякую, що прийшли.", "thank the audience", "Thank you for attending this presentation.", ["Thank you for joining this call."]),
+   ("The aim of today’s presentation is to …", "Мета сьогоднішньої презентації — …", "say why you are presenting", "The aim of today’s presentation is to introduce our services.", ["The aim of this demo is to …"]),
+   ("First, … Then, … Finally, …", "Спочатку… Потім… Наприкінці…", "give the plan of the presentation", "First, I’ll tell you about the company. Then I’ll show you the product. Finally, we’ll have questions.", ["First, I’ll …", "Then, I’ll …"]),
+   ("So, let’s start with …", "Отже, почнімо з …", "begin the main part", "So, let’s start with more information about the company.", ["Let’s begin with …"]),
+   ("Let’s move on to …", "Перейдімо до …", "go to the next part", "Let’s move on to our products and services.", ["Now let’s talk about …"]),
+   ("We’re based in …", "Ми знаходимося в …", "say where your company is", "We’re based in Lviv, in Ukraine.", ["Our main office is in …"]),
+   ("We provide …", "Ми надаємо …", "say what your company offers", "We provide websites, online shops and payment systems.", ["We offer …", "We can build …"]),
+   ("That’s the end of my presentation.", "На цьому моя презентація завершується.", "finish the presentation", "So, that’s the end of my presentation. Thank you for listening.", ["Thank you for listening."]),
+   ("Does anyone have any questions?", "Чи є запитання?", "invite questions", "Does anyone have any questions?", ["Are there any questions?"]),
+  ]),
+ ]),
 ]
 
 def lesson(num):
