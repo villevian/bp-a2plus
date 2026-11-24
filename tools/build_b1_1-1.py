@@ -183,10 +183,29 @@ def GUIDE(en, ua): return '<div class="card" style="background:#f4f6ff;border-le
 F = {}
 QS = [("conflict resolution", True), ("communication", True), ("coding", False), ("speed", False), ("perfect English", False), ("a university degree", False)]
 for i, (w, a) in enumerate(QS): F["f1a_%d" % (i + 1)] = ["yes" if a else "no"]
-F["f1b"] = ["It is still valuable, even in a difficult job market."]
 OPT1B = ["It is not important if you change careers.", "It is still valuable, even in a difficult job market.", "AI can do it better now.", "Only your last job matters."]
 def yn(k, w): return '<span style="display:inline-flex;align-items:center;gap:2px;margin:4px 8px 4px 0"><label style="display:inline-flex;gap:6px;align-items:center;border:1.5px solid #c8c9cb;border-radius:8px;padding:4px 10px;cursor:pointer"><input type="checkbox" class="yn" data-yn="%s"> %s</label><input class="g" data-k="%s" type="hidden" value="no">%s</span>' % (k, w, k, fb(k).replace("<div", "<span").replace("</div>", "</span>"))
 WHYF = {}
+BL = {"R": ("🔍 Remember", "#e8f1fb", "#2a5d9f"), "U": ("💭 Understand", "#eef7ee", "#2e7d4f"), "AP": ("✍️ Apply", "#fff4e6", "#b25e00"),
+      "AN": ("🔎 Analyse", "#f3eefb", "#6a3fb0"), "E": ("⚖️ Evaluate", "#fdeef2", "#a8325e"), "C": ("🛠 Create", "#fff8d6", "#8a6d00")}
+def bt(x):
+    t, bg, c = BL[x]
+    return '<span style="display:inline-block;background:%s;color:%s;border-radius:20px;padding:1px 10px;font-size:13px;font-weight:600;margin-right:6px;vertical-align:2px">%s</span>' % (bg, c, t)
+def BQ(q):
+    return ('<div style="background:#fff7ef;border:1.5px dashed #e8894a;border-radius:12px;padding:8px 14px;margin:4px 0 10px;font-size:15px">🧳 <b>Our big question:</b> '
+            '<i>What is in your suitcase – and how will you show it to an international company?</i><br><span style="color:#c4642a">Today’s step:</span> %s</div>') % q
+def think(k, q, ph="", model="", h=70):
+    return ('<div class="card" style="margin-top:12px">%s</div>' % q) + ta(k, ph, h) + (mbtn("m_" + k, model, "Compare with a model answer") if model else "")
+def recall(prefix, items):
+    """items: [(phrase, meaning)] -> type the phrase from memory (auto-check)."""
+    h = '<div class="hint" style="margin:4px 0 6px">Cover the cards above. Write the phrase from memory.</div>'
+    for n, (ph, mean) in enumerate(items):
+        k = "%s_%d" % (prefix, n + 1); F[k] = [ph, ph.replace(",", ""), ph.replace("’", "'")]
+        h += '<div class="row">%d. <i>%s</i> → %s%s</div>' % (n + 1, mean, inp(k, 300, ph.split()[0][0] + "…"), fb(k))
+    return h + ctl(prefix)
+def useit(k, task, ph, need, h=80):
+    return ('<div class="card" style="margin-top:12px">%s</div>' % task + ta(k, ph, h).replace("<textarea ", '<textarea data-need="%s" ' % "|".join(need)) +
+            '<div class="need" data-for="%s"></div>' % k)
 
 # ---- Step 1 · What are transferable skills? (concept first, then words, then video) ----
 def guess_custom(prefix, items):
@@ -207,23 +226,31 @@ PRE = [("previous experience", "the jobs, projects and other things you did befo
        ("a tough job market", "a time when it is hard to find a job", "складний ринок праці", "In a tough job market, your network matters.", "tough = важкий, жорсткий", "a market where you buy computers", "a job with a lot of physical work"),
        ("the AI boom", "the time when AI is growing very fast", "бум штучного інтелекту", "Many companies are hiring AI engineers during the AI boom.", "boom = різке зростання (як вибух)", "a loud noise from a computer", "an AI tool that stopped working")]
 f0 = ('<div class="bsec">Before class <span class="sub">Step 1 · What are transferable skills?</span></div>' +
-      GUIDE("Start here. First understand the key idea of the lesson, then learn 4 words you will hear in the video. Read, think, guess – then check.", "Почни тут: спочатку зрозумій головну ідею уроку, потім 4 слова з відео. Читай, думай, вгадуй – потім перевіряй.") +
+      GUIDE("Start here. First understand the key idea of the lesson, then learn 4 words you will hear in the video. Read, think, guess – then check. Write your answers in full sentences: your teacher reads them before the lesson.", "Почни тут: спочатку головна ідея, потім 4 слова з відео. Пиши відповіді реченнями – викладачка їх прочитає до уроку.") +
+      BQ("What are transferable skills? Which ones do <b>you</b> have?") +
       '<div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center;background:#fff7ef;border:1.5px solid #f5d2b5;border-radius:14px;padding:16px 18px;margin:6px 0 16px">'
       '<div style="font-size:54px;line-height:1">🧳</div><div style="flex:1;min-width:240px"><b style="font-size:19px">Transferable skills</b> are skills you can <b>take with you</b> from one job to another – like things in a suitcase.<br>'
       'You change your job, your company or even your profession – but these skills come with you.<br><span class="hint">🇺🇦 навички, які «переїжджають» з тобою з роботи на роботу</span></div></div>' +
-      '<p class="ins"><b class="x">1</b><b>A</b> Can you take it to another job? Tick (✓) the <b>transferable</b> skills.</p>' +
+      '<p class="ins"><b class="x">1</b><b>A</b> %sCan you take it to another job? Tick (✓) the <b>transferable</b> skills.</p>' % bt("U") +
       '<div>%s</div>' % "".join(yn("f0a_%d" % (i + 1), w) for i, (w, a) in enumerate(TS)) + ctl("f0a") +
-      '<p class="ins" style="margin-top:24px"><b>B</b> You will hear these words in the video. Guess what they mean.</p>' + guess_custom("f0b", PRE) +
-      '<p class="ins" style="margin-top:24px"><b>C</b> Think about you. Name two transferable skills you have – and where you got them.</p>' +
-      ta("f0c", "1 communication – I got it when I …\n2 …", 70) +
+      think("f0a_why", bt("AN") + "Why is <i>“using your company’s own billing system”</i> <b>not</b> transferable – but <i>“problem-solving”</i> is? Write 1–2 sentences.",
+            "It isn’t transferable because …", "You can only use that billing system in one company. Problem-solving works in any job, team or tool – you take it with you.") +
+      '<p class="ins" style="margin-top:24px"><b>B</b> %sYou will hear these words in the video. Guess what they mean.</p>' % bt("U") + guess_custom("f0b", PRE) +
+      '<p class="ins" style="margin-top:24px"><b>C</b> %sNow without the cards: write the words.</p>' % bt("R") +
+      recall("f0r", [(e, m) for e, m, *_ in [PRE[i] for i in (2, 0, 3, 1)]]) +
+      '<p class="ins" style="margin-top:24px"><b>D</b> %sThink about you. Name two transferable skills you have – and where you got them. Use <b>previous experience</b> or <b>conflict resolution</b> if you can.</p>' % bt("AP") +
+      useit("f0c", "", "1 communication – I got it in my previous experience as …\n2 …", ["previous experience", "conflict resolution"]) +
       '<p class="hint">Now you’re ready for the video → Step 2.</p>')
-f1 = ('<div class="bsec">Before class <span class="sub">Step 2 · A short clip</span></div>' + GUIDE("Watch a very short clip (under 1 minute) and do two small tasks. It’s a warm-up – don’t worry if you don’t understand every word.", "Короткий ролик на розігрів: подивись і виконай 2 маленькі завдання.") +
-      '<p class="ins"><b class="x">2</b><b>A</b> Watch the clip. Which <b>two</b> qualities do employers want in every field – especially during the AI boom? Tick (✓) them.</p>' +
+f1 = ('<div class="bsec">Before class <span class="sub">Step 2 · A short clip</span></div>' + GUIDE("Watch a very short clip (under 1 minute). First tick, then explain in your own words. It’s a warm-up – don’t worry if you don’t understand every word.", "Короткий ролик: спочатку познач, потім поясни своїми словами.") +
+      BQ("What do employers want – even in a tough job market?") +
+      '<p class="ins"><b class="x">2</b><b>A</b> ' + bt("R") + 'Watch the clip. Which <b>two</b> qualities do employers want in every field – especially during the AI boom? Tick (✓) them.</p>' +
       '<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">' + shortbox() + '<div style="flex:1;min-width:260px">' +
       '<div>%s</div>' % "".join(yn("f1a_%d" % (i + 1), w) for i, (w, a) in enumerate(QS)) + ctl("f1a") +
-      '<p class="ins" style="margin-top:22px"><b>B</b> What does the speaker say about your previous experience?</p>' +
-      '<div class="row">%s%s</div>' % (sel("f1b", OPT1B, 360), fb("f1b")) + ctl("f1b") + '</div></div>' +
-      '')
+      '<p class="ins" style="margin-top:22px"><b>B</b> %sWhat does the speaker say about your <b>previous experience</b>? Write it in your own words.</p>' % bt("U") +
+      ta("f1b", "She says that …", 60) + mbtn("m_f1b", "Your previous experience is still valuable – even in a tough job market. You don’t start from zero.", "Compare with a model answer") + '</div></div>' +
+      '<p class="ins" style="margin-top:24px"><b>C</b> %sThe full episode is called <i>“How to Change Careers Using Transferable Skills You Already Have”</i>. What do you expect to hear? Write <b>two</b> predictions.</p>' % bt("AN") +
+      ta("f1c", "1 I think they will say that …\n2 Maybe they will give advice about …", 60) +
+      '<p class="hint">Keep your predictions – in Step 3 you’ll check them.</p>')
 VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
 VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
       "stakeholder management": "find the groups of people involved, learn how each group communicates and meet their needs.",
@@ -270,15 +297,23 @@ fv = ('<div class="bsec">Before class <span class="sub">Vocabulary: IT work</spa
       '<p class="ins" style="margin-top:26px"><b>C</b> Complete the word families.</p>' + tbl2() + ctl("v2c") +
       '<p class="ins" style="margin-top:26px"><b>D</b> Make it personal. Complete the sentences about you. Use words from A–C.</p>' +
       "".join('<div class="row">%d. %s<br>%s</div>' % (i + 1, q, ta("v2d_%d" % (i + 1), ph, 46)) for i, (q, ph) in enumerate(F2D)))
-f2 = ('<div class="bsec">Before class <span class="sub">Step 8 · Reading</span></div>' + GUIDE("Read the article for our lesson (or listen with 🔊). Answer the questions – use <b>Show answer</b> to check yourself.", "Прочитай статтю до уроку й відповідай на питання.") + '<p class="ins"><b class="x">8</b>Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
+f2 = ('<div class="bsec">Before class <span class="sub">Step 8 · Reading</span></div>' + GUIDE("Read the article for our lesson (or listen with 🔊). Answer the questions – use <b>Show answer</b> to check yourself.", "Прочитай статтю до уроку й відповідай на питання.") + BQ("Which skills survive AI – and do you have them?") + '<p class="ins"><b class="x">8</b>Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
       "".join('<p class="ins"><span class="q">%d</span>%s</p>%s%s' % (i + 1, q, ta("f2_%d" % (i + 1), "", 60), mbtn("mf2_%d" % (i + 1), A4[i], "Show answer")) for i, q in enumerate(Q4)) +
       '<p class="ins"><span class="q">4</span>Which skills are mentioned in <b>both</b> the video and the article?</p>' + ta("f2_4", "", 50) +
-      mbtn("mf2_4", "problem-solving, communication (skills), teamwork / being a team player"))
-f3 = ('<div class="bsec">Before class <span class="sub">Step 9 · Get ready to speak</span></div>' + GUIDE("Last step: make short notes for the lesson. In class we will <b>talk</b>, not read – so prepare your ideas. Then press <b>Send to my teacher</b>.", "Останній крок: нотатки до уроку, потім «Send to my teacher».") + '<p class="ins"><b class="x">9</b>Prepare for the lesson. Make short notes – we will talk about them in class.</p>'
-      '<div class="card">1. Which three skills from the video and the article do you already have? Think of one real example from your work for each.</div>' + ta("f3_1", "1 problem-solving – last month I …\n2 …\n3 …", 110) +
-      '<div class="card">2. Which skill do you want to develop this year? Why?</div>' + ta("f3_2", "", 60) +
-      '<div class="card">3. Write down 3–5 new words or phrases from the video or the article. <span class="hint">Tip: select a word on this page and press ＋ to save it to My vocabulary.</span></div>' + ta("f3_3", "", 60) +
-      '<div style="margin-top:20px">%s</div>' % (SELF % "How well did you understand the video and the article?"))
+      mbtn("mf2_4", "problem-solving, communication (skills), teamwork / being a team player") +
+      think("f2_5", bt("E") + "5. The video and the article both give advice. Which piece of advice is the most useful for <b>you</b> right now – and which one would you ignore? Why?", "The most useful advice for me is … I would ignore … because …"))
+ALLPH = ["transferable skills", "previous experience", "audit your experience", "with fresh eyes", "AI-proof", "bridge the gap", "industry-specific terms", "connect the dots",
+         "think in verbs, not titles", "side hustle", "skill gap", "every experience counts", "signal initiative", "industry-recognised credentials", "through line", "critical thinking", "team player", "can-do attitude"]
+f3 = ('<div class="bsec">Before class <span class="sub">Step 9 · My suitcase: get ready to speak</span></div>' +
+      GUIDE("Last step: put everything together. Look at your own answers from Steps 1–7, then write your story. In class you will <b>tell</b> it – not read it. Then press <b>Send to my teacher</b>.", "Останній крок: збери все разом. Подивись на свої відповіді, напиши свою історію – на уроці ти її розкажеш. Потім «Send to my teacher».") +
+      BQ("Your answer to the big question.") +
+      '<p class="ins"><b class="x">9</b><b>A</b> %sYour notes so far – everything you wrote in Steps 1–7:</p>' % bt("R") +
+      '<div id="suitcase" class="card" style="font-size:15.5px;background:#fffaf4;white-space:pre-wrap">…</div>' +
+      '<p class="ins" style="margin-top:24px"><b>B</b> %sWrite your <b>60-second story</b> for an interview at an international company (80–120 words): who you are, 3 transferable skills with real examples, your skill gap and how you’re bridging it. Use at least <b>6</b> phrases from the lesson.</p>' % bt("C") +
+      useit("f3_1", "", "I’m a … with … years of previous experience in … When I audit my experience with fresh eyes, …", ALLPH, 170) + '<div class="res" id="wc9"></div>' +
+      think("f3_2", bt("E") + "<b>C</b> Read your story again. What is the strongest sentence? Which sentence is still weak – and why?", "My strongest sentence is … The weak one is …") +
+      think("f3_3", "<b>D</b> Two questions you want to ask your teacher in class (about the words, the video or your story).", "1 …\n2 …") +
+      '<div style="margin-top:20px">%s</div>' % (SELF % "How well can you talk about your transferable skills now?"))
 VOC_F = [("Step 1 + clip + Part A", ["transferable skills", "previous experience", "conflict resolution", "a tough job market", "the AI boom", "audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "industry-specific terms", "connect the dots"]),
          ("Parts B + C", ["side hustle", "think in verbs, not titles", "comfort with new tools", "skill gap", "every experience counts", "go back to square one", "industry-recognised credentials", "low cost to no cost", "signal initiative", "a day in the life"]),
          ("★ Part D", ["through line", "reframe longevity as loyalty", "industry disruptions", "lead by example", "own it and articulate it"]),
@@ -322,43 +357,77 @@ def chk(prefix): return '<div class="ctl"><button class="btn" onclick="chkRad(\'
 
 g2 = ('<div class="bsec">Before class <span class="sub">Step 3 · The whole episode</span></div>' +
       GUIDE("Now watch the <b>whole episode once</b> (about 11 minutes), from the start. Don’t stop and don’t look up words – just follow the main ideas. Then answer three questions.", "Подивись усе відео один раз, без зупинок і словника – лише головні ідеї. Потім 3 питання.") +
+      BQ("What is the main message of the episode?") +
       epvideo(True).replace("&start=64", "&start=0") +
-      mcq("g2_1", "1. What is the episode mainly about?", ["How to ask for a pay rise", "How to change careers using skills you already have", "How to write better code with AI"], "How to change careers using skills you already have") +
-      mcq("g2_2", "2. Who is the advice for?", ["Only university students", "Only managers with 20 years of experience", "Job seekers of any age – from Gen Z to people with long careers"], "Job seekers of any age – from Gen Z to people with long careers") +
-      mcq("g2_3", "3. Which topic is in the episode?", ["Getting certificates without a degree", "Negotiating your salary", "Working remotely from another country"], "Getting certificates without a degree") + chk("g2") +
+      mcq("g2_1", bt("R") + "1. Who is the advice for?", ["Only university students", "Only managers with 20 years of experience", "Job seekers of any age – from Gen Z to people with long careers"], "Job seekers of any age – from Gen Z to people with long careers") +
+      mcq("g2_2", "2. Which topic is in the episode?", ["Getting certificates without a degree", "Negotiating your salary", "Working remotely from another country"], "Getting certificates without a degree") + chk("g2") +
+      think("g2_pred", bt("AN") + "3. Look at your predictions from Step 2. Which one was right? What surprised you?", "My prediction about … was right. I was surprised that …") +
+      think("g2_slack", bt("U") + "4. A colleague asks in Slack: <i>“Is this video worth watching? What’s it about?”</i> Answer in 2–3 sentences.",
+            "Yes! It’s about …", "Yes, it’s worth it! It’s about how to change careers with the skills you already have. They explain how to audit your experience, describe it in industry terms and get certificates without a degree.") +
       '<p class="hint">Next: we’ll listen to the episode in small parts and work with the key phrases.</p>')
-gA = ('<div class="bsec">Before class <span class="sub">Step 4 · Part A: audit your skills</span></div>' +
-      GUIDE("Listen to <b>Part A only</b> (1:04–2:50) – the player starts and stops there. Then: <b>1</b> answer the question, <b>2</b> for each phrase you heard, <b>guess</b> the meaning first, use 💡 Hint only if you need it, then press <b>Check</b>.",
-            "Слухай лише частину A. Потім: питання → вгадай значення кожної фрази (підказка 💡 за потреби) → Check.") +
-      clip(64, 170, "Part A") +
-      mcq("gAq_1", "1. The guest used to be a school teacher. How does she describe her old job in new words?", ["“I managed a classroom.”", "“I designed programmes, developed tracking tools and educated people.”", "“I marked homework every evening.”"], "“I designed programmes, developed tracking tools and educated people.”", "She translates her experience into industry-specific terms.") +
-      mcq("gAq_2", "2. Which skill do they mention as one that employers want and AI can’t replace?", ["communication", "typing fast", "knowing many programming languages"], "communication") + chk("gAq") +
-      '<p class="ins" style="margin-top:22px">Now the phrases from Part A. Listen again if you need to.</p>' +
-      guess_cards("gA", ["audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "industry-specific terms", "connect the dots"]))
-gB = ('<div class="bsec">Before class <span class="sub">Step 5 · Part B: first-time job seekers</span></div>' +
-      GUIDE("Listen to <b>Part B</b> (2:50–4:34). It’s about young people with little work experience – but the advice works for everyone. Answer, then guess the phrases.", "Частина B: поради для тих, хто шукає першу роботу. Питання → вгадай фрази.") +
-      clip(170, 274, "Part B") +
-      mcq("gBq_1", "1. Which experiences can build useful skills, according to the speakers?", ["Only paid full-time jobs", "Caregiving, volunteering, freelance work, side hustles and student organisations", "Only university courses"], "Caregiving, volunteering, freelance work, side hustles and student organisations") +
-      mcq("gBq_2", "2. How should you describe these experiences?", ["With job titles only", "With action verbs, e.g. organise, coach, communicate, build", "With long lists of tools"], "With action verbs, e.g. organise, coach, communicate, build") + chk("gBq") +
-      '<p class="ins" style="margin-top:22px">The phrases from Part B:</p>' +
-      guess_cards("gB", ["side hustle", "think in verbs, not titles", "comfort with new tools", "skill gap", "every experience counts"]))
-gC = ('<div class="bsec">Before class <span class="sub">Step 6 · Part C: certificates</span></div>' +
-      GUIDE("Listen to <b>Part C</b> (4:34–7:05) about getting certified without a degree. Answer, then guess the phrases.", "Частина C: сертифікати без диплома. Питання → вгадай фрази.") +
-      clip(274, 425, "Part C") +
-      mcq("gCq_1", "1. What do they say about many online certificates?", ["They are very expensive", "They are often free or low-cost, and can show initiative", "Employers ignore them"], "They are often free or low-cost, and can show initiative") +
-      mcq("gCq_2", "2. What should you do before you choose a new role?", ["Quit your job first", "Research the role, e.g. watch ‘a day in the life’ videos", "Buy the most expensive course"], "Research the role, e.g. watch ‘a day in the life’ videos") + chk("gCq") +
-      '<p class="ins" style="margin-top:22px">The phrases from Part C:</p>' +
-      guess_cards("gC", ["go back to square one", "industry-recognised credentials", "low cost to no cost", "signal initiative", "a day in the life"]))
-gD = ('<div class="bsec">Before class <span class="sub">Step 7 · ★ Part D: tell your story</span></div>' +
-      '<div class="card" style="border-left:4px solid #e0a100;background:#fffaf0"><b style="color:#b26b00">★ Advanced option</b> – do this part if you have time and energy. It’s harder, but very useful for interviews.</div>' +
-      GUIDE("Listen to <b>Part D</b> (7:05–9:56): how to present a long career. Answer, then guess the phrases.", "Частина D (за бажанням): як подати довгу кар’єру.") +
-      clip(425, 596, "Part D") +
-      mcq("gDq_1", "1. Which sentence is stronger, according to the speakers?", ["“I’ve been in this field for 20 years.”", "“I’ve built and led teams through two industry disruptions.”"], "“I’ve built and led teams through two industry disruptions.”", "It shows actions and results, not just years.") + chk("gDq") +
-      '<p class="ins" style="margin-top:22px">The phrases from Part D:</p>' +
-      guess_cards("gD", ["through line", "reframe longevity as loyalty", "industry disruptions", "lead by example", "own it and articulate it"]))
+def M(ph): return IWD[ph][3]
+def part(lbl, title, bq, guide_en, guide_ua, a, b_, opens, phrases, uses, evalq, adv=False):
+    pre = lbl.lower()
+    h = '<div class="bsec">Before class <span class="sub">%s</span></div>' % title
+    if adv: h += '<div class="card" style="border-left:4px solid #e0a100;background:#fffaf0"><b style="color:#b26b00">★ Advanced option</b> – do this part if you have time and energy. It’s harder, but very useful for interviews.</div>'
+    h += GUIDE(guide_en, guide_ua) + BQ(bq) + clip(a, b_, "Part " + lbl)
+    h += '<p class="ins" style="margin-top:18px"><b>1</b> %sListen and answer in your own words. Then compare with the model answer.</p>' % bt("U")
+    for i, (q, ph_, model) in enumerate(opens): h += think("g%so_%d" % (lbl, i + 1), q, ph_, model, 55)
+    h += '<p class="ins" style="margin-top:24px"><b>2</b> %sThe key phrases from Part %s. Guess the meaning first – 💡 Hint only if you need it.</p>' % (bt("U"), lbl) + guess_cards("g" + lbl, phrases)
+    h += '<p class="ins" style="margin-top:24px"><b>3</b> %sNow from memory.</p>' % bt("R") + recall("g%sr" % lbl, [(ph, M(ph)) for ph in phrases[::-1][:4]])
+    h += '<p class="ins" style="margin-top:24px"><b>4</b> %sUse the phrases about <b>you</b>. The phrases turn green when you use them.</p>' % bt("AP")
+    for i, (task, ph_, need) in enumerate(uses): h += useit("g%su_%d" % (lbl, i + 1), task, ph_, need)
+    if evalq:
+        q, ph_, model = evalq
+        h += '<p class="ins" style="margin-top:24px"><b>5</b> %sWhat do you think?</p>' % bt("E") + think("g%st" % lbl, q, ph_, model, 70)
+    return h
+
+gA = part("A", "Step 4 · Part A: audit your skills", "How can you see your experience <b>with fresh eyes</b>?",
+  "Listen to <b>Part A only</b> (1:04–2:50) – the player starts and stops there. Then go step by step: <b>1</b> answer → <b>2</b> guess the phrases → <b>3</b> write them from memory → <b>4</b> use them about you → <b>5</b> your opinion.",
+  "Слухай лише частину A. Далі по кроках: відповідь → вгадай фрази → напиши з пам’яті → використай про себе → твоя думка.", 64, 170,
+  [("a) The guest used to be a school teacher. How does she describe her old job in <b>new words</b>?", "She says that she …", "She says she designed programmes, developed tracking tools and educated people – she translates her experience into industry-specific terms."),
+   ("b) Which skill do they mention that employers want and AI can’t replace?", "", "Communication – it’s an AI-proof skill.")],
+  ["audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "industry-specific terms", "connect the dots"],
+  [("a) Audit your experience <b>with fresh eyes</b>. Take one thing from your past (a job, studies, a hobby) and describe it in <b>industry-specific terms</b> for an IT company.", "When I audit my experience with fresh eyes, I see that …", ["audit your experience", "with fresh eyes", "industry-specific terms"]),
+   ("b) What is the <b>gap</b> between your experience now and a job in an international company? How will you <b>bridge the gap</b>?", "The biggest gap is … I’m going to bridge the gap by …", ["bridge the gap"])],
+  ("They say communication is an <b>AI-proof skill</b>. Do you agree? Name one more skill you think is AI-proof – and one that is <b>not</b>. Explain why.", "I agree / don’t agree, because … Another AI-proof skill is … because …",
+   "e.g. I agree – AI can write a message, but it can’t build trust in a team. Another AI-proof skill is conflict resolution. Writing simple boilerplate code is not AI-proof any more."))
+gB = part("B", "Step 5 · Part B: first-time job seekers", "What counts as experience – if it wasn’t a paid job?",
+  "Listen to <b>Part B</b> (2:50–4:34). It’s about young people with little work experience – but the advice works for everyone. Then the same 5 steps.",
+  "Частина B: поради для тих, хто шукає першу роботу. Ті самі 5 кроків.", 170, 274,
+  [("a) Which experiences, besides paid jobs, can build useful skills? Name at least three.", "", "Caregiving, volunteering, freelance work, side hustles, student organisations."),
+   ("b) How should you describe these experiences – with job titles or with verbs? Give one example.", "", "With action verbs: organise, coach, communicate, build. e.g. “I organised a team of 10 volunteers.”")],
+  ["side hustle", "think in verbs, not titles", "comfort with new tools", "skill gap", "every experience counts"],
+  [("a) <b>Think in verbs, not titles.</b> Write your job title – then turn it into three action verbs about what you really do.", "My title: … → I build …, I explain …, I …", ["think in verbs, not titles"]),
+   ("b) Do you have a <b>side hustle</b>, volunteering or a hobby project? What skill did it give you? (No? Which side hustle could help you in IT?)", "My side hustle is … It gave me …", ["side hustle", "every experience counts"])],
+  ("“<b>Every experience counts.</b>” Is this always true when you apply to an international IT company? When is it <b>not</b> true?", "I think it’s true when … but not when …",
+   "e.g. It’s true if you can show a skill and a result. It’s not true if the experience has nothing to do with the role and you can’t connect the dots for the recruiter."))
+gC = part("C", "Step 6 · Part C: certificates", "How can you <b>prove</b> your skills without a new degree?",
+  "Listen to <b>Part C</b> (4:34–7:05) about getting certified without a degree. Then the same 5 steps.", "Частина C: сертифікати без диплома. Ті самі 5 кроків.", 274, 425,
+  [("a) What do they say about many online certificates – the price and what they show employers?", "", "Many are free or low-cost, and they signal initiative – that you learn on your own."),
+   ("b) What should you do <b>before</b> you choose a new role?", "", "Research the role, e.g. watch “a day in the life” videos.")],
+  ["go back to square one", "industry-recognised credentials", "low cost to no cost", "signal initiative", "a day in the life"],
+  [("a) Which <b>industry-recognised credential</b> could <b>signal initiative</b> for the job you want? (e.g. AWS, Scrum, Google PM, ISTQB…) Why this one?", "For my next role, … would signal initiative because …", ["industry-recognised credentials", "signal initiative"]),
+   ("b) Find a <b>“day in the life”</b> video of the role you want in an international company. Paste the link and write two things you learned.", "Link: …\n1 …\n2 …", ["a day in the life"])],
+  ("A certificate or a real project on GitHub – what carries more real weight for a recruiter? Why?", "I think … carries more weight, because …", ""))
+gD = part("D", "Step 7 · ★ Part D: tell your story", "How do you turn your whole career into <b>one strong story</b>?",
+  "Listen to <b>Part D</b> (7:05–9:56): how to present a long career. Then the steps.", "Частина D (за бажанням): як подати довгу кар’єру.", 425, 596,
+  [("a) Which sentence is stronger, and why? <i>“I’ve been in this field for 20 years.”</i> or <i>“I’ve built and led teams through two industry disruptions.”</i>", "", "The second – it shows actions and results, not just years.")],
+  ["through line", "reframe longevity as loyalty", "industry disruptions", "lead by example", "own it and articulate it"],
+  [("What is the <b>through line</b> of your career? One sentence that connects all your jobs.", "The through line of my career is …", ["through line"]),
+   ("Rewrite a weak sentence about you into a strong one (actions + results), like in the video.", "Weak: I have worked in IT for … years.\nStrong: I’ve …", ["industry disruptions", "lead by example"])], None, adv=True)
 for _k in [k for k in F if k.startswith("v2")]: del F[_k]
+NEEDJS = r"""function needUpd(t){const box=document.querySelector('.need[data-for="'+t.dataset.k+'"]');if(!box)return;const P=x=>x.toLowerCase().replace(/[’']/g,"'").replace(/,/g,'').replace(/\b(your|my|his|her|our|their)\b/g,'·').replace(/\s+/g,' ');const v=P(t.value||'');const ws=t.dataset.need.split('|');let n=0;
+box.innerHTML=ws.map(w=>{const core=P(w).replace(/^(a|the) /,'');const ok=v.includes(core);if(ok)n++;return '<span style="display:inline-block;margin:3px 6px 0 0;padding:1px 9px;border-radius:12px;font-size:13px;border:1.5px solid '+(ok?'#3a9d5d;background:#eaf7ee;color:#1e6b3d':'#d0d1d3;color:#77787b')+'">'+(ok?'✓ ':'')+w+'</span>'}).join('')+(ws.length>3?' <b style="font-size:13px;color:#1e6b3d">'+n+' used</b>':'')}
+function suit(){const el=document.getElementById('suitcase');if(!el)return;const L=[['f0c','Step 1 · My transferable skills'],['f0a_why','Step 1 · Why transferable'],['gAu_1','Part A · My experience with fresh eyes'],['gAu_2','Part A · My gap'],['gAt','Part A · AI-proof skills'],['gBu_1','Part B · Verbs, not titles'],['gBu_2','Part B · Side hustle'],['gBt','Part B · Every experience counts?'],['gCu_1','Part C · A credential for me'],['gCu_2','Part C · A day in the life'],['gDu_1','★ My through line'],['gDu_2','★ My strong sentence'],['f2_5','Step 8 · Most useful advice']];
+let o='';L.forEach(([k,t])=>{const x=document.querySelector('[data-k="'+k+'"]');if(x&&x.value.trim())o+='<b>'+t+':</b> '+x.value.trim().replace(/</g,'&lt;')+'\n\n'});el.innerHTML=o||'<span class="hint">Your answers from Steps 1–7 will appear here. Go back and write them first 🙂</span>'}
+function wc9(){const t=document.querySelector('[data-k="f3_1"]');if(!t)return;const n=(t.value.match(/\S+/g)||[]).length;document.getElementById('wc9').textContent=n+' words (80–120)'+(n>=80&&n<=120?' ✓':'')}
+document.querySelectorAll('textarea[data-need]').forEach(t=>{t.addEventListener('input',()=>{needUpd(t);if(t.dataset.k==='f3_1')wc9()});needUpd(t)});
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>setTimeout(suit,30)));
+const _af2=window.afterFill;window.afterFill=()=>{_af2&&_af2();document.querySelectorAll('textarea[data-need]').forEach(needUpd);suit();wc9()};
+"""
 html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
-            [("1", f0), ("2", f1), ("3", g2), ("4", gA), ("5", gB), ("6", gC), ("7", gD), ("8", f2), ("9", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + 'function jump(t){const f=document.getElementById("yt");if(!f)return;const d=f.closest("details");if(d)d.open=true;f.src=f.src.replace(/([?&])start=\\d+/,"$1start="+t)+"&autoplay=1";f.scrollIntoView({behavior:"smooth",block:"center"})}\n' + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
+            [("1", f0), ("2", f1), ("3", g2), ("4", gA), ("5", gB), ("6", gC), ("7", gD), ("8", f2), ("9", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + NEEDJS + 'function jump(t){const f=document.getElementById("yt");if(!f)return;const d=f.closest("details");if(d)d.open=true;f.src=f.src.replace(/([?&])start=\\d+/,"$1start="+t)+"&autoplay=1";f.scrollIntoView({behavior:"smooth",block:"center"})}\n' + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "flip.html"), "w").write(html)
 
 # ================= HOMEWORK =================
