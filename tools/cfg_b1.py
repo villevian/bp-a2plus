@@ -5,6 +5,7 @@ GRAD = ("#c4642a", "#f2a66e")
 PAGES = {"1.1": ["flip", "lesson", "hw", "extra"], "4.2": ["lesson", "extra"], "4.3": ["lesson"], "4.4": ["lesson"], "4.5": ["lesson"]}
 TEACHER = True
 VOCAB = True
+GLOSSARY = True
 # (number, title, focus, tag kept|updated|new, status ready|soon)
 U = [
  ("1", "Career choices", [

@@ -50,4 +50,6 @@ initU();document.getElementById("u").onchange=()=>{L="all";render()};document.ge
 document.getElementById("tuk").onchange=e=>document.body.classList.toggle("nouk",!e.target.checked);document.getElementById("tfam").onchange=e=>document.body.classList.toggle("nofam",!e.target.checked);render();
 </script></body></html>"""
 h = HTML.replace("__DATA__", json.dumps(data, ensure_ascii=False)).replace("__LVL__", LVL).replace("__TOTAL__", str(total)).replace("__ACC2__", ACC2).replace("__ACC__", ACC).replace("__DARK__", DARK)
+if LVL == "student":
+    h = h.replace("<title>Business Partner student — Glossary</title>", "<title>My glossary</title>").replace('<div class="n">student</div>', '<div class="n">📖</div>')
 open(OUT, "w").write(h); print("ok glossary", total, "words")

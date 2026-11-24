@@ -12,6 +12,7 @@ build() { D=$1; C=$2
   python3 build_b1_4-4.py $D/lessons/4-4/all $C >/dev/null
   python3 build_b1_4-5.py $D/lessons/4-5 $C >/dev/null
   python3 build_vocab.py $D/vocab.html vocab_b1 B1 "$C" >/dev/null
+  python3 build_glossary.py $D/glossary.html glossary_b1 ${L:-B1} "#e07a3f" "#fdf0e7" "#b85a24" >/dev/null
 }
 build $R/bp-b1 ""
 python3 build_contents.py $R/bp-b1/index.html cfg_b1 >/dev/null
@@ -20,7 +21,7 @@ echo "template bp-b1 ✓"
 for S in $STUDENTS; do
   [ -d $R/bp-$S ] || { echo "skip bp-$S (no folder)"; continue; }
   C=$(python3 -c "import cfg_$S as c; print(c.STUDENT['code'])")
-  build $R/bp-$S $C
+  L=student build $R/bp-$S $C
   python3 build_contents.py $R/bp-$S/index.html cfg_$S >/dev/null
   python3 build_student_home.py $R/bp-$S/index.html cfg_$S >/dev/null
   echo "bp-$S ✓"
