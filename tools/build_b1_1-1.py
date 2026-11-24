@@ -69,7 +69,7 @@ s2 = ('<div class="bsec">Lead-in</div><p class="ins"><b class="x">2</b>Compare y
 s3 = ('<div class="bsec">Reading</div><p class="ins"><b class="x">3</b><b>A</b> Discuss the question.</p>'
       '<div class="card">According to the article you’re going to read, employers want <i>skills that can be applied to a range of tasks and roles</i> – even when AI does part of the work. What skills do you think this means? Give examples.</div>' +
       ta("r3a", "For example: … because AI can’t …", 80) +
-      '<p class="ins"><b>B</b> Read (or listen to) the article. Were any of your ideas mentioned?</p><p class="hint">🏠 You read the article and watched the video before class – just compare your ideas now.</p>' + article() + video() + ta("r3b", "Yes, … was mentioned. / No, the article doesn’t mention …", 60))
+      '<p class="ins"><b>B</b> Read (or listen to) the article. Were any of your ideas mentioned?</p><p class="hint">🏠 You read the article and watched the video before class – just compare your ideas now.</p>' + article() + shortvideo() + ta("r3b", "Yes, … was mentioned. / No, the article doesn’t mention …", 60))
 A4 = ["the ability to work in teams / be a good team player, work well with other people, think outside the box, set goals you can achieve, flexibility, critical thinking, problem-solving, communication skills, honesty, integrity, being genuine, being passionate, motivated, hard-working, a can-do attitude, determination",
       "in person, on video calls, in writing (on Slack and in documentation), one-to-one, in large groups (a demo to the whole company)",
       "1 collect skills you can take from one job / tool / team to the next; 2 be a team player – nobody ships a successful product alone; 3 remember that employers look at the person behind the CV and the GitHub profile"]
@@ -173,13 +173,6 @@ open(os.path.join(OUTDIR, "lesson.html"), "w").write(html)
 
 # ================= BEFORE CLASS (flipped classroom) =================
 F = {}
-VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
-VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
-      "stakeholder management": "find the groups of people involved, learn how each group communicates and meet their needs.",
-      "problem-solving": "use technology to solve problems for customers or for teams inside the company.",
-      "communication": "listen well and explain technical ideas in plain business language to other departments.",
-      "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
-for i, v in enumerate(VS): F["f1_%d" % (i + 1)] = [v]
 QS = [("conflict resolution", True), ("communication", True), ("coding", False), ("speed", False), ("perfect English", False), ("a university degree", False)]
 for i, (w, a) in enumerate(QS): F["f1a_%d" % (i + 1)] = ["yes" if a else "no"]
 F["f1b"] = ["It is still valuable, even in a difficult job market."]
@@ -197,37 +190,6 @@ f1 = ('<div class="bsec">Before class <span class="sub">Video</span></div>'
       '<div class="card">2. Write down 3–5 skills or phrases you hear.</div>' + ta("f1c_2", "", 50) +
       '<div class="card">3. Try it: audit <b>your</b> experience. Choose one past job, project or hobby and write two skills it gave you.</div>' + ta("f1c_3", "At my last job / in my project … I learned to … and …", 70) +
       '<p class="hint">Your teacher will read your notes before the lesson.</p>')
-VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
-VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
-      "stakeholder management": "find the groups of people involved, learn how each group communicates and meet their needs.",
-      "problem-solving": "use technology to solve problems for customers or for teams inside the company.",
-      "communication": "listen well and explain technical ideas in plain business language to other departments.",
-      "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
-for i, v in enumerate(VS): F["f1_%d" % (i + 1)] = [v]
-SK = [("teamwork – fitting into the team", True), ("coding skills", False), ("communication skills", True), ("critical thinking", True), ("perfect English", False),
-      ("problem-solving", True), ("the ability to influence people", True), ("honesty", True), ("many years in one company", False), ("flexibility", True),
-      ("enthusiasm", True), ("a big network on LinkedIn", False), ("integrity", True), ("passion", True)]
-for i, (w, a) in enumerate(SK): F["f1a_%d" % (i + 1)] = ["yes" if a else "no"]
-EXP = [("internships", True), ("online games", False), ("part-time jobs", True), ("volunteer work", True), ("travelling abroad", False), ("university societies and clubs", True)]
-for i, (w, a) in enumerate(EXP): F["f1b_%d" % (i + 1)] = ["yes" if a else "no"]
-TF = [("Today most people stay in one job or one industry for their whole career.", "F", "Careers are no longer linear – people move between jobs, industries and countries."),
-      ("Employers often ask: ‘Can this candidate fit into the team well?’", "T", ""),
-      ("Communication skills are important only in some sectors.", "F", "They are ‘absolutely key’ in all sectors."),
-      ("Personal qualities can be as important as technical skills.", "T", ""),
-      ("Employers hire the whole person behind the CV.", "T", "")]
-WHYF = {}
-for i, (q, a, w) in enumerate(TF):
-    F["f1c_%d" % (i + 1)] = [a]
-    if w: WHYF["f1c_%d" % (i + 1)] = w
-def yn(k, w): return '<span style="display:inline-flex;align-items:center;gap:2px;margin:4px 8px 4px 0"><label style="display:inline-flex;gap:6px;align-items:center;border:1.5px solid #c8c9cb;border-radius:8px;padding:4px 10px;cursor:pointer"><input type="checkbox" class="yn" data-yn="%s"> %s</label><input class="g" data-k="%s" type="hidden" value="no">%s</span>' % (k, w, k, fb(k).replace("<div", "<span").replace("</div>", "</span>"))
-f1 = ('<div class="bsec">Before class <span class="sub">Video</span></div><p class="ins"><b class="x">1</b><b>A</b> Watch the video. A careers expert explains what employers look for. Tick (✓) the skills and qualities the speakers talk about. <span class="hint">Four of them are NOT in the video.</span></p>' +
-      bookvideo(True) + '<div>%s</div>' % "".join(yn("f1a_%d" % (i + 1), w) for i, (w, a) in enumerate(SK)) + ctl("f1a") +
-      '<p class="ins" style="margin-top:24px"><b>B</b> Where can students get experience <i>outside the classroom</i>? Tick the four places the video mentions.</p>' +
-      '<div>%s</div>' % "".join(yn("f1b_%d" % (i + 1), w) for i, (w, a) in enumerate(EXP)) + ctl("f1b") +
-      '<p class="ins" style="margin-top:24px"><b>C</b> True (T) or false (F)?</p>' +
-      "".join('<div class="tf"><span class="q">%d. %s</span><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="T"> T</label><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="F"> F</label>%s</div>'
-              % (i + 1, q, i + 1, i + 1, i + 1, i + 1, fb("f1c_%d" % (i + 1))) for i, (q, a, w) in enumerate(TF)) +
-      '<div class="ctl"><button class="btn" onclick="chkRad(\'f1c\',WHYF)">Check</button><span class="res" id="r_f1c"></span></div>')
 VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
 VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
       "stakeholder management": "find the groups of people involved, learn how each group communicates and meet their needs.",
