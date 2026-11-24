@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Business Partner — Admin</title>
+<meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--acc:#3fa9ad;--acc2:#e6f4f4;--mag:#c4127a;--pur:#6b2a8c;--grey:#77787b;--lg:#eeeff0;--ink:#231f20;--gold:#f2b631;--ok:#5c9e2f}
+*{box-sizing:border-box}body{margin:0;font-family:"Fira Sans",system-ui,sans-serif;color:var(--ink);background:#fff;font-weight:300}
+header{display:flex;align-items:stretch;border-bottom:3px solid var(--acc)}
+header .lv{background:linear-gradient(120deg,var(--pur),var(--mag));color:#fff;font-weight:500;font-size:24px;padding:14px 20px}
+header h1{margin:0;align-self:center;padding-left:16px;font-weight:500;font-size:24px;color:#4d4d4f}
+header .r{margin-left:auto;align-self:center;margin-right:16px;display:flex;gap:8px}
+button{font:inherit;font-weight:500;cursor:pointer;border-radius:4px}
+.btn{border:0;background:var(--acc);color:#fff;padding:8px 14px}
+.btn.l{background:#fff;color:#4d4d4f;border:1px solid #c9cacc}
+main{max-width:1200px;margin:0 auto;padding:16px 22px 50px}
+.login{max-width:420px;margin:60px auto;text-align:center}
+.login input{font:inherit;width:100%;padding:10px 12px;border:1.5px solid var(--acc);border-radius:4px;margin:12px 0}
+.levels{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.levels button{border:1.5px solid var(--acc);background:#fff;color:var(--acc);padding:7px 14px;border-radius:20px}
+.levels button.on{background:var(--acc);color:#fff}
+.levels button small{opacity:.75;margin-left:4px}
+.empty{color:var(--grey);padding:20px 0}
+table.mx{border-collapse:collapse;width:100%;font-size:14px;margin-bottom:20px}
+table.mx th,table.mx td{border:1px solid #d5d6d7;padding:7px 9px;text-align:left;vertical-align:top}
+table.mx th{background:var(--acc2);font-weight:600}
+table.mx td.st{width:210px}
+.who b{font-weight:600;font-size:15px}.who div{font-size:12.5px;color:var(--grey)}
+.who a{color:var(--acc);text-decoration:none;font-size:12.5px}
+.chip{display:inline-block;padding:3px 9px;border-radius:12px;font-size:12.5px;cursor:pointer;border:1px solid transparent;white-space:nowrap}
+.chip.done{background:#eaf4df;color:#3d6e1c;border-color:#bcd9a2}
+.chip.prog{background:#fdf0d5;color:#8a6200;border-color:#f0d58e}
+.chip.none{background:var(--lg);color:#a0a1a3;cursor:default}
+.chip .c{margin-left:4px}
+.detail{border:1px solid #d5d6d7;border-radius:6px;padding:16px 18px;background:#fbfbfb}
+.detail h3{margin:0 0 4px;font-weight:500}
+.detail .meta{color:var(--grey);font-size:13.5px;margin-bottom:12px}
+.scores{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.scores span{background:var(--acc2);padding:3px 9px;border-radius:10px;font-size:13px}
+.ans{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:10px;margin-bottom:14px}
+.ex{background:#fff;border:1px solid #e3e4e5;border-radius:4px;padding:8px 12px}
+.ex h4{margin:0 0 6px;font-size:14px;font-weight:600;color:var(--acc)}
+.ex div{font-size:14px;line-height:1.45;border-bottom:1px dashed #eee;padding:2px 0}
+.ex div i{color:var(--grey);font-style:normal;margin-right:6px;font-size:12.5px}
+.ex .emptyv{color:#c0392b}
+textarea{font:inherit;width:100%;min-height:90px;padding:8px 10px;border:1px solid #c9cacc;border-radius:4px}
+.add{margin-top:26px;border-top:1px solid #e3e4e5;padding-top:16px}
+.add h3{font-weight:500;margin:0 0 8px}
+.add form{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.add input,.add select{font:inherit;padding:7px 9px;border:1px solid #c9cacc;border-radius:4px}
+.note{font-size:13.5px;color:var(--grey);margin-top:8px}
+.ok{color:#2e7d32}.err{color:#c0392b}
+.code{font-family:monospace;background:var(--lg);padding:1px 6px;border-radius:3px}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:10px}
+.card{border:1px solid #d5d6d7;border-left:5px solid var(--acc);border-radius:6px;padding:14px 16px;cursor:pointer;background:#fff;transition:box-shadow .15s}
+.card:hover{box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.card b{display:block;font-size:18px;font-weight:600}
+.card .sub{font-size:13px;color:var(--grey);margin-top:2px}
+.card .stat{font-size:13px;margin-top:8px}
+.back{display:inline-block;margin-bottom:12px;color:var(--acc);text-decoration:none;font-weight:500;cursor:pointer}
+.sh{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:6px}
+.sh h2{margin:0;font-weight:500;font-size:26px}
+.info{display:flex;gap:18px;flex-wrap:wrap;font-size:14px;color:#4d4d4f;margin-bottom:16px}
+.info a{color:var(--acc)}
+table.ls{border-collapse:collapse;width:100%;font-size:14.5px;margin-bottom:16px}
+table.ls th,table.ls td{border-bottom:1px solid #e3e4e5;padding:9px 8px;text-align:left}
+table.ls th{font-weight:600;color:var(--grey);font-size:13px}
+table.ls tr.row{cursor:pointer}table.ls tr.row:hover{background:var(--acc2)}
+table.ls tr.sel{background:var(--acc2)}
+footer{text-align:center;color:var(--grey);font-size:12px;padding:20px}
+.ctx{margin:10px 0}.cx{border:1px solid #e1e2e3;border-radius:8px;padding:8px 12px;margin:8px 0}.cx h4{margin:2px 0 6px;font-size:14px;color:#2b8185}.ci{padding:5px 0;border-top:1px solid #f1f1f2}.cq{color:#6d6e70;font-size:13.5px}.av{font-weight:500;color:#231f20;white-space:pre-wrap}.cx .ins2{color:#6d6e70;font-size:13px;margin:-2px 0 6px}.mk{display:inline-block;margin-left:8px;font-size:13px}.mk.y{color:#1e8449}.mk.n{color:#c0392b}.right{color:#1e8449;font-size:13px;margin-left:6px}.ci.bad{background:#fdf1f0;border-radius:6px;padding-left:6px}</style></head><body>
+<header><div class="lv">BP</div><h1>Business Partner · Admin</h1><a href="hub.html" style="margin-left:16px;align-self:center;color:#5b5fc7;font-weight:500;text-decoration:none">🗂 All levels &amp; students</a><a href="students.html" style="margin-left:16px;align-self:center;color:#ff6b3d;font-weight:600;text-decoration:none">👩‍🏫 Мої студенти</a><a href="cabinets.html" style="margin-left:16px;align-self:center;color:#ff6b3d;font-weight:600;text-decoration:none">🎟 Кабінети студентів</a><div class="r" id="hdr" style="display:none"><button class="btn l" onclick="load()">↻ Refresh</button><button class="btn l" onclick="logout()">Log out</button></div></header>
+<main id="app"></main>
+<footer>Valentyna Hordiienko · Middle Learning Architect</footer>
+<script>
+const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
+const LEVELS=["A1","A2","A2+","B1","B1+","B2","B2+","C1"];
+const app=document.getElementById("app");
+let KEY="",STUDENTS=[],OVER=[],LEVEL=null,SEL=null;
+try{KEY=localStorage.getItem("bp_admin_key")||""}catch(e){}
+const rpc=(f,b)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(async r=>{const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):null});
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const short=l=>l.replace(/^BP\s+\S+\s+/,"");
+const lessonNo=l=>{const m=l.match(/(\d+\.\d+|W\d+)/);return m?m[1]:l};
+const fmtDate=d=>d?new Date(d).toLocaleString("uk-UA",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"}):"";
+
+function loginView(msg){
+ document.getElementById("hdr").style.display="none";
+ app.innerHTML=`<div class="login"><h2 style="font-weight:500">Вхід для вчителя</h2><p class="note">Введіть ключ адміністратора.</p>
+ <input id="k" type="password" placeholder="Admin key" autocomplete="current-password"><button class="btn" id="go" style="width:100%;padding:10px">Увійти</button>
+ <p class="err">${msg||""}</p></div>`;
+ const k=document.getElementById("k");k.focus();
+ const go=()=>{KEY=k.value.trim();load()};document.getElementById("go").onclick=go;k.onkeydown=e=>{if(e.key==="Enter")go()};
+}
+function logout(){KEY="";try{localStorage.removeItem("bp_admin_key")}catch(e){};loginView()}
+async function load(){
+ if(!KEY)return loginView();
+ app.innerHTML=`<p class="note">Loading…</p>`;
+ try{[STUDENTS,OVER]=await Promise.all([rpc("admin_students",{p_key:KEY}),rpc("admin_overview",{p_key:KEY})])}
+ catch(e){return loginView(/not allowed/.test(e.message)?"Невірний ключ.":"Немає з’єднання з базою.")}
+ try{localStorage.setItem("bp_admin_key",KEY)}catch(e){}
+ document.getElementById("hdr").style.display="flex";
+ if(!LEVEL){LEVEL=(LEVELS.find(l=>STUDENTS.some(s=>s.level===l)))||"A2+"}
+ render();
+}
+function route(){const h=decodeURIComponent(location.hash.slice(1));return h.startsWith("s/")?h.slice(2):null}
+window.addEventListener("hashchange",()=>{SEL=null;render()});
+function render(){
+ const slug=route();
+ if(slug&&STUDENTS.some(s=>s.slug===slug))return studentPage(slug);
+ const lv=LEVELS.map(l=>{const n=STUDENTS.filter(s=>s.level===l).length;return `<button class="${l===LEVEL?"on":""}" data-l="${l}">${l}<small>${n?"· "+n:""}</small></button>`}).join("");
+ const st=STUDENTS.filter(s=>s.level===LEVEL);
+ const cards=st.length?`<div class="cards">${st.map(s=>{const rows=OVER.filter(o=>o.slug===s.slug);const sent=rows.filter(o=>o.submitted).length,prog=rows.length-sent;
+   const last=rows.map(o=>o.updated_at).sort().pop();
+   return `<div class="card" data-s="${esc(s.slug)}"><b>${esc(s.name)}</b><div class="sub">${esc(s.level)} · ${esc(s.track)}</div>
+   <div class="stat">${sent?`<span class="chip done">✓ ${sent} sent</span> `:""}${prog?`<span class="chip prog">${prog} in progress</span>`:""}${!rows.length?'<span class="chip none">no homework yet</span>':""}</div>
+   ${last?`<div class="note" style="margin-top:6px">last activity ${fmtDate(last)}</div>`:""}</div>`}).join("")}</div>`
+  :`<p class="empty">На рівні ${LEVEL} ще немає студентів. Додайте нижче.</p>`;
+ app.innerHTML=`<div class="levels">${lv}</div>${cards}
+ <div class="add"><h3>Додати / змінити студента</h3>
+ <form id="af"><input name="name" placeholder="Name (e.g. Kate)" required><input name="slug" placeholder="slug (kate)" required pattern="[a-z0-9-]+">
+ <select name="level">${LEVELS.map(l=>`<option ${l===LEVEL?"selected":""}>${l}</option>`).join("")}</select>
+ <select name="track"><option value="all">all</option><option value="it">it</option><option value="pm">pm</option><option value="design">design</option></select>
+ <button class="btn">Зберегти</button></form><div id="am" class="note"></div>
+ <p class="note">Після додавання з’явиться особистий код. Його вписують у сторінки студента (репо bp-&lt;slug&gt;) — тоді відповіді пишуться саме на нього, без введення імені.</p></div>`;
+ app.querySelectorAll(".levels button").forEach(b=>b.onclick=()=>{LEVEL=b.dataset.l;render()});
+ app.querySelectorAll(".card[data-s]").forEach(c=>c.onclick=()=>{location.hash="s/"+c.dataset.s});
+ document.getElementById("af").onsubmit=async e=>{e.preventDefault();const f=new FormData(e.target);const am=document.getElementById("am");
+  try{const code=await rpc("admin_add_student",{p_key:KEY,p_slug:f.get("slug"),p_name:f.get("name"),p_level:f.get("level"),p_track:f.get("track")});
+   am.innerHTML=`<span class="ok">✓ Збережено. Код: <span class="code">${esc(code)}</span></span>`;LEVEL=f.get("level");setTimeout(load,800)}
+  catch(err){am.innerHTML=`<span class="err">Помилка: ${esc(err.message)}</span>`}};
+}
+function studentPage(slug){
+ const s=STUDENTS.find(x=>x.slug===slug);LEVEL=s.level;
+ const rows=OVER.filter(o=>o.slug===slug).sort((a,b)=>lessonNo(a.lesson).localeCompare(lessonNo(b.lesson),undefined,{numeric:true}));
+ app.innerHTML=`<a class="back" onclick="location.hash=''">← Усі студенти (${esc(s.level)})</a>
+ <div class="sh"><h2>${esc(s.name)}</h2><span class="chip done" style="cursor:default">${esc(s.level)}</span><span class="chip none" style="color:#4d4d4f">track: ${esc(s.track)}</span></div>
+ <div class="info"><a href="https://villevian.github.io/bp-${esc(s.slug)}/" target="_blank" rel="noopener">Сторінка студента ↗</a><span>Код: <span class="code">${esc(s.code)}</span></span></div>
+ <h3 style="font-weight:500;margin:6px 0">Домашні завдання</h3>
+ ${rows.length?`<table class="ls"><tr><th>Урок</th><th>Статус</th><th>Бали</th><th>Оновлено</th><th></th></tr>${rows.map(o=>`<tr class="row${SEL&&SEL[1]===o.lesson?" sel":""}" data-ls="${esc(o.lesson)}"><td><b style="font-weight:500">${esc(short(o.lesson))}</b></td>
+  <td><span class="chip ${o.submitted?"done":"prog"}">${o.submitted?"✓ Sent":"In progress"}</span></td><td>${esc(o.score?Object.entries(o.score).map(([k,v])=>k.replace(/^e/,"Ex ")+": "+v).join(" · "):"")}</td>
+  <td class="note">${fmtDate(o.updated_at)}</td><td>${o.has_comment?"💬":""}</td></tr>`).join("")}</table>`:`<p class="empty">Ще немає жодної домашки.</p>`}
+ <div id="det"></div>`;
+ app.querySelectorAll("tr.row").forEach(r=>r.onclick=()=>{app.querySelectorAll("tr.row").forEach(x=>x.classList.remove("sel"));r.classList.add("sel");openDetail(slug,r.dataset.ls)});
+ if(SEL&&SEL[0]===slug)openDetail(slug,SEL[1]);else if(rows.length===1)openDetail(slug,rows[0].lesson);
+}
+function groupAnswers(a){
+ const g={};
+ Object.entries(a||{}).forEach(([k,v])=>{
+  let ex="Other",item=k;const m=k.match(/^e(\d+)([a-z]?)_?(.*)$/);
+  if(m){ex="Ex "+m[1]+(m[2]?m[2].toUpperCase():"");item=m[3]||""}else if(k==="self"){ex="Self-assessment";item=""}else if(k==="q"){ex="Questions for teacher";item=""}
+  (g[ex]=g[ex]||[]).push([item,Array.isArray(v)?v.join(", "):v]);
+ });
+ return Object.entries(g).sort((x,y)=>{const n=s=>parseInt((s.match(/\d+/)||[999])[0]);return n(x[0])-n(y[0])||x[0].localeCompare(y[0])});
+}
+const PAGE_CACHE={};
+function pageCandidates(slug,lesson,track){
+ const m=lesson.match(/(\d+)\.(\d+)/);if(!m)return[];const n=m[1]+"-"+m[2];
+ const trs=[...new Set([track,"all",track+"-classic","all-classic"].filter(Boolean))];
+ const fs=/extra/i.test(lesson)?["extra.html"]:/lesson/i.test(lesson)&&!/homework/i.test(lesson)?["lesson.html"]:["hw.html","hw-standard.html","hw-easy.html","extra.html"];
+ const out=[];trs.forEach(t=>fs.forEach(f=>out.push(`https://villevian.github.io/bp-${slug}/lessons/${n}/${t}/${f}`)));return out}
+async function pageFor(slug,lesson,track){
+ const ck=slug+"|"+lesson;if(PAGE_CACHE[ck]!==undefined)return PAGE_CACHE[ck];
+ let found=null;
+ for(const u of pageCandidates(slug,lesson,track)){
+  try{const r=await fetch(u,{cache:"no-cache"});if(!r.ok)continue;const t=await r.text();
+   const L=(t.match(/LESSON\s*=\s*"([^"]+)"/)||[])[1];if(L===lesson){found={url:u,html:t};break}}catch(e){}
+ }
+ return PAGE_CACHE[ck]=found}
+function ctxFromPage(html){
+ const doc=new DOMParser().parseFromString(html,"text/html");const C={};let i=0;
+ let ans=null;const km=html.match(/const KEY\s*=\s*(\{[\s\S]*?\});/);if(km){try{ans=JSON.parse(km[1])}catch(e){}}
+ const clean=t=>(t||"").replace(/\s+/g," ").trim();
+ const secTitle=sec=>{if(!sec)return{t:"",ins:""};const c=sec.cloneNode(true);
+  const h=c.querySelector("h2");let t="";if(h){const num=h.querySelector("span");t=(num?clean(num.textContent)+". ":"")+clean([...h.childNodes].filter(x=>x!==num).map(x=>x.textContent).join(" "))}
+  const p=c.querySelector(".ins");let ins="";if(p){const x=p.querySelector("b.x");if(x&&!t)t="Ex "+clean(x.textContent);if(x)x.remove();const ua=p.querySelector(".ua");const uat=ua?clean(ua.textContent):"";if(ua)ua.remove();ins=clean(p.textContent)||uat}
+  const b=c.querySelector(".bsec");if(b&&t&&!h)t+=" · "+clean(b.textContent);return{t:t||"Task",ins}};
+ const qText=el=>{
+  const box=el.closest(".row,.tf");if(!box)return"";
+  const sq=box.querySelector(".q");if(sq&&el.type==="radio")return clean(sq.textContent);
+  const c=box.cloneNode(true);c.querySelectorAll(".fb,.uah,script").forEach(x=>x.remove());
+  c.querySelectorAll("select,input:not([type=radio]),textarea").forEach(x=>x.replaceWith(" ___ "));
+  const labs=[...c.querySelectorAll("label")];if(labs.length){const opts=labs.map(l=>clean(l.textContent));labs.forEach(l=>l.remove());return clean(c.textContent+" "+opts.join("  /  "))}
+  return clean(c.textContent)};
+ doc.querySelectorAll("[data-k]").forEach(el=>{const k=el.dataset.k;if(!k||k.includes("$")||C[k])return;
+  const sec=el.closest("section");const st=secTitle(sec);
+  let q=qText(el);if(k==="q"){C[k]={s:"Questions for teacher",q:"",i:9000};return}
+  C[k]={s:st.t,ins:st.ins,q,i:i++}});
+ return{C,ans}}
+function renderCtx(a,C,page,ans){
+ if(!a)return "";C=C||a._ctx;if(!C)return "";page=page||a._page;
+ const keys=Object.keys(a).filter(k=>!k.startsWith("_")&&C[k]).sort((x,y)=>C[x].i-C[y].i);
+ const known=new Set(keys);const extra=Object.keys(a).filter(k=>!k.startsWith("_")&&!known.has(k)&&k!=="self");
+ const sec=[];keys.forEach(k=>{const s=C[k].s||"";let g=sec.find(x=>x.s===s);if(!g){g={s,ins:C[k].ins||"",items:[]};sec.push(g)}g.items.push([C[k].q,a[k],k])});
+ if(a.self!=null)sec.push({s:"Self-assessment",items:[["0 = need more practice · 5 = know this well",a.self+" / 5","self"]]});
+ if(extra.length)sec.push({s:"Other",items:extra.map(k=>[k,a[k],k])});
+ const norm=t=>String(t||"").toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").replace(/[.!?]+$/,"").trim();
+ const item=([q,v,k])=>{const empty=v===""||v==null;const key=ans&&ans[k];let mk="",right="",bad=false;
+  if(key&&!empty){const ok=key.some(x=>norm(x)===norm(v));mk=ok?'<span class="mk y">✓</span>':'<span class="mk n">✗</span>';if(!ok){bad=true;right='<span class="right">→ '+esc(key.join(" / "))+'</span>'}}
+  else if(key&&empty){bad=true;right='<span class="right">→ '+esc(key.join(" / "))+'</span>'}
+  return '<div class="ci'+(bad?" bad":"")+'">'+(q?'<div class="cq">'+esc(q)+'</div>':'')+(empty?'<span class="emptyv">— не заповнено</span>':'<b class="av">'+esc(Array.isArray(v)?v.join(", "):String(v))+'</b>')+mk+right+'</div>'};
+ return (page?'<p class="note"><a href="'+esc(page)+'" target="_blank">📄 Відкрити сторінку студента</a></p>':'')+
+  '<div class="ctx">'+sec.map(g=>'<div class="cx"><h4>'+esc(g.s)+'</h4>'+(g.ins?'<div class="ins2">'+esc(g.ins)+'</div>':'')+g.items.map(item).join("")+'</div>').join("")+'</div>'}
+async function openDetail(slug,lesson){
+ SEL=[slug,lesson];const s=STUDENTS.find(x=>x.slug===slug);const det=document.getElementById("det");det.innerHTML=`<p class="note">Loading…</p>`;
+ let d;try{d=(await rpc("admin_get",{p_key:KEY,p_slug:slug,p_lesson:lesson}))[0]}catch(e){det.innerHTML=`<p class="err">${esc(e.message)}</p>`;return}
+ if(!d){det.innerHTML="";return}
+ const groups=groupAnswers(Object.fromEntries(Object.entries(d.answers||{}).filter(([k])=>!k.startsWith("_"))));
+ let ctxHtml=renderCtx(d.answers);
+ if(!ctxHtml&&d.answers){const pg=await pageFor(slug,lesson,s&&s.track);if(pg){const r=ctxFromPage(pg.html);ctxHtml=renderCtx(d.answers,r.C,pg.url,r.ans)}}
+ det.innerHTML=`<div class="detail"><h3>${esc(s?s.name:slug)} · ${esc(short(lesson))}</h3>
+ <div class="meta">${d.submitted?"✓ Надіслано вчителю":"Ще в процесі"} · оновлено ${fmtDate(d.updated_at)}</div>
+ <div class="scores">${d.score?Object.entries(d.score).map(([k,v])=>`<span>${esc(k.replace(/^e/,"Ex "))}: <b>${esc(v)}</b></span>`).join(""):""}</div>
+ ${ctxHtml?ctxHtml:`<div class="ans">${groups.map(([ex,items])=>`<div class="ex"><h4>${esc(ex)}</h4>${items.map(([i,v])=>`<div><i>${esc(i)}</i>${v===""||v==null?'<span class="emptyv">—</span>':esc(v)}</div>`).join("")}</div>`).join("")}</div>`}
+ <b style="font-weight:600">💬 Коментар для студента</b><p class="note" style="margin:2px 0 6px">Студент побачить його вгорі своєї домашки, а в Contents — позначку 💬.</p>
+ <textarea id="cm">${esc(d.teacher_comment||"")}</textarea>
+ <div style="margin-top:8px;display:flex;gap:8px;align-items:center"><button class="btn" id="sv">Зберегти коментар</button><button class="btn l" onclick="SEL=null;document.getElementById('det').innerHTML=''">Закрити</button><span id="svm" class="note"></span></div></div>`;
+ document.getElementById("sv").onclick=async()=>{const m=document.getElementById("svm");try{await rpc("admin_comment",{p_key:KEY,p_slug:slug,p_lesson:lesson,p_comment:document.getElementById("cm").value});m.innerHTML='<span class="ok">✓ Збережено</span>';const o=OVER.find(x=>x.slug===slug&&x.lesson===lesson);if(o)o.has_comment=!!document.getElementById("cm").value.trim()}catch(e){m.innerHTML='<span class="err">Помилка</span>'}};
+ 
+}
+load();
+</script></body></html>
