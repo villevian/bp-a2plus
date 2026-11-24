@@ -260,3 +260,5 @@ VOCAB[0][2][2][1][:0] = [   # Indeed videos 2026 (Before class)
   ("audit your skills", "проаналізувати (провести аудит) свої навички", "check carefully what skills you have", "Start your career change by auditing your skills."),
   ("change careers", "змінити професію / кар’єру", "start working in a different field", "Many people change careers in their thirties."),
 ]
+from indeed_words import WORDS as _IW
+VOCAB[0][2].insert(3, ("Video words (Indeed)", [(w[0], w[2], w[3], w[4]) for w in _IW]))

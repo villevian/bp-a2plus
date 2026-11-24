@@ -158,7 +158,7 @@ function render(){
    tot++;const pr=PROGRESS[n]||"none";if(pr==="done"){done++;ud++}
    const A=ASSIGNED&&ASSIGNED[n];let tr=A?(A.track||A):track;const PG=(A&&A.pages)||PAGES[n]||["lesson","hw","extra"];if(!(VARIANTS[n]||["all"]).includes(tr))tr="all";const ready=st==="ready";
    const ws=n.startsWith("W")||t.startsWith("Business workshop");
-   const NM={flip:"🏠 Before class",lesson:"Lesson",hw:"Homework",extra:"Extra",games:"Speaking & Games",present:"🎤 Presentation kit",speak:"💼 Speaking: business situations"};
+   const NM={flip:"🏠 Before class",lesson:"Lesson",hw:"Homework",words:"🎬 Video words",extra:"Extra",games:"Speaking & Games",present:"🎤 Presentation kit",speak:"💼 Speaking: business situations"};
    const L3=(t2,lab)=>`<div class="links">${lab?`<span class="vl">${lab}</span>`:""}${PG.map(p=>`<a href="${path(n,t2,p)}">${NM[p]}</a>`).join("")}</div>`;
    const open=ready&&(!ASSIGNED||A);
    const links=open?(cl?L3(tr,"Updated")+L3(tr+"-classic","Classic"):L3(tr,""))+`

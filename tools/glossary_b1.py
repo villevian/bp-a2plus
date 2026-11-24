@@ -82,6 +82,8 @@ U1_1X = [  # Extra: portfolio career
  ("side project", "n.", "власний (сайд-)проєкт", "something you build in your free time, not for a client", "He adds every side project to his portfolio.", ["work on a side project"], "", True),
 ]
 
+from indeed_words import WORDS as IW
+
 def _unit4():
     from vocab_b1 import VOCAB
     out = []
@@ -93,6 +95,7 @@ def _unit4():
 UNITS = [
  ("1", "Career choices", [
   ("1.1", "Transferable skills", U1_1),
+  ("1.1 Video", "Indeed: career change & transferable skills", [(w[0], w[1], w[2], w[3], w[4], w[5], w[6] + (" · ★ Advanced" if w[7] == "adv" else (" · listening" if w[7] == "rec" else "")) if w[6] or w[7] != "core" else "", True) for w in IW]),
   ("1.1 Extra", "Portfolio career", U1_1X),
  ]),
  ("4", "Global markets", _unit4()),

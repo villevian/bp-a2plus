@@ -46,7 +46,10 @@ def vidx(vid_id, title, extra="", open_=False, ratio="56.25%", maxw=720):
             'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:10px" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
             '<p class="hint">Subtitles: CC. Speed: ⚙ → 0.75. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", title, ratio, maxw, vid_id, extra, vid_id)
 def shortvideo(open_=False): return vidx(SHORT_ID, "Video 1: <i>Transferable Skills Employers Want (Even in a Tough Market)</i> · Indeed, 2026 · under 1 min", "", open_, "177.7%", 300)
-def epvideo(open_=False): return vidx(EP_ID, "Video 2: <i>How to Change Careers Using Transferable Skills You Already Have</i> · Indeed, 2026 · watch 1:04–2:50", "&start=64&end=170", open_)
+from indeed_words import CHAPTERS as EP_CH
+def epvideo(open_=False):
+    return (vidx(EP_ID, "Video 2: <i>How to Change Careers Using Transferable Skills You Already Have</i> · Indeed · Job Search Stories, 2026", "&start=64&enablejsapi=1", open_).replace("<iframe ", '<iframe id="yt" ', 1) +
+            '<div class="chips" style="margin:-4px 0 8px">%s</div>' % "".join('<span style="cursor:pointer" onclick="jump(%d)">▶ %d:%02d %s</span>' % (t, t // 60, t % 60, n) for t, n in EP_CH))
 VIDEO_ID = "wBEeVfhaDR4"
 def video(open_=False):
     return ('<details class="ad"%s><summary>🎬 Video: <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16)</summary>'
@@ -184,7 +187,7 @@ f1 = ('<div class="bsec">Before class <span class="sub">Video</span></div>'
       shortvideo(True) + '<div>%s</div>' % "".join(yn("f1a_%d" % (i + 1), w) for i, (w, a) in enumerate(QS)) + ctl("f1a") +
       '<p class="ins" style="margin-top:22px"><b>B</b> What does the speaker say about your previous experience?</p>' +
       '<div class="row">%s%s</div>' % (sel("f1b", OPT1B, 460), fb("f1b")) + ctl("f1b") +
-      '<p class="ins" style="margin-top:26px"><b>C</b> Now watch video 2 – <b>only 1:04 to 2:50</b> (the player starts and stops there). Two career coaches explain how to <i>audit</i> (check carefully) your transferable skills. Make notes.</p>' +
+      '<p class="ins" style="margin-top:26px"><b>C</b> Now watch video 2 – the full episode. Focus on <b>1:04–4:34</b> (it starts there; use the ▶ buttons to jump). Two career coaches explain how to <i>audit</i> (check carefully) your transferable skills. Make notes.</p>' +
       epvideo(True) +
       '<div class="card">1. What steps do they suggest to find your transferable skills?</div>' + ta("f1c_1", "1 …\n2 …", 80) +
       '<div class="card">2. Write down 3–5 skills or phrases you hear.</div>' + ta("f1c_2", "", 50) +
@@ -196,10 +199,6 @@ VD = {"project management": "IT work is almost always organised as projects: bui
       "problem-solving": "use technology to solve problems for customers or for teams inside the company.",
       "communication": "listen well and explain technical ideas in plain business language to other departments.",
       "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
-for i, v in enumerate(VS): F["f1d_%d" % (i + 1)] = [VD[v]]
-DSORT = sorted(VD.values())
-f1 += ADV("A harder video about IT", '<p>Watch <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16) – a longer talk about IT. Match each skill with what the speaker says about it.</p>' + video(False) +
-          "".join('<div class="row"><b style="display:inline-block;min-width:210px;font-weight:500">%s</b>%s%s</div>' % (v, sel("f1d_%d" % (i + 1), DSORT, 520), fb("f1d_%d" % (i + 1))) for i, v in enumerate(VS)) + ctl("f1d"))
 # ---- 2 Vocabulary from the video ----
 M2 = [("stakeholder", "a person or group who is affected by a project and cares about the result"),
       ("roll out (a system)", "introduce a new system to all the people who will use it"),
@@ -231,7 +230,7 @@ def tbl2():
     return h + "</table>"
 F2D = [("I think my strongest skill is ___ because …", "problem-solving / communication …"), ("In my job, I often explain technical things to ___ like …", "other departments / stakeholders"),
        ("One gap in my knowledge is …, but I’m working on it by …", ""), ("If I had to write a cover letter tomorrow, I would connect … to …", "")]
-fv = ('<div class="bsec">Before class <span class="sub">Vocabulary from the video</span></div>'
+fv = ('<div class="bsec">Before class <span class="sub">Vocabulary: IT work</span></div>'
       '<p class="ins"><b class="x">2</b><b>A</b> Match the words and phrases about skills in IT with their meanings.</p>' +
       "".join('<div class="row"><b style="display:inline-block;min-width:220px;font-weight:500">%s</b>%s%s</div>' % (w, sel("v2a_%d" % (i + 1), sorted(d for _, d in M2), 470), fb("v2a_%d" % (i + 1))) for i, (w, d) in enumerate(M2)) + ctl("v2a") +
       '<p class="ins" style="margin-top:26px"><b>B</b> Complete the collocations about IT work with the verbs in the box.</p>'
@@ -249,11 +248,11 @@ f3 = ('<div class="bsec">Before class <span class="sub">Get ready to speak</span
       '<div class="card">2. Which skill do you want to develop this year? Why?</div>' + ta("f3_2", "", 60) +
       '<div class="card">3. Write down 3–5 new words or phrases from the video or the article. <span class="hint">Tip: select a word on this page and press ＋ to save it to My vocabulary.</span></div>' + ta("f3_3", "", 60) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well did you understand the video and the article?"))
-VOC_F = [("From the videos", ["transferable skills", "a tough / difficult job market", "previous experience", "conflict resolution", "communication", "the AI boom", "audit your skills", "change careers", "career coach"]),
+VOC_F = [("From the videos (Indeed)", ["transferable skills", "a tough job market", "previous experience", "conflict resolution", "the AI boom", "audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "connect the dots", "skill gap", "side hustle", "every experience counts"]),
          ("Words about IT work", ["project management", "stakeholder management", "teamwork and collaboration", "plain business language", "stakeholder", "roll out (a system)", "internal team", "department", "gap (in your knowledge)", "cover letter", "transition into IT", "manage a project", "meet the needs of customers", "explain technical ideas", "connect your skills to real examples"]),
          ("From the article", ["think outside the box", "set goals", "flexibility", "critical thinking", "team player", "integrity", "a can-do attitude", "determination", "old news", "tech stack"])]
 html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
-            [("1", f1), ("2", fv), ("3", f2), ("4", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
+            [("1", f1), ("2", fv), ("3", f2), ("4", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + 'function jump(t){const f=document.getElementById("yt");if(!f)return;const d=f.closest("details");if(d)d.open=true;f.src=f.src.replace(/([?&])start=\\d+/,"$1start="+t)+"&autoplay=1";f.scrollIntoView({behavior:"smooth",block:"center"})}\n' + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "flip.html"), "w").write(html)
 
 # ================= HOMEWORK =================

@@ -89,7 +89,7 @@ footer{color:var(--mut);font-size:12.5px;margin-top:30px}
 const D=__DATA__;const SB="https://zuegojpfhgigsvyrnymt.supabase.co",SK="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
 const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const rpc=(f,b)=>fetch(SB+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SK,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(r=>r.ok?r.json():Promise.reject(r.status));
-const NM={flip:"Before class",lesson:"Lesson",hw:"Homework",extra:"Extra practice",games:"Speaking & games",present:"Presentation kit",speak:"Speaking practice"};
+const NM={flip:"Before class",lesson:"Lesson",hw:"Homework",words:"Homework: video words",extra:"Extra practice",games:"Speaking & games",present:"Presentation kit",speak:"Speaking practice"};
 const path=(n,tr,p)=>`lessons/${n.replace(".","-").toLowerCase()}/${tr}/${p}.html?v=${D.build}`;
 const first=D.student.name.split(" ")[0];$("av").textContent=first[0];$("nm").textContent=D.student.name;
 const h=new Date().getHours();$("hi").textContent=(h<12?"Good morning":h<18?"Good afternoon":"Good evening")+", "+first+"! 👋";

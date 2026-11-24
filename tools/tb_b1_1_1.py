@@ -93,4 +93,26 @@ def build(blk, ul, say, step):
        ["What is a red flag in a job description for you?"], "<p>Модель 10B — на сторінці уроку.</p>",
        "Перевіряйте, чи навички вжиті правильно: <i>be a team player</i> (не <i>be team player</i>), <i>set goals</i> (не <i>make goals</i>).")),
     ]
+    S.append(("s11", "🎬", step("s11", "Video words (Indeed) — домашка + обговорення на уроці", "домашка ~40 хв · урок 20 хв",
+       "<p><b>Логіка домашки — таксономія Блума для лексики</b> (спочатку значення, потім форма; повторне пригадування; використання в новому контексті): "
+       "1 Remember — почути й дописати фрази у відео (1:04–4:34) → 2 Understand — значення + ситуації → 3 пасивні фрази на слух → 4 Apply — Slack/LinkedIn-повідомлення в IT → "
+       "5 Analyse — «verbs, not titles» у CV і яку стратегію використовує людина → 6 Evaluate — порівняти дві відповіді на співбесіді, погодитися/не погодитися з аргументом → "
+       "7 Create — власний <i>skills audit</i> (90–120 слів, ≥6 фраз, фрази підсвічуються) + сказати вголос за 1 хв. ★ Advanced — розділ 7:05–9:56 (through line).</p>"
+       "<p><b>Soft skills уроку:</b> self-advocacy (говорити про себе без вибачень), reframing (переформулювати «слабкість» у сильну сторону), структурна відповідь, активне слухання.</p>",
+       ["Last time you audited your experience. Let’s start with your one-minute ‘Tell me about yourself’.", "Which phrase from the video was the most useful for you? Why?"],
+       ul(["<b>1. Retrieval warm-up (3 хв):</b> пінг-понг — ви кажете значення або український переклад, студент — фразу; потім навпаки. Без підглядання.",
+           "<b>2. Його 1-хвилинний audit (4 хв):</b> студент говорить без тексту. Ви записуєте 2 вдалі фрази і 2 помилки, нічого не перебиваєте.",
+           "<b>3. Обговорення (7 хв), питання по черзі:</b> <i>What are your AI-proof skills? Which of your tasks could AI do tomorrow?</i> · <i>What’s your skill gap right now – and how will you bridge it?</i> · <i>Would you show your side hustle / pet project to a recruiter?</i> · <i>Does every experience count? Where is the line?</i> · <i>Certificates – do they carry real weight in IT?</i> (повертайтеся до його відповідей з кроку 6B домашки).",
+           "<b>4. Рольова гра «Turn it around» (7 хв):</b> ви — рекрутер міжнародної компанії, ставите незручні питання; студент відповідає за схемою: без вибачень → connect the dots → verbs, not titles → доказ (цифра/результат).",
+           "<b>5. Фідбек (2 хв):</b> <i>What went well / Even better if…</i> — спочатку самооцінка студента, потім ваша."]),
+       ["Your role (recruiter): “You changed jobs three times in four years – why?” → якщо він вибачається, скажіть: <i>Try again – connect the dots.</i>",
+        "“You don’t have a computer science degree.” → чекаєте: <i>audit my experience, bridge the gap, certificate signals initiative</i>.",
+        "“AI can do junior tasks now. Why should we hire you?” → чекаєте: <i>AI-proof skills, comfort with new tools, communication</i>.",
+        "★ “You stayed six years at one company – isn’t that too long?” → <i>reframe longevity as loyalty</i>."],
+       "<p><b>Ключі домашки.</b> 1: experience, eyes, AI, gap, terms, dots, gap, verbs, tools, hustle, counts, initiative, life. "
+       "2B: bridges the gap with industry-specific terms · with fresh eyes · connects the dots · audits her experience · skill gap. "
+       "4: audit my experience · skill gap · side hustle · connect the dots / bridge the gap · AI-proof skills · Think in verbs, not titles · comfort with new tools · signal initiative. "
+       "5A: Led a team of 4… · Built 120 automated tests… · Organised weekly coding workshops… 5B: signal initiative · audit · connect the dots · bridge the gap · audit · bridge the gap. 6A: B. "
+       "Кроки 2A, 3, ★ — автоперевірка на сторінці.</p>",
+       "Слова з відео вже є в тренажері (група «Video words») і в глосарії. Інтервальне повторення: домашка в день уроку → тренажер через 2–3 дні → пінг-пінг на наступному уроці.")))
     return O, S
