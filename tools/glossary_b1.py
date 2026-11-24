@@ -45,7 +45,14 @@ U1_1 = [
  ("async communication", "n. [U]", "асинхронна комунікація", "communicating in writing so people can answer later", "Good async communication means fewer meetings.", [], "asynchronous (adj) → asynchronously (adv)", True),
  ("ownership", "n. [U]", "відповідальність за результат", "taking a task from start to finish and caring about the result", "We want people who take ownership.", ["take ownership of sth"], "own (v) → owner (n) → ownership (n)", True),
  ("job description", "n.", "опис вакансії", "a text that explains a job and the skills it needs", "Write a job description for a remote role.", ["write / read a job description"], "", False),
- # --- From the video (Before class, NEW) ---
+ # --- Coursebook video 1.1.1 (Before class) ---
+ ("fit into the team", "v. phr.", "вписатися в команду", "work well and feel comfortable with the other people in a team", "Employers ask: can this candidate fit into the team well?", ["fit in well"], "", False),
+ ("influence people", "v. phr.", "впливати на людей", "change what other people think or do", "The ability to influence people is an important skill.", ["have an influence on sb"], "influence (v / n) → influential (adj)", False),
+ ("internship", "n.", "стажування", "a short period of work to get experience, often for students", "She did a three-month internship at a software company.", ["do an internship", "a paid / unpaid internship"], "intern (n) → internship (n)", False),
+ ("part-time job", "n.", "робота на неповний день", "a job for only some hours of the day or week", "A part-time job shows that you can manage your time.", ["have / get a part-time job"], "≠ full-time job", False),
+ ("volunteer work", "n. [U]", "волонтерська робота", "work you do without pay to help people", "Volunteer work can show your communication skills.", ["do volunteer work"], "volunteer (n / v) → voluntary (adj)", False),
+ ("the whole person behind the CV", "n. phr.", "людина повністю, а не лише резюме", "who you really are – skills, qualities and experience together", "Employers hire the whole person behind the CV.", [], "", False),
+ # --- From the IT video (★ Advanced, NEW) ---
  ("stakeholder", "n.", "стейкхолдер, зацікавлена сторона", "a person or group affected by a project who cares about the result", "Talk to every stakeholder before you change the plan.", ["key stakeholders", "stakeholder management"], "", True),
  ("roll out", "phr. v.", "впровадити, розгорнути", "introduce a new system to all the people who will use it", "We rolled out the new CRM to all departments.", ["roll out a system / a feature"], "roll out (v) → rollout (n)", True),
  ("project management", "n. [U]", "управління проєктами", "planning and organising work so a project finishes on time", "IT work is almost always organised as projects.", ["project management tools"], "manage (v) → management (n) → manager (n)", True),

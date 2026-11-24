@@ -20,7 +20,8 @@ def build(blk, ul, say, step):
       "Професії в упр. 9 — ІТ-ролі замість personal trainer / factory worker.",
       "Урок 1:1, тому <i>Work in pairs</i> = студент + ви."])) +
      blk("start", "Перевернутий клас: що студент робить ДО уроку (сторінка Before class)", ul([
-      "<b>Відео</b> <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16, YouTube): порядок п’яти навичок, що каже спікерка про кожну, T/F про поради в кінці.",
+      "<b>Відео</b> — книжкове 1.1.1 <i>Transferable skills</i> (рівень B1): 1A — позначити навички/якості з відео (5 зайвих: coding skills, perfect English, many years in one company, a big network on LinkedIn — їх немає); 1B — досвід поза навчанням (internships, part-time jobs, volunteer work, university societies); 1C — T/F (F, T, F, T, T). Субтитри CC і швидкість 0.75 — підказка на сторінці.",
+      "<b>★ Advanced:</b> складніше відео <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16) — зіставити 5 навичок з тим, що каже спікерка. Тільки якщо студент хоче.",
       "<b>Лексика з відео</b> (Before class 2): значення (stakeholder, roll out, internal team, gap, cover letter…), колокації з дієсловами (manage a project, meet the needs, explain technical ideas…), словотвір (manage → management → manager), 4 речення про себе. На уроці почніть з 2D: попросіть прочитати його речення і поставте 2–3 follow-up питання.",
       "<b>Стаття</b> (≈450 слів, B1 з елементами B1+: double-check, justify, stay employable) <i>The skills that survive AI</i> + питання 4A (кнопки Show answer) + які навички є і у відео, і в статті.",
       "<b>Підготовка до говоріння:</b> три свої навички з реальним прикладом, навичка, яку хоче розвинути, 3–5 нових слів.",

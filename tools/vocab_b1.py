@@ -244,3 +244,11 @@ VOCAB[0][2][1][1].extend([
   ("inflexible / unmotivated / dishonest", "негнучкий / невмотивований / нечесний", "negative adjectives with in-, un-, dis-", "Nobody wants an inflexible, dishonest colleague."),
   ("unreliable / disorganised", "ненадійний / неорганізований", "negative adjectives with un-, dis-", "An unreliable contractor loses clients fast."),
 ])
+VOCAB[0][2][2][1][:0] = [   # book video 1.1.1 (Before class)
+  ("fit into the team", "вписатися в команду", "work well and feel comfortable with the other people in a team", "Employers ask: can this candidate fit into the team well?"),
+  ("influence people", "впливати на людей", "change what other people think or do", "The ability to influence people is an important skill."),
+  ("internship", "стажування", "a short period of work to get experience, often for students", "She did a three-month internship at a software company."),
+  ("part-time job", "робота на неповний день", "a job for only some hours of the day or week", "A part-time job shows that you can manage your time."),
+  ("volunteer work", "волонтерська робота", "work you do without pay to help people", "Volunteer work can show your communication skills."),
+  ("the whole person behind the CV", "людина повністю, а не лише резюме", "who you really are – skills, qualities and experience together", "Employers hire the whole person behind the CV."),
+]

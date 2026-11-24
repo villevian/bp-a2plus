@@ -32,6 +32,13 @@ def article():
     return ('<div class="art"><h3>%s</h3><p class="sub2">%s</p>%s</div>' % (ART_T, ART_S, "".join("<p>%s</p>" % p for p in ART)) +
             '<div class="ctl"><button class="btn l" onclick="readArt(this)">🔊 Listen to the article</button><span class="hint">The browser reads the text aloud.</span></div>')
 
+BOOK_ID = "Zu5M4iiEJao"
+def vid(vid_id, title, open_=False):
+    return ('<details class="ad"%s><summary>🎬 Video: %s</summary>'
+            '<div style="position:relative;padding-top:56.25%%;margin:8px 0;max-width:720px"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1" '
+            'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:8px" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
+            '<p class="hint">Subtitles: press CC. Speed: ⚙ → Playback speed → 0.75. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", title, vid_id, vid_id)
+def bookvideo(open_=False): return vid(BOOK_ID, "<i>Transferable skills</i> (Business Partner B1, 1.1.1)", open_)
 VIDEO_ID = "wBEeVfhaDR4"
 def video(open_=False):
     return ('<details class="ad"%s><summary>🎬 Video: <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16)</summary>'
@@ -165,26 +172,40 @@ VD = {"project management": "IT work is almost always organised as projects: bui
       "communication": "listen well and explain technical ideas in plain business language to other departments.",
       "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
 for i, v in enumerate(VS): F["f1_%d" % (i + 1)] = [v]
-f1 = ('<div class="bsec">Before class <span class="sub">Video</span></div><p class="ins"><b class="x">1</b><b>A</b> Watch the video. A university IT leader explains which skills from other jobs help you in IT. '
-      'In what order does she mention these five skills?</p>' + video(True) + '<div class="box">%s</div>' % " · ".join(sorted(VS)) +
-      "".join('<div class="row"><b class="w">%d</b>%s%s</div>' % (i + 1, sel("f1_%d" % (i + 1), sorted(VS), 260), fb("f1_%d" % (i + 1))) for i in range(5)) + ctl("f1") +
-      '<p class="ins"><b>B</b> Watch again. Match each skill with what the speaker says about it.</p>')
-DSORT = sorted(VD.values())
-for i, v in enumerate(VS): F["f1b_%d" % (i + 1)] = [VD[v]]
-f1 += "".join('<div class="row"><b style="display:inline-block;min-width:210px;font-weight:500">%s</b>%s%s</div>' % (v, sel("f1b_%d" % (i + 1), DSORT, 560), fb("f1b_%d" % (i + 1))) for i, v in enumerate(VS)) + ctl("f1b")
-TF = [("She says you should connect your transferable skills to real IT examples in your application or interview.", "T", ""),
-      ("She says you must learn to code before you apply for an IT job.", "F", "She doesn’t say that – she says build basic technical vocabulary."),
-      ("She advises you to build basic technical vocabulary.", "T", ""),
-      ("She says gaps in your knowledge are a big problem for employers.", "F", "Her advice: don’t worry too much about the gaps.")]
+SK = [("teamwork – fitting into the team", True), ("coding skills", False), ("communication skills", True), ("critical thinking", True), ("perfect English", False),
+      ("problem-solving", True), ("the ability to influence people", True), ("honesty", True), ("many years in one company", False), ("flexibility", True),
+      ("enthusiasm", True), ("a big network on LinkedIn", False), ("integrity", True), ("passion", True)]
+for i, (w, a) in enumerate(SK): F["f1a_%d" % (i + 1)] = ["yes" if a else "no"]
+EXP = [("internships", True), ("online games", False), ("part-time jobs", True), ("volunteer work", True), ("travelling abroad", False), ("university societies and clubs", True)]
+for i, (w, a) in enumerate(EXP): F["f1b_%d" % (i + 1)] = ["yes" if a else "no"]
+TF = [("Today most people stay in one job or one industry for their whole career.", "F", "Careers are no longer linear – people move between jobs, industries and countries."),
+      ("Employers often ask: ‘Can this candidate fit into the team well?’", "T", ""),
+      ("Communication skills are important only in some sectors.", "F", "They are ‘absolutely key’ in all sectors."),
+      ("Personal qualities can be as important as technical skills.", "T", ""),
+      ("Employers hire the whole person behind the CV.", "T", "")]
 WHYF = {}
 for i, (q, a, w) in enumerate(TF):
     F["f1c_%d" % (i + 1)] = [a]
     if w: WHYF["f1c_%d" % (i + 1)] = w
-f1 += ('<p class="ins"><b>C</b> The end of the video (2:00–3:16): true (T) or false (F)?</p>' +
-       "".join('<div class="tf"><span class="q">%d. %s</span><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="T"> T</label><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="F"> F</label>%s</div>'
-               % (i + 1, q, i + 1, i + 1, i + 1, i + 1, fb("f1c_%d" % (i + 1))) for i, (q, a, w) in enumerate(TF)) +
-       '<div class="ctl"><button class="btn" onclick="chkRad(\'f1c\',WHYF)">Check</button><span class="res" id="r_f1c"></span></div>')
-
+def yn(k, w): return '<span style="display:inline-flex;align-items:center;gap:2px;margin:4px 8px 4px 0"><label style="display:inline-flex;gap:6px;align-items:center;border:1.5px solid #c8c9cb;border-radius:8px;padding:4px 10px;cursor:pointer"><input type="checkbox" class="yn" data-yn="%s"> %s</label><input class="g" data-k="%s" type="hidden" value="no">%s</span>' % (k, w, k, fb(k).replace("<div", "<span").replace("</div>", "</span>"))
+f1 = ('<div class="bsec">Before class <span class="sub">Video</span></div><p class="ins"><b class="x">1</b><b>A</b> Watch the video. A careers expert explains what employers look for. Tick (✓) the skills and qualities the speakers talk about. <span class="hint">Four of them are NOT in the video.</span></p>' +
+      bookvideo(True) + '<div>%s</div>' % "".join(yn("f1a_%d" % (i + 1), w) for i, (w, a) in enumerate(SK)) + ctl("f1a") +
+      '<p class="ins" style="margin-top:24px"><b>B</b> Where can students get experience <i>outside the classroom</i>? Tick the four places the video mentions.</p>' +
+      '<div>%s</div>' % "".join(yn("f1b_%d" % (i + 1), w) for i, (w, a) in enumerate(EXP)) + ctl("f1b") +
+      '<p class="ins" style="margin-top:24px"><b>C</b> True (T) or false (F)?</p>' +
+      "".join('<div class="tf"><span class="q">%d. %s</span><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="T"> T</label><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="F"> F</label>%s</div>'
+              % (i + 1, q, i + 1, i + 1, i + 1, i + 1, fb("f1c_%d" % (i + 1))) for i, (q, a, w) in enumerate(TF)) +
+      '<div class="ctl"><button class="btn" onclick="chkRad(\'f1c\',WHYF)">Check</button><span class="res" id="r_f1c"></span></div>')
+VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
+VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
+      "stakeholder management": "find the groups of people involved, learn how each group communicates and meet their needs.",
+      "problem-solving": "use technology to solve problems for customers or for teams inside the company.",
+      "communication": "listen well and explain technical ideas in plain business language to other departments.",
+      "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
+for i, v in enumerate(VS): F["f1d_%d" % (i + 1)] = [VD[v]]
+DSORT = sorted(VD.values())
+f1 += ADV("A harder video about IT", '<p>Watch <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16) – faster, more natural speech. Match each skill with what the speaker says about it.</p>' + video(False) +
+          "".join('<div class="row"><b style="display:inline-block;min-width:210px;font-weight:500">%s</b>%s%s</div>' % (v, sel("f1d_%d" % (i + 1), DSORT, 520), fb("f1d_%d" % (i + 1))) for i, v in enumerate(VS)) + ctl("f1d"))
 # ---- 2 Vocabulary from the video ----
 M2 = [("stakeholder", "a person or group who is affected by a project and cares about the result"),
       ("roll out (a system)", "introduce a new system to all the people who will use it"),
@@ -219,7 +240,7 @@ F2D = [("I think my strongest skill is ___ because …", "problem-solving / comm
 fv = ('<div class="bsec">Before class <span class="sub">Vocabulary from the video</span></div>'
       '<p class="ins"><b class="x">2</b><b>A</b> Match the words and phrases about skills in IT with their meanings.</p>' +
       "".join('<div class="row"><b style="display:inline-block;min-width:220px;font-weight:500">%s</b>%s%s</div>' % (w, sel("v2a_%d" % (i + 1), sorted(d for _, d in M2), 470), fb("v2a_%d" % (i + 1))) for i, (w, d) in enumerate(M2)) + ctl("v2a") +
-      '<p class="ins" style="margin-top:26px"><b>B</b> Complete the collocations with the verbs in the box. Then watch the video again and check which ideas you hear.</p>'
+      '<p class="ins" style="margin-top:26px"><b>B</b> Complete the collocations about IT work with the verbs in the box.</p>'
       '<div class="box">%s</div>' % " · ".join(sorted(a for _, a in C2)) +
       "".join('<div class="row">%d. %s%s</div>' % (i + 1, q.replace("___", inp("v2b_%d" % (i + 1), 120)), fb("v2b_%d" % (i + 1))) for i, (q, a) in enumerate(C2)) + ctl("v2b") +
       '<p class="ins" style="margin-top:26px"><b>C</b> Complete the word families.</p>' + tbl2() + ctl("v2c") +
@@ -234,11 +255,11 @@ f3 = ('<div class="bsec">Before class <span class="sub">Get ready to speak</span
       '<div class="card">2. Which skill do you want to develop this year? Why?</div>' + ta("f3_2", "", 60) +
       '<div class="card">3. Write down 3–5 new words or phrases from the video or the article. <span class="hint">Tip: select a word on this page and press ＋ to save it to My vocabulary.</span></div>' + ta("f3_3", "", 60) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well did you understand the video and the article?"))
-VOC_F = [("From the video", ["transferable skills", "project management", "stakeholder management", "problem-solving", "communication skills", "teamwork and collaboration", "plain business language", "technical vocabulary"]),
-         ("Words about IT work", ["stakeholder", "roll out (a system)", "internal team", "department", "gap (in your knowledge)", "cover letter", "transition into IT", "manage a project", "meet the needs of customers", "explain technical ideas", "connect your skills to real examples"]),
+VOC_F = [("From the video", ["transferable skills", "fit into the team", "communication skills", "critical thinking", "problem-solving", "influence people", "honesty", "flexibility", "enthusiasm", "integrity", "passion", "internship", "part-time job", "volunteer work", "the whole person behind the CV"]),
+         ("Words about IT work", ["project management", "stakeholder management", "teamwork and collaboration", "plain business language", "stakeholder", "roll out (a system)", "internal team", "department", "gap (in your knowledge)", "cover letter", "transition into IT", "manage a project", "meet the needs of customers", "explain technical ideas", "connect your skills to real examples"]),
          ("From the article", ["think outside the box", "set goals", "flexibility", "critical thinking", "team player", "integrity", "a can-do attitude", "determination", "old news", "tech stack"])]
 html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
-            [("1", f1), ("2", fv), ("3", f2), ("4", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
+            [("1", f1), ("2", fv), ("3", f2), ("4", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "flip.html"), "w").write(html)
 
 # ================= HOMEWORK =================
