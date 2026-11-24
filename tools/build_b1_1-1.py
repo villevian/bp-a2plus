@@ -40,12 +40,16 @@ def vid(vid_id, title, open_=False):
             '<p class="hint">Subtitles: press CC. Speed: ⚙ → Playback speed → 0.75. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", title, vid_id, vid_id)
 def bookvideo(open_=False): return vid(BOOK_ID, "<i>Transferable skills</i> (Business Partner B1, 1.1.1)", open_)
 SHORT_ID, EP_ID = "yN0VrXS41Gc", "FRFb_JMB5g0"
-def vidx(vid_id, title, extra="", open_=False, ratio="56.25%", maxw=720):
+def vidx(vid_id, title, extra="", open_=False, ratio="16/9", maxw=720):
     return ('<details class="ad"%s><summary>🎬 %s</summary>'
-            '<div style="position:relative;padding-top:%s;margin:8px 0;max-width:%dpx"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1%s" '
-            'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:10px" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
-            '<p class="hint">Subtitles: CC. Speed: ⚙ → 0.75. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", title, ratio, maxw, vid_id, extra, vid_id)
-def shortvideo(open_=False): return vidx(SHORT_ID, "Video 1: <i>Transferable Skills Employers Want (Even in a Tough Market)</i> · Indeed, 2026 · under 1 min", "", open_, "177.7%", 300)
+            '<div style="width:100%%;max-width:%dpx;aspect-ratio:%s;margin:8px 0"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1%s" '
+            'style="width:100%%;height:100%%;border:0;border-radius:12px;display:block" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
+            '<p class="hint">Subtitles: CC. Speed: ⚙ → 0.75. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", title, maxw, ratio, vid_id, extra, vid_id)
+def shortbox():
+    return ('<div style="width:100%%;max-width:300px;aspect-ratio:9/16;flex:0 0 auto"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1" '
+            'style="width:100%%;height:100%%;border:0;border-radius:14px;display:block" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe>'
+            '<p class="hint" style="margin-top:4px">Indeed · 2026 · under 1 min · CC = subtitles</p></div>') % SHORT_ID
+def shortvideo(open_=False): return vidx(SHORT_ID, "Video: <i>Transferable Skills Employers Want (Even in a Tough Market)</i> · Indeed, 2026 · under 1 min", "", open_, "9/16", 300)
 from indeed_words import CHAPTERS as EP_CH
 def epvideo(open_=False):
     return (vidx(EP_ID, "Video 2: <i>How to Change Careers Using Transferable Skills You Already Have</i> · Indeed · Job Search Stories, 2026", "&start=64&enablejsapi=1", open_).replace("<iframe ", '<iframe id="yt" ', 1) +
@@ -121,7 +125,7 @@ s7 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">7</b>Comple
       '<div class="two"><div>%s</div><div>%s</div></div>' % (tbl7(T7[:6], 1), tbl7(T7[6:], 7)) + ctl("v7") +
       '<p class="hint">💡 Word stress: <b>FLEX</b>ible – flexi<b>BIL</b>ity · <b>CON</b>fident – <b>CON</b>fidence · com<b>MU</b>nicate – communi<b>CA</b>tion</p>' +
       ADV("Negative prefixes", '<p>Make the adjectives negative with <b>in-</b>, <b>un-</b> or <b>dis-</b>. Then use two of them to describe the worst colleague you can imagine (no names!).</p>' + "".join('<div class="row">%d. %s → %s%s</div>' % (i + 1, a, inp("v7x_%d" % (i + 1), 170), fb("v7x_%d" % (i + 1))) for i, (a, n) in enumerate(NEG)) + ctl("v7x") + ta("v7x_use", "The worst colleague would be … and …", 50)))
-s8 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">8</b>Work with your teacher.</p>'
+s8 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">9</b>Work with your teacher.</p>'
       '<div class="card">1. Think of three or four more transferable skills that are important in tech in 2026. Use your dictionary if necessary.</div>' + ta("v8_1", "1 …\n2 …\n3 …", 90) +
       '<div class="card">2. For each skill, think of a way you could develop or demonstrate it at work.</div>' + ta("v8_2", "AI literacy – I could … / You can show it by …", 90) +
       mbtn("m8", "<b>AI literacy</b> – use AI tools every day, but always check the result; show it with a small project in your portfolio.\n"
@@ -183,11 +187,42 @@ F["f1b"] = ["It is still valuable, even in a difficult job market."]
 OPT1B = ["It is not important if you change careers.", "It is still valuable, even in a difficult job market.", "AI can do it better now.", "Only your last job matters."]
 def yn(k, w): return '<span style="display:inline-flex;align-items:center;gap:2px;margin:4px 8px 4px 0"><label style="display:inline-flex;gap:6px;align-items:center;border:1.5px solid #c8c9cb;border-radius:8px;padding:4px 10px;cursor:pointer"><input type="checkbox" class="yn" data-yn="%s"> %s</label><input class="g" data-k="%s" type="hidden" value="no">%s</span>' % (k, w, k, fb(k).replace("<div", "<span").replace("</div>", "</span>"))
 WHYF = {}
-f1 = ('<div class="bsec">Before class <span class="sub">Step 1 · A short clip</span></div>' + GUIDE("Watch a very short clip (under 1 minute) and do two small tasks. It’s a warm-up – don’t worry if you don’t understand every word.", "Короткий ролик на розігрів: подивись і виконай 2 маленькі завдання.") +
-      '<p class="ins"><b class="x">1</b><b>A</b> Watch the clip. Which <b>two</b> qualities do employers want in every field – especially during the AI boom? Tick (✓) them.</p>' +
-      shortvideo(True) + '<div>%s</div>' % "".join(yn("f1a_%d" % (i + 1), w) for i, (w, a) in enumerate(QS)) + ctl("f1a") +
+
+# ---- Step 1 · What are transferable skills? (concept first, then words, then video) ----
+def guess_custom(prefix, items):
+    h = ""
+    for n, (en, mean, uk, ex, hint, d1, d2) in enumerate(items):
+        k = "%s_%d" % (prefix, n + 1); F[k] = [mean]
+        opts = [[mean, d1, d2], [d1, mean, d2], [d2, d1, mean]][n % 3]
+        h += ('<div class="card" style="margin-top:10px"><b>“%s”</b> – what do you think it means? <span class="hint">Guess first!</span><div style="margin-top:6px">%s</div>'
+              '<button class="btn l" style="margin-top:6px;font-size:13px;padding:3px 10px" onclick="this.nextElementSibling.style.display=\'block\';this.remove()">💡 Hint</button>'
+              '<div class="hint" style="display:none;margin-top:4px">💡 %s</div>%s<div class="hint ans" style="display:none;margin-top:4px">🇺🇦 %s · e.g. <i>%s</i></div></div>') % (
+              en, "".join('<label style="display:block;margin:3px 0;cursor:pointer"><input type="radio" name="%s" data-k="%s" value="%s"> %s</label>' % (k, k, o, o) for o in opts), hint, fb(k), uk, ex)
+    return h + '<div class="ctl"><button class="btn" onclick="chkRad(\'%s\',WHYF);document.querySelectorAll(\'.ans\').forEach(a=>{if(a.closest(\'.card\').querySelector(\'input[data-k^=%s_]\'))a.style.display=\'block\'})">Check</button><span class="res" id="r_%s"></span></div>' % (prefix, prefix, prefix)
+TS = [("communication", True), ("using your company’s own billing system", False), ("problem-solving", True), ("teamwork", True), ("the server passwords of your old company", False),
+      ("time management", True), ("knowing where the coffee machine is in your office", False), ("conflict resolution", True)]
+for i, (w, a) in enumerate(TS): F["f0a_%d" % (i + 1)] = ["yes" if a else "no"]
+PRE = [("previous experience", "the jobs, projects and other things you did before", "попередній досвід", "Your previous experience is still valuable.", "previous = попередній", "a skill you learn at university", "the job you want next"),
+       ("conflict resolution", "helping people agree when there is a problem between them", "вирішення конфліктів", "In a big team, conflict resolution is part of the job.", "conflict = конфлікт; resolve = вирішити", "a very fast internet connection", "a meeting about salaries"),
+       ("a tough job market", "a time when it is hard to find a job", "складний ринок праці", "In a tough job market, your network matters.", "tough = важкий, жорсткий", "a market where you buy computers", "a job with a lot of physical work"),
+       ("the AI boom", "the time when AI is growing very fast", "бум штучного інтелекту", "Many companies are hiring AI engineers during the AI boom.", "boom = різке зростання (як вибух)", "a loud noise from a computer", "an AI tool that stopped working")]
+f0 = ('<div class="bsec">Before class <span class="sub">Step 1 · What are transferable skills?</span></div>' +
+      GUIDE("Start here. First understand the key idea of the lesson, then learn 4 words you will hear in the video. Read, think, guess – then check.", "Почни тут: спочатку зрозумій головну ідею уроку, потім 4 слова з відео. Читай, думай, вгадуй – потім перевіряй.") +
+      '<div style="display:flex;gap:18px;flex-wrap:wrap;align-items:center;background:#fff7ef;border:1.5px solid #f5d2b5;border-radius:14px;padding:16px 18px;margin:6px 0 16px">'
+      '<div style="font-size:54px;line-height:1">🧳</div><div style="flex:1;min-width:240px"><b style="font-size:19px">Transferable skills</b> are skills you can <b>take with you</b> from one job to another – like things in a suitcase.<br>'
+      'You change your job, your company or even your profession – but these skills come with you.<br><span class="hint">🇺🇦 навички, які «переїжджають» з тобою з роботи на роботу</span></div></div>' +
+      '<p class="ins"><b class="x">1</b><b>A</b> Can you take it to another job? Tick (✓) the <b>transferable</b> skills.</p>' +
+      '<div>%s</div>' % "".join(yn("f0a_%d" % (i + 1), w) for i, (w, a) in enumerate(TS)) + ctl("f0a") +
+      '<p class="ins" style="margin-top:24px"><b>B</b> You will hear these words in the video. Guess what they mean.</p>' + guess_custom("f0b", PRE) +
+      '<p class="ins" style="margin-top:24px"><b>C</b> Think about you. Name two transferable skills you have – and where you got them.</p>' +
+      ta("f0c", "1 communication – I got it when I …\n2 …", 70) +
+      '<p class="hint">Now you’re ready for the video → Step 2.</p>')
+f1 = ('<div class="bsec">Before class <span class="sub">Step 2 · A short clip</span></div>' + GUIDE("Watch a very short clip (under 1 minute) and do two small tasks. It’s a warm-up – don’t worry if you don’t understand every word.", "Короткий ролик на розігрів: подивись і виконай 2 маленькі завдання.") +
+      '<p class="ins"><b class="x">2</b><b>A</b> Watch the clip. Which <b>two</b> qualities do employers want in every field – especially during the AI boom? Tick (✓) them.</p>' +
+      '<div style="display:flex;gap:24px;flex-wrap:wrap;align-items:flex-start">' + shortbox() + '<div style="flex:1;min-width:260px">' +
+      '<div>%s</div>' % "".join(yn("f1a_%d" % (i + 1), w) for i, (w, a) in enumerate(QS)) + ctl("f1a") +
       '<p class="ins" style="margin-top:22px"><b>B</b> What does the speaker say about your previous experience?</p>' +
-      '<div class="row">%s%s</div>' % (sel("f1b", OPT1B, 460), fb("f1b")) + ctl("f1b") +
+      '<div class="row">%s%s</div>' % (sel("f1b", OPT1B, 360), fb("f1b")) + ctl("f1b") + '</div></div>' +
       '')
 VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
 VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
@@ -235,16 +270,16 @@ fv = ('<div class="bsec">Before class <span class="sub">Vocabulary: IT work</spa
       '<p class="ins" style="margin-top:26px"><b>C</b> Complete the word families.</p>' + tbl2() + ctl("v2c") +
       '<p class="ins" style="margin-top:26px"><b>D</b> Make it personal. Complete the sentences about you. Use words from A–C.</p>' +
       "".join('<div class="row">%d. %s<br>%s</div>' % (i + 1, q, ta("v2d_%d" % (i + 1), ph, 46)) for i, (q, ph) in enumerate(F2D)))
-f2 = ('<div class="bsec">Before class <span class="sub">Step 7 · Reading</span></div>' + GUIDE("Read the article for our lesson (or listen with 🔊). Answer the questions – use <b>Show answer</b> to check yourself.", "Прочитай статтю до уроку й відповідай на питання.") + '<p class="ins"><b class="x">7</b>Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
+f2 = ('<div class="bsec">Before class <span class="sub">Step 8 · Reading</span></div>' + GUIDE("Read the article for our lesson (or listen with 🔊). Answer the questions – use <b>Show answer</b> to check yourself.", "Прочитай статтю до уроку й відповідай на питання.") + '<p class="ins"><b class="x">8</b>Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
       "".join('<p class="ins"><span class="q">%d</span>%s</p>%s%s' % (i + 1, q, ta("f2_%d" % (i + 1), "", 60), mbtn("mf2_%d" % (i + 1), A4[i], "Show answer")) for i, q in enumerate(Q4)) +
       '<p class="ins"><span class="q">4</span>Which skills are mentioned in <b>both</b> the video and the article?</p>' + ta("f2_4", "", 50) +
       mbtn("mf2_4", "problem-solving, communication (skills), teamwork / being a team player"))
-f3 = ('<div class="bsec">Before class <span class="sub">Step 8 · Get ready to speak</span></div>' + GUIDE("Last step: make short notes for the lesson. In class we will <b>talk</b>, not read – so prepare your ideas. Then press <b>Send to my teacher</b>.", "Останній крок: нотатки до уроку, потім «Send to my teacher».") + '<p class="ins"><b class="x">8</b>Prepare for the lesson. Make short notes – we will talk about them in class.</p>'
+f3 = ('<div class="bsec">Before class <span class="sub">Step 9 · Get ready to speak</span></div>' + GUIDE("Last step: make short notes for the lesson. In class we will <b>talk</b>, not read – so prepare your ideas. Then press <b>Send to my teacher</b>.", "Останній крок: нотатки до уроку, потім «Send to my teacher».") + '<p class="ins"><b class="x">9</b>Prepare for the lesson. Make short notes – we will talk about them in class.</p>'
       '<div class="card">1. Which three skills from the video and the article do you already have? Think of one real example from your work for each.</div>' + ta("f3_1", "1 problem-solving – last month I …\n2 …\n3 …", 110) +
       '<div class="card">2. Which skill do you want to develop this year? Why?</div>' + ta("f3_2", "", 60) +
       '<div class="card">3. Write down 3–5 new words or phrases from the video or the article. <span class="hint">Tip: select a word on this page and press ＋ to save it to My vocabulary.</span></div>' + ta("f3_3", "", 60) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well did you understand the video and the article?"))
-VOC_F = [("Clip + Part A", ["transferable skills", "conflict resolution", "previous experience", "audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "industry-specific terms", "connect the dots"]),
+VOC_F = [("Step 1 + clip + Part A", ["transferable skills", "previous experience", "conflict resolution", "a tough job market", "the AI boom", "audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "industry-specific terms", "connect the dots"]),
          ("Parts B + C", ["side hustle", "think in verbs, not titles", "comfort with new tools", "skill gap", "every experience counts", "go back to square one", "industry-recognised credentials", "low cost to no cost", "signal initiative", "a day in the life"]),
          ("★ Part D", ["through line", "reframe longevity as loyalty", "industry disruptions", "lead by example", "own it and articulate it"]),
          ("From the article", ["think outside the box", "set goals", "flexibility", "critical thinking", "team player", "integrity", "a can-do attitude", "determination", "old news", "tech stack"])]
@@ -254,8 +289,8 @@ from indeed_words import WORDS as IW
 IWD = {w[0]: w for w in IW}
 def GUIDE(en, ua): return '<div class="card" style="background:#f4f6ff;border-left:4px solid #5b5fc7;margin:6px 0 14px"><b>🧭 What to do:</b> %s<br><span class="hint">%s</span></div>' % (en, ua)
 def clip(a, b, label):
-    return ('<div style="position:relative;padding-top:56.25%%;max-width:640px;margin:8px 0"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1&start=%d&end=%d" '
-            'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:10px" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
+    return ('<div style="width:100%%;max-width:640px;aspect-ratio:16/9;margin:8px 0"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1&start=%d&end=%d" '
+            'style="width:100%%;height:100%%;border:0;border-radius:12px;display:block" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>'
             '<p class="hint">▶ %s · plays %d:%02d–%d:%02d and stops · CC = subtitles · ⚙ = speed 0.75</p>') % (EP_ID, a, b, label, a // 60, a % 60, b // 60, b % 60)
 HINT = {"audit your experience": "audit = перевірка (як аудит у бухгалтерії). Що ти перевіряєш?", "with fresh eyes": "fresh = свіжий. Як ти бачиш річ, коли дивишся «свіжими очима»?",
  "AI-proof skills": "waterproof = не пропускає воду. Тоді AI-proof = …?", "bridge the gap": "bridge = міст, gap = проміжок. Що робить міст?", "industry-specific terms": "specific = особливий для чогось; terms = слова, терміни.",
@@ -285,14 +320,14 @@ def mcq(k, q, opts, ans, why=""):
     return ('<div class="card" style="margin-top:10px">%s<div style="margin-top:6px">%s</div>%s</div>' % (q, "".join('<label style="display:block;margin:3px 0;cursor:pointer"><input type="radio" name="%s" data-k="%s" value="%s"> %s</label>' % (k, k, o, o) for o in opts), fb(k)))
 def chk(prefix): return '<div class="ctl"><button class="btn" onclick="chkRad(\'%s\',WHYF)">Check</button><span class="res" id="r_%s"></span></div>' % (prefix, prefix)
 
-g2 = ('<div class="bsec">Before class <span class="sub">Step 2 · The whole episode</span></div>' +
+g2 = ('<div class="bsec">Before class <span class="sub">Step 3 · The whole episode</span></div>' +
       GUIDE("Now watch the <b>whole episode once</b> (about 11 minutes), from the start. Don’t stop and don’t look up words – just follow the main ideas. Then answer three questions.", "Подивись усе відео один раз, без зупинок і словника – лише головні ідеї. Потім 3 питання.") +
       epvideo(True).replace("&start=64", "&start=0") +
       mcq("g2_1", "1. What is the episode mainly about?", ["How to ask for a pay rise", "How to change careers using skills you already have", "How to write better code with AI"], "How to change careers using skills you already have") +
       mcq("g2_2", "2. Who is the advice for?", ["Only university students", "Only managers with 20 years of experience", "Job seekers of any age – from Gen Z to people with long careers"], "Job seekers of any age – from Gen Z to people with long careers") +
       mcq("g2_3", "3. Which topic is in the episode?", ["Getting certificates without a degree", "Negotiating your salary", "Working remotely from another country"], "Getting certificates without a degree") + chk("g2") +
       '<p class="hint">Next: we’ll listen to the episode in small parts and work with the key phrases.</p>')
-gA = ('<div class="bsec">Before class <span class="sub">Step 3 · Part A: audit your skills</span></div>' +
+gA = ('<div class="bsec">Before class <span class="sub">Step 4 · Part A: audit your skills</span></div>' +
       GUIDE("Listen to <b>Part A only</b> (1:04–2:50) – the player starts and stops there. Then: <b>1</b> answer the question, <b>2</b> for each phrase you heard, <b>guess</b> the meaning first, use 💡 Hint only if you need it, then press <b>Check</b>.",
             "Слухай лише частину A. Потім: питання → вгадай значення кожної фрази (підказка 💡 за потреби) → Check.") +
       clip(64, 170, "Part A") +
@@ -300,21 +335,21 @@ gA = ('<div class="bsec">Before class <span class="sub">Step 3 · Part A: audit 
       mcq("gAq_2", "2. Which skill do they mention as one that employers want and AI can’t replace?", ["communication", "typing fast", "knowing many programming languages"], "communication") + chk("gAq") +
       '<p class="ins" style="margin-top:22px">Now the phrases from Part A. Listen again if you need to.</p>' +
       guess_cards("gA", ["audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "industry-specific terms", "connect the dots"]))
-gB = ('<div class="bsec">Before class <span class="sub">Step 4 · Part B: first-time job seekers</span></div>' +
+gB = ('<div class="bsec">Before class <span class="sub">Step 5 · Part B: first-time job seekers</span></div>' +
       GUIDE("Listen to <b>Part B</b> (2:50–4:34). It’s about young people with little work experience – but the advice works for everyone. Answer, then guess the phrases.", "Частина B: поради для тих, хто шукає першу роботу. Питання → вгадай фрази.") +
       clip(170, 274, "Part B") +
       mcq("gBq_1", "1. Which experiences can build useful skills, according to the speakers?", ["Only paid full-time jobs", "Caregiving, volunteering, freelance work, side hustles and student organisations", "Only university courses"], "Caregiving, volunteering, freelance work, side hustles and student organisations") +
       mcq("gBq_2", "2. How should you describe these experiences?", ["With job titles only", "With action verbs, e.g. organise, coach, communicate, build", "With long lists of tools"], "With action verbs, e.g. organise, coach, communicate, build") + chk("gBq") +
       '<p class="ins" style="margin-top:22px">The phrases from Part B:</p>' +
       guess_cards("gB", ["side hustle", "think in verbs, not titles", "comfort with new tools", "skill gap", "every experience counts"]))
-gC = ('<div class="bsec">Before class <span class="sub">Step 5 · Part C: certificates</span></div>' +
+gC = ('<div class="bsec">Before class <span class="sub">Step 6 · Part C: certificates</span></div>' +
       GUIDE("Listen to <b>Part C</b> (4:34–7:05) about getting certified without a degree. Answer, then guess the phrases.", "Частина C: сертифікати без диплома. Питання → вгадай фрази.") +
       clip(274, 425, "Part C") +
       mcq("gCq_1", "1. What do they say about many online certificates?", ["They are very expensive", "They are often free or low-cost, and can show initiative", "Employers ignore them"], "They are often free or low-cost, and can show initiative") +
       mcq("gCq_2", "2. What should you do before you choose a new role?", ["Quit your job first", "Research the role, e.g. watch ‘a day in the life’ videos", "Buy the most expensive course"], "Research the role, e.g. watch ‘a day in the life’ videos") + chk("gCq") +
       '<p class="ins" style="margin-top:22px">The phrases from Part C:</p>' +
       guess_cards("gC", ["go back to square one", "industry-recognised credentials", "low cost to no cost", "signal initiative", "a day in the life"]))
-gD = ('<div class="bsec">Before class <span class="sub">Step 6 · ★ Part D: tell your story</span></div>' +
+gD = ('<div class="bsec">Before class <span class="sub">Step 7 · ★ Part D: tell your story</span></div>' +
       '<div class="card" style="border-left:4px solid #e0a100;background:#fffaf0"><b style="color:#b26b00">★ Advanced option</b> – do this part if you have time and energy. It’s harder, but very useful for interviews.</div>' +
       GUIDE("Listen to <b>Part D</b> (7:05–9:56): how to present a long career. Answer, then guess the phrases.", "Частина D (за бажанням): як подати довгу кар’єру.") +
       clip(425, 596, "Part D") +
@@ -323,7 +358,7 @@ gD = ('<div class="bsec">Before class <span class="sub">Step 6 · ★ Part D: te
       guess_cards("gD", ["through line", "reframe longevity as loyalty", "industry disruptions", "lead by example", "own it and articulate it"]))
 for _k in [k for k in F if k.startswith("v2")]: del F[_k]
 html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
-            [("1", f1), ("2", g2), ("3", gA), ("4", gB), ("5", gC), ("6", gD), ("7", f2), ("8", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + 'function jump(t){const f=document.getElementById("yt");if(!f)return;const d=f.closest("details");if(d)d.open=true;f.src=f.src.replace(/([?&])start=\\d+/,"$1start="+t)+"&autoplay=1";f.scrollIntoView({behavior:"smooth",block:"center"})}\n' + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
+            [("1", f0), ("2", f1), ("3", g2), ("4", gA), ("5", gB), ("6", gC), ("7", gD), ("8", f2), ("9", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + 'function jump(t){const f=document.getElementById("yt");if(!f)return;const d=f.closest("details");if(d)d.open=true;f.src=f.src.replace(/([?&])start=\\d+/,"$1start="+t)+"&autoplay=1";f.scrollIntoView({behavior:"smooth",block:"center"})}\n' + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "flip.html"), "w").write(html)
 
 # ================= HOMEWORK =================
