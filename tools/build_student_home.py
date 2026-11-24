@@ -22,7 +22,7 @@ _d = os.path.dirname(os.path.abspath(OUT))
 LINKS = []
 if getattr(CFG, "VOCAB", False) or os.path.exists(os.path.join(_d, "vocab.html")): LINKS.append(("vocab.html", "📚", "My vocabulary"))
 if getattr(CFG, "GLOSSARY", False) or os.path.exists(os.path.join(_d, "glossary.html")): LINKS.append(("glossary.html", "📖", "Glossary"))
-DATA = {"units": units, "student": {"name": ST["name"], "code": ST.get("code", "")}, "links": LINKS, "build": time.strftime("%Y%m%d%H%M")}
+DATA = {"units": units, "student": {"name": ST["name"], "code": ST.get("code", "")}, "links": LINKS, "plan": getattr(CFG, "PLAN", None), "build": time.strftime("%Y%m%d%H%M")}
 
 HTML = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>__NAME__ · My English</title><meta name="robots" content="noindex">
@@ -66,17 +66,23 @@ h2.sec{font-size:20px;margin:0 0 12px}
 .l b{font-weight:600}.l p{margin:2px 0 6px;font-size:13.5px;color:var(--mut)}.l .pg{display:flex;flex-wrap:wrap;gap:6px}.l .pg a{font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid var(--line);border-radius:9px;padding:3px 10px;color:var(--ink)}.l .pg a:hover{border-color:var(--or);color:var(--or)}
 .l.lock{opacity:.55}.l.lock .ln{border-style:dashed}
 .empty{color:var(--mut);font-size:14px}
+.pl{margin-bottom:26px}.pl .wk{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:6px}
+.pl .dy{border:1.5px solid var(--line);border-radius:14px;padding:10px 12px;background:#fff}.pl .dy.td{border-color:var(--or);background:var(--or2)}
+.pl .dy small{display:block;color:var(--mut);font-size:12.5px;font-weight:600;text-transform:uppercase;letter-spacing:.3px}.pl .dy b{display:block;font-size:14.5px;margin-top:2px}.pl .dy span{font-size:13px;color:#5b6478}
+.rt{display:flex;gap:6px;margin-top:12px}.rt div{flex:1;border-radius:10px;padding:8px 10px;background:#f1f2f6;font-size:13px;color:#5b6478}.rt div b{display:block;color:var(--ink);font-size:14px}.rt div.now{background:var(--bl2);color:var(--bl)}.rt div.now b{color:var(--bl)}
+.pl .row3{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
+@media(max-width:760px){.pl .wk{grid-template-columns:repeat(2,minmax(0,1fr))}.pl .row3{grid-template-columns:1fr}}
 footer{color:var(--mut);font-size:12.5px;margin-top:30px}
 @media(max-width:1000px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.mid{grid-template-columns:1fr}}
 @media(max-width:760px){.app{grid-template-columns:minmax(0,1fr)}aside{position:sticky;top:0;z-index:5;height:auto;flex-direction:row;flex-wrap:nowrap;overflow-x:auto;padding:10px 12px;gap:2px}aside a.nv{white-space:nowrap;padding:8px}.ring{display:none}.hero .bs .btn{white-space:normal}.me{border:0;padding:0 8px 0 0;margin:0}aside .sp,.tch{display:none}main{padding:18px 16px 40px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.uh .ub2{display:none}.l{grid-template-columns:40px 1fr}.l>.st{grid-column:2}}
 </style></head><body><div class="app">
 <aside><div class="me"><div class="av" id="av"></div><div><b id="nm"></b><span>Student</span></div></div>
-<a class="nv on" href="#top"><i>🏠</i>Dashboard</a><a class="nv" href="#course"><i>📘</i>My course</a><a class="nv" href="#homework"><i>📝</i>Homework</a><span id="xl"></span>
+<a class="nv on" href="#top"><i>🏠</i>Dashboard</a><a class="nv" href="#myplan"><i>📆</i>My plan</a><a class="nv" href="#course"><i>📘</i>My course</a><a class="nv" href="#homework"><i>📝</i>Homework</a><span id="xl"></span>
 <div class="sp"></div><div class="tch">Your teacher<b>Valentyna Hordiienko</b>Middle Learning Architect</div></aside>
 <main id="top"><div class="top"><div><h1 id="hi"></h1><p id="today"></p></div><div class="ring" id="ring"></div></div>
 <div class="stats" id="stats"></div>
 <div class="mid"><div><div class="card hero" id="hero"></div><div id="msg"></div></div><div class="card" id="homework"><h3>📝 Homework</h3><div id="hwl"><p class="empty">Loading…</p></div></div></div>
-<h2 class="sec" id="course">My course</h2><div id="units"></div>
+<div id="plan"></div><h2 class="sec" id="course">My course</h2><div id="units"></div>
 <footer>Valentyna Hordiienko · Middle Learning Architect</footer></main></div>
 <script>
 const D=__DATA__;const SB="https://zuegojpfhgigsvyrnymt.supabase.co",SK="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
@@ -109,7 +115,7 @@ function render(){
  S.push(`<div class="card"><h3>📈 Progress</h3><div class="num">${done}<span style="font-size:18px;color:#8a92a6"> / ${OPEN.length}</span></div><div class="bar"><i style="width:${pct}%"></i></div><div class="sub" style="margin-top:6px">lessons completed</div></div>`);
  $("stats").innerHTML=S.join("");$("stats").style.setProperty("--n",S.length);
  // hero
- $("hero").innerHTML=cur?`<h3>▶ Continue learning</h3><span class="no">${cur.n.startsWith("W")?"Workshop":"Lesson "+esc(cur.n)}</span> ${pill(status(cur.n))}<h2>${esc(cur.t)}</h2><p>${esc(cur.d)}</p><div class="bs">${cur.pages.map(p=>`<a class="btn ${p==="lesson"?"":"l"}" href="${path(cur.n,cur.tr,p)}">${NM[p]||p}</a>`).join("")}${cur.classic?`<a class="btn l" href="${path(cur.n,cur.tr+"-classic","lesson")}">Lesson · email version</a>`:""}</div>`:'<p class="empty">Your first lesson will appear here.</p>';
+ $("hero").innerHTML=cur?`<h3>▶ Continue learning</h3><span class="no">${cur.n.startsWith("W")?"Workshop":"Lesson "+esc(cur.n)}</span> ${pill(status(cur.n))}<h2>${esc(cur.t)}</h2><p>${esc(cur.d)}</p><div class="bs">${cur.pages.map((p,j)=>`<a class="btn ${j===0?"":"l"}" href="${path(cur.n,cur.tr,p)}">${NM[p]||p}</a>`).join("")}${cur.classic?`<a class="btn l" href="${path(cur.n,cur.tr+"-classic","lesson")}">Lesson · email version</a>`:""}</div>`:'<p class="empty">Your first lesson will appear here.</p>';
  $("msg").innerHTML=CAB.note?`<div class="msg">💬 <b>From your teacher:</b> ${esc(CAB.note)}</div>`:"";
  // homework list
  const hl=[];if(CAB.homework||CAB.homework_url)hl.push(`<div class="hw"><div><a href="${esc(CAB.homework_url||"#")}">${esc(CAB.homework||"Homework")}</a><small>${CAB.homework_due?"Due "+new Date(CAB.homework_due+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}):"from your teacher"}</small></div>${pill(HWD[(String(CAB.homework_url||"").match(/lessons\/([^/]+)\//)||[])[1]?.replace("-",".")]?"done":"new")}</div>`);
@@ -121,6 +127,25 @@ function render(){
   <div class="ls">${u.ls.map(l=>{const s=status(l.n);return `<div class="l ${l.open?(s==="done"?"done":""):"lock"} ${cur&&l===cur?"cur":""}"><div class="ln">${l.open&&s==="done"?"✓":esc(l.n.startsWith("W")?"W":l.n)}</div><div><b>${esc(l.t)}</b><p>${esc(l.d)}</p>${l.open?`<div class="pg">${pageLinks(l)}</div>`:""}</div><div class="st">${l.open?pill(s):'<span class="pill p-no">🔒 Soon</span>'}</div></div>`}).join("")}</div></div>`}).join("");
  document.querySelectorAll(".uh").forEach(x=>x.onclick=()=>x.parentNode.classList.toggle("open"));
 }
+
+function renderPlan(){const P=D.plan;if(!P){$("plan").innerHTML="";const a=document.querySelector('a.nv[href="#myplan"]');if(a)a.remove();return}
+ const seq=[];D.units.forEach(u=>u.ls.forEach(l=>seq.push(l)));const total=seq.length,done=seq.filter(l=>status(l.n)==="done").length;
+ let i=seq.findIndex(l=>status(l.n)!=="done");if(i<0)i=seq.length;
+ const days=P.days||[1,2,3,4],now=new Date();let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
+ if(CAB.next_lesson){const n=new Date(CAB.next_lesson);d=new Date(n.getFullYear(),n.getMonth(),n.getDate())}
+ const start=P.start?new Date(P.start+"T00:00"):null;if(start&&d<start)d=start;
+ const out=[];let k=i;while(out.length<4&&k<seq.length+4){if(days.includes(d.getDay())){out.push([new Date(d),seq[k]]);k++}d.setDate(d.getDate()+1)}
+ const today=new Date(now.getFullYear(),now.getMonth(),now.getDate()).getTime();
+ const fd=x=>x.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"});
+ const wk=out.map(([dt,l])=>`<div class="dy${dt.getTime()===today?" td":""}"><small>${dt.getTime()===today?"Today":fd(dt)}</small>${l?`<b>${esc(l.n.startsWith("W")?"Workshop":l.n)}</b><span>${esc(l.t)}</span>`:"<b>Review</b><span>Level test & review</span>"}</div>`).join("");
+ const goal=P.goal?new Date(P.goal+"T23:59"):null,left=goal?Math.max(0,Math.ceil((goal-now)/864e5)):null;
+ const rt=(P.route||[]).map(r=>{const a=new Date(r[1]+"T00:00"),b=new Date(r[2]+"T23:59"),on=now>=a&&now<=b;return `<div class="${on?"now":""}"><b>${esc(r[0])}${on?" · now":""}</b>${new Date(r[1]).toLocaleDateString("en-GB",{month:"short",year:"numeric"})} – ${new Date(r[2]).toLocaleDateString("en-GB",{month:"short",year:"numeric"})}</div>`}).join("");
+ const pct=total?Math.round(done/total*100):0;
+ $("plan").innerHTML=`<h2 class="sec" id="myplan">📆 My plan</h2><div class="pl"><div class="row3"><div class="card"><h3>Next lessons · ${esc(P.rhythm||"Mon–Thu")}</h3><div class="wk">${wk}</div></div>
+ <div class="card"><h3>🎯 My goal</h3><div class="big">${esc(P.goal_text||"")}</div><div class="sub">by ${goal?goal.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}${left!=null?' · <span class="pill p-new">'+left+" days left</span>":""}</div>
+ <div class="bar"><i style="width:${Math.max(2,pct)}%"></i></div><div class="sub" style="margin-top:6px">${esc(P.level||"This level")}: ${done} of ${total} lessons done</div></div></div>
+ ${rt?`<div class="rt">${rt}</div>`:""}</div>`}
+const _r=render;render=function(){_r();renderPlan()};
 render();
 if(D.student.code){Promise.all([rpc("get_my_cabinet",{p_code:D.student.code}).catch(()=>[]),rpc("get_my_progress",{p_code:D.student.code}).catch(()=>[])]).then(([c,p])=>{
  CAB=(c&&c[0])||{};(p||[]).forEach(r=>{const m=String(r.lesson).match(/(\d+\.\d+|W\d+)/);if(!m)return;const n=m[1];
