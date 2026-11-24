@@ -252,3 +252,11 @@ VOCAB[0][2][2][1][:0] = [   # book video 1.1.1 (Before class)
   ("volunteer work", "волонтерська робота", "work you do without pay to help people", "Volunteer work can show your communication skills."),
   ("the whole person behind the CV", "людина повністю, а не лише резюме", "who you really are – skills, qualities and experience together", "Employers hire the whole person behind the CV."),
 ]
+VOCAB[0][2][2][1][:0] = [   # Indeed videos 2026 (Before class)
+  ("a tough job market", "складний ринок праці", "a time when it is hard to find a job", "Even in a tough job market, your experience is valuable."),
+  ("previous experience", "попередній досвід", "the jobs and projects you did before", "Look at your previous experience for transferable skills."),
+  ("conflict resolution", "вирішення конфліктів", "helping people agree when there is a problem between them", "Conflict resolution is important in every team."),
+  ("the AI boom", "бум штучного інтелекту", "the time when AI is growing very fast", "Soft skills matter even more during the AI boom."),
+  ("audit your skills", "проаналізувати (провести аудит) свої навички", "check carefully what skills you have", "Start your career change by auditing your skills."),
+  ("change careers", "змінити професію / кар’єру", "start working in a different field", "Many people change careers in their thirties."),
+]

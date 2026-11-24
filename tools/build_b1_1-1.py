@@ -39,6 +39,14 @@ def vid(vid_id, title, open_=False):
             'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:8px" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
             '<p class="hint">Subtitles: press CC. Speed: ⚙ → Playback speed → 0.75. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", title, vid_id, vid_id)
 def bookvideo(open_=False): return vid(BOOK_ID, "<i>Transferable skills</i> (Business Partner B1, 1.1.1)", open_)
+SHORT_ID, EP_ID = "yN0VrXS41Gc", "FRFb_JMB5g0"
+def vidx(vid_id, title, extra="", open_=False, ratio="56.25%", maxw=720):
+    return ('<details class="ad"%s><summary>🎬 %s</summary>'
+            '<div style="position:relative;padding-top:%s;margin:8px 0;max-width:%dpx"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1%s" '
+            'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:10px" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
+            '<p class="hint">Subtitles: CC. Speed: ⚙ → 0.75. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", title, ratio, maxw, vid_id, extra, vid_id)
+def shortvideo(open_=False): return vidx(SHORT_ID, "Video 1: <i>Transferable Skills Employers Want (Even in a Tough Market)</i> · Indeed, 2026 · under 1 min", "", open_, "177.7%", 300)
+def epvideo(open_=False): return vidx(EP_ID, "Video 2: <i>How to Change Careers Using Transferable Skills You Already Have</i> · Indeed, 2026 · watch 1:04–2:50", "&start=64&end=170", open_)
 VIDEO_ID = "wBEeVfhaDR4"
 def video(open_=False):
     return ('<details class="ad"%s><summary>🎬 Video: <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16)</summary>'
@@ -172,6 +180,30 @@ VD = {"project management": "IT work is almost always organised as projects: bui
       "communication": "listen well and explain technical ideas in plain business language to other departments.",
       "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
 for i, v in enumerate(VS): F["f1_%d" % (i + 1)] = [v]
+QS = [("conflict resolution", True), ("communication", True), ("coding", False), ("speed", False), ("perfect English", False), ("a university degree", False)]
+for i, (w, a) in enumerate(QS): F["f1a_%d" % (i + 1)] = ["yes" if a else "no"]
+F["f1b"] = ["It is still valuable, even in a difficult job market."]
+OPT1B = ["It is not important if you change careers.", "It is still valuable, even in a difficult job market.", "AI can do it better now.", "Only your last job matters."]
+def yn(k, w): return '<span style="display:inline-flex;align-items:center;gap:2px;margin:4px 8px 4px 0"><label style="display:inline-flex;gap:6px;align-items:center;border:1.5px solid #c8c9cb;border-radius:8px;padding:4px 10px;cursor:pointer"><input type="checkbox" class="yn" data-yn="%s"> %s</label><input class="g" data-k="%s" type="hidden" value="no">%s</span>' % (k, w, k, fb(k).replace("<div", "<span").replace("</div>", "</span>"))
+WHYF = {}
+f1 = ('<div class="bsec">Before class <span class="sub">Video</span></div>'
+      '<p class="ins"><b class="x">1</b><b>A</b> Watch video 1 (less than a minute). Which <b>two</b> qualities do employers want in every field – especially during the AI boom? Tick (✓) them.</p>' +
+      shortvideo(True) + '<div>%s</div>' % "".join(yn("f1a_%d" % (i + 1), w) for i, (w, a) in enumerate(QS)) + ctl("f1a") +
+      '<p class="ins" style="margin-top:22px"><b>B</b> What does the speaker say about your previous experience?</p>' +
+      '<div class="row">%s%s</div>' % (sel("f1b", OPT1B, 460), fb("f1b")) + ctl("f1b") +
+      '<p class="ins" style="margin-top:26px"><b>C</b> Now watch video 2 – <b>only 1:04 to 2:50</b> (the player starts and stops there). Two career coaches explain how to <i>audit</i> (check carefully) your transferable skills. Make notes.</p>' +
+      epvideo(True) +
+      '<div class="card">1. What steps do they suggest to find your transferable skills?</div>' + ta("f1c_1", "1 …\n2 …", 80) +
+      '<div class="card">2. Write down 3–5 skills or phrases you hear.</div>' + ta("f1c_2", "", 50) +
+      '<div class="card">3. Try it: audit <b>your</b> experience. Choose one past job, project or hobby and write two skills it gave you.</div>' + ta("f1c_3", "At my last job / in my project … I learned to … and …", 70) +
+      '<p class="hint">Your teacher will read your notes before the lesson.</p>')
+VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
+VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
+      "stakeholder management": "find the groups of people involved, learn how each group communicates and meet their needs.",
+      "problem-solving": "use technology to solve problems for customers or for teams inside the company.",
+      "communication": "listen well and explain technical ideas in plain business language to other departments.",
+      "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
+for i, v in enumerate(VS): F["f1_%d" % (i + 1)] = [v]
 SK = [("teamwork – fitting into the team", True), ("coding skills", False), ("communication skills", True), ("critical thinking", True), ("perfect English", False),
       ("problem-solving", True), ("the ability to influence people", True), ("honesty", True), ("many years in one company", False), ("flexibility", True),
       ("enthusiasm", True), ("a big network on LinkedIn", False), ("integrity", True), ("passion", True)]
@@ -204,7 +236,7 @@ VD = {"project management": "IT work is almost always organised as projects: bui
       "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
 for i, v in enumerate(VS): F["f1d_%d" % (i + 1)] = [VD[v]]
 DSORT = sorted(VD.values())
-f1 += ADV("A harder video about IT", '<p>Watch <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16) – faster, more natural speech. Match each skill with what the speaker says about it.</p>' + video(False) +
+f1 += ADV("A harder video about IT", '<p>Watch <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16) – a longer talk about IT. Match each skill with what the speaker says about it.</p>' + video(False) +
           "".join('<div class="row"><b style="display:inline-block;min-width:210px;font-weight:500">%s</b>%s%s</div>' % (v, sel("f1d_%d" % (i + 1), DSORT, 520), fb("f1d_%d" % (i + 1))) for i, v in enumerate(VS)) + ctl("f1d"))
 # ---- 2 Vocabulary from the video ----
 M2 = [("stakeholder", "a person or group who is affected by a project and cares about the result"),
@@ -255,7 +287,7 @@ f3 = ('<div class="bsec">Before class <span class="sub">Get ready to speak</span
       '<div class="card">2. Which skill do you want to develop this year? Why?</div>' + ta("f3_2", "", 60) +
       '<div class="card">3. Write down 3–5 new words or phrases from the video or the article. <span class="hint">Tip: select a word on this page and press ＋ to save it to My vocabulary.</span></div>' + ta("f3_3", "", 60) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well did you understand the video and the article?"))
-VOC_F = [("From the video", ["transferable skills", "fit into the team", "communication skills", "critical thinking", "problem-solving", "influence people", "honesty", "flexibility", "enthusiasm", "integrity", "passion", "internship", "part-time job", "volunteer work", "the whole person behind the CV"]),
+VOC_F = [("From the videos", ["transferable skills", "a tough / difficult job market", "previous experience", "conflict resolution", "communication", "the AI boom", "audit your skills", "change careers", "career coach"]),
          ("Words about IT work", ["project management", "stakeholder management", "teamwork and collaboration", "plain business language", "stakeholder", "roll out (a system)", "internal team", "department", "gap (in your knowledge)", "cover letter", "transition into IT", "manage a project", "meet the needs of customers", "explain technical ideas", "connect your skills to real examples"]),
          ("From the article", ["think outside the box", "set goals", "flexibility", "critical thinking", "team player", "integrity", "a can-do attitude", "determination", "old news", "tech stack"])]
 html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,

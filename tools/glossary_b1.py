@@ -45,6 +45,13 @@ U1_1 = [
  ("async communication", "n. [U]", "асинхронна комунікація", "communicating in writing so people can answer later", "Good async communication means fewer meetings.", [], "asynchronous (adj) → asynchronously (adv)", True),
  ("ownership", "n. [U]", "відповідальність за результат", "taking a task from start to finish and caring about the result", "We want people who take ownership.", ["take ownership of sth"], "own (v) → owner (n) → ownership (n)", True),
  ("job description", "n.", "опис вакансії", "a text that explains a job and the skills it needs", "Write a job description for a remote role.", ["write / read a job description"], "", False),
+ # --- Indeed videos 2026 (Before class, NEW) ---
+ ("a tough job market", "n. phr.", "складний ринок праці", "a time when it is hard to find a job", "Even in a tough job market, your experience is valuable.", ["a difficult / competitive job market"], "", True),
+ ("previous experience", "n. [U]", "попередній досвід", "the jobs and projects you did before", "Look at your previous experience for transferable skills.", ["relevant previous experience"], "", True),
+ ("conflict resolution", "n. [U]", "вирішення конфліктів", "helping people agree when there is a problem between them", "Conflict resolution is important in every team.", ["conflict resolution skills"], "resolve (v) → resolution (n)", True),
+ ("the AI boom", "n.", "бум ШІ", "the time when AI is growing very fast", "Soft skills matter even more during the AI boom.", [], "", True),
+ ("audit your skills", "v. phr.", "провести аудит своїх навичок", "check carefully what skills you have", "Start your career change by auditing your skills.", ["a skills audit"], "audit (v / n)", True),
+ ("change careers", "v. phr.", "змінити професію", "start working in a different field", "Many people change careers in their thirties.", ["a career change"], "", True),
  # --- Coursebook video 1.1.1 (Before class) ---
  ("fit into the team", "v. phr.", "вписатися в команду", "work well and feel comfortable with the other people in a team", "Employers ask: can this candidate fit into the team well?", ["fit in well"], "", False),
  ("influence people", "v. phr.", "впливати на людей", "change what other people think or do", "The ability to influence people is an important skill.", ["have an influence on sb"], "influence (v / n) → influential (adj)", False),
