@@ -1,0 +1,49 @@
+<!DOCTYPE html><html lang="uk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Grammar</title><meta name="robots" content="noindex">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--or:#ff6b3d;--or2:#fff1ea;--ink:#1f2a44;--mut:#6b7387;--line:#e8ebf2;--bg:#f5f7fb}
+*{box-sizing:border-box;min-width:0}body{margin:0;font:16px/1.5 Inter,system-ui,sans-serif;color:var(--ink);background:var(--bg)}
+.wrap{max-width:1000px;margin:0 auto;padding:clamp(18px,4vw,40px) max(4vw,14px)}
+.back{color:var(--or);text-decoration:none;font-weight:600;display:inline-block;min-height:44px;padding:10px 0}
+h1{font-size:clamp(30px,4vw,42px);line-height:1.1;margin:4px 0 6px}.lead{color:var(--mut);margin:0 0 20px;max-width:65ch}
+.search{width:100%;max-width:420px;font:16px Inter,sans-serif;padding:11px 14px;border:1.5px solid var(--line);border-radius:12px;margin-bottom:18px;background:#fff}
+.search:focus{outline:none;border-color:var(--or)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
+a.t{display:flex;flex-direction:column;gap:6px;background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;text-decoration:none;color:inherit;transition:transform .15s,box-shadow .15s}
+a.t:hover,a.t:focus-visible{transform:translateY(-2px);box-shadow:0 8px 22px rgba(31,42,68,.1);outline:none}
+.ic{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:24px;background:var(--or2)}
+a.t b{font-size:18px}a.t span{color:var(--mut);font-size:14.5px}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}.tags i{font-style:normal;font-size:12.5px;background:var(--bg);border-radius:10px;padding:2px 9px;color:var(--mut)}
+.new{align-self:flex-start;font-size:12px;font-weight:600;color:#fff;background:var(--or);border-radius:10px;padding:1px 8px}
+.empty{color:var(--mut);display:none}[hidden]{display:none!important}
+footer{color:var(--mut);font-size:13px;text-align:center;padding:24px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style></head><body>
+<div class="wrap">
+<a class="back" id="back" href="#" hidden>← My course</a>
+<h1>Grammar</h1>
+<p class="lead">Короткі пояснення граматики з прикладами. Відкривай тему, коли треба повторити правило перед уроком чи домашкою.</p>
+<input class="search" id="q" placeholder="🔍 Пошук теми: tenses, gerund…" aria-label="Пошук теми">
+<div class="grid" id="g"></div>
+<p class="empty" id="empty">Нічого не знайдено.</p>
+</div>
+<footer>Valentyna Hordiienko · Middle Learning Architect</footer>
+<script>
+{
+// Нова тема: поклади HTML-файл у цю папку і додай рядок сюди (найновіші — зверху).
+const TOPICS=[
+ {f:"gerund-infinitive.html",ic:"🔀",t:"to do or doing?",d:"Gerund чи infinitive: після яких дієслів, прийменників і фраз; коли змінюється сенс.",tags:["gerund","infinitive","verb patterns"],added:"2026-11-24"},
+ {f:"tenses.html",ic:"🕒",t:"12 tenses",d:"Усі часи в одній таблиці: сенс, допоміжні дієслова, маркери, фішки й питання на перевірку.",tags:["Present","Past","Future","Simple","Continuous","Perfect"],added:"2026-11-24"}
+];
+const esc=t=>String(t).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fresh=d=>(Date.now()-new Date(d))/864e5<14;
+function draw(q){q=(q||"").trim().toLowerCase();const L=TOPICS.filter(x=>!q||(x.t+" "+x.d+" "+x.tags.join(" ")).toLowerCase().includes(q));
+ document.getElementById("g").innerHTML=L.map(x=>`<a class="t" href="${esc(x.f)}"><div class="ic">${x.ic}</div>${fresh(x.added)?'<span class="new">new</span>':''}<b>${esc(x.t)}</b><span>${esc(x.d)}</span><div class="tags">${x.tags.map(t=>`<i>${esc(t)}</i>`).join("")}</div></a>`).join("");
+ document.getElementById("empty").style.display=L.length?"none":"block"}
+document.getElementById("q").addEventListener("input",e=>draw(e.target.value));draw();
+// «← My course»: повертає на сайт студента, з якого прийшли
+let home=null;try{const r=document.referrer;if(/^https:\/\/villevian\.github\.io\/(bp|ge)-[^/]+\/(index\.html)?$/.test(r)){home=r;sessionStorage.setItem("gr-home",r)}else home=sessionStorage.getItem("gr-home")}catch(e){}
+if(home){const b=document.getElementById("back");b.href=home;b.hidden=false}
+}
+</script></body></html>

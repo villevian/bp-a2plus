@@ -22,6 +22,7 @@ _d = os.path.dirname(os.path.abspath(OUT))
 LINKS = []
 if getattr(CFG, "VOCAB", False) or os.path.exists(os.path.join(_d, "vocab.html")): LINKS.append(("vocab.html", "📚", "My vocabulary"))
 if getattr(CFG, "GLOSSARY", False) or os.path.exists(os.path.join(_d, "glossary.html")): LINKS.append(("glossary.html", "📖", "Glossary"))
+LINKS.append(("https://villevian.github.io/bp-a2plus/grammar/", "📐", "Grammar"))  # shared grammar hub: the same for every student
 DATA = {"units": units, "student": {"name": ST["name"], "code": ST.get("code", "")}, "links": LINKS, "plan": getattr(CFG, "PLAN", None), "build": time.strftime("%Y%m%d%H%M")}
 
 HTML = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
