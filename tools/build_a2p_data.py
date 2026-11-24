@@ -2,7 +2,7 @@ U = [
  ("1", "Travelling for work", [
   ("1.1", "Business travel", "Vocabulary: transport, accommodation · Project: helping a business traveller", "kept", "ready"),
   ("1.2", "Events management", "Bleisure: a conference in Barcelona · Interview with an events manager (2026) · Comparatives & superlatives · Choosing a venue", "updated", "ready"),
-  ("1.3", "Small talk", "Small talk at the conference and the evening event · Showing interest", "kept", "soon"),
+  ("1.3", "Small talk", "Video: a welcome dinner in Dublin · Small talk questions · The AAA model", "kept", "ready"),
   ("1.4", "Dealing with problems", "Problems on a work trip: hotel Wi-Fi, projector, email", "kept", "soon"),
   ("1.5", "Writing: Asking for information", "Message asking to extend a work trip · can / could", "both", "soon", "Email asking for information · can / could"),
   ("W1", "Business workshop: A business trip", "A cancelled flight: changing travel plans · Email + message", "updated", "soon")]),
