@@ -19,14 +19,14 @@ def build(blk, ul, say, step):
       "Ситуації a–h в упр. 6 переписано під ІТ; ключ той самий, що в книзі: 1d 2b 3a 4c 5f 6g 7e 8h.",
       "Професії в упр. 9 — ІТ-ролі замість personal trainer / factory worker.",
       "Урок 1:1, тому <i>Work in pairs</i> = студент + ви."])) +
-     blk("start", "Перевернутий клас: що студент робить ДО уроку (сторінка Before class)", ul([
-      "<b>Відео (Indeed, 2026):</b> 1A — короткий ролик <i>Transferable Skills Employers Want (Even in a Tough Market)</i> (<1 хв): дві якості — <b>conflict resolution</b> і <b>communication</b>; 1B — попередній досвід <i>still valuable, even in a difficult job market</i>. 1C — фрагмент 1:04–2:50 з <i>How to Change Careers Using Transferable Skills You Already Have</i> (Jenn і Priya: як провести аудит навичок): нотатки студента + власний «аудит». Перегляньте фрагмент перед уроком і перевірте 1C у нотатках студента.",
-      "<b>★ Advanced:</b> складніше відео <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16) — зіставити 5 навичок з тим, що каже спікерка. Тільки якщо студент хоче.",
-      "<b>Лексика з відео</b> (Before class 2): значення (stakeholder, roll out, internal team, gap, cover letter…), колокації з дієсловами (manage a project, meet the needs, explain technical ideas…), словотвір (manage → management → manager), 4 речення про себе. На уроці почніть з 2D: попросіть прочитати його речення і поставте 2–3 follow-up питання.",
-      "<b>Стаття</b> (≈450 слів, B1 з елементами B1+: double-check, justify, stay employable) <i>The skills that survive AI</i> + питання 4A (кнопки Show answer) + які навички є і у відео, і в статті.",
-      "<b>Підготовка до говоріння:</b> три свої навички з реальним прикладом, навичка, яку хоче розвинути, 3–5 нових слів.",
-      "На уроці 3–4 — лише швидка перевірка (3–4 хв): <i>What did you find? Which skills are in both?</i> Основний час — 1–2, 5–10: говоріння, лексика, проєкт.",
-      "Відповіді студента зі сторінки Before class видно в адмінці — перегляньте перед уроком і візьміть його приклади як старт для упр. 5."])) +
+     blk("start", "Перевернутий клас: Before class — студента ведемо крок за кроком", ul([
+      "<b>Крок 1.</b> Короткий ролик Indeed (<1 хв): дві якості (conflict resolution, communication) + що кажуть про попередній досвід.",
+      "<b>Крок 2.</b> Увесь випуск Indeed <i>How to Change Careers Using Transferable Skills You Already Have</i> один раз, без зупинок: 3 питання на загальне розуміння.",
+      "<b>Кроки 3–5.</b> Частини A (1:04–2:50), B (2:50–4:34), C (4:34–7:05) — плеєр сам стартує й зупиняється на потрібному шматку. У кожній: 1–2 питання на зміст → фрази з цієї частини: <i>спочатку вгадати</i> значення (3 варіанти) → 💡 підказка за потреби → Check показує переклад і приклад з IT.",
+      "<b>Крок 6 ★.</b> Частина D (7:05–9:56): through line, reframe longevity as loyalty… — за бажанням.",
+      "<b>Кроки 7–8.</b> Стаття уроку + нотатки до уроку. На самому уроці 3–4 — лише швидка перевірка, основний час — говоріння.",
+      "<b>Після уроку:</b> домашка <i>Video words</i> (Блум) — закріплення тих самих фраз у нових IT-контекстах.",
+      "Перед уроком перегляньте його відповіді в адмінці: які фрази він не вгадав — з них і почніть розминку."])) +
      blk("big", "★ Advanced option і Extra", ul([
       "<b>★ Advanced</b> (жовта картка на сторінці уроку) — для днів, коли студент швидко справляється. Упр. 5: однохвилинний виступ <i>One skill AI will never replace – and why</i> (claim → 2 reasons → example → conclusion). Упр. 7: заперечні префікси <i>in- / un- / dis-</i> (inflexible, unreliable, dishonest…). Відповіді: undependable, inflexible, unreliable, dishonest, disorganised, unmotivated, unambitious, unconfident (≈ insecure — можна прийняти).",
       "<b>Extra: Portfolio career</b> — за бажанням, вдома. Стаття про розробника з трьома клієнтами (контракти, онбординг, scope, invoice, rate), T/F, лексика, письмо 60–80 слів + ★ pitch клієнту в LinkedIn. Якщо студент зробив — 3 хв на уроці: <i>Would you work like Mykola? Why / why not?</i>"])) +
