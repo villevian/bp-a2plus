@@ -21,7 +21,8 @@ def build(blk, ul, say, step):
       "Урок 1:1, тому <i>Work in pairs</i> = студент + ви."])) +
      blk("start", "Перевернутий клас: що студент робить ДО уроку (сторінка Before class)", ul([
       "<b>Відео</b> <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16, YouTube): порядок п’яти навичок, що каже спікерка про кожну, T/F про поради в кінці.",
-      "<b>Стаття</b> <i>The skills that survive AI</i> + питання 4A (кнопки Show answer) + які навички є і у відео, і в статті.",
+      "<b>Лексика з відео</b> (Before class 2): значення (stakeholder, roll out, internal team, gap, cover letter…), колокації з дієсловами (manage a project, meet the needs, explain technical ideas…), словотвір (manage → management → manager), 4 речення про себе. На уроці почніть з 2D: попросіть прочитати його речення і поставте 2–3 follow-up питання.",
+      "<b>Стаття</b> (≈450 слів, B1 з елементами B1+: double-check, justify, stay employable) <i>The skills that survive AI</i> + питання 4A (кнопки Show answer) + які навички є і у відео, і в статті.",
       "<b>Підготовка до говоріння:</b> три свої навички з реальним прикладом, навичка, яку хоче розвинути, 3–5 нових слів.",
       "На уроці 3–4 — лише швидка перевірка (3–4 хв): <i>What did you find? Which skills are in both?</i> Основний час — 1–2, 5–10: говоріння, лексика, проєкт.",
       "Відповіді студента зі сторінки Before class видно в адмінці — перегляньте перед уроком і візьміть його приклади як старт для упр. 5."])) +

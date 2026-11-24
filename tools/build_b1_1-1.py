@@ -12,20 +12,20 @@ def mbtn(i, txt, label="Show ideas"):
 
 # ---------------- article (replaces video 1.1.1) ----------------
 ART_T = "The skills that survive AI"
-ART_S = "When AI writes the first version of the code, what do employers look for?"
+ART_S = "When AI writes the first draft of the code, what do employers actually look for?"
 ART = [
- "In 2026, about half of all tech job ads ask for AI skills. So is the future only for people who can build AI agents? Not exactly. When AI writes the first version of the code, employers start looking for something else: "
- "<b>transferable skills</b> – skills that can be applied to a range of tasks and roles.",
- "‘A tool you learn today can be old news next year,’ says Lena Park, head of engineering at a fintech start-up in Berlin. ‘So when I hire, I look for people who can <b>think outside the box</b> and who can "
- "<b>set goals</b> they can actually achieve. <b>Flexibility</b> matters too – our tech stack changes every year.’",
- "<b>Critical thinking</b> is now more important, not less. AI tools make mistakes that look very convincing. A good engineer checks the output, asks ‘Why?’ and doesn’t accept the first answer. "
- "<b>Problem-solving</b> is the same: AI can suggest ten solutions, but someone has to choose the right one and explain the choice to the team.",
- "Then there is teamwork. Most products are built by distributed teams, so you need to be a good <b>team player</b> and work well with other people – people you may never meet in person. "
- "Your <b>communication skills</b> are tested every day: in person, on video calls, in writing on Slack and in docs, one-to-one with your manager, and in large groups when you demo your work to the whole company.",
- "Lena also lists the ‘human’ qualities: <b>honesty</b>, <b>integrity</b> and being <b>genuine</b>. ‘If you broke the build, say so. If AI wrote the code, say so,’ she says. "
- "She wants people who are <b>passionate</b> about the product, <b>motivated</b> and <b>hard-working</b>, with a <b>can-do attitude</b> – and the <b>determination</b> to keep going when a release goes wrong.",
- "Her advice? First, collect skills you can take with you from one job, tool or team to the next. Second, be a team player – nobody ships a product alone. "
- "And third, remember that employers look at the person behind the CV and the GitHub profile.",
+ "In 2026, roughly half of all tech job ads mention AI skills, and many developers are asking themselves an uncomfortable question: if a machine can write the code, what am I being paid for? "
+ "According to hiring managers, the answer is not to compete with AI, but to focus on what it can’t do. Increasingly, employers are looking for <b>transferable skills</b> – skills that can be applied to a range of tasks and roles, no matter which tools the team happens to use.",
+ "‘A framework you master today may be old news by next year,’ says Lena Park, who leads an engineering team at a fintech start-up in Berlin. ‘So when I’m hiring, I’m less interested in a long list of technologies. "
+ "I want people who can <b>think outside the box</b> and who can <b>set goals</b> that are ambitious but realistic. <b>Flexibility</b> matters too, because our tech stack changes almost every year.’",
+ "Surprisingly, <b>critical thinking</b> has become more important since AI tools arrived, not less. AI assistants make mistakes that look extremely convincing, so a good engineer double-checks the output, asks ‘Why?’ and never accepts the first answer just because it works. "
+ "<b>Problem-solving</b> works in a similar way: AI may suggest ten possible solutions, but someone still has to choose the right one and justify that choice to the rest of the team.",
+ "Then there is teamwork. Most products today are built by distributed teams spread across several time zones, which means you need to be a good <b>team player</b> who works well with other people – including people you may never meet in person. "
+ "Your <b>communication skills</b> are tested every day: in person, on video calls, in writing on Slack and in documentation, one-to-one with your manager, and in large groups when you demo your work to the whole company.",
+ "Lena also values the ‘human’ qualities that are hard to automate: <b>honesty</b>, <b>integrity</b> and being <b>genuine</b>. ‘If you broke the build, admit it. If AI wrote half of your code, say so,’ she explains. "
+ "She is looking for people who are <b>passionate</b> about the product, <b>motivated</b> and <b>hard-working</b>, with a <b>can-do attitude</b> – and enough <b>determination</b> to keep going when a release goes badly wrong.",
+ "So what is her advice for people who want to stay employable? First, collect skills that you can take with you from one job, tool or team to the next. Second, be a team player, because nobody ships a successful product alone. "
+ "And finally, remember that employers don’t just read your CV or scroll through your GitHub profile – they are looking at the person behind them.",
 ]
 ART_PLAIN = " ".join(p.replace("<b>", "").replace("</b>", "") for p in ART)
 def article():
@@ -55,8 +55,8 @@ s3 = ('<div class="bsec">Reading</div><p class="ins"><b class="x">3</b><b>A</b> 
       ta("r3a", "For example: … because AI can’t …", 80) +
       '<p class="ins"><b>B</b> Read (or listen to) the article. Were any of your ideas mentioned?</p><p class="hint">🏠 You read the article and watched the video before class – just compare your ideas now.</p>' + article() + video() + ta("r3b", "Yes, … was mentioned. / No, the article doesn’t mention …", 60))
 A4 = ["the ability to work in teams / be a good team player, work well with other people, think outside the box, set goals you can achieve, flexibility, critical thinking, problem-solving, communication skills, honesty, integrity, being genuine, being passionate, motivated, hard-working, a can-do attitude, determination",
-      "in person, on video calls, in writing (on Slack and in docs), one-to-one, in large groups (a demo to the whole company)",
-      "1 collect skills you can take from one job / tool / team to the next; 2 be a team player – nobody ships a product alone; 3 remember that employers look at the person behind the CV and the GitHub profile"]
+      "in person, on video calls, in writing (on Slack and in documentation), one-to-one, in large groups (a demo to the whole company)",
+      "1 collect skills you can take from one job / tool / team to the next; 2 be a team player – nobody ships a successful product alone; 3 remember that employers look at the person behind the CV and the GitHub profile"]
 Q4 = ["What skills and personal qualities does the article talk about? Add them to the list of skills you discussed in Exercise 3.",
       "What five ways of communicating are mentioned in the article?", "What are the three main pieces of advice the article gives?"]
 s4 = ('<div class="bsec">Reading</div><p class="ins"><b class="x">4</b><b>A</b> Read the article again. Answer the questions.</p><details class="ad"><summary>📄 Show the article</summary>%s</details>' % article() +
@@ -142,7 +142,7 @@ window.afterFill=()=>{const v=(H1.value||"").split(", ");T1.forEach(x=>x.checked
 VOC_L = [("Transferable skills", ["transferable skills", "think outside the box", "a can-do attitude", "set goals", "critical thinking", "determination", "team player", "integrity", "communication skills", "problem-solving"]),
          ("Adjective → noun", ["adaptable – adaptability", "flexible – flexibility", "motivated – motivation", "confident – confidence", "dependable – dependability", "resourceful – resourcefulness",
                                "independent – independence", "ambitious – ambition", "passionate – passion", "enthusiastic – enthusiasm", "honest – honesty", "authentic – authenticity"]),
-         ("From the article", ["be applied to a range of tasks and roles", "old news", "tech stack", "distributed team", "demo your work", "break the build", "ship a product", "genuine", "the person behind the CV"]),
+         ("From the article", ["be applied to a range of tasks and roles", "old news", "tech stack", "double-check the output", "justify a choice", "distributed team", "time zone", "demo your work", "break the build", "admit", "hard to automate", "ship a product", "genuine", "stay employable", "the person behind the CV"]),
          ("2026 skills", ["AI literacy", "async communication", "ownership", "job description"])]
 NAV = [("1", s1), ("2", s2), ("3", s3), ("4", s4), ("5", s5), ("6", s6), ("7", s7), ("8", s8), ("9", s9), ("10", s10)]
 html = page("1.1", "Transferable skills", "LESSON", "Learners can use vocabulary related to skills and personal qualities.", "BP B1 1.1 Transferable skills · Lesson", CODE,
@@ -178,19 +178,61 @@ f1 += ('<p class="ins"><b>C</b> The end of the video (2:00–3:16): true (T) or 
        "".join('<div class="tf"><span class="q">%d. %s</span><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="T"> T</label><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="F"> F</label>%s</div>'
                % (i + 1, q, i + 1, i + 1, i + 1, i + 1, fb("f1c_%d" % (i + 1))) for i, (q, a, w) in enumerate(TF)) +
        '<div class="ctl"><button class="btn" onclick="chkRad(\'f1c\',WHYF)">Check</button><span class="res" id="r_f1c"></span></div>')
-f2 = ('<div class="bsec">Before class <span class="sub">Reading</span></div><p class="ins"><b class="x">2</b>Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
+
+# ---- 2 Vocabulary from the video ----
+M2 = [("stakeholder", "a person or group who is affected by a project and cares about the result"),
+      ("roll out (a system)", "introduce a new system to all the people who will use it"),
+      ("internal team", "a team inside your own company"),
+      ("department", "one part of a company, e.g. sales, HR or finance"),
+      ("plain business language", "simple words that non-technical people understand"),
+      ("gap (in your knowledge)", "something you don’t know yet"),
+      ("cover letter", "a short letter you send together with your CV"),
+      ("transition into IT", "move from another career into IT")]
+M2 = [M2[i] for i in (5, 2, 7, 0, 4, 1, 6, 3)]
+for i, (w, d) in enumerate(M2): F["v2a_%d" % (i + 1)] = [d]
+C2 = [("___ a project", "manage"), ("___ a new system", "roll out"), ("___ the needs of customers", "meet"), ("___ technical ideas to other departments", "explain"),
+      ("___ problems for internal teams", "solve"), ("___ your skills to real examples", "connect"), ("___ basic technical vocabulary", "build"), ("___ too much about the gaps", "worry")]
+for i, (q, a) in enumerate(C2): F["v2b_%d" % (i + 1)] = [a]
+W2 = [("manage", "management", "manager"), ("communicate", "communication", "communicator"), ("collaborate", "collaboration", "collaborator"),
+      ("solve", "solution", "—"), ("apply", "application", "applicant"), ("lead", "leadership", "leader")]
+GAPS2 = {0: [1], 1: [2], 2: [1, 2], 3: [1], 4: [1, 2], 5: [1]}
+def tbl2():
+    h = '<table style="border-collapse:collapse;font-size:16px"><tr>' + "".join('<th style="text-align:left;padding:4px 10px;background:#e6e7e8">%s</th>' % t for t in ["Verb", "Noun (thing / activity)", "Noun (person)"]) + "</tr>"
+    for r, row in enumerate(W2):
+        h += "<tr>"
+        for c, w in enumerate(row):
+            if c in GAPS2[r] and w != "—":
+                k = "v2c_%dx%d" % (r + 1, c); F[k] = [w]
+                h += '<td style="padding:4px 10px;border-bottom:1px solid #eee">%s%s</td>' % (inp(k, 160), fb(k))
+            else:
+                h += '<td style="padding:4px 10px;border-bottom:1px solid #eee">%s</td>' % w
+        h += "</tr>"
+    return h + "</table>"
+F2D = [("I think my strongest skill is ___ because …", "problem-solving / communication …"), ("In my job, I often explain technical things to ___ like …", "other departments / stakeholders"),
+       ("One gap in my knowledge is …, but I’m working on it by …", ""), ("If I had to write a cover letter tomorrow, I would connect … to …", "")]
+fv = ('<div class="bsec">Before class <span class="sub">Vocabulary from the video</span></div>'
+      '<p class="ins"><b class="x">2</b><b>A</b> Match the words and phrases about skills in IT with their meanings.</p>' +
+      "".join('<div class="row"><b style="display:inline-block;min-width:220px;font-weight:500">%s</b>%s%s</div>' % (w, sel("v2a_%d" % (i + 1), sorted(d for _, d in M2), 470), fb("v2a_%d" % (i + 1))) for i, (w, d) in enumerate(M2)) + ctl("v2a") +
+      '<p class="ins" style="margin-top:26px"><b>B</b> Complete the collocations with the verbs in the box. Then watch the video again and check which ideas you hear.</p>'
+      '<div class="box">%s</div>' % " · ".join(sorted(a for _, a in C2)) +
+      "".join('<div class="row">%d. %s%s</div>' % (i + 1, q.replace("___", inp("v2b_%d" % (i + 1), 120)), fb("v2b_%d" % (i + 1))) for i, (q, a) in enumerate(C2)) + ctl("v2b") +
+      '<p class="ins" style="margin-top:26px"><b>C</b> Complete the word families.</p>' + tbl2() + ctl("v2c") +
+      '<p class="ins" style="margin-top:26px"><b>D</b> Make it personal. Complete the sentences about you. Use words from A–C.</p>' +
+      "".join('<div class="row">%d. %s<br>%s</div>' % (i + 1, q, ta("v2d_%d" % (i + 1), ph, 46)) for i, (q, ph) in enumerate(F2D)))
+f2 = ('<div class="bsec">Before class <span class="sub">Reading</span></div><p class="ins"><b class="x">3</b>Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
       "".join('<p class="ins"><span class="q">%d</span>%s</p>%s%s' % (i + 1, q, ta("f2_%d" % (i + 1), "", 60), mbtn("mf2_%d" % (i + 1), A4[i], "Show answer")) for i, q in enumerate(Q4)) +
       '<p class="ins"><span class="q">4</span>Which skills are mentioned in <b>both</b> the video and the article?</p>' + ta("f2_4", "", 50) +
       mbtn("mf2_4", "problem-solving, communication (skills), teamwork / being a team player"))
-f3 = ('<div class="bsec">Before class <span class="sub">Get ready to speak</span></div><p class="ins"><b class="x">3</b>Prepare for the lesson. Make short notes – we will talk about them in class.</p>'
+f3 = ('<div class="bsec">Before class <span class="sub">Get ready to speak</span></div><p class="ins"><b class="x">4</b>Prepare for the lesson. Make short notes – we will talk about them in class.</p>'
       '<div class="card">1. Which three skills from the video and the article do you already have? Think of one real example from your work for each.</div>' + ta("f3_1", "1 problem-solving – last month I …\n2 …\n3 …", 110) +
       '<div class="card">2. Which skill do you want to develop this year? Why?</div>' + ta("f3_2", "", 60) +
       '<div class="card">3. Write down 3–5 new words or phrases from the video or the article. <span class="hint">Tip: select a word on this page and press ＋ to save it to My vocabulary.</span></div>' + ta("f3_3", "", 60) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well did you understand the video and the article?"))
 VOC_F = [("From the video", ["transferable skills", "project management", "stakeholder management", "problem-solving", "communication skills", "teamwork and collaboration", "plain business language", "technical vocabulary"]),
+         ("Words about IT work", ["stakeholder", "roll out (a system)", "internal team", "department", "gap (in your knowledge)", "cover letter", "transition into IT", "manage a project", "meet the needs of customers", "explain technical ideas", "connect your skills to real examples"]),
          ("From the article", ["think outside the box", "set goals", "flexibility", "critical thinking", "team player", "integrity", "a can-do attitude", "determination", "old news", "tech stack"])]
 html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
-            [("1", f1), ("2", f2), ("3", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
+            [("1", f1), ("2", fv), ("3", f2), ("4", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "flip.html"), "w").write(html)
 
 # ================= HOMEWORK =================

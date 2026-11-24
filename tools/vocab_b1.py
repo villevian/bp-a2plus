@@ -210,3 +210,21 @@ VOCAB[0][2].insert(2, ("From the video", [
   ("plain business language", "проста ділова мова (без жаргону)", "simple words that non-technical people understand", "Explain the bug in plain business language."),
   ("technical vocabulary", "технічна лексика", "the special words used in a technical field", "Build basic technical vocabulary and don’t worry too much about the gaps."),
 ]))
+VOCAB[0][2][3][1].extend([   # From the article (harder version)
+  ("double-check the output", "перепровірити результат", "check something again to be sure it is correct", "A good engineer double-checks the output of AI tools."),
+  ("justify a choice", "обґрунтувати вибір", "explain why your decision is right", "Someone has to choose the right solution and justify that choice."),
+  ("time zone", "часовий пояс", "an area of the world with the same time", "Our team is spread across several time zones."),
+  ("admit", "визнати", "say that something bad is true, often about yourself", "If you broke the build, admit it."),
+  ("hard to automate", "важко автоматизувати", "difficult for machines or AI to do instead of people", "Honesty and integrity are hard to automate."),
+  ("stay employable", "залишатися затребуваним на ринку праці", "keep the skills that employers want", "Collect transferable skills if you want to stay employable."),
+])
+VOCAB[0][2][2][1].extend([   # From the video: words about IT work
+  ("stakeholder", "стейкхолдер, зацікавлена сторона", "a person or group who is affected by a project and cares about the result", "Talk to every stakeholder before you change the plan."),
+  ("roll out (a system)", "впровадити (систему)", "introduce a new system to all the people who will use it", "We rolled out the new CRM to all departments."),
+  ("internal team", "внутрішня команда", "a team inside your own company", "IT solves problems for customers and for internal teams."),
+  ("department", "відділ", "one part of a company, e.g. sales, HR or finance", "Projects usually involve several departments."),
+  ("gap (in your knowledge)", "прогалина (в знаннях)", "something you don’t know yet", "Don’t worry too much about the gaps."),
+  ("cover letter", "супровідний лист", "a short letter you send together with your CV", "Connect your skills to real examples in your cover letter."),
+  ("transition into IT", "перейти в IT", "move from another career into IT", "Many people transition into IT from teaching or sales."),
+  ("meet the needs of customers", "задовольняти потреби клієнтів", "give customers what they need", "Stakeholder management means meeting the needs of each group."),
+])
