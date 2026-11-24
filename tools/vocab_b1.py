@@ -228,3 +228,19 @@ VOCAB[0][2][2][1].extend([   # From the video: words about IT work
   ("transition into IT", "перейти в IT", "move from another career into IT", "Many people transition into IT from teaching or sales."),
   ("meet the needs of customers", "задовольняти потреби клієнтів", "give customers what they need", "Stakeholder management means meeting the needs of each group."),
 ])
+VOCAB[0][2].append(("Extra: portfolio career", [
+  ("portfolio career", "портфельна кар’єра (кілька клієнтів / проєктів)", "working for several clients or projects instead of one employer", "More engineers build a portfolio career."),
+  ("client", "клієнт", "a company or person who pays you for your work", "He has three clients in three countries."),
+  ("contractor", "контрактор, підрядник", "a person who works under a contract, not as an employee", "He works with all of them as a contractor."),
+  ("rate", "ставка", "the money you charge per hour or per day", "He reviews his rate once a year."),
+  ("invoice", "рахунок-фактура, інвойс", "a document that asks a client to pay for your work", "I’ll send you the invoice on Friday."),
+  ("scope", "обсяг робіт", "exactly what work is included in a task or project", "Let’s agree the scope first."),
+  ("onboarding", "онбординг, адаптація", "the first days when you learn how a new team works", "Onboarding fast is the most important skill."),
+  ("manage expectations", "керувати очікуваннями", "make sure people know what you can do, and when", "Tell the client early – manage expectations."),
+  ("availability", "доступність, вільний час", "the times when you are free to work or talk", "My availability this week: Mon–Wed."),
+  ("side project", "сайд-проєкт, власний проєкт", "something you build in your free time", "He adds every side project to his portfolio."),
+]))
+VOCAB[0][2][1][1].extend([
+  ("inflexible / unmotivated / dishonest", "негнучкий / невмотивований / нечесний", "negative adjectives with in-, un-, dis-", "Nobody wants an inflexible, dishonest colleague."),
+  ("unreliable / disorganised", "ненадійний / неорганізований", "negative adjectives with un-, dis-", "An unreliable contractor loses clients fast."),
+])

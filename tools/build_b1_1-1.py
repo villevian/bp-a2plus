@@ -39,6 +39,7 @@ def video(open_=False):
             'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:8px" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
             '<p class="hint">Subtitles: press CC. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", VIDEO_ID, VIDEO_ID)
 
+ADV = lambda title, body: '<div class="card" style="border-left:4px solid #e0a100;background:#fffaf0;margin-top:22px"><b style="color:#b26b00">★ Advanced option</b> · %s<div style="margin-top:6px">%s</div></div>' % (title, body)
 # ---------------- 1–2 Lead-in ----------------
 BOX1 = ["calm", "good with computers", "good with numbers", "good with people", "good at problem-solving", "organised", "reliable", "resourceful", "good at explaining things", "curious"]
 s1 = ('<div class="bsec">Lead-in</div><p class="ins"><b class="x">1</b>Tick (✓) the three words or phrases that best describe you.</p>'
@@ -65,7 +66,8 @@ s4 = ('<div class="bsec">Reading</div><p class="ins"><b class="x">4</b><b>A</b> 
       mbtn("m4b", "lazy, dishonest, negative, unmotivated, inflexible, not a team player, not able to set goals, copies AI code without checking it, never asks questions"))
 s5 = ('<div class="bsec">Speaking</div><p class="ins"><b class="x">5</b>Discuss these questions.</p>'
       '<div class="card">1. Choose one of the transferable skills or personal qualities you listed in Exercise 4A. Think of at least two different situations where it might be useful.</div>' + ta("d5_1", "Critical thinking is useful when … and when …", 70) +
-      '<div class="card">2. Which transferable skills are the most important in your current situation, as a professional in tech? Are there any that aren’t important?</div>' + ta("d5_2", "In my job, the most important … because …", 70))
+      '<div class="card">2. Which transferable skills are the most important in your current situation, as a professional in tech? Are there any that aren’t important?</div>' + ta("d5_2", "In my job, the most important … because …", 70) +
+      ADV("One-minute talk", '<p>Prepare and give a one-minute talk: <i>“One skill AI will never replace – and why.”</i> Use this structure: <b>1</b> your claim → <b>2</b> two reasons → <b>3</b> a real example from your work → <b>4</b> a short conclusion.</p><p class="hint">Useful: <i>I’d argue that… · The main reason is… · On top of that… · For example, last month… · So, to sum up…</i></p>' + ta("d5_adv", "I’d argue that … The main reason is …", 110)))
 
 # ---------------- 6–8 Vocabulary ----------------
 P6 = [("can <b>think outside the box</b>", "d"), ("have <b>a can-do attitude</b>", "b"), ("can <b>set goals</b>", "a"), ("use <b>critical thinking</b>", "c"),
@@ -85,6 +87,9 @@ def blk6(rng, letters):
     return '<div class="two"><div>%s</div><div class="box" style="display:block">%s</div></div>' % (rows, sits)
 s6 = ('<div class="bsec">Vocabulary <span class="sub">Transferable skills</span></div><p class="ins"><b class="x">6</b>What do these words and phrases from the article mean? Match them with the best situation (a–h).</p>' +
       blk6(range(0, 4), "abcd") + '<div style="height:14px"></div>' + blk6(range(4, 8), "efgh") + ctl("v6"))
+NEG = [("flexible", "inflexible"), ("motivated", "unmotivated"), ("honest", "dishonest"), ("dependable", "undependable"), ("confident", "unconfident"), ("organised", "disorganised"), ("reliable", "unreliable"), ("ambitious", "unambitious")]
+NEG = [NEG[i] for i in (3, 0, 6, 2, 5, 1, 7, 4)]
+for i, (a, n) in enumerate(NEG): K["v7x_%d" % (i + 1)] = [n]
 T7 = [("", "adaptability", "adaptable", "a"), ("flexible", "", "flexibility", "n"), ("", "motivation", "motivated", "a"), ("confident", "", "confidence", "n"), ("", "dependability", "dependable", "a"), ("resourceful", "", "resourcefulness", "n"),
       ("", "independence", "independent", "a"), ("ambitious", "", "ambition", "n"), ("", "passion", "passionate", "a"), ("enthusiastic", "", "enthusiasm", "n"), ("", "honesty", "honest", "a"), ("authentic", "", "authenticity", "n")]
 def tbl7(rows, start):
@@ -96,7 +101,8 @@ def tbl7(rows, start):
     return h + "</table>"
 s7 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">7</b>Complete the tables with the correct words.</p>'
       '<div class="two"><div>%s</div><div>%s</div></div>' % (tbl7(T7[:6], 1), tbl7(T7[6:], 7)) + ctl("v7") +
-      '<p class="hint">💡 Word stress: <b>FLEX</b>ible – flexi<b>BIL</b>ity · <b>CON</b>fident – <b>CON</b>fidence · com<b>MU</b>nicate – communi<b>CA</b>tion</p>')
+      '<p class="hint">💡 Word stress: <b>FLEX</b>ible – flexi<b>BIL</b>ity · <b>CON</b>fident – <b>CON</b>fidence · com<b>MU</b>nicate – communi<b>CA</b>tion</p>' +
+      ADV("Negative prefixes", '<p>Make the adjectives negative with <b>in-</b>, <b>un-</b> or <b>dis-</b>. Then use two of them to describe the worst colleague you can imagine (no names!).</p>' + "".join('<div class="row">%d. %s → %s%s</div>' % (i + 1, a, inp("v7x_%d" % (i + 1), 170), fb("v7x_%d" % (i + 1))) for i, (a, n) in enumerate(NEG)) + ctl("v7x") + ta("v7x_use", "The worst colleague would be … and …", 50)))
 s8 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">8</b>Work with your teacher.</p>'
       '<div class="card">1. Think of three or four more transferable skills that are important in tech in 2026. Use your dictionary if necessary.</div>' + ta("v8_1", "1 …\n2 …\n3 …", 90) +
       '<div class="card">2. For each skill, think of a way you could develop or demonstrate it at work.</div>' + ta("v8_2", "AI literacy – I could … / You can show it by …", 90) +
