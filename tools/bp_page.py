@@ -111,7 +111,7 @@ document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>{document.query
 $("submit").onclick=async()=>{submitted=true;await save();$("done").style.display="block"};
 __XJS__
 start();
-</script></body></html>"""
+</script><script src="https://villevian.github.io/bp-admin/vocab-kit.js" defer></script></body></html>"""
 
 def fb(k): return '<div class="fb" id="fb_%s"><span class="h"></span></div>' % k
 def sel(k, opts, w=None): return '<select class="g" data-k="%s"%s><option value="">—</option>%s</select>' % (k, ' style="width:%dpx"' % w if w else "", "".join("<option>%s</option>" % o for o in opts))

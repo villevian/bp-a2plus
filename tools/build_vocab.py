@@ -56,26 +56,33 @@ main{max-width:980px;margin:0 auto;padding:10px 20px 50px}.top{display:flex;gap:
 <footer>Valentyna Hordiienko · Middle Learning Architect</footer>
 <script>
 const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
-const KEYL="BP __LEVEL__ Vocabulary",CODE="__CODE__",ITEMS=__ITEMS__,LESSONS=__LESSONS__;
+const KEYL="BP __LEVEL__ Vocabulary",CODE="__CODE__";let ITEMS=__ITEMS__;const LESSONS=[{n:"★",t:"My words",g:["My words"]}].concat(__LESSONS__);
 const $=id=>document.getElementById(id);const byId={};ITEMS.forEach(x=>byId[x.id]=x);
-let S={sel:[],lv:{}},timer=null,ready=false,dir="en",mode="cards";
+let S={sel:[],lv:{},own:[],del:[]},timer=null,ready=false,dir="en",mode="cards";
 const rpc=(f,b)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(async r=>{const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):null});
 const norm=s=>(s||"").toLowerCase().replace(/[’`]/g,"'").replace(/[.!?,]/g,"").replace(/\s+/g," ").trim();
 const lv=id=>S.lv[id]||0;
 function status(t,c=""){$("st").textContent=t;$("st").className="st "+c}
 function local(){try{localStorage.setItem("voc:"+KEYL+":"+(CODE||"preview"),JSON.stringify(S))}catch(e){}}
 async function save(){if(!ready)return;local();if(!CODE){status("Preview — your words are saved on this device only.");return}
- try{const known=Object.values(S.lv).filter(v=>v>=3).length;await rpc("save_hw",{p_code:CODE,p_lesson:KEYL,p_answers:S,p_score:{selected:S.sel.length,mastered:known},p_submitted:false});status("Saved ✓","ok")}catch(e){status("Saved on this device (no internet).")}}
+ try{try{const r=await rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL});const R=(r&&r[0]&&r[0].answers)||{};const del=new Set([...(R.del||[]),...(S.del||[])]),o={};[...(R.own||[]),...(S.own||[])].forEach(w=>{if(!del.has(w.id))o[w.id]=w});S.own=Object.values(o);S.del=[...del];(R.sel||[]).forEach(id=>{if(/^own\|/.test(id)&&o[id]&&!S.sel.includes(id))S.sel.push(id)});ownSync()}catch(e){}
+ const known=Object.values(S.lv).filter(v=>v>=3).length;await rpc("save_hw",{p_code:CODE,p_lesson:KEYL,p_answers:S,p_score:{selected:S.sel.length,mastered:known},p_submitted:false});status("Saved ✓","ok")}catch(e){status("Saved on this device (no internet).")}}
 function later(){clearTimeout(timer);timer=setTimeout(save,1000)}
 function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
 function dots(id){const n=lv(id);return '<span class="lv">'+[0,1,2].map(i=>'<i class="'+(i<n?"f":"")+'"></i>').join("")+"</span>"}
+
+function ownSync(){(S.own||[]).forEach(w=>{const x={id:w.id,l:"★",g:"My words",en:w.en,uk:w.uk||"",df:w.src?"from "+w.src:"my word",ex:w.ex||""};byId[w.id]=x;if(!ITEMS.some(i=>i.id===w.id))ITEMS.push(x)});ITEMS=ITEMS.filter(i=>i.l!=="★"||S.own.some(o=>o.id===i.id))}
+function ownForm(){return `<div class="bar" style="margin-top:8px"><input id="oEn" placeholder="English word or phrase" style="flex:1;min-width:180px"><input id="oUk" placeholder="translation" style="flex:1;min-width:140px"><input id="oEx" placeholder="example (optional)" style="flex:2;min-width:200px"><button class="btn a" id="ownAdd">＋ Add</button></div><p style="font-size:14px;color:#6d6e70;margin:2px 0 6px">Add your own words here – or select any text in a lesson and press <b>＋</b>.</p>`}
+function addOwn(){const en=$("oEn").value.trim();if(!en)return;const w={id:"own|"+Date.now(),en,uk:$("oUk").value.trim(),ex:$("oEx").value.trim(),src:"",at:new Date().toISOString()};S.own.push(w);ownSync();S.sel.push(w.id);renderList();later()}
+function delOwn(id){S.own=S.own.filter(w=>w.id!==id);S.del=[...(S.del||[]),id];S.sel=S.sel.filter(x=>x!==id);delete S.lv[id];ownSync();renderList();later()}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&CODE&&ready){rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL}).then(r=>{const a=r&&r[0]&&r[0].answers;if(!a)return;const del=new Set([...(a.del||[]),...(S.del||[])]),o={};[...(S.own||[]),...(a.own||[])].forEach(w=>{if(!del.has(w.id))o[w.id]=w});S.own=Object.values(o);S.del=[...del];(a.sel||[]).forEach(id=>{if(!S.sel.includes(id))S.sel.push(id)});ownSync();S.sel=S.sel.filter(id=>byId[id]);renderList()}).catch(()=>{})}});
 function renderList(){const L=$("fl").value,onlyNew=$("fn").checked,q=norm($("fs").value);let h="";
- LESSONS.forEach(les=>{if(L&&les.n!==L)return;let lh="";les.g.forEach(g=>{const ws=ITEMS.filter(x=>x.l===les.n&&x.g===g&&(!onlyNew||lv(x.id)<3)&&(!q||norm(x.en+" "+x.uk).includes(q)));if(!ws.length)return;
+ LESSONS.forEach(les=>{if(L&&les.n!==L)return;let lh="";if(les.n==="★"&&!onlyNew&&!q)lh+=ownForm();les.g.forEach(g=>{const ws=ITEMS.filter(x=>x.l===les.n&&x.g===g&&(!onlyNew||lv(x.id)<3)&&(!q||norm(x.en+" "+x.uk).includes(q)));if(!ws.length)return;
   lh+=`<div class="grp"><h3>${g}</h3><button class="btn l" onclick="selGrp('${les.n}','${g.replace(/'/g,"\\'")}')">select group</button></div>`;
-  ws.forEach(x=>{lh+=`<div class="w" data-id="${x.id}"><input type="checkbox" ${S.sel.includes(x.id)?"checked":""}><span class="en">${x.en}</span><span class="uk">${x.uk}</span>${dots(x.id)}<button class="spk" title="listen">🔊</button><div class="more">${x.df}<br><i>${x.ex}</i></div></div>`})});
-  if(lh)h+=`<div class="lh">${les.n} ${les.t}</div>`+lh});
+  ws.forEach(x=>{lh+=`<div class="w" data-id="${x.id}"><input type="checkbox" ${S.sel.includes(x.id)?"checked":""}><span class="en">${x.en}</span><span class="uk">${x.uk}</span>${dots(x.id)}<button class="spk" title="listen">🔊</button><div class="more">${x.df}${x.l==="★"?' <button class="btn l dl" style="font-size:12px;padding:2px 8px;margin-left:8px">delete</button>':""}<br><i>${x.ex}</i></div></div>`})});
+  if(lh)h+=`<div class="lh">${les.n==="★"?"⭐":les.n} ${les.t}</div>`+lh});
  $("words").innerHTML=h||'<div class="empty">No words here.</div>';
- document.querySelectorAll(".w").forEach(r=>{const id=r.dataset.id;r.querySelector("input").onclick=e=>{e.stopPropagation();tog(id,e.target.checked)};r.querySelector(".spk").onclick=e=>{e.stopPropagation();speak(byId[id].en)};r.onclick=()=>r.classList.toggle("open")});cnt()}
+ document.querySelectorAll(".w").forEach(r=>{const id=r.dataset.id;r.querySelector("input").onclick=e=>{e.stopPropagation();tog(id,e.target.checked)};r.querySelector(".spk").onclick=e=>{e.stopPropagation();speak(byId[id].en)};r.onclick=()=>r.classList.toggle("open");const d=r.querySelector(".dl");if(d)d.onclick=e=>{e.stopPropagation();delOwn(id)}});const ob=$("ownAdd");if(ob)ob.onclick=addOwn;cnt()}
 function tog(id,on){S.sel=S.sel.filter(x=>x!==id);if(on)S.sel.push(id);cnt();later()}
 function cnt(){$("cnt").textContent="Selected: "+S.sel.length;$("tc").textContent=S.sel.length?"("+S.sel.length+")":""}
 function selAll(on){document.querySelectorAll(".w").forEach(r=>{r.querySelector("input").checked=!!on;tog(r.dataset.id,!!on)})}
@@ -120,8 +127,11 @@ $("tw").onchange=startMode;["fl","fn"].forEach(i=>$(i).onchange=renderList);$("f
 LESSONS.forEach(l=>$("fl").insertAdjacentHTML("beforeend",`<option value="${l.n}">${l.n} ${l.t}</option>`));
 (async()=>{let a=null;if(CODE){try{const r=await rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL});const d=r&&r[0];if(d&&d.answers)a=d.answers}catch(e){}}
  if(!a){try{a=JSON.parse(localStorage.getItem("voc:"+KEYL+":"+(CODE||"preview"))||"null")}catch(e){}}
- if(a&&a.sel)S={sel:a.sel.filter(id=>byId[id]),lv:a.lv||{}};ready=true;renderList();status(CODE?"Your words save automatically.":"Preview — your words are saved on this device only.",CODE?"ok":"")})();
+ if(a&&a.sel){S={sel:a.sel,lv:a.lv||{},own:a.own||[],del:a.del||[]};ownSync();S.sel=S.sel.filter(id=>byId[id])}ready=true;renderList();status(CODE?"Your words save automatically.":"Preview — your words are saved on this device only.",CODE?"ok":"")})();
 </script></body></html>"""
 html = (html.replace("__ITEMS__", json.dumps(items, ensure_ascii=False)).replace("__LESSONS__", json.dumps(lessons, ensure_ascii=False))
         .replace("__LEVEL__", LEVEL).replace("__CODE__", CODE).replace("ACC2", ACC2).replace("ACC", ACC).replace("DARK", DARK))
-open(OUT, "w").write(html); print("ok", len(items), "words")
+open(OUT, "w").write(html)
+import os as _o
+json.dump({"level": LEVEL, "items": items}, open(_o.path.join(_o.path.dirname(_o.path.abspath(OUT)), "vocab.json"), "w"), ensure_ascii=False)
+print("ok", len(items), "words")

@@ -1,4 +1,4 @@
-"""Business Partner B1 — Teacher's Book pages (Ukrainian) for 4.2 and 4.3 + index.
+"""Business Partner B1 — Teacher's Book pages (Ukrainian) for 1.1, 4.2–4.5 + index.
 Usage: python3 build_b1_teacher.py OUTDIR   -> OUTDIR/index.html, 4-2.html, 4-3.html
 Each step: what & why (сенс), how to start (teacher's words in English), how to run, extra questions, answers.
 """
@@ -286,13 +286,18 @@ S45.append(("s3", "3", step("s3", "3 · TASK", "20 хв / вдома",
  ["Which version is better for a new client, and which for a client you know well?"],
  "<p>Модель Classic (TB): Dear Ms Liang, We are writing to confirm your order number WT3488 for 100 PR765 printers, which we received this morning. The unit price is €230. … discount of 8 percent for any orders over 80 units. We will deliver the goods to your warehouse in Felton Business Park on 5 May. … payment terms are 30 days after the date of the invoice. We enclose our business terms and conditions… Yours sincerely,</p><p>Модель Updated — на сторінці уроку (Show model answer).</p>")))
 
+import tb_b1_1_1
+O11, S11 = tb_b1_1_1.build(blk, ul, say, step)
+open(os.path.join(OUT, "1-1.html"), "w").write(pagef("1.1", "Transferable skills", "../lessons/1-1/all/lesson.html", O11, S11))
 open(os.path.join(OUT, "4-2.html"), "w").write(pagef("4.2", "Back to the office?", "../lessons/4-2/all/lesson.html", O42, S42))
 open(os.path.join(OUT, "4-3.html"), "w").write(pagef("4.3", "Managing conversations", "../lessons/4-3/all/lesson.html", O43, S43))
 open(os.path.join(OUT, "4-4.html"), "w").write(pagef("4.4", "Building consensus", "../lessons/4-4/all/lesson.html", O44, S44))
 open(os.path.join(OUT, "4-5.html"), "w").write(pagef("4.5", "Confirming an order", "../lessons/4-5/all/lesson.html", O45, S45))
 IDX = ('<div class="bsec">Business Partner B1 · Teacher’s Book</div>' + blk("aim", "Готові уроки", ul([
+  '<a href="1-1.html"><b>1.1 Transferable skills</b></a> — Skills that survive AI · лексика навичок · job description для remote-вакансії',
   '<a href="4-2.html"><b>4.2 Back to the office?</b></a> — віддалена робота vs офіс · Present & Past Simple passive · Extra: have something done',
   '<a href="4-3.html"><b>4.3 Managing conversations</b></a> — змінити тему і тримати фокус · відео Beata & Mateo (YouTube)',
+  '<a href="4-3-speak.html"><b>4.3 Speaking practice</b></a> — твої перебивання, секретні картки ситуацій, «якщо вона каже X → ти Y»',
   '<a href="4-4.html"><b>4.4 Building consensus</b></a> — згода, незгода, пропозиції · аудіо 4.01/4.02 (голосом браузера)',
   '<a href="4-5.html"><b>4.5 Confirming an order</b></a> — Classic: лист · Updated: Slack Connect / CRM'])))
 open(os.path.join(OUT, "index.html"), "w").write(TPL.replace("__NUM__", "B1").replace("__TITLE__", "Teacher’s Book").replace("__URL__", "../index.html").replace("__NAV__", "")

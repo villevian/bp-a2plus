@@ -105,3 +105,101 @@ VOCAB = [
   ]),
  ]),
 ]
+
+# --- added 2026-11-24: every chip shown in the lesson vocabulary box has a card ---
+_ADD = {
+ ("4.2", "Tools"): [
+  ("video call platform", "платформа для відеодзвінків", "software for online meetings with video", "Zoom and Google Meet are video call platforms."),
+ ],
+ ("4.4", "Building consensus"): [
+  ("reach agreement", "дійти згоди", "finally agree after a discussion", "It took an hour to reach agreement on the budget."),
+  ("be involved", "бути залученим", "take part and have a say", "I want the whole team to be involved."),
+  ("talking stick", "«паличка слова» (говорить той, у кого вона)", "an object: only the person holding it can speak", "We use a virtual talking stick so nobody dominates the call."),
+ ],
+ ("4.4", "Agreeing and disagreeing"): [
+  ("Yes, I agree, too.", "Так, я теж згодна.", "agree with what someone has just said", "— Small groups work better. — Yes, I agree, too."),
+  ("I agree that …", "Я згодна, що …", "agree with an idea", "I agree that we need more time for testing."),
+  ("Sorry, I don’t agree with you.", "Вибач, я з тобою не згодна.", "disagree directly but politely", "Sorry, I don’t agree with you. The deadline is too short."),
+ ],
+ ("4.4", "Suggesting and reacting"): [
+  ("Good idea!", "Гарна ідея!", "react positively to a suggestion", "— Why don’t we record the meeting? — Good idea!"),
+  ("So we need to …", "Отже, нам потрібно …", "sum up what the group must do", "So we need to choose one option by Friday."),
+  ("I don’t think …", "Я не думаю, що …", "disagree or doubt softly", "I don’t think that’s the best solution."),
+ ],
+ ("4.5", "Order confirmation"): [
+  ("order #", "замовлення №", "the number of an order", "Quick confirmation of your order #4471."),
+  ("discount", "знижка", "a lower price than usual", "As agreed, you get an 8% discount."),
+  ("delivery / ETA", "доставка / орієнтовний час прибуття", "bringing goods to the customer / estimated time of arrival", "The ETA for delivery is 12 March."),
+  ("attached 📎", "у вкладенні", "sent together with a message", "The invoice is attached 📎."),
+  ("in the thread", "у гілці (повідомлень)", "in the replies to one message in Slack", "Let’s keep all questions in the thread."),
+ ],
+ ("4.5", "Chat phrases"): [
+  ("Quick confirmation of your order …", "Коротке підтвердження вашого замовлення …", "a friendly first line in a chat or CRM message", "Hi Mei! Quick confirmation of your order #4471."),
+  ("Just confirming …", "Просто підтверджую …", "a short, informal way to confirm", "Just confirming: 40 units, delivery on Monday."),
+  ("Our T&Cs are attached.", "Наші умови в додатку.", "say the terms are sent with the message", "Our T&Cs are attached. Let me know if you have questions."),
+  ("Thanks for your business!", "Дякуємо, що обрали нас!", "thank a customer for buying", "Thanks for your business! We’ll update you on delivery."),
+  ("Don’t hesitate to message me here.", "Пишіть мені сюди без вагань.", "offer help in a chat", "Any questions? Don’t hesitate to message me here."),
+  ("Best regards,", "З найкращими побажаннями,", "a neutral closing", "Best regards, Olena"),
+ ],
+ ("4.5", "Verbs + prepositions"): [
+  ("write to", "писати (комусь)", "send a message or letter to someone", "I’m writing to you about your order."),
+  ("talk about", "говорити про", "discuss a topic", "We talked about the delivery date."),
+  ("pay for", "платити за", "give money for something", "The customer pays for delivery."),
+  ("deliver to", "доставляти до / кому", "bring goods to a place or person", "We deliver to all EU countries."),
+  ("thank sb for", "дякувати комусь за", "say thank you for something", "Thank you for your quick reply."),
+  ("look forward to", "з нетерпінням чекати", "be happy about something in the future", "We look forward to working with you."),
+ ],
+}
+for (_n, _g), _ws in _ADD.items():
+    _les = next(x for x in VOCAB if x[0] == _n)
+    _grp = next((x for x in _les[2] if x[0] == _g), None)
+    if _grp is None:
+        _grp = (_g, []); _les[2].append(_grp)
+    _grp[1].extend(_ws)
+
+# --- 1.1 Transferable skills (IT adaptation, 2026-11-24) ---
+VOCAB.insert(0, ("1.1", "Transferable skills", [
+ ("Transferable skills", [
+  ("transferable skills", "навички, що переносяться (з роботи в роботу)", "skills you can use in many different jobs and roles", "Critical thinking is one of the most valuable transferable skills."),
+  ("think outside the box", "мислити нестандартно", "have new, creative ideas", "She thought outside the box and replaced the spec with a demo video."),
+  ("a can-do attitude", "позитивний настрій «я зможу»", "being positive and ready to try difficult things", "He took the old project with a real can-do attitude."),
+  ("set goals", "ставити цілі", "decide what you want to achieve", "I set goals for every sprint."),
+  ("critical thinking", "критичне мислення", "checking information carefully before you accept it", "Use critical thinking when AI suggests a solution."),
+  ("determination", "рішучість, наполегливість", "not giving up when something is difficult", "It took determination to pass the interview on the third try."),
+  ("team player", "командний гравець", "someone who works well with others", "Nobody ships a product alone – be a team player."),
+  ("integrity", "чесність, порядність", "being honest and doing what is right", "If you broke the build, say so – that’s integrity."),
+  ("communication skills", "комунікативні навички", "the ability to explain things and listen well", "Communication skills are tested every day in a distributed team."),
+  ("problem-solving", "вирішення проблем", "finding solutions to difficult situations", "AI suggests ten solutions; problem-solving is choosing the right one."),
+ ]),
+ ("Adjective → noun", [
+  ("adaptable – adaptability", "здатний пристосовуватися – адаптивність", "able to change when the situation changes", "You need to be adaptable – our priorities change every sprint."),
+  ("flexible – flexibility", "гнучкий – гнучкість", "able to change plans or ways of working easily", "Flexibility matters – our tech stack changes every year."),
+  ("motivated – motivation", "вмотивований – мотивація", "wanting to do something well", "We’re looking for a motivated engineer."),
+  ("confident – confidence", "впевнений – впевненість", "sure about your abilities", "He speaks with more confidence in meetings now."),
+  ("dependable – dependability", "надійний – надійність", "someone you can trust to do what they promise", "Our team lead is very dependable."),
+  ("resourceful – resourcefulness", "винахідливий – винахідливість", "good at finding ways to solve problems", "She’s resourceful: she always finds a workaround."),
+  ("independent – independence", "самостійний – самостійність", "able to work without help", "We need an independent engineer who can work without a manager."),
+  ("ambitious – ambition", "амбітний – амбіція", "wanting to be successful", "His ambition is to become a tech lead."),
+  ("passionate – passion", "пристрасний, захоплений – пристрасть", "loving what you do", "Her passion for clean code is visible in every PR."),
+  ("enthusiastic – enthusiasm", "захоплений – ентузіазм", "showing a lot of interest and energy", "The new junior shows a lot of enthusiasm."),
+  ("honest – honesty", "чесний – чесність", "telling the truth", "Be honest in your profile."),
+  ("authentic – authenticity", "справжній – автентичність", "real, not pretending", "Employers value authenticity in interviews."),
+ ]),
+ ("From the article", [
+  ("be applied to a range of tasks and roles", "застосовуватися до різних задач і ролей", "be useful in many different situations", "Transferable skills can be applied to a range of tasks and roles."),
+  ("old news", "застаріле, вже не новина", "not new or interesting any more", "A tool you learn today can be old news next year."),
+  ("tech stack", "технологічний стек", "the tools and technologies a team uses", "Our tech stack changes every year."),
+  ("distributed team", "розподілена команда", "a team whose members work in different places", "Most products are built by distributed teams."),
+  ("demo your work", "показати (продемонструвати) свою роботу", "show what you have built to other people", "Every Friday we demo our work to the whole company."),
+  ("break the build", "«зламати» збірку", "push code that makes the project fail to build or test", "If you broke the build, say so."),
+  ("ship a product", "випустити продукт", "release a product to users", "Nobody ships a product alone."),
+  ("genuine", "щирий, справжній", "real and honest", "Employers look for genuine people."),
+  ("the person behind the CV", "людина за резюме", "who you really are, not only what is written about you", "Employers look at the person behind the CV and the GitHub profile."),
+ ]),
+ ("2026 skills", [
+  ("AI literacy", "грамотність у роботі з ШІ", "knowing how to use AI tools well and check their results", "AI literacy is now in half of all tech job ads."),
+  ("async communication", "асинхронна комунікація", "communicating in writing so people can answer later", "Good async communication means fewer meetings."),
+  ("ownership", "відповідальність за результат", "taking a task from start to finish and caring about the result", "We want people who take ownership."),
+  ("job description", "опис вакансії", "a text that explains a job and the skills it needs", "Write a job description for a remote role."),
+ ]),
+]))

@@ -1,14 +1,14 @@
 LEVEL = "B1"
 ACC, ACC2 = "#e8894a", "#fbeadb"
-VARIANTS = {"4.2": ["all"], "4.3": ["all"], "4.4": ["all"], "4.5": ["all"]}
+VARIANTS = {"1.1": ["all"], "4.2": ["all"], "4.3": ["all"], "4.4": ["all"], "4.5": ["all"]}
 GRAD = ("#c4642a", "#f2a66e")
-PAGES = {"4.2": ["lesson", "extra"], "4.3": ["lesson"], "4.4": ["lesson"], "4.5": ["lesson"]}
+PAGES = {"1.1": ["lesson", "hw"], "4.2": ["lesson", "extra"], "4.3": ["lesson"], "4.4": ["lesson"], "4.5": ["lesson"]}
 TEACHER = True
 VOCAB = True
 # (number, title, focus, tag kept|updated|new, status ready|soon)
 U = [
  ("1", "Career choices", [
-  ("1.1", "Transferable skills", "Vocabulary: transferable skills · Project: writing a job description", "kept", "soon"),
+  ("1.1", "Transferable skills", "Skills that survive AI · Vocabulary: transferable skills · Project: a job description for a remote tech role", "updated", "ready"),
   ("1.2", "Career advice and career switching", "Advice and suggestions · Improving a LinkedIn profile · Switching to tech", "updated", "soon"),
   ("1.3", "Building rapport", "Questions to build rapport on video calls and at events", "kept", "soon"),
   ("1.4", "Networking", "Networking at meetups, online events and on LinkedIn", "kept", "soon"),
