@@ -203,3 +203,10 @@ VOCAB.insert(0, ("1.1", "Transferable skills", [
   ("job description", "опис вакансії", "a text that explains a job and the skills it needs", "Write a job description for a remote role."),
  ]),
 ]))
+VOCAB[0][2].insert(2, ("From the video", [
+  ("project management", "управління проєктами", "planning and organising work so a project finishes on time", "IT work is almost always organised as projects."),
+  ("stakeholder management", "управління стейкхолдерами (зацікавленими сторонами)", "understanding the people involved in a project and meeting their needs", "Stakeholder management means learning how each group communicates."),
+  ("teamwork and collaboration", "командна робота і співпраця", "working well together with other people and teams", "IT projects need teamwork and collaboration across departments."),
+  ("plain business language", "проста ділова мова (без жаргону)", "simple words that non-technical people understand", "Explain the bug in plain business language."),
+  ("technical vocabulary", "технічна лексика", "the special words used in a technical field", "Build basic technical vocabulary and don’t worry too much about the gaps."),
+]))

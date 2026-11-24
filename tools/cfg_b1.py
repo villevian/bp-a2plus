@@ -2,7 +2,7 @@ LEVEL = "B1"
 ACC, ACC2 = "#e8894a", "#fbeadb"
 VARIANTS = {"1.1": ["all"], "4.2": ["all"], "4.3": ["all"], "4.4": ["all"], "4.5": ["all"]}
 GRAD = ("#c4642a", "#f2a66e")
-PAGES = {"1.1": ["lesson", "hw"], "4.2": ["lesson", "extra"], "4.3": ["lesson"], "4.4": ["lesson"], "4.5": ["lesson"]}
+PAGES = {"1.1": ["flip", "lesson", "hw"], "4.2": ["lesson", "extra"], "4.3": ["lesson"], "4.4": ["lesson"], "4.5": ["lesson"]}
 TEACHER = True
 VOCAB = True
 # (number, title, focus, tag kept|updated|new, status ready|soon)

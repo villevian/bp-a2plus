@@ -1,6 +1,6 @@
 """Business Partner B1 · 1.1 Transferable skills — LESSON + HOMEWORK (IT adaptation, option A: Skills that survive AI).
 Structure = coursebook p.8–9: Lead-in 1–2, Reading (replaces video 1.1.1) 3A–B, 4A–B, 5, Vocabulary 6–8, Project 9–10A–D, Self-assessment.
-Usage: python3 build_b1_1-1.py OUTDIR [STUDENT_CODE]   -> OUTDIR/lesson.html, OUTDIR/hw.html
+Usage: python3 build_b1_1-1.py OUTDIR [STUDENT_CODE]   -> OUTDIR/flip.html (before class), OUTDIR/lesson.html, OUTDIR/hw.html
 """
 import sys, os, json
 from bp_page import page, fb, sel, inp, ta, ctl, radios, SELF
@@ -32,6 +32,13 @@ def article():
     return ('<div class="art"><h3>%s</h3><p class="sub2">%s</p>%s</div>' % (ART_T, ART_S, "".join("<p>%s</p>" % p for p in ART)) +
             '<div class="ctl"><button class="btn l" onclick="readArt(this)">🔊 Listen to the article</button><span class="hint">The browser reads the text aloud.</span></div>')
 
+VIDEO_ID = "wBEeVfhaDR4"
+def video(open_=False):
+    return ('<details class="ad"%s><summary>🎬 Video: <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16)</summary>'
+            '<div style="position:relative;padding-top:56.25%%;margin:8px 0;max-width:720px"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1" '
+            'style="position:absolute;inset:0;width:100%%;height:100%%;border:0;border-radius:8px" allow="encrypted-media; picture-in-picture" allowfullscreen></iframe></div>'
+            '<p class="hint">Subtitles: press CC. <a href="https://www.youtube.com/watch?v=%s" target="_blank">Open on YouTube</a></p></details>') % (" open" if open_ else "", VIDEO_ID, VIDEO_ID)
+
 # ---------------- 1–2 Lead-in ----------------
 BOX1 = ["calm", "good with computers", "good with numbers", "good with people", "good at problem-solving", "organised", "reliable", "resourceful", "good at explaining things", "curious"]
 s1 = ('<div class="bsec">Lead-in</div><p class="ins"><b class="x">1</b>Tick (✓) the three words or phrases that best describe you.</p>'
@@ -46,7 +53,7 @@ s2 = ('<div class="bsec">Lead-in</div><p class="ins"><b class="x">2</b>Compare y
 s3 = ('<div class="bsec">Reading</div><p class="ins"><b class="x">3</b><b>A</b> Discuss the question.</p>'
       '<div class="card">According to the article you’re going to read, employers want <i>skills that can be applied to a range of tasks and roles</i> – even when AI does part of the work. What skills do you think this means? Give examples.</div>' +
       ta("r3a", "For example: … because AI can’t …", 80) +
-      '<p class="ins"><b>B</b> Read (or listen to) the article. Were any of your ideas mentioned?</p>' + article() + ta("r3b", "Yes, … was mentioned. / No, the article doesn’t mention …", 60))
+      '<p class="ins"><b>B</b> Read (or listen to) the article. Were any of your ideas mentioned?</p><p class="hint">🏠 You read the article and watched the video before class – just compare your ideas now.</p>' + article() + video() + ta("r3b", "Yes, … was mentioned. / No, the article doesn’t mention …", 60))
 A4 = ["the ability to work in teams / be a good team player, work well with other people, think outside the box, set goals you can achieve, flexibility, critical thinking, problem-solving, communication skills, honesty, integrity, being genuine, being passionate, motivated, hard-working, a can-do attitude, determination",
       "in person, on video calls, in writing (on Slack and in docs), one-to-one, in large groups (a demo to the whole company)",
       "1 collect skills you can take from one job / tool / team to the next; 2 be a team player – nobody ships a product alone; 3 remember that employers look at the person behind the CV and the GitHub profile"]
@@ -141,6 +148,50 @@ NAV = [("1", s1), ("2", s2), ("3", s3), ("4", s4), ("5", s5), ("6", s6), ("7", s
 html = page("1.1", "Transferable skills", "LESSON", "Learners can use vocabulary related to skills and personal qualities.", "BP B1 1.1 Transferable skills · Lesson", CODE,
             NAV, K, VOC_L, extra_js=XJS.replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "lesson.html"), "w").write(html)
+
+
+# ================= BEFORE CLASS (flipped classroom) =================
+F = {}
+VS = ["project management", "stakeholder management", "problem-solving", "communication", "teamwork and collaboration"]
+VD = {"project management": "IT work is almost always organised as projects: building, rolling out or improving systems.",
+      "stakeholder management": "find the groups of people involved, learn how each group communicates and meet their needs.",
+      "problem-solving": "use technology to solve problems for customers or for teams inside the company.",
+      "communication": "listen well and explain technical ideas in plain business language to other departments.",
+      "teamwork and collaboration": "IT rarely works alone – projects involve several departments and customer groups."}
+for i, v in enumerate(VS): F["f1_%d" % (i + 1)] = [v]
+f1 = ('<div class="bsec">Before class <span class="sub">Video</span></div><p class="ins"><b class="x">1</b><b>A</b> Watch the video. A university IT leader explains which skills from other jobs help you in IT. '
+      'In what order does she mention these five skills?</p>' + video(True) + '<div class="box">%s</div>' % " · ".join(sorted(VS)) +
+      "".join('<div class="row"><b class="w">%d</b>%s%s</div>' % (i + 1, sel("f1_%d" % (i + 1), sorted(VS), 260), fb("f1_%d" % (i + 1))) for i in range(5)) + ctl("f1") +
+      '<p class="ins"><b>B</b> Watch again. Match each skill with what the speaker says about it.</p>')
+DSORT = sorted(VD.values())
+for i, v in enumerate(VS): F["f1b_%d" % (i + 1)] = [VD[v]]
+f1 += "".join('<div class="row"><b style="display:inline-block;min-width:210px;font-weight:500">%s</b>%s%s</div>' % (v, sel("f1b_%d" % (i + 1), DSORT, 560), fb("f1b_%d" % (i + 1))) for i, v in enumerate(VS)) + ctl("f1b")
+TF = [("She says you should connect your transferable skills to real IT examples in your application or interview.", "T", ""),
+      ("She says you must learn to code before you apply for an IT job.", "F", "She doesn’t say that – she says build basic technical vocabulary."),
+      ("She advises you to build basic technical vocabulary.", "T", ""),
+      ("She says gaps in your knowledge are a big problem for employers.", "F", "Her advice: don’t worry too much about the gaps.")]
+WHYF = {}
+for i, (q, a, w) in enumerate(TF):
+    F["f1c_%d" % (i + 1)] = [a]
+    if w: WHYF["f1c_%d" % (i + 1)] = w
+f1 += ('<p class="ins"><b>C</b> The end of the video (2:00–3:16): true (T) or false (F)?</p>' +
+       "".join('<div class="tf"><span class="q">%d. %s</span><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="T"> T</label><label><input type="radio" name="f1c_%d" data-k="f1c_%d" value="F"> F</label>%s</div>'
+               % (i + 1, q, i + 1, i + 1, i + 1, i + 1, fb("f1c_%d" % (i + 1))) for i, (q, a, w) in enumerate(TF)) +
+       '<div class="ctl"><button class="btn" onclick="chkRad(\'f1c\',WHYF)">Check</button><span class="res" id="r_f1c"></span></div>')
+f2 = ('<div class="bsec">Before class <span class="sub">Reading</span></div><p class="ins"><b class="x">2</b>Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
+      "".join('<p class="ins"><span class="q">%d</span>%s</p>%s%s' % (i + 1, q, ta("f2_%d" % (i + 1), "", 60), mbtn("mf2_%d" % (i + 1), A4[i], "Show answer")) for i, q in enumerate(Q4)) +
+      '<p class="ins"><span class="q">4</span>Which skills are mentioned in <b>both</b> the video and the article?</p>' + ta("f2_4", "", 50) +
+      mbtn("mf2_4", "problem-solving, communication (skills), teamwork / being a team player"))
+f3 = ('<div class="bsec">Before class <span class="sub">Get ready to speak</span></div><p class="ins"><b class="x">3</b>Prepare for the lesson. Make short notes – we will talk about them in class.</p>'
+      '<div class="card">1. Which three skills from the video and the article do you already have? Think of one real example from your work for each.</div>' + ta("f3_1", "1 problem-solving – last month I …\n2 …\n3 …", 110) +
+      '<div class="card">2. Which skill do you want to develop this year? Why?</div>' + ta("f3_2", "", 60) +
+      '<div class="card">3. Write down 3–5 new words or phrases from the video or the article. <span class="hint">Tip: select a word on this page and press ＋ to save it to My vocabulary.</span></div>' + ta("f3_3", "", 60) +
+      '<div style="margin-top:20px">%s</div>' % (SELF % "How well did you understand the video and the article?"))
+VOC_F = [("From the video", ["transferable skills", "project management", "stakeholder management", "problem-solving", "communication skills", "teamwork and collaboration", "plain business language", "technical vocabulary"]),
+         ("From the article", ["think outside the box", "set goals", "flexibility", "critical thinking", "team player", "integrity", "a can-do attitude", "determination", "old news", "tech stack"])]
+html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
+            [("1", f1), ("2", f2), ("3", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
+open(os.path.join(OUTDIR, "flip.html"), "w").write(html)
 
 # ================= HOMEWORK =================
 H = {}

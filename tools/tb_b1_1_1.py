@@ -19,6 +19,12 @@ def build(blk, ul, say, step):
       "Ситуації a–h в упр. 6 переписано під ІТ; ключ той самий, що в книзі: 1d 2b 3a 4c 5f 6g 7e 8h.",
       "Професії в упр. 9 — ІТ-ролі замість personal trainer / factory worker.",
       "Урок 1:1, тому <i>Work in pairs</i> = студент + ви."])) +
+     blk("start", "Перевернутий клас: що студент робить ДО уроку (сторінка Before class)", ul([
+      "<b>Відео</b> <i>Use Transferable Skills For a Career In IT</i> (University of Phoenix, 2025, 3:16, YouTube): порядок п’яти навичок, що каже спікерка про кожну, T/F про поради в кінці.",
+      "<b>Стаття</b> <i>The skills that survive AI</i> + питання 4A (кнопки Show answer) + які навички є і у відео, і в статті.",
+      "<b>Підготовка до говоріння:</b> три свої навички з реальним прикладом, навичка, яку хоче розвинути, 3–5 нових слів.",
+      "На уроці 3–4 — лише швидка перевірка (3–4 хв): <i>What did you find? Which skills are in both?</i> Основний час — 1–2, 5–10: говоріння, лексика, проєкт.",
+      "Відповіді студента зі сторінки Before class видно в адмінці — перегляньте перед уроком і візьміть його приклади як старт для упр. 5."])) +
      blk("tgt", "Цільова лексика", "<p>transferable skills · think outside the box · a can-do attitude · set goals · critical thinking · determination · team player · integrity · communication skills · problem-solving · "
       "adaptable/adaptability · flexible/flexibility · motivated/motivation · confident/confidence · dependable/dependability · resourceful/resourcefulness · independent/independence · ambitious/ambition · passionate/passion · enthusiastic/enthusiasm · honest/honesty · authentic/authenticity · "
       "+ 2026: AI literacy · async communication · ownership</p><p>Студент може натиснути будь-яке слово в блоці Vocabulary (переклад, приклад, 🔊) і виділити будь-який текст → «＋» → слово в його особистому словнику.</p>"))
@@ -33,13 +39,13 @@ def build(blk, ul, say, step):
        ["Is there anything in the box that definitely doesn’t describe you?", "Which is the most important skill for someone in tech? And the least important?"],
        ul(["Попросіть аргумент: <i>Why? Can you give me an example from your job?</i>", "Запишіть 2–3 його ідеї — повернетесь до них у 3B."]),
        ["Has AI changed which skills are important in your team?"], "<p>Відповіді вільні.</p>")),
-     ("s3", "3", step("s3", "3A–B Reading", "8 хв",
+     ("s3", "3", step("s3", "3A–B Reading (зроблено вдома)", "3 хв",
        "<p>Прогнозування + читання для загального розуміння (як <i>Watch the video</i> в книзі). Студент перевіряє, чи збіглися його ідеї з текстом.</p>",
        ["Employers want skills that can be applied to a range of tasks and roles – even when AI writes part of the code. What skills do you think they mean?", "Now read the article – or listen to it. Were any of your ideas mentioned?"],
-       ul(["3A: 1–2 хв, приймайте будь-які відповіді.", "3B: читання ~3 хв або 🔊 прослуховування. Попросіть піднімати руку (або казати <i>‘There!’</i>), коли трапляється його ідея.",
+       ul(["3A: 1–2 хв, приймайте будь-які відповіді.", "3B студент уже зробив удома (стаття + відео). Попросіть 2–3 ідеї, які збіглися, і одну, якої не було.",
            "Поясніть <i>old news</i>, <i>tech stack</i>, <i>break the build</i>, <i>ship a product</i>, якщо треба."]),
        ["Which idea in the article surprised you?", "Do you agree that critical thinking is more important now, not less?"], "", "Стаття навмисно містить усі навички з відео книги — у 4A вони знадобляться.")),
-     ("s4", "4", step("s4", "4A–B Reading", "8 хв",
+     ("s4", "4", step("s4", "4A–B Reading (перевірка)", "3 хв",
        "<p>Детальне читання: знайти навички, способи комунікації, три поради. 4B — перевернути: описати <i>unsuccessful</i> працівника (антоніми).</p>",
        ["Read again and answer the three questions.", "Now the opposite: what words describe an unsuccessful tech worker in 2026?"],
        ul(["Після кожного питання — кнопка Show answer.", "У 4B зверніть увагу на заперечні форми: <i>dishonest, unmotivated, inflexible, unable to set goals</i>."]),
