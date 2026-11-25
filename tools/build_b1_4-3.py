@@ -98,6 +98,6 @@ EXTRA_CSS = ('const st=document.createElement("style");st.textContent=".vbox{mar
              '.fr{position:relative;padding-top:56.25%}.fr iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.oh{color:#c4642a;margin:6px 0}.dlg p{margin:6px 0;line-height:2.2}";document.head.appendChild(st);')
 html = page("4.3", "Managing conversations", "LESSON", "Learners are aware of different approaches to managing a conversation and can use a range of expressions to signal and respond to a change of topic.",
             "BP B1 4.3 Managing conversations · Lesson", CODE, [(str(i + 1), s) for i, s in enumerate([s1, s2, s3, s4, s5, s6, s7, s8, s9, s10])], K, VOC,
-            footer="Videos: Business Partner B1 (Pearson), YouTube. ", extra_js=EXTRA_CSS)
+            footer="Videos: coursebook videos (Pearson), YouTube. ", extra_js=EXTRA_CSS)
 open(os.path.join(OUTDIR, "lesson.html"), "w").write(html)
 print("ok")

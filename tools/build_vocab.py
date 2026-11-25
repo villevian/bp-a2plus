@@ -16,7 +16,7 @@ for num, title, groups in V:
             items.append({"id": "%s|%s" % (num, en), "l": num, "g": g, "en": en, "uk": uk, "df": df, "ex": ex})
 
 html = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>My vocabulary — Business Partner __LEVEL__</title><link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
+<title>__TITLE__</title><link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
 <style>*{box-sizing:border-box}body{margin:0;font-family:"Fira Sans",system-ui,sans-serif;font-weight:300;color:#231f20;background:#fff;font-size:17px;line-height:1.45}
 header{display:flex;border-bottom:3px solid ACC}header .n{background:linear-gradient(120deg,DARK,#7b7fe0);color:#fff;font-weight:500;font-size:30px;padding:10px 22px}
 header h1{margin:0;align-self:center;padding-left:18px;font-weight:500;font-size:28px;color:#4d4d4f}
@@ -44,7 +44,7 @@ main{max-width:980px;margin:0 auto;padding:10px 20px 50px}.top{display:flex;gap:
 .done{text-align:center;padding:30px;font-size:20px}.dir{display:inline-flex;border:1.5px solid ACC;border-radius:18px;overflow:hidden}.dir button{border:0;background:#fff;color:DARK;padding:4px 12px;font:500 14px "Fira Sans",system-ui,sans-serif;cursor:pointer}.dir button.on{background:ACC;color:#fff}
 .empty{text-align:center;color:#6d6e70;padding:30px}footer{max-width:980px;margin:0 auto;padding:0 20px 30px;font-size:12px;color:#77787b}
 @media(max-width:700px){.w{grid-template-columns:28px 1fr 60px 26px}.w .uk{grid-column:2/3;grid-row:2}.modes,.match{grid-template-columns:1fr 1fr}.opts{grid-template-columns:1fr}}</style></head><body>
-<header><div class="n">__LEVEL__</div><h1>My vocabulary</h1></header>
+<header><div class="n">__BADGE__</div><h1>My vocabulary</h1></header>
 <main><div class="top"><a href="index.html">← Contents</a><span class="st" id="st"></span></div>
 <div class="tabs"><button class="on" data-t="list">📖 Words</button><button data-t="train">🎯 Train <b id="tc"></b></button></div>
 <div id="list"><div class="bar"><label>Lesson <select id="fl"><option value="">All lessons</option></select></label><label><input type="checkbox" id="fn"> only words I don’t know yet</label>
@@ -131,7 +131,7 @@ LESSONS.forEach(l=>$("fl").insertAdjacentHTML("beforeend",`<option value="${l.n}
  if(a&&a.sel){S={sel:a.sel,lv:a.lv||{},own:a.own||[],del:a.del||[],chg:a.chg||{}};ownSync();S.sel=S.sel.filter(id=>byId[id])}ready=true;renderList();status(CODE?"Your words save automatically.":"Preview — your words are saved on this device only.",CODE?"ok":"")})();
 </script></body></html>"""
 html = (html.replace("__ITEMS__", json.dumps(items, ensure_ascii=False)).replace("__LESSONS__", json.dumps(lessons, ensure_ascii=False))
-        .replace("__LEVEL__", LEVEL).replace("__CODE__", CODE).replace("ACC2", ACC2).replace("ACC", ACC).replace("DARK", DARK))
+        .replace("__TITLE__", "My vocabulary" if CODE else "My vocabulary — Business Partner " + LEVEL).replace("__BADGE__", "📚" if CODE else LEVEL).replace("__LEVEL__", LEVEL).replace("__CODE__", CODE).replace("ACC2", ACC2).replace("ACC", ACC).replace("DARK", DARK))
 open(OUT, "w").write(html)
 import os as _o
 json.dump({"level": LEVEL, "items": items}, open(_o.path.join(_o.path.dirname(_o.path.abspath(OUT)), "vocab.json"), "w"), ensure_ascii=False)

@@ -44,7 +44,7 @@ T2 = [("Dear Sir/Madam,", 0), ("We are writing to you to confirm your order", 1)
 for i, (p, f) in enumerate(T2): K["c2_%d" % (i + 1)] = [FUNCS[f]]
 c2 = ('<div class="bsec">Functional language</div><p class="ins"><b class="x">2</b>Complete the table with phrases or sentences from the letter, then add the phrases in the box to the table. Choose the function for each phrase.</p>'
       '<div class="row"><i>Dear Mr Chahal,</i> → <b>Greeting</b> (example)</div>' +
-      "".join('<div class="row"><span style="display:inline-block;min-width:520px">%s</span>%s%s</div>' % (p, sel("c2_%d" % (i + 1), FUNCS, 170), fb("c2_%d" % (i + 1))) for i, (p, f) in enumerate(T2)) + ctl("c2") +
+      "".join('<div class="row"><span style="display:inline-block;width:520px;max-width:100%%">%s</span>%s%s</div>' % (p, sel("c2_%d" % (i + 1), FUNCS, 170), fb("c2_%d" % (i + 1))) for i, (p, f) in enumerate(T2)) + ctl("c2") +
       '<div class="gbox"><div class="gh">Remember</div><p><b>Dear Mr / Ms + surname</b> → <b>Yours sincerely</b> · <b>Dear Sir/Madam</b> (no name) → <b>Yours faithfully</b></p><p><b>enclose</b> = put in the same envelope (letter) · <b>attach</b> = send with an email</p></div>' + VP)
 BAD = ('<div class="letter" style="line-height:1.7">Hi Ms Liang!<br>Thanks a lot for the order, we got it. The printers will come to you soon. Like we said, there is a discount. '
        'You can pay us later when you get the bill. I put some papers in with this letter. Any problems just call me.<br>Cheers,<br>Tom</div>')
@@ -83,7 +83,7 @@ T2U = [("Hi Mr Chahal 👋", 0), ("Hi team,", 0), ("Quick confirmation of your o
        ("Thanks for your business!", 6), ("If anything is unclear, don’t hesitate to message me here.", 6), ("Best regards,", 7), ("Cheers,", 7)]
 for i, (p, f) in enumerate(T2U): K["u2_%d" % (i + 1)] = [FUNCS[f]]
 u2 = ('<div class="bsec">Functional language</div><p class="ins"><b class="x">2</b>Which part of the message is it? Choose the function for each phrase.</p>' +
-      "".join('<div class="row"><span style="display:inline-block;min-width:480px">%s</span>%s%s</div>' % (p, sel("u2_%d" % (i + 1), FUNCS, 170), fb("u2_%d" % (i + 1))) for i, (p, f) in enumerate(T2U)) + ctl("u2") +
+      "".join('<div class="row"><span style="display:inline-block;width:480px;max-width:100%%">%s</span>%s%s</div>' % (p, sel("u2_%d" % (i + 1), FUNCS, 170), fb("u2_%d" % (i + 1))) for i, (p, f) in enumerate(T2U)) + ctl("u2") +
       '<div class="gbox"><div class="gh">Letter → chat: what changes?</div><table class="tt2" style="border-collapse:collapse;font-size:15px">'
       + "".join('<tr><td style="padding:3px 14px 3px 0"><b>%s</b></td><td style="padding:3px 14px 3px 0">%s</td><td>%s</td></tr>' % r for r in [
           ("Greeting", "Dear Mr Chahal,", "Hi Mr Chahal 👋 / Hi Mei"), ("Opening", "We are writing to confirm your order …", "Quick confirmation of your order #…"),
