@@ -262,3 +262,43 @@ VOCAB[0][2][2][1][:0] = [   # Indeed videos 2026 (Before class)
 ]
 from indeed_words import WORDS as _IW
 VOCAB[0][2].insert(3, ("Video words (Indeed)", [(w[0], w[2], w[3], w[4]) for w in _IW]))
+
+# --- added 2026-11-25: chips that had no card (Extra 1.1, grammar 4.2, 4.5 email) ---
+_ADD2 = {
+ ("1.1", "Extra: portfolio career"): [
+  ("portfolio", "портфоліо", "a collection of your best work that you show to clients or employers", "Send the client a link to your portfolio on GitHub."),
+  ("contract", "контракт, договір", "a written agreement about the work, the price and the dates", "We signed a three-month contract with a fintech start-up."),
+  ("deadline", "дедлайн, кінцевий термін", "the date or time when work must be finished", "The deadline for the release is Friday."),
+ ],
+ ("4.2", "Grammar: the passive"): [
+  ("am / is / are + past participle", "Present Simple Passive: am / is / are + 3-тя форма", "the passive in the present: the action is done to the subject", "The office is cleaned every evening."),
+  ("am / is / are + V3", "Present Simple Passive: am / is / are + V3", "V3 = past participle (3rd form of the verb)", "Our code is reviewed by two developers."),
+  ("was / were + past participle", "Past Simple Passive: was / were + 3-тя форма", "the passive in the past", "The app was launched in 2024."),
+  ("was / were + V3", "Past Simple Passive: was / were + V3", "V3 = past participle (3rd form of the verb)", "The meetings were moved online."),
+  ("by + agent", "by + виконавець дії", "says who did the action in a passive sentence", "The new policy was announced by the CEO."),
+  ("have + something + V3", "have something done – щось зробили для тебе", "someone else does a job for you (often a service you pay for)", "We had our office redesigned last year."),
+  ("get + something + V3", "get something done – (розмовне) щось зробили для тебе", "the same as have something done, more informal", "I need to get my laptop fixed."),
+  ("have my laptop repaired", "віддати ноутбук у ремонт (його відремонтують)", "pay someone to repair your laptop", "I had my laptop repaired at the service centre."),
+  ("have our website redesigned", "замовити редизайн нашого сайту", "pay a designer to make the website new", "We’re having our website redesigned this spring."),
+ ],
+ ("4.5", "Email: confirming an order"): [
+  ("We are writing to confirm …", "Пишемо, щоб підтвердити …", "a formal first line of a confirmation email", "We are writing to confirm your order of 40 units."),
+  ("We are pleased to confirm …", "Раді підтвердити …", "a formal, friendly way to confirm", "We are pleased to confirm the delivery date."),
+  ("We enclose …", "Додаємо (у вкладенні) …", "formal: we send this document with the email", "We enclose our terms and conditions."),
+  ("We look forward to …", "З нетерпінням чекаємо …", "a formal closing line about the future", "We look forward to working with you."),
+  ("We thank you for your business.", "Дякуємо за співпрацю.", "a formal way to thank a customer", "We thank you for your business and hope to hear from you soon."),
+  ("terms and conditions", "умови (договору)", "the rules of an agreement: price, payment, delivery", "Please read our terms and conditions before you sign."),
+  ("T&Cs (terms and conditions)", "умови (скорочено T&Cs)", "a short form of terms and conditions", "Our T&Cs are attached."),
+  ("order number", "номер замовлення", "the number that identifies an order", "Please include the order number in your reply."),
+  ("unit / unit price", "одиниця (товару) / ціна за одиницю", "one item / the price of one item", "The unit price is €12, so 40 units cost €480."),
+  ("deliver the goods", "доставити товар", "bring the products to the customer", "We will deliver the goods on 3 March."),
+  ("first delivery", "перша поставка", "the first time goods are delivered under an order", "The first delivery will arrive next week."),
+  ("queries", "запитання, запити", "questions (formal)", "If you have any queries, please contact me."),
+ ],
+}
+for (_n, _g), _ws in _ADD2.items():
+    _les = next(x for x in VOCAB if x[0] == _n)
+    _grp = next((x for x in _les[2] if x[0] == _g), None)
+    if _grp is None:
+        _grp = (_g, []); _les[2].append(_grp)
+    _grp[1].extend(_ws)
