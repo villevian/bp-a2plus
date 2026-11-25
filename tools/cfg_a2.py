@@ -2,8 +2,8 @@ LEVEL = "A2"
 ACC, ACC2 = "#3b7dd8", "#e3eefb"          # blue
 GRAD = ("#2a5fb0", "#4f9be8")
 COLS = 5                                   # A2 book: 5 lessons per unit, x.5 = business workshop
-VARIANTS = {"1.1": ["all"], "1.2": ["all"], "1.3": ["all"], "7.2": ["all"], "7.3": ["all"], "7.4": ["all"]}
-PAGES = {"1.1": ["lesson", "hw"], "1.2": ["lesson", "hw"], "1.3": ["lesson", "hw", "extra"], "7.2": ["lesson", "hw", "extra", "games"], "7.3": ["lesson", "hw", "extra", "games"], "7.4": ["lesson", "hw", "extra", "present"]}
+VARIANTS = {"1.1": ["all"], "1.2": ["all"], "1.3": ["all"], "7.2": ["all"], "7.3": ["all"], "7.4": ["all"], "7.5": ["all"]}
+PAGES = {"1.1": ["lesson", "hw"], "1.2": ["lesson", "hw"], "1.3": ["lesson", "hw", "extra"], "7.2": ["lesson", "hw", "extra", "games"], "7.3": ["lesson", "hw", "extra", "games"], "7.4": ["lesson", "hw", "extra", "present"], "7.5": ["lesson", "present"]}
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [
  ("1", "Working day", [
@@ -47,7 +47,7 @@ U = [
   ("7.2", "Services and subscriptions", "Vocabulary: fees and hidden fees · Reading: Adobe, Microsoft, Amazon · Listening: recruitment agencies · An honest pricing page", "both", "ready", "Advertisement for a courier agency"),
   ("7.3", "The best providers", "Superlatives · Mobile operators for company eSIMs · A recommendation in Slack", "both", "ready", "Email comparing services (Travel Care)"),
   ("7.4", "Work skills: Presentations", "Video: Our products and services · Presenting online: share your screen · Presentation kit", "both", "ready", "Presentation from notes (Force Sport Cars)"),
-  ("7.5", "Business workshop: The big contract", "A trade show · Giving a presentation · A recommendation message", "updated", "soon")]),
+  ("7.5", "Business workshop: The big contract", "Unit 7 review · Comparing three offers · An online pitch to win a contract", "updated", "ready")]),
  ("8", "Jobs", [
   ("8.1", "Work experience", "Talking about experience (Present Perfect) · Skills and personal qualities", "kept", "soon"),
   ("8.2", "The best person for the job", "Job requirements · Choosing candidates · Job ads on LinkedIn", "updated", "soon"),
