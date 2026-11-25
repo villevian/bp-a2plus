@@ -58,14 +58,15 @@ main{max-width:980px;margin:0 auto;padding:10px 20px 50px}.top{display:flex;gap:
 const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
 const KEYL="BP __LEVEL__ Vocabulary",CODE="__CODE__";let ITEMS=__ITEMS__;const LESSONS=[{n:"★",t:"My words",g:["My words"]}].concat(__LESSONS__);
 const $=id=>document.getElementById(id);const byId={};ITEMS.forEach(x=>byId[x.id]=x);
-let S={sel:[],lv:{},own:[],del:[]},timer=null,ready=false,dir="en",mode="cards";
+function mergeSel(R,L){const chg=Object.assign({},R.chg||{});for(const k in(L.chg||{}))if(!chg[k]||L.chg[k][1]>chg[k][1])chg[k]=L.chg[k];const set=new Set([...(R.sel||[]),...(L.sel||[])]);for(const k in chg){if(chg[k][0])set.add(k);else set.delete(k)}return{sel:[...set],chg}}
+let S={sel:[],lv:{},own:[],del:[],chg:{}},timer=null,ready=false,dir="en",mode="cards";
 const rpc=(f,b)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(async r=>{const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):null});
 const norm=s=>(s||"").toLowerCase().replace(/[’`]/g,"'").replace(/[.!?,]/g,"").replace(/\s+/g," ").trim();
 const lv=id=>S.lv[id]||0;
 function status(t,c=""){$("st").textContent=t;$("st").className="st "+c}
 function local(){try{localStorage.setItem("voc:"+KEYL+":"+(CODE||"preview"),JSON.stringify(S))}catch(e){}}
 async function save(){if(!ready)return;local();if(!CODE){status("Preview — your words are saved on this device only.");return}
- try{try{const r=await rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL});const R=(r&&r[0]&&r[0].answers)||{};const del=new Set([...(R.del||[]),...(S.del||[])]),o={};[...(R.own||[]),...(S.own||[])].forEach(w=>{if(!del.has(w.id))o[w.id]=w});S.own=Object.values(o);S.del=[...del];(R.sel||[]).forEach(id=>{if(/^own\|/.test(id)&&o[id]&&!S.sel.includes(id))S.sel.push(id)});ownSync()}catch(e){}
+ try{try{const r=await rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL});const R=(r&&r[0]&&r[0].answers)||{};const del=new Set([...(R.del||[]),...(S.del||[])]),o={};[...(R.own||[]),...(S.own||[])].forEach(w=>{if(!del.has(w.id))o[w.id]=w});S.own=Object.values(o);S.del=[...del];ownSync();const m=mergeSel(R,S);S.chg=m.chg;S.sel=m.sel.filter(id=>byId[id])}catch(e){}
  const known=Object.values(S.lv).filter(v=>v>=3).length;await rpc("save_hw",{p_code:CODE,p_lesson:KEYL,p_answers:S,p_score:{selected:S.sel.length,mastered:known},p_submitted:false});status("Saved ✓","ok")}catch(e){status("Saved on this device (no internet).")}}
 function later(){clearTimeout(timer);timer=setTimeout(save,1000)}
 function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang="en-GB";u.rate=.9;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
@@ -73,9 +74,9 @@ function dots(id){const n=lv(id);return '<span class="lv">'+[0,1,2].map(i=>'<i c
 
 function ownSync(){(S.own||[]).forEach(w=>{const x={id:w.id,l:"★",g:"My words",en:w.en,uk:w.uk||"",df:w.src?"from "+w.src:"my word",ex:w.ex||""};byId[w.id]=x;if(!ITEMS.some(i=>i.id===w.id))ITEMS.push(x)});ITEMS=ITEMS.filter(i=>i.l!=="★"||S.own.some(o=>o.id===i.id))}
 function ownForm(){return `<div class="bar" style="margin-top:8px"><input id="oEn" placeholder="English word or phrase" style="flex:1;min-width:180px"><input id="oUk" placeholder="translation" style="flex:1;min-width:140px"><input id="oEx" placeholder="example (optional)" style="flex:2;min-width:200px"><button class="btn a" id="ownAdd">＋ Add</button></div><p style="font-size:14px;color:#6d6e70;margin:2px 0 6px">Add your own words here – or select any text in a lesson and press <b>＋</b>.</p>`}
-function addOwn(){const en=$("oEn").value.trim();if(!en)return;const w={id:"own|"+Date.now(),en,uk:$("oUk").value.trim(),ex:$("oEx").value.trim(),src:"",at:new Date().toISOString()};S.own.push(w);ownSync();S.sel.push(w.id);renderList();later()}
-function delOwn(id){S.own=S.own.filter(w=>w.id!==id);S.del=[...(S.del||[]),id];S.sel=S.sel.filter(x=>x!==id);delete S.lv[id];ownSync();renderList();later()}
-document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&CODE&&ready){rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL}).then(r=>{const a=r&&r[0]&&r[0].answers;if(!a)return;const del=new Set([...(a.del||[]),...(S.del||[])]),o={};[...(S.own||[]),...(a.own||[])].forEach(w=>{if(!del.has(w.id))o[w.id]=w});S.own=Object.values(o);S.del=[...del];(a.sel||[]).forEach(id=>{if(!S.sel.includes(id))S.sel.push(id)});ownSync();S.sel=S.sel.filter(id=>byId[id]);renderList()}).catch(()=>{})}});
+function addOwn(){S.chg=S.chg||{};const en=$("oEn").value.trim();if(!en)return;const w={id:"own|"+Date.now(),en,uk:$("oUk").value.trim(),ex:$("oEx").value.trim(),src:"",at:new Date().toISOString()};S.own.push(w);ownSync();S.sel.push(w.id);renderList();later()}
+function delOwn(id){S.own=S.own.filter(w=>w.id!==id);S.del=[...(S.del||[]),id];(S.chg=S.chg||{})[id]=[0,Date.now()];S.sel=S.sel.filter(x=>x!==id);delete S.lv[id];ownSync();renderList();later()}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible"&&CODE&&ready){rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL}).then(r=>{const a=r&&r[0]&&r[0].answers;if(!a)return;const del=new Set([...(a.del||[]),...(S.del||[])]),o={};[...(S.own||[]),...(a.own||[])].forEach(w=>{if(!del.has(w.id))o[w.id]=w});S.own=Object.values(o);S.del=[...del];ownSync();const m=mergeSel(a,S);S.chg=m.chg;S.sel=m.sel.filter(id=>byId[id]);renderList()}).catch(()=>{})}});
 function renderList(){const L=$("fl").value,onlyNew=$("fn").checked,q=norm($("fs").value);let h="";
  LESSONS.forEach(les=>{if(L&&les.n!==L)return;let lh="";if(les.n==="★"&&!onlyNew&&!q)lh+=ownForm();les.g.forEach(g=>{const ws=ITEMS.filter(x=>x.l===les.n&&x.g===g&&(!onlyNew||lv(x.id)<3)&&(!q||norm(x.en+" "+x.uk).includes(q)));if(!ws.length)return;
   lh+=`<div class="grp"><h3>${g}</h3><button class="btn l" onclick="selGrp('${les.n}','${g.replace(/'/g,"\\'")}')">select group</button></div>`;
@@ -83,10 +84,10 @@ function renderList(){const L=$("fl").value,onlyNew=$("fn").checked,q=norm($("fs
   if(lh)h+=`<div class="lh">${les.n==="★"?"⭐":les.n} ${les.t}</div>`+lh});
  $("words").innerHTML=h||'<div class="empty">No words here.</div>';
  document.querySelectorAll(".w").forEach(r=>{const id=r.dataset.id;r.querySelector("input").onclick=e=>{e.stopPropagation();tog(id,e.target.checked)};r.querySelector(".spk").onclick=e=>{e.stopPropagation();speak(byId[id].en)};r.onclick=()=>r.classList.toggle("open");const d=r.querySelector(".dl");if(d)d.onclick=e=>{e.stopPropagation();delOwn(id)}});const ob=$("ownAdd");if(ob)ob.onclick=addOwn;cnt()}
-function tog(id,on){S.sel=S.sel.filter(x=>x!==id);if(on)S.sel.push(id);cnt();later()}
+function tog(id,on){S.sel=S.sel.filter(x=>x!==id);if(on)S.sel.push(id);(S.chg=S.chg||{})[id]=[on?1:0,Date.now()];cnt();later()}
 function cnt(){$("cnt").textContent="Selected: "+S.sel.length;$("tc").textContent=S.sel.length?"("+S.sel.length+")":""}
 function selAll(on){document.querySelectorAll(".w").forEach(r=>{r.querySelector("input").checked=!!on;tog(r.dataset.id,!!on)})}
-function selGrp(l,g){ITEMS.filter(x=>x.l===l&&x.g===g).forEach(x=>{if(!S.sel.includes(x.id))S.sel.push(x.id)});renderList();later()}
+function selGrp(l,g){const t=Date.now();S.chg=S.chg||{};ITEMS.filter(x=>x.l===l&&x.g===g).forEach(x=>{S.chg[x.id]=[1,t];if(!S.sel.includes(x.id))S.sel.push(x.id)});renderList();later()}
 function pool(){let p=S.sel.map(id=>byId[id]).filter(Boolean);if($("tw").checked)p=p.filter(x=>lv(x.id)<3);return p}
 const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 function bump(id,d){S.lv[id]=Math.max(0,Math.min(3,lv(id)+d));later()}
@@ -127,7 +128,7 @@ $("tw").onchange=startMode;["fl","fn"].forEach(i=>$(i).onchange=renderList);$("f
 LESSONS.forEach(l=>$("fl").insertAdjacentHTML("beforeend",`<option value="${l.n}">${l.n} ${l.t}</option>`));
 (async()=>{let a=null;if(CODE){try{const r=await rpc("get_my_hw",{p_code:CODE,p_lesson:KEYL});const d=r&&r[0];if(d&&d.answers)a=d.answers}catch(e){}}
  if(!a){try{a=JSON.parse(localStorage.getItem("voc:"+KEYL+":"+(CODE||"preview"))||"null")}catch(e){}}
- if(a&&a.sel){S={sel:a.sel,lv:a.lv||{},own:a.own||[],del:a.del||[]};ownSync();S.sel=S.sel.filter(id=>byId[id])}ready=true;renderList();status(CODE?"Your words save automatically.":"Preview — your words are saved on this device only.",CODE?"ok":"")})();
+ if(a&&a.sel){S={sel:a.sel,lv:a.lv||{},own:a.own||[],del:a.del||[],chg:a.chg||{}};ownSync();S.sel=S.sel.filter(id=>byId[id])}ready=true;renderList();status(CODE?"Your words save automatically.":"Preview — your words are saved on this device only.",CODE?"ok":"")})();
 </script></body></html>"""
 html = (html.replace("__ITEMS__", json.dumps(items, ensure_ascii=False)).replace("__LESSONS__", json.dumps(lessons, ensure_ascii=False))
         .replace("__LEVEL__", LEVEL).replace("__CODE__", CODE).replace("ACC2", ACC2).replace("ACC", ACC).replace("DARK", DARK))
