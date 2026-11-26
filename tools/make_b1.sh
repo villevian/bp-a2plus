@@ -8,6 +8,7 @@ build() { D=$1; C=$2
   python3 build_b1_1-1.py $D/lessons/1-1/all $C >/dev/null
   python3 build_b1_1-1_extra.py $D/lessons/1-1/all $C >/dev/null
   python3 build_b1_1-1_words.py $D/lessons/1-1/all $C >/dev/null
+  python3 build_b1_1-1_speak.py $D/lessons/1-1/all $C >/dev/null
   python3 build_b1_4-2.py $D/lessons/4-2/all $C >/dev/null
   python3 build_b1_4-3.py $D/lessons/4-3/all $C >/dev/null
   python3 build_b1_4-4.py $D/lessons/4-4/all $C >/dev/null
