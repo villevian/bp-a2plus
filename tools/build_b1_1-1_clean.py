@@ -23,13 +23,13 @@ def gaps(prefix, items, opts, w=110):
         k = "%s_%d" % (prefix, i + 1); K[k] = ans if isinstance(ans, list) else [ans]
         o = list(it[2]) if len(it) > 2 else list(opts)
         if len(it) > 2: _R.shuffle(o)
-        h += '<div class="row">%s) %s%s</div>' % ("abcdefghijkl"[i], txt.replace("___", sel(k, o, w)), fb(k))
+        h += '<div class="row">%s) %s%s</div>' % ("abcdefghijklmnop"[i], txt.replace("___", sel(k, o, w)), fb(k))
     return h + ctl(prefix)
 def fix(prefix, items, w=560):
     h = ""
     for i, (bad, good) in enumerate(items):
         k = "%s_%d" % (prefix, i + 1); K[k] = good
-        h += '<div class="row">%s) <span style="color:#a33">“%s”</span><br>%s%s</div>' % ("abcdefghijkl"[i], bad, inp(k, w, "Your correct sentence"), fb(k))
+        h += '<div class="row">%s) <span style="color:#a33">“%s”</span><br>%s%s</div>' % ("abcdefghijklmnop"[i], bad, inp(k, w, "Your correct sentence"), fb(k))
     return h + ctl(prefix)
 def v(*a):  # variants with straight / curly apostrophes
     out = []
@@ -40,20 +40,22 @@ def v(*a):  # variants with straight / curly apostrophes
 
 # ---------- 1 Error clinic ----------
 EC = [("I not understand it.", v("I didn't understand it.", "I don't understand it.", "I did not understand it.", "I do not understand it.")),
-      ("In this week I am working more than previous.", v("This week I'm working more than last week.", "This week I am working more than last week.", "This week I'm working more than usual.", "This week I am working more than usual.", "This week I'm working more than before.", "This week I am working more than before.")),
-      ("All these skills very important.", v("All these skills are very important.", "All the skills are very important.", "All skills are very important.")),
-      ("It makes your work more comfortable, more easiest.", v("It makes your work more comfortable and easier.", "It makes your work more comfortable, easier.", "It makes your work easier and more comfortable.")),
-      ("When you work in team, you should build relationships.", v("When you work in a team, you should build relationships.")),
-      ("I understood what about it.", v("I understood what it is about.", "I understood what it was about.", "I understand what it is about.")),
-      ("Yesterday I forget the meaning.", v("Yesterday I forgot the meaning.")),
-      ("I should thinking about it.", v("I should think about it.", "I need to think about it.")),
+      ("Yesterday I’m watching the full video.", v("Yesterday I watched the whole video.", "Yesterday I watched the full video.")),
+      ("Last week I’m trying to change the speed – 0.9 was OK.", v("Last week I tried changing the speed – 0.9 was OK.", "Last week I tried changing the speed - 0.9 was OK.", "Last week I tried changing the speed – 0.9 was ok.", "Last week I tried changing the speed, 0.9 was OK.")),
+      ("If talk about me, my main skill is communication.", v("If we are talking about me, my main skill is communication.", "If we're talking about me, my main skill is communication.")),
+      ("In this week I am working more than usual.", v("This week I am working more than usual.", "This week I'm working more than usual.")),
+      ("All of these skills very important.", v("All these skills are very important.", "All of these skills are very important.")),
+      ("Good communication makes your work more easier.", v("Good communication makes your work easier.")),
+      ("When you work in team, you need good relationships.", v("When you work in a team, you need good relationships.")),
       ("Good communication skill is the simplest way to build relationships.", v("Good communication skills are the simplest way to build relationships.")),
-      ("This skill very helpful for your routine.", v("This skill is very helpful for your routine.", "This skill is very helpful for your daily routine.", "This skill is very helpful in your routine.")),
-      ("If talk about me, my main skill is communication.", v("If we're talking about me, my main skill is communication.", "If we are talking about me, my main skill is communication.", "If we talk about me, my main skill is communication.", "Talking about me, my main skill is communication.")),
-      ("I can to use it in another job.", v("I can use it in another job."))]
+      ("I understood what about it.", v("I understood what it is about.", "I understood what it was about.")),
+      ("Yesterday I forget the meaning of “integrity”.", v("Yesterday I forgot the meaning of “integrity”.", 'Yesterday I forgot the meaning of "integrity".', "Yesterday I forgot the meaning of integrity.")),
+      ("I found a colleague password on a sticky note.", v("I found a colleague's password on a sticky note.")),
+      ("Think outside the box is my strongest skill.", v("Thinking outside the box is my strongest skill.")),
+      ("I use this skill in each part of my life.", v("I use this skill in every sphere of my life.", "I use this skill in every area of my life.", "I use this skill in all areas of my life."))]
 s1 = ('<div class="bsec">Error clinic <span class="sub">Your own sentences from our lesson</span></div>' +
-      '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🎯 <b>Why?</b> You told me: <i>“I already speak with mistakes – I need to re-learn.”</i> The best way is to <b>catch your own mistakes</b>. These are real sentences you said today (a little shortened).</div>' +
-      '<p class="ins">' + X(1, "A") + 'Each sentence has <b>one</b> mistake. Write the correct sentence. Don’t look at the rules yet – try first. Then press <b>Check</b>.</p>' + fix("ec", EC) +
+      '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🎯 <b>Why?</b> You told me: <i>“I already speak with mistakes – I need to re-learn.”</i> The best way is to <b>catch your own mistakes</b>. These are real sentences you said in our lesson – and we talked about each mistake.</div>' +
+      '<p class="ins">' + X(1, "A") + 'Each sentence has <b>one</b> mistake. Write the correct sentence. Remember what we said in class. Then press <b>Check</b>.</p>' + fix("ec", EC) +
       '<p class="ins" style="margin-top:22px">' + X(1, "B") + 'Which mistake do you make <b>most often</b>? Write your own rule for it in 1–2 sentences – in English or Ukrainian.</p>' +
       ta("ec_rule", "My most common mistake is … My rule: …", 70))
 
@@ -96,19 +98,21 @@ TI_EN = ("<b>Two verbs together.</b> The first verb is in the tense you need. Th
          "<b>try to</b> vs <b>try -ing</b> – the meaning changes:<br>"
          "• <b>try to do</b> = make an <b>effort</b>, it’s hard: <i>I tried <b>to fix</b> the bug all night.</i> Anchor: <b>effor<u>t</u> → <u>t</u>o</b>.<br>"
          "• <b>try doing</b> = test something new and see what happens: <i>Try <b>changing</b> the speed to 0.9.</i><br>"
-         "<b>After can / should / must / will → just the verb</b>: <i>I should <b>think</b> about it</i> (not <s>should thinking</s>, not <s>can to use</s>).")
+         "<b>More verbs from Unit 1:</b> <i>want / decide / plan / hope <b>to</b> do</i> · <i>avoid / consider / keep <b>doing</b></i> · <i>how about / what about <b>doing</b>?</i> · <i>should / could / why don’t you + <b>do</b></i>.")
 TI_UA = ("<b>Два дієслова підряд.</b> Перше – у потрібному часі, друге – або <b>to + дієслово</b>, або <b>дієслово з -ing</b>. В українській друге завжди в інфінітиві (люблю грати), в англійській треба <b>запам’ятати, яка форма йде після якого дієслова</b>. Системи майже немає, тому коли виписуєш слово – пиши й форму після нього.<br>"
          "<b>enjoy + -ing</b> – завжди. Інша форма – це помилка.<br><b>like + -ing</b> – найчастіше.<br>"
          "<b>Дієслово на початку речення → -ing</b>: <i>Smoking is dangerous</i> – курити шкідливо. <i>Thinking outside the box…</i><br>"
          "<b>try to</b> = намагатися, докладати зусиль. Якір: <b>effort</b> закінчується на <b>t → to</b>.<br><b>try -ing</b> = спробувати щось нове і подивитися, що буде.<br>"
-         "<b>Після can / should / must / will</b> – просто дієслово: <i>I should think, I can use</i>.")
-TIQ = [("I really enjoy ___ (work) with international teams.", "working", "to work"), ("___ (think) outside the box helps me in every area of my life.", "Thinking", "Think"),
-       ("I tried ___ (change) the speed: 0.9 was perfect.", "changing", "to change"), ("I tried ___ (fix) the bug all night, but I couldn’t.", "to fix", "fixing"),
-       ("I should ___ (think) about this puzzle.", "think", "thinking"), ("She likes ___ (play) the guitar.", "playing", "play"),
-       ("You can ___ (use) this skill in any job.", "use", "to use"), ("___ (learn) a language is easier when you speak every day.", "Learning", "Learn")]
+         "<b>Ще дієслова з Unit 1:</b> want / decide / plan / hope + <b>to</b>; avoid / consider / keep + <b>-ing</b>; how about / what about + <b>-ing</b>; should / could / why don’t you + просто дієслово.")
+TIQ = [("I really enjoy ___ (work) in a team.", "working", "to work"), ("___ (set) clear goals helps me finish projects on time.", "Setting", "Set"),
+       ("I want ___ (change) careers and work for an international company.", "to change", "changing"), ("Many people decide ___ (apply) for jobs abroad.", "to apply", "applying"),
+       ("I tried ___ (fix) the bug all night, but I couldn’t.", "to fix", "fixing"), ("Try ___ (ask) your online connections for advice – maybe it will work.", "asking", "to ask"),
+       ("You should ___ (show) your transferable skills, not just list them.", "show", "to show"), ("How about ___ (add) your side project to your CV?", "adding", "to add"),
+       ("Why don’t you ___ (write) about your experience with AI?", "write", "writing"), ("Avoid ___ (use) words like “hard-working” – show it instead.", "using", "to use"),
+       ("Have you considered ___ (do) a cloud certification?", "doing", "to do"), ("Keep ___ (learn) new tools – the market changes fast.", "learning", "to learn")]
 s3 = ('<div class="bsec">Grammar <span class="sub">Two verbs together: to or -ing?</span></div>' +
       rule("What we said in class", TI_EN, TI_UA) +
-      '<p class="ins">' + X(3, "A") + 'Choose the correct form.</p>' +
+      '<p class="ins">' + X(3, "A") + 'Choose the correct form. All the verbs are from <b>Unit 1</b> – you will need them for careers advice on Monday.</p>' +
       gaps("ti", [(t, [a], [a, b]) for t, a, b in TIQ], [], 140) +
       '<p class="ins" style="margin-top:22px">' + X(3, "B") + 'Two sentences about you: one with <b>try to</b> (an effort) and one with <b>try -ing</b> (a test).</p>' +
       ta("ti_own", "1 Last month I tried to …\n2 I tried … and it worked.", 70))
@@ -145,27 +149,54 @@ s4 = ('<div class="bsec">Grammar <span class="sub">Present Simple or Present Con
 # ---------- 5 Word order, be, sounds ----------
 WO_EN = ("<b>Word order: who → does what.</b> In Ukrainian we can move words (<i>кішка з’їла мишку / мишку з’їла кішка</i>) because of endings. In English the order is fixed: <i>The cat ate the mouse.</i><br>"
          "So: <i>I understood <b>what it is about</b></i> (not <s>what about it</s>) – after <i>what</i> comes a normal sentence: <i>it + is</i>.<br>"
-         "<b>Every sentence needs a verb.</b> Don’t forget <b>be</b>: <i>All these skills <b>are</b> very important. This skill <b>is</b> very helpful.</i><br>"
-         "<b>easier</b>, not <s>more easier</s> – short adjectives take <b>-er</b>, long ones take <b>more</b>: <i>easier, faster, but more comfortable</i>.<br>"
-         "<b>this</b> = one, short sound /ɪ/: <i>this skill</i>. <b>these</b> = many, long sound /iː/ – you “sing” it: <i>these skills</i>.")
+         "<b>Every sentence needs a verb.</b> Don’t forget <b>be</b>: <i>All these skills <b>are</b> very important.</i><br>"
+         "<b>easier</b>, not <s>more easier</s> – short adjectives take <b>-er</b>, long ones take <b>more</b>: <i>easier, faster, but more comfortable</i>.")
 WO_UA = ("<b>Порядок слів: хто → що робить.</b> В українській слова можна переставляти завдяки закінченням, в англійській порядок фіксований.<br>"
          "Тому <i>I understood what it is about</i> – після what іде звичайне речення: it + is.<br>"
          "<b>У реченні завжди потрібне дієслово</b> – не забувай <b>be</b>: All these skills <b>are</b> very important.<br>"
-         "<b>easier</b>, а не more easier: короткі прикметники – <b>-er</b>, довгі – more.<br>"
-         "<b>this</b> – один, короткий звук /ɪ/. <b>these</b> – багато, довгий звук /iː/, ніби проспівуєш.")
-SND = [("ship", "sheep"), ("this", "these"), ("live", "leave"), ("it", "eat"), ("fill", "feel"), ("bit", "beat"), ("sit", "seat"), ("still", "steal")]
+         "<b>easier</b>, а не more easier: короткі прикметники – <b>-er</b>, довгі – more.")
+SN_EN = ("In Ukrainian we have one sound <b>і</b>. English has <b>two different sounds</b> – and they change the meaning: <i>live</i> (жити) – <i>leave</i> (їхати, йти); <i>ship</i> – <i>sheep</i>; <i>this</i> – <i>these</i>.<br>"
+         "<b>/ɪ/ – short and relaxed.</b> Your mouth is relaxed, the sound is short, a bit like Ukrainian <b>и</b>: <i>th<b>i</b>s, sk<b>i</b>ll, l<b>i</b>ve, sh<b>i</b>p, f<b>i</b>t, b<b>u</b>sy</i>.<br>"
+         "<b>/iː/ – long and tense.</b> Smile, your lips are stretched, the sound is long – like a long Ukrainian <b>і-і</b>: <i>th<b>e</b>se, t<b>ea</b>m, l<b>ea</b>ve, sh<b>ee</b>p, n<b>ee</b>d, f<b>ie</b>ld</i>.<br>"
+         "<b>How to know from the spelling:</b><br>"
+         "• <b>ee, ea, ie, e + consonant + e</b> → long /iː/: <i>meeting, feedback, team, lead, field, these, complete</i>. Also <i>he, she, we, me</i>.<br>"
+         "• <b>i</b> + consonant at the end of a syllable → short /ɪ/: <i>this, skill, fix, build, ship, live, quick, think</i>.<br>"
+         "• Exceptions to remember: <i>police, machine</i> (i = /iː/); <i>been</i> is often short.<br>"
+         "<b>Tip:</b> for /iː/ – smile and make it long; for /ɪ/ – relax and make it short. Put your hand under your chin: with /iː/ your mouth is wider and more tense.")
+SN_UA = ("В українській є один звук <b>і</b>, а в англійській – <b>два різні</b>, і вони змінюють значення: live (жити) – leave (йти, їхати); ship (корабель) – sheep (вівця); this (це) – these (ці).<br>"
+         "<b>/ɪ/ – короткий і розслаблений</b>, трохи схожий на українське <b>и</b>: this, skill, live, ship.<br>"
+         "<b>/iː/ – довгий і напружений</b>: усміхнись, губи розтягнуті, звук довгий, як «і-і»: these, team, leave, sheep.<br>"
+         "<b>Як зрозуміти з написання:</b> ee, ea, ie, e + приголосна + e → довгий /iː/ (meeting, team, field, these). <b>i</b> + приголосна в кінці складу → короткий /ɪ/ (this, skill, fix, build). Винятки: police, machine.<br>"
+         "<b>Порада:</b> для /iː/ – усміхнись і тягни; для /ɪ/ – розслабся і коротко.")
+SND = [("ship", "sheep"), ("this", "these"), ("live", "leave"), ("fill", "feel"), ("fit", "feet"), ("sit", "seat"), ("still", "steal"), ("hit", "heat")]
 import random
 rnd = random.Random(11)
+def pair_row(i, a, b):
+    return ('<div class="row">%s) <button class="btn l" type="button" style="min-height:40px;padding:4px 12px" onclick="say(\'%s\')">🔊 %s</button> '
+            '<button class="btn l" type="button" style="min-height:40px;padding:4px 12px" onclick="say(\'%s\')">🔊 %s</button></div>') % ("abcdefgh"[i], a, a, b, b)
 snd = ""
 for i, (a, b) in enumerate(SND):
     w = [a, b][rnd.randint(0, 1)]; k = "sn_%d" % (i + 1); K[k] = [w]
     snd += ('<div class="row">%s) <button class="btn l" type="button" style="min-height:40px;padding:4px 14px" onclick="say(\'%s\')">🔊 Listen</button> %s%s</div>'
             % ("abcdefgh"[i], w, sel(k, [a, b], 120), fb(k)))
-s5 = ('<div class="bsec">Grammar & sounds <span class="sub">Word order, “be”, this / these</span></div>' +
-      rule("What we said in class", WO_EN, WO_UA) +
-      '<p class="ins">' + X(5, "A") + 'Short /ɪ/ or long /iː/? Listen and choose the word you hear.</p>' + snd + ctl("sn") +
-      '<p class="ins" style="margin-top:22px">' + X(5, "B") + 'Say these pairs aloud 3 times, slowly: <i>this skill – these skills · ship – sheep · live – leave · sit – seat</i>. Record yourself below and listen: can you hear the difference?</p>' +
-      '<div class="rec" data-r="pair"></div>')
+SORTW = ["skill", "team", "these", "this", "meeting", "fix", "feedback", "build", "need", "think", "lead", "field", "quick", "leave", "live", "keep"]
+rnd.shuffle(SORTW)
+LONG = {"team", "these", "meeting", "feedback", "need", "lead", "field", "leave", "keep"}
+sortr = ""
+for i, w in enumerate(SORTW):
+    k = "so_%d" % (i + 1); K[k] = ["long /iː/" if w in LONG else "short /ɪ/"]
+    sortr += '<span style="display:inline-block;margin:4px 14px 4px 0"><b>%s</b> %s%s</span>' % (w, sel(k, ["short /ɪ/", "long /iː/"], 120), fb(k))
+s5 = ('<div class="bsec">Sounds <span class="sub">Short /ɪ/ or long /iː/?</span></div>' +
+      rule("Two English sounds for one Ukrainian «і»", SN_EN, SN_UA) +
+      '<p class="ins">' + X(5, "A") + '<b>Listen and compare.</b> Press each button. Watch your mouth in a mirror or your camera: relaxed and short – or smile and long?</p>' +
+      "".join(pair_row(i, a, b) for i, (a, b) in enumerate(SND[:6])) +
+      '<p class="ins" style="margin-top:22px">' + X(5, "B") + '<b>Hear the difference.</b> Listen and choose the word you hear.</p>' + snd + ctl("sn") +
+      '<p class="ins" style="margin-top:22px">' + X(5, "C") + '<b>Use the spelling rule.</b> Words from our lesson – short or long? Use the spelling rule – no listening here.</p>' + sortr + ctl("so") +
+      '<p class="ins" style="margin-top:22px">' + X(5, "D") + '<b>Say it.</b> Read these sentences aloud 3 times, slowly, then faster:</p>' +
+      '<div class="card" style="background:#fbfbfd;line-height:1.9">1 <i>Th<b>i</b>s sk<b>i</b>ll is important. Th<b>e</b>se sk<b>i</b>lls are important.</i><br>2 <i>I l<b>i</b>ve in Kyiv. I l<b>ea</b>ve work at six.</i><br>'
+      '3 <i>Our t<b>ea</b>m n<b>ee</b>ds a qu<b>i</b>ck f<b>i</b>x.</i><br>4 <i>I th<b>i</b>nk the f<b>ee</b>dback from the m<b>ee</b>ting is useful.</i></div>' +
+      '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record sentences 1–4 as a voice message and send it to your teacher in Telegram.</b></div>' +
+      '<p class="ins" style="margin-top:22px">' + X(5, "E") + '<b>Word order and “be”</b> – read the rule.</p>' + rule("What we said in class", WO_EN, WO_UA))
 
 # ---------- 6 Shadowing ----------
 def clip(a, b):
@@ -178,8 +209,8 @@ s6 = ('<div class="bsec">Shadowing <span class="sub">Speak like the speakers</sp
       '<p class="ins">' + X(6, "A") + 'Clip 1 (about 30 seconds).</p>' + clip(64, 94) +
       '<p class="ins" style="margin-top:18px">' + X(6, "B") + 'Clip 2.</p>' + clip(94, 130) +
       '<p class="ins" style="margin-top:18px">' + X(6, "C") + 'Clip 3.</p>' + clip(130, 170) +
-      '<p class="ins" style="margin-top:22px">' + X(6, "D") + 'Record yourself shadowing one clip (round ④) and listen.</p><div class="rec" data-r="shadow"></div>' +
-      '<p class="ins" style="margin-top:22px">' + X(6, "E") + 'Write down 3 phrases you can now say <b>exactly like the speaker</b>.</p>' + ta("sh_ph", "1 …\n2 …\n3 …", 70))
+      '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record one clip (round ④) as a voice message and send it to your teacher in Telegram.</b></div>' +
+      '<p class="ins" style="margin-top:22px">' + X(6, "D") + 'Write down 3 phrases you can now say <b>exactly like the speaker</b>.</p>' + ta("sh_ph", "1 …\n2 …\n3 …", 70))
 
 # ---------- 7 4/3/2 ----------
 s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 / 1.5 / 1)</span></div>' +
@@ -187,20 +218,14 @@ s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 
       '<span class="hint">🇺🇦 Одну й ту саму історію розповідаєш тричі, щоразу коротше: 2 хв → 1,5 хв → 1 хв. Щоразу чистіше.</span></div>' +
       '<p class="ins">' + X(7, "A") + 'Your topic: <b>“Thinking outside the box is my strongest skill.”</b> Why? Give a real example from work or life. Bonus: tell how you tried to solve the <b>nine dots puzzle</b> (<i>First I tried…, then I realised…</i>).</p>' +
       '<div class="card" style="background:#fbfbfd">✅ <b>My checklist before I speak:</b> <i>be</i> in every sentence? · <i>-s</i> with he/she/it? · <i>a / the</i> before nouns? · who → does what? · past = <i>didn’t / forgot / tried</i>?</div>' +
-      '<div class="rec" data-r="r1" data-t="120"></div><div class="rec" data-r="r2" data-t="90"></div><div class="rec" data-r="r3" data-t="60"></div>' +
-      '<p class="ins" style="margin-top:22px">' + X(7, "B") + 'Listen to round 1 and round 3. Which mistakes did you fix? Which mistakes are still there?</p>' +
+      '<div class="card" style="margin-top:12px;background:#fbfbfd">⏱ Use a timer: <button class="btn l" type="button" onclick="tmr(this,120)">2:00</button> <button class="btn l" type="button" onclick="tmr(this,90)">1:30</button> <button class="btn l" type="button" onclick="tmr(this,60)">1:00</button> <b class="tmv" style="font:600 20px monospace;margin-left:10px"></b></div>' +
+      '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record round 1 and round 3 as voice messages and send them to your teacher in Telegram.</b></div>' +
+      '<p class="ins" style="margin-top:22px">' + X(7, "B") + 'Listen to your round 1 and round 3. Which mistakes did you fix? Which mistakes are still there?</p>' +
       ta("r_ref", "In round 3 I fixed … I still say …", 80) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well can you notice and fix your own mistakes now?"))
 
 XJS = r"""function say(w){try{const u=new SpeechSynthesisUtterance(w);u.lang="en-GB";u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
-document.querySelectorAll(".rec").forEach(box=>{const t=+box.dataset.t||0;const lab={r1:"Round 1 · 2:00",r2:"Round 2 · 1:30",r3:"Round 3 · 1:00",pair:"Sound pairs",shadow:"Shadowing"}[box.dataset.r]||"Record";
- box.className="card rec";box.style.cssText="margin:10px 0;background:#fff";box.innerHTML='<b>🎙 '+lab+'</b> <button class="btn" type="button" style="min-height:40px">● Record</button> <span class="tm" style="font:600 18px monospace;margin-left:8px"></span> <audio controls style="display:none;vertical-align:middle;margin-left:8px;max-width:100%"></audio><div class="hint">The recording stays on your device – only you can hear it.</div>';
- const b=box.querySelector("button"),tm=box.querySelector(".tm"),au=box.querySelector("audio");let mr=null,ch=[],iv=null,left=0;
- function stop(){if(mr&&mr.state!=="inactive")mr.stop();clearInterval(iv);b.textContent="● Record again"}
- b.onclick=async()=>{if(mr&&mr.state==="recording"){stop();return}
-  try{const s=await navigator.mediaDevices.getUserMedia({audio:true});mr=new MediaRecorder(s);ch=[];mr.ondataavailable=e=>ch.push(e.data);mr.onstop=()=>{au.src=URL.createObjectURL(new Blob(ch));au.style.display="inline-block";s.getTracks().forEach(x=>x.stop())};mr.start();b.textContent="■ Stop";
-   left=t;const show=()=>{tm.textContent=t?(Math.floor(left/60)+":"+String(left%60).padStart(2,"0")):"";};show();if(t)iv=setInterval(()=>{left--;show();if(left<=0){stop();tm.textContent="⏰ time!"}},1000)}
-  catch(e){tm.textContent="Microphone is not available – just speak and use a timer.";}}});
+let _tv=null;function tmr(b,t){clearInterval(_tv);const o=b.parentElement.querySelector(".tmv");let l=t;const sh=()=>o.textContent=Math.floor(l/60)+":"+String(l%60).padStart(2,"0");sh();_tv=setInterval(()=>{l--;sh();if(l<=0){clearInterval(_tv);o.textContent="⏰ Stop!"}},1000)}
 """
 VOC = [("Clean English", ["I didn’t understand it.", "this week", "in a team", "what it is about", "I forgot", "I should think about it", "communication skills", "easier", "try to", "try -ing"]),
        ("Lesson words", ["a can-do attitude", "set goals", "determination", "integrity", "think outside the box", "critical thinking", "team player"])]
