@@ -63,8 +63,6 @@ EC = [
   "Jobs → <b>a / an</b>: an engineer (vowel sound → an).", "Before a job we always use an article. <i>engineer</i> starts with a vowel sound."),
  ("Can you send me video from yesterday’s meeting?", ["Can you send me the video from yesterday's meeting?"],
   "This exact video, we both know which → <b>the</b>.", "It’s one specific video – from yesterday’s meeting. Which article?"),
- ("I need an advice about my CV.", ["I need some advice about my CV.", "I need advice about my CV.", "I need a piece of advice about my CV."],
-  "<b>advice</b> is uncountable → no a/an (some advice, a piece of advice).", "Can you count <i>advice</i>? Uncountable nouns don’t take a / an."),
  ("I enjoy to work with international clients.", ["I enjoy working with international clients."],
   "<b>enjoy + -ing</b> – always.", "After <i>enjoy</i> the second verb has one form only – not <i>to</i>."),
  ("Set clear goals is important for every team.", ["Setting clear goals is important for every team."],
@@ -99,14 +97,14 @@ s1 = ('<div class="bsec">Error clinic <span class="sub">Find and fix the mistake
 ART_EN = ("<b>Articles go in front of nouns.</b> They show that the word is a noun – some words can be a verb <i>and</i> a noun: <i>help</i>, <i>last</i> (<i>Last night we dined out.</i> / <i>The film lasts three hours.</i>).<br>"
           "<b>a / an</b> = one of many, any. <i>I need <b>a</b> pen</i> – any pen, not a special one. Only with nouns you can count, in the singular.<br>"
           "<b>the</b> = this exact one, the one we both know. <i>I need <b>the</b> cup you gave me yesterday.</i> <i>The love he gave me was not enough.</i> Even with names: <i>I saw <b>the</b> Peter</i> = that Peter we both know; <i>a Peter</i> = some Peter, I don’t know him.<br>"
-          "<b>No article</b>: nouns you can’t count (<i>love, friendship, water, rice, sugar, juice, advice, feedback</i>) and plural nouns in general: <i>All skills are important.</i> But if it’s specific – <i>the</i>: <i>Give me <b>the</b> sugar on the top shelf.</i><br>"
+          "<b>No article</b>: nouns you can’t count (<i>love, friendship, water, rice, sugar, juice</i>) and plural nouns in general: <i>All skills are important.</i> But if it’s specific – <i>the</i>: <i>Give me <b>the</b> sugar on the top shelf.</i><br>"
           "<b>Jobs → a / an</b>: <i>I’m <b>a</b> teacher. I’m <b>an</b> IT specialist.</i> Specific: <i>I’m <b>the</b> English teacher of this university.</i><br>"
           "<b>Adjective + noun → the article goes before the adjective</b>: <i>in <b>a</b> friendly team</i>, <i>in <b>a</b> big IT team</i>.<br>"
           "<span class='hint'>Geography (countries, rivers…) has its own rules – later.</span>")
 ART_UA = ("<b>Артикль стоїть перед іменником</b> і показує, що це іменник (help – допомагати / допомога; last – останній / тривати).<br>"
           "<b>a / an</b> – неозначений: «один із багатьох», будь-який. <i>I need a pen</i> – мені потрібна ручка, будь-яка. Тільки з тим, що можна порахувати, в однині.<br>"
           "<b>the</b> – означений: саме той, конкретний, про який ми обоє знаємо. <i>The cup you gave me yesterday</i> – саме та чашка. <i>The Peter</i> – той самий Пітер; <i>a Peter</i> – якийсь Пітер.<br>"
-          "<b>Без артикля</b>: те, що не рахується (любов, дружба, вода, рис, цукор, сік, advice, feedback) і множина взагалі: <i>All skills are important</i> – усі навички загалом. Але конкретне – з the: <i>Дай мені той цукор з верхньої полиці – the sugar.</i><br>"
+          "<b>Без артикля</b>: те, що не рахується (любов, дружба, вода, рис, цукор, сік) і множина взагалі: <i>All skills are important</i> – усі навички загалом. Але конкретне – з the: <i>Дай мені той цукор з верхньої полиці – the sugar.</i><br>"
           "<b>Професія – завжди a / an</b>: <i>I’m a teacher, I’m an IT specialist.</i> Конкретний – the.<br>"
           "<b>Прикметник + іменник</b>: артикль іде перед прикметником – <i>in a friendly team</i>.")
 ARTQ = [("I’m ___ .NET engineer with eight years of experience.", "a"), ("Thank you for ___ video you sent me yesterday – I watched it twice.", "the"),
@@ -114,16 +112,31 @@ ARTQ = [("I’m ___ .NET engineer with eight years of experience.", "a"), ("Than
         ("I’m ___ IT specialist, and my wife is ___ designer.", None), ("___ skills you mentioned in your story are very strong.", "The"),
         ("I usually drink ___ water during long meetings.", "—"), ("We have ___ new client from Germany. ___ client wants a demo on Friday.", None)]
 ARTQ2 = [("I’m ___ .NET engineer with eight years of experience.", "a"), ("Thank you for ___ video you sent me yesterday – I watched it twice.", "the"),
-         ("When you work in ___ team, communication is everything.", "a"), ("Can you give me some ___ advice about my CV?", "– (no article)"),
+         ("When you work in ___ team, communication is everything.", "a"), ("Friendship is important, but ___ love is more important.", "– (no article)"),
          ("I’m ___ IT specialist.", "an"), ("___ skills you mentioned in your story are very strong.", "The"),
          ("I usually drink ___ water during long meetings.", "– (no article)"), ("We have a new client from Germany. ___ client wants a demo on Friday.", "The"),
-         ("I work in ___ friendly international team.", "a"), ("___ feedback from my team lead was very useful.", "The")]
+         ("I work in ___ friendly international team.", "a"), ("___ juice in the office fridge is mine – please don’t drink it!", "The")]
+
+STAR_EN = ("Some nouns in English are <b>uncountable</b>, but in Ukrainian we can count them. They have <b>no a/an</b> and <b>no plural</b>:<br>"
+           "<i>advice, information, feedback, news, software, equipment, research, knowledge</i>.<br>"
+           "❌ <s>an advice</s>, <s>informations</s> → ✅ <b>some</b> advice, <b>a piece of</b> advice, <b>much</b> information, <b>the</b> feedback (this exact feedback).<br>"
+           "<i>news</i> looks plural but it’s singular: <i>The news <b>is</b> good.</i>")
+STAR_UA = ("Деякі іменники в англійській <b>незлічувані</b>, хоча в українській ми їх рахуємо (порада – поради, інформація). З ними <b>немає a/an</b> і <b>немає множини</b>: advice, information, feedback, news, software, equipment, research, knowledge.<br>"
+           "Не можна: an advice, informations. Можна: some advice, a piece of advice (одна порада), much information, the feedback (саме цей).<br>"
+           "<i>news</i> виглядає як множина, але це однина: The news is good.")
+STQ = [("Can you give me ___ advice about my CV?", "some", "an"), ("Thanks for ___ feedback you gave me yesterday – it really helped.", "the", "a"),
+       ("I need more ___ about the project.", "information", "informations"), ("Let me give you ___ piece of advice: show, don’t tell.", "a", "an"),
+       ("The news about the release ___ good.", "is", "are"), ("We don’t have ___ equipment for video calls in this room.", "much", "many")]
+s2star = ('<div class="card" style="margin-top:26px;border-left:4px solid #e0a100;background:#fffaf0"><b style="color:#b26b00">★ If you want to know more</b> – optional. Words like <i>advice</i> and <i>information</i>.</div>' +
+          rule("Uncountable nouns at work", STAR_EN, STAR_UA) +
+          '<p class="ins">' + X(2, "C") + '★ Choose the correct word.</p>' +
+          gaps("st", [(t, [a], [a, b]) for t, a, b in STQ], [], 150))
 s2 = ('<div class="bsec">Grammar <span class="sub">Articles: a / an / the / no article</span></div>' +
       rule("What we said in class", ART_EN, ART_UA) +
       '<p class="ins">' + X(2, "A") + 'Choose <b>a</b>, <b>an</b>, <b>the</b> or <b>– (no article)</b>. Think: <i>one of many? this exact one? can I count it?</i></p>' +
       gaps("ar", [(t, [a.lower()]) for t, a in ARTQ2], ["a", "an", "the", "– (no article)"], 150) +
       '<p class="ins" style="margin-top:22px">' + X(2, "B") + 'Write 3 sentences about <b>your</b> work: one with <b>a/an</b>, one with <b>the</b>, one with <b>no article</b>.</p>' +
-      ta("ar_own", "1 I’m a …\n2 The …\n3 I like … (no article)", 80))
+      ta("ar_own", "1 I’m a …\n2 The …\n3 I like … (no article)", 80) + s2star)
 
 # ---------- 3 to or -ing ----------
 TI_EN = ("<b>Two verbs together.</b> The first verb is in the tense you need. The second verb is <b>to + verb</b> or <b>verb-ing</b>. "
