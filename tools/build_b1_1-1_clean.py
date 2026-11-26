@@ -81,15 +81,16 @@ EC = [
 import random as _rr
 _rr.Random(26).shuffle(EC)
 ECW = {}
+ECUA = {'Sorry, I not understand your question yesterday.': 'Вибач, я вчора не зрозумів твого питання.', 'Last month I’m reading a great book about leadership.': 'Минулого місяця я прочитав чудову книжку про лідерство.', 'In this week I’m working from home.': 'Цього тижня я працюю з дому (а зазвичай – ні).', 'Right now we discuss the new release – can I call you back?': 'Ми саме зараз обговорюємо новий реліз – можна я тобі передзвоню?', 'Our team lead is always having stand-ups at 10.': 'Наш тімлід завжди проводить стендапи о 10-й.', 'These skill is very useful for developers.': 'Ця навичка дуже корисна для розробників.', 'All these tools very helpful for remote work.': 'Усі ці інструменти дуже корисні для віддаленої роботи.', 'Working with AI makes my job more easier.': 'Робота з ШІ робить мою роботу легшою.', 'She works in big IT company in Lviv.': 'Вона працює у великій IT-компанії у Львові.', 'My brother is engineer at a bank.': 'Мій брат – інженер у банку.', 'Can you send me video from yesterday’s meeting?': 'Можеш надіслати мені відео з учорашньої зустрічі?', 'I enjoy to work with international clients.': 'Мені подобається працювати з іноземними клієнтами.', 'Set clear goals is important for every team.': 'Ставити чіткі цілі важливо для кожної команди.', 'I tried fixing this bug all night, but it was too hard.': 'Я цілу ніч намагався виправити цей баг, але це було надто складно.', 'I don’t know what about this task.': 'Я не знаю, про що це завдання.', 'Yesterday I forget my laptop at the office.': 'Учора я забув ноутбук в офісі.', 'I can’t open my colleague laptop.': 'Я не можу відкрити ноутбук колеги.', 'He has good communication skill.': 'У нього хороші комунікативні навички.'}
 def ecfix(prefix, items, w=560):
     h = ""
     for i, (bad, good, okx, errx) in enumerate(items):
         k = "%s_%d" % (prefix, i + 1); K[k] = v(*good); ECW[k] = [okx, errx]
-        h += '<div class="row">%d. <span style="color:#a33">“%s”</span><br>%s%s</div>' % (i + 1, bad, inp(k, w, "Write the correct sentence"), fb(k))
+        h += '<div class="row">%d. <span style="color:#a33">“%s”</span><br><span class="hint">🇺🇦 %s</span><br>%s%s</div>' % (i + 1, bad, ECUA[bad], inp(k, w, "Write the correct sentence"), fb(k))
     return h + '<div class="ctl"><button class="btn" onclick="chkEC(\'%s\')">Check</button><span class="res" id="r_%s"></span></div>' % (prefix, prefix)
 s1 = ('<div class="bsec">Error clinic <span class="sub">Find and fix the mistake</span></div>' +
       '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🎯 <b>Why?</b> You said in our lesson: <i>“I already speak with mistakes – I need to re-learn.”</i> The best way is to learn to <b>catch mistakes</b> – first in other people’s English, then in your own.</div>' +
-      '<p class="ins">' + X(1, "A") + 'Colleagues wrote these sentences in Slack. Each one has <b>one</b> mistake – the topics we talked about in class. Write the correct sentence and press <b>Check</b>. If it’s wrong, read the hint and try again.</p>' + ecfix("ec", EC) +
+      '<p class="ins">' + X(1, "A") + 'Colleagues wrote these sentences in Slack. Each one has <b>one</b> mistake – the topics we talked about in class. Under each sentence you can see in Ukrainian what the person wants to say. Write the correct sentence and press <b>Check</b>. If it’s wrong, read the hint and try again.</p>' + ecfix("ec", EC) +
       '<p class="ins" style="margin-top:22px">' + X(1, "B") + 'Which of these mistakes do <b>you</b> make too? Write your own rule for it in 1–2 sentences – in English or Ukrainian.</p>' +
       ta("ec_rule", "I also make the mistake with … My rule: …", 70))
 
