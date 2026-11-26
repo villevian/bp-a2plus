@@ -240,10 +240,9 @@ def yt(i):
             'style="width:100%%;height:100%%;border:0;border-radius:12px" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>') % i
 s5 = ('<div class="bsec">Sounds <span class="sub">Short /ɪ/ or long /iː/?</span></div>' +
       rule("Two English sounds for one Ukrainian «і»", SN_EN, SN_UA) +
-      '<p class="ins">' + X(5, "A") + '<b>Watch and repeat.</b> Choose <b>one</b> video – <b>British</b> or <b>American</b> pronunciation, the one you like more. Pause and repeat every word after the speaker.</p>' +
-      '<div class="card" style="background:#fbfbfd"><b>Video 1 · British English</b> – a pronunciation coach explains the difference between <i>sheet</i> and a rude word 😉: how to hold your mouth for the long /iː/ and the short /ɪ/, with pairs of words to repeat.</div>' + yt("PjoMCw44KRI") +
-      '<div class="card" style="background:#fbfbfd;margin-top:14px"><b>Video 2 · American English</b> – practice with Hadar, a pronunciation coach (English is not her first language either): <i>sheep – ship, leave – live</i>. You listen and repeat the pairs and then sentences with her.</div>' + yt("Xh-KHPHPVXg") +
-      '<p class="hint">🇺🇦 Обери одне відео – британська чи американська вимова, як тобі більше подобається. Зупиняй і повторюй кожне слово вголос.</p>' +
+      '<p class="ins">' + X(5, "A") + '<b>Watch and repeat.</b> Pause the video and repeat every word and sentence after the speaker.</p>' +
+      '<div class="card" style="background:#fbfbfd;margin-top:14px"><b>American English</b> – practice with Hadar, a pronunciation coach (English is not her first language either): <i>sheep – ship, leave – live</i>. You listen and repeat the pairs and then sentences with her.</div>' + yt("Xh-KHPHPVXg") +
+      '<p class="hint">🇺🇦 Зупиняй відео й повторюй кожне слово та речення вголос.</p>' +
       '<p class="ins" style="margin-top:22px">' + X(5, "B") + '<b>Listen and compare.</b> Press each button. Watch your mouth in a mirror or your camera: relaxed and short – or smile and long?</p>' +
       "".join(pair_row(i, a, b) for i, (a, b) in enumerate(SND[:6])) +
       '<p class="ins" style="margin-top:22px">' + X(5, "C") + '<b>Hear the difference.</b> Listen and choose the word you hear.</p>' + snd + ctl("sn") +
@@ -283,7 +282,7 @@ s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 
 XJS = r"""const ECW=__ECW__;const ECT={};
 function chkEC(p){let n=0,t=0;for(const k in KEY){if(k.replace(/_[^_]+$/,"")!==p)continue;const el=document.querySelector(`.g[data-k="${k}"]`);if(!el)continue;t++;const val=el.value.trim();const ok=!!val&&okv(k,val);if(ok)n++;else if(val)ECT[k]=(ECT[k]||0)+1;
  el.classList.remove("right","wrong");el.classList.add(ok?"right":"wrong");const w=ECW[k]||["",""];fbk(k,ok,ok?"✓ <b>Well done!</b> "+w[0]:(!val?"✗ Write your sentence first.":"✗ <b>Not yet.</b> "+w[1]+(ECT[k]>=2?"<br>👉 Correct: <b>"+KEY[k][0]+"</b>":"")))}$("r_"+p).textContent=n+" / "+t+(n===t?" ✓ Well done!":"");save()}
-function say(w){try{const u=new SpeechSynthesisUtterance(w);u.lang="en-GB";u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+const _AU={};function say(w){let a=_AU[w];if(!a){a=_AU[w]=new Audio("audio/"+w+".mp3");a.preload="auto"}try{a.pause();a.currentTime=0}catch(e){}a.play().catch(()=>{try{const u=new SpeechSynthesisUtterance(w);u.lang="en-US";u.rate=.8;speechSynthesis.speak(u)}catch(e){}})}
 let _tv=null;function tmr(b,t){clearInterval(_tv);const o=b.parentElement.querySelector(".tmv");let l=t;const sh=()=>o.textContent=Math.floor(l/60)+":"+String(l%60).padStart(2,"0");sh();_tv=setInterval(()=>{l--;sh();if(l<=0){clearInterval(_tv);o.textContent="⏰ Stop!"}},1000)}
 """
 VOC = [("Clean English", ["I didn’t understand it.", "this week", "in a team", "what it is about", "I forgot", "I should think about it", "communication skills", "easier", "try to", "try -ing"]),
