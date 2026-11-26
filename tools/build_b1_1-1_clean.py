@@ -38,6 +38,15 @@ def v(*a):  # variants with straight / curly apostrophes
             if x not in out: out.append(x)
     return out
 
+WO_EN = ("<b>Word order: who → does what.</b> In Ukrainian we can move words (<i>кішка з’їла мишку / мишку з’їла кішка</i>) because of endings. In English the order is fixed: <i>The cat ate the mouse.</i><br>"
+         "So: <i>I understood <b>what it is about</b></i> (not <s>what about it</s>) – after <i>what</i> comes a normal sentence: <i>it + is</i>.<br>"
+         "<b>Every sentence needs a verb.</b> Don’t forget <b>be</b>: <i>All these skills <b>are</b> very important.</i><br>"
+         "<b>easier</b>, not <s>more easier</s> – short adjectives take <b>-er</b>, long ones take <b>more</b>: <i>easier, faster, but more comfortable</i>.")
+WO_UA = ("<b>Порядок слів: хто → що робить.</b> В українській слова можна переставляти завдяки закінченням, в англійській порядок фіксований.<br>"
+         "Тому <i>I understood what it is about</i> – після what іде звичайне речення: it + is.<br>"
+         "<b>У реченні завжди потрібне дієслово</b> – не забувай <b>be</b>: All these skills <b>are</b> very important.<br>"
+         "<b>easier</b>, а не more easier: короткі прикметники – <b>-er</b>, довгі – more.")
+
 # ---------- 1 Error clinic ----------
 # (wrong sentence, [correct variants], why it is right, what the mistake is)
 EC = [
@@ -88,10 +97,11 @@ def ecfix(prefix, items, w=560):
         k = "%s_%d" % (prefix, i + 1); K[k] = v(*good); ECW[k] = [okx, errx]
         h += '<div class="row">%d. <span style="color:#a33">“%s”</span><br><span class="hint">🇺🇦 %s</span><br>%s%s</div>' % (i + 1, bad, ECUA[bad], inp(k, w, "Write the correct sentence"), fb(k))
     return h + '<div class="ctl"><button class="btn" onclick="chkEC(\'%s\')">Check</button><span class="res" id="r_%s"></span></div>' % (prefix, prefix)
-s1 = ('<div class="bsec">Error clinic <span class="sub">Find and fix the mistake</span></div>' +
-      '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🎯 <b>Why?</b> You said in our lesson: <i>“I already speak with mistakes – I need to re-learn.”</i> The best way is to learn to <b>catch mistakes</b> – first in other people’s English, then in your own.</div>' +
-      '<p class="ins">' + X(1, "A") + 'Colleagues wrote these sentences in Slack. Each one has <b>one</b> mistake – the topics we talked about in class. Under each sentence you can see in Ukrainian what the person wants to say. Write the correct sentence and press <b>Check</b>. If it’s wrong, read the hint and try again.</p>' + ecfix("ec", EC) +
-      '<p class="ins" style="margin-top:22px">' + X(1, "B") + 'Which of these mistakes do <b>you</b> make too? Write your own rule for it in 1–2 sentences – in English or Ukrainian.</p>' +
+s1 = ('<div class="bsec">Error clinic <span class="sub">Find and fix the mistake · analyse</span></div>' +
+      '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🎯 <b>Why?</b> You said in our lesson: <i>“I already speak with mistakes – I need to re-learn.”</i> You have practised the rules in Steps 1–3. Now learn to <b>catch mistakes</b> – first in other people’s English, then in your own.</div>' +
+      '<p class="ins">Before you start – two more rules from our lesson:</p>' + rule("Word order, “be”, easier", WO_EN, WO_UA) +
+      '<p class="ins">' + X(4, "A") + 'Colleagues wrote these sentences in Slack. Each one has <b>one</b> mistake – the topics we talked about in class. Under each sentence you can see in Ukrainian what the person wants to say. Write the correct sentence and press <b>Check</b>. If it’s wrong, read the hint and try again.</p>' + ecfix("ec", EC) +
+      '<p class="ins" style="margin-top:22px">' + X(4, "B") + 'Which of these mistakes do <b>you</b> make too? Write your own rule for it in 1–2 sentences – in English or Ukrainian.</p>' +
       ta("ec_rule", "I also make the mistake with … My rule: …", 70))
 
 # ---------- 2 Articles ----------
@@ -130,13 +140,13 @@ STQ = [("Can you give me ___ advice about my CV?", "some", "an"), ("Thanks for _
        ("The news about the release ___ good.", "is", "are"), ("We don’t have ___ equipment for video calls in this room.", "much", "many")]
 s2star = ('<div class="card" style="margin-top:26px;border-left:4px solid #e0a100;background:#fffaf0"><b style="color:#b26b00">★ If you want to know more</b> – optional. Words like <i>advice</i> and <i>information</i>.</div>' +
           rule("Uncountable nouns at work", STAR_EN, STAR_UA) +
-          '<p class="ins">' + X(2, "C") + '★ Choose the correct word.</p>' +
+          '<p class="ins">' + X(1, "C") + '★ Choose the correct word.</p>' +
           gaps("st", [(t, [a], [a, b]) for t, a, b in STQ], [], 150))
-s2 = ('<div class="bsec">Grammar <span class="sub">Articles: a / an / the / no article</span></div>' +
+s2 = ('<div class="bsec">Grammar <span class="sub">Articles: a / an / the / no article · understand → apply</span></div>' +
       rule("What we said in class", ART_EN, ART_UA) +
-      '<p class="ins">' + X(2, "A") + 'Choose <b>a</b>, <b>an</b>, <b>the</b> or <b>– (no article)</b>. Think: <i>one of many? this exact one? can I count it?</i></p>' +
+      '<p class="ins">' + X(1, "A") + 'Choose <b>a</b>, <b>an</b>, <b>the</b> or <b>– (no article)</b>. Think: <i>one of many? this exact one? can I count it?</i></p>' +
       gaps("ar", [(t, [a.lower()]) for t, a in ARTQ2], ["a", "an", "the", "– (no article)"], 150) +
-      '<p class="ins" style="margin-top:22px">' + X(2, "B") + 'Write 3 sentences about <b>your</b> work: one with <b>a/an</b>, one with <b>the</b>, one with <b>no article</b>.</p>' +
+      '<p class="ins" style="margin-top:22px">' + X(1, "B") + 'Write 3 sentences about <b>your</b> work: one with <b>a/an</b>, one with <b>the</b>, one with <b>no article</b>.</p>' +
       ta("ar_own", "1 I’m a …\n2 The …\n3 I like … (no article)", 80) + s2star)
 
 # ---------- 3 to or -ing ----------
@@ -160,11 +170,11 @@ TIQ = [("I really enjoy ___ (work) in a team.", "working", "to work"), ("___ (se
        ("You should ___ (show) your transferable skills, not just list them.", "show", "to show"), ("How about ___ (add) your side project to your CV?", "adding", "to add"),
        ("Why don’t you ___ (write) about your experience with AI?", "write", "writing"), ("Avoid ___ (use) words like “hard-working” – show it instead.", "using", "to use"),
        ("Have you considered ___ (do) a cloud certification?", "doing", "to do"), ("Keep ___ (learn) new tools – the market changes fast.", "learning", "to learn")]
-s3 = ('<div class="bsec">Grammar <span class="sub">Two verbs together: to or -ing?</span></div>' +
+s3 = ('<div class="bsec">Grammar <span class="sub">Two verbs together: to or -ing? · understand → apply</span></div>' +
       rule("What we said in class", TI_EN, TI_UA) +
-      '<p class="ins">' + X(3, "A") + 'Choose the correct form. All the verbs are from <b>Unit 1</b> – you will need them for careers advice on Monday.</p>' +
+      '<p class="ins">' + X(2, "A") + 'Choose the correct form. All the verbs are from <b>Unit 1</b> – you will need them for careers advice on Monday.</p>' +
       gaps("ti", [(t, [a], [a, b]) for t, a, b in TIQ], [], 140) +
-      '<p class="ins" style="margin-top:22px">' + X(3, "B") + 'Two sentences about you: one with <b>try to</b> (an effort) and one with <b>try -ing</b> (a test).</p>' +
+      '<p class="ins" style="margin-top:22px">' + X(2, "B") + 'Two sentences about you: one with <b>try to</b> (an effort) and one with <b>try -ing</b> (a test).</p>' +
       ta("ti_own", "1 Last month I tried to …\n2 I tried … and it worked.", 70))
 
 # ---------- 4 Simple vs Continuous ----------
@@ -189,22 +199,14 @@ SCQ = [("I usually ___ (start) work at 9.", "start", "’m starting"), ("This we
        ("I ___ (learn) English with a private teacher this year.", "’m learning", "learn"), ("Our team ___ (have) a stand-up every morning.", "has", "is having"),
        ("The IT job market ___ (change) very fast these days.", "is changing", "changes"), ("How often ___ (you / read) books in English?", "do you read", "are you reading")]
 SCOPT = ["start", "’m starting", "’m working", "work", "writes", "is writing", "’m having", "have", "’m learning", "learn", "has", "is having", "is changing", "changes", "do … read", "are … reading"]
-s4 = ('<div class="bsec">Grammar <span class="sub">Present Simple or Present Continuous?</span></div>' +
+s4 = ('<div class="bsec">Grammar <span class="sub">Present Simple or Present Continuous? · understand → apply</span></div>' +
       rule("What we said in class", SC_EN, SC_UA) +
-      '<p class="ins">' + X(4, "A") + 'Usually or now / this week? Choose the correct form.</p>' +
+      '<p class="ins">' + X(3, "A") + 'Usually or now / this week? Choose the correct form.</p>' +
       gaps("sc", [(t, v(a), [a, b]) for t, a, b in SCQ], [], 150) +
-      '<p class="ins" style="margin-top:22px">' + X(4, "B") + 'Your week. Write 3 pairs: <b>Usually I …, but this week I’m …</b></p>' +
+      '<p class="ins" style="margin-top:22px">' + X(3, "B") + 'Your week. Write 3 pairs: <b>Usually I …, but this week I’m …</b></p>' +
       ta("sc_own", "1 Usually I …, but this week I’m …\n2 …\n3 …", 90))
 
 # ---------- 5 Word order, be, sounds ----------
-WO_EN = ("<b>Word order: who → does what.</b> In Ukrainian we can move words (<i>кішка з’їла мишку / мишку з’їла кішка</i>) because of endings. In English the order is fixed: <i>The cat ate the mouse.</i><br>"
-         "So: <i>I understood <b>what it is about</b></i> (not <s>what about it</s>) – after <i>what</i> comes a normal sentence: <i>it + is</i>.<br>"
-         "<b>Every sentence needs a verb.</b> Don’t forget <b>be</b>: <i>All these skills <b>are</b> very important.</i><br>"
-         "<b>easier</b>, not <s>more easier</s> – short adjectives take <b>-er</b>, long ones take <b>more</b>: <i>easier, faster, but more comfortable</i>.")
-WO_UA = ("<b>Порядок слів: хто → що робить.</b> В українській слова можна переставляти завдяки закінченням, в англійській порядок фіксований.<br>"
-         "Тому <i>I understood what it is about</i> – після what іде звичайне речення: it + is.<br>"
-         "<b>У реченні завжди потрібне дієслово</b> – не забувай <b>be</b>: All these skills <b>are</b> very important.<br>"
-         "<b>easier</b>, а не more easier: короткі прикметники – <b>-er</b>, довгі – more.")
 SN_EN = ("In Ukrainian we have one sound <b>і</b>. English has <b>two different sounds</b> – and they change the meaning: <i>live</i> (жити) – <i>leave</i> (їхати, йти); <i>ship</i> – <i>sheep</i>; <i>this</i> – <i>these</i>.<br>"
          "<b>/ɪ/ – short and relaxed.</b> Your mouth is relaxed, the sound is short, a bit like Ukrainian <b>и</b>: <i>th<b>i</b>s, sk<b>i</b>ll, l<b>i</b>ve, sh<b>i</b>p, f<b>i</b>t, b<b>u</b>sy</i>.<br>"
          "<b>/iː/ – long and tense.</b> Smile, your lips are stretched, the sound is long – like a long Ukrainian <b>і-і</b>: <i>th<b>e</b>se, t<b>ea</b>m, l<b>ea</b>ve, sh<b>ee</b>p, n<b>ee</b>d, f<b>ie</b>ld</i>.<br>"
@@ -252,7 +254,7 @@ s5 = ('<div class="bsec">Sounds <span class="sub">Short /ɪ/ or long /iː/?</spa
       '<div class="card" style="background:#fbfbfd;line-height:1.9">1 <i>Th<b>i</b>s sk<b>i</b>ll is important. Th<b>e</b>se sk<b>i</b>lls are important.</i><br>2 <i>I l<b>i</b>ve in Kyiv. I l<b>ea</b>ve work at six.</i><br>'
       '3 <i>Our t<b>ea</b>m n<b>ee</b>ds a qu<b>i</b>ck f<b>i</b>x.</i><br>4 <i>I th<b>i</b>nk the f<b>ee</b>dback from the m<b>ee</b>ting is useful.</i></div>' +
       '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record sentences 1–4 as a voice message and send it to your teacher in Telegram.</b></div>' +
-      '<p class="ins" style="margin-top:22px">' + X(5, "F") + '<b>Word order and “be”</b> – read the rule.</p>' + rule("What we said in class", WO_EN, WO_UA))
+      '')
 
 # ---------- 6 Shadowing ----------
 def clip(a, b):
@@ -269,7 +271,7 @@ s6 = ('<div class="bsec">Shadowing <span class="sub">Speak like the speakers</sp
       '<p class="ins" style="margin-top:22px">' + X(6, "D") + 'Write down 3 phrases you can now say <b>exactly like the speaker</b>.</p>' + ta("sh_ph", "1 …\n2 …\n3 …", 70))
 
 # ---------- 7 4/3/2 ----------
-s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 / 1.5 / 1)</span></div>' +
+s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 / 1.5 / 1) · create → evaluate</span></div>' +
       '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🧭 You tell the <b>same story three times</b>, each time faster: <b>2 minutes → 1.5 minutes → 1 minute</b>. Each time you make fewer mistakes and fewer pauses.<br>'
       '<span class="hint">🇺🇦 Одну й ту саму історію розповідаєш тричі, щоразу коротше: 2 хв → 1,5 хв → 1 хв. Щоразу чистіше.</span></div>' +
       '<p class="ins">' + X(7, "A") + 'Your topic: <b>“Thinking outside the box is my strongest skill.”</b> Why? Give a real example from work or life. Bonus: tell how you tried to solve the <b>nine dots puzzle</b> (<i>First I tried…, then I realised…</i>).</p>' +
@@ -292,6 +294,6 @@ import json as _j
 XJS = XJS.replace("__ECW__", _j.dumps(ECW, ensure_ascii=False))
 html = page("1.1", "Transferable skills", "HOMEWORK · CLEAN YOUR ENGLISH", "Notice and fix your own mistakes; use articles, to/-ing and Simple vs Continuous correctly.",
             "BP B1 1.1 Transferable skills · Clean English", CODE,
-            [("1", s1), ("2", s2), ("3", s3), ("4", s4), ("5", s5), ("6", s6), ("7", s7)], K, VOC, extra_js=XJS)
+            [("1", s2), ("2", s3), ("3", s4), ("4", s1), ("5", s5), ("6", s6), ("7", s7)], K, VOC, extra_js=XJS)
 open(os.path.join(OUTDIR, "clean.html"), "w").write(html)
 print("ok", OUTDIR)
