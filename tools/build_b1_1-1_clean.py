@@ -39,25 +39,61 @@ def v(*a):  # variants with straight / curly apostrophes
     return out
 
 # ---------- 1 Error clinic ----------
-EC = [("I not understand it.", v("I didn't understand it.", "I don't understand it.", "I did not understand it.", "I do not understand it.")),
-      ("Yesterday I’m watching the full video.", v("Yesterday I watched the whole video.", "Yesterday I watched the full video.")),
-      ("Last week I’m trying to change the speed – 0.9 was OK.", v("Last week I tried changing the speed – 0.9 was OK.", "Last week I tried changing the speed - 0.9 was OK.", "Last week I tried changing the speed – 0.9 was ok.", "Last week I tried changing the speed, 0.9 was OK.")),
-      ("If talk about me, my main skill is communication.", v("If we are talking about me, my main skill is communication.", "If we're talking about me, my main skill is communication.")),
-      ("In this week I am working more than usual.", v("This week I am working more than usual.", "This week I'm working more than usual.")),
-      ("All of these skills very important.", v("All these skills are very important.", "All of these skills are very important.")),
-      ("Good communication makes your work more easier.", v("Good communication makes your work easier.")),
-      ("When you work in team, you need good relationships.", v("When you work in a team, you need good relationships.")),
-      ("Good communication skill is the simplest way to build relationships.", v("Good communication skills are the simplest way to build relationships.")),
-      ("I understood what about it.", v("I understood what it is about.", "I understood what it was about.")),
-      ("Yesterday I forget the meaning of “integrity”.", v("Yesterday I forgot the meaning of “integrity”.", 'Yesterday I forgot the meaning of "integrity".', "Yesterday I forgot the meaning of integrity.")),
-      ("I found a colleague password on a sticky note.", v("I found a colleague's password on a sticky note.")),
-      ("Think outside the box is my strongest skill.", v("Thinking outside the box is my strongest skill.")),
-      ("I use this skill in each part of my life.", v("I use this skill in every sphere of my life.", "I use this skill in every area of my life.", "I use this skill in all areas of my life."))]
-s1 = ('<div class="bsec">Error clinic <span class="sub">Your own sentences from our lesson</span></div>' +
-      '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🎯 <b>Why?</b> You told me: <i>“I already speak with mistakes – I need to re-learn.”</i> The best way is to <b>catch your own mistakes</b>. These are real sentences you said in our lesson – and we talked about each mistake.</div>' +
-      '<p class="ins">' + X(1, "A") + 'Each sentence has <b>one</b> mistake. Write the correct sentence. Remember what we said in class. Then press <b>Check</b>.</p>' + fix("ec", EC) +
-      '<p class="ins" style="margin-top:22px">' + X(1, "B") + 'Which mistake do you make <b>most often</b>? Write your own rule for it in 1–2 sentences – in English or Ukrainian.</p>' +
-      ta("ec_rule", "My most common mistake is … My rule: …", 70))
+# (wrong sentence, [correct variants], why it is right, what the mistake is)
+EC = [
+ ("Sorry, I not understand your question yesterday.", ["Sorry, I didn't understand your question yesterday.", "Sorry, I did not understand your question yesterday."],
+  "Past + negative → <b>didn’t + verb</b>: I didn’t understand.", "It’s the past (yesterday) and negative. We need <b>didn’t</b> + verb, not just <i>not</i>."),
+ ("Last month I’m reading a great book about leadership.", ["Last month I read a great book about leadership."],
+  "Finished action in the past → <b>Past Simple</b>: I read.", "<i>Last month</i> is finished past. <i>I’m reading</i> = now. Use the past form."),
+ ("In this week I’m working from home.", ["This week I'm working from home.", "This week I am working from home."],
+  "<b>this / that / next / last week</b> – no <i>in</i>.", "Look at the word before <i>this week</i>. With this / that / next / last we don’t use a preposition."),
+ ("Right now we discuss the new release – can I call you back?", ["Right now we're discussing the new release – can I call you back?", "Right now we are discussing the new release – can I call you back?", "Right now we're discussing the new release - can I call you back?", "Right now we are discussing the new release - can I call you back?", "Right now we're discussing the new release, can I call you back?", "Right now we are discussing the new release, can I call you back?"],
+  "Happening at this moment → <b>be + -ing</b>: we’re discussing.", "<i>Right now</i> = at this moment. Present Simple is for habits. Use <b>be + -ing</b>."),
+ ("Our team lead is always having stand-ups at 10.", ["Our team lead always has stand-ups at 10."],
+  "A habit, a schedule → <b>Present Simple</b>; he → <b>has</b>.", "<i>Always</i> + a regular schedule = a habit. Use Present Simple – and remember <b>-s</b> with he/she."),
+ ("These skill is very useful for developers.", ["This skill is very useful for developers."],
+  "One skill → <b>this</b> (short /ɪ/). Many skills → these.", "Count: one skill or many? <i>is</i> and <i>skill</i> are singular."),
+ ("All these tools very helpful for remote work.", ["All these tools are very helpful for remote work."],
+  "Every sentence needs a verb → <b>are</b> very helpful.", "Where is the verb? Don’t forget <b>be</b>."),
+ ("Working with AI makes my job more easier.", ["Working with AI makes my job easier."],
+  "Short adjective → <b>-er</b>: easier (no <i>more</i>).", "<i>easy</i> is short: we add <b>-er</b>. <i>more</i> is only for long adjectives."),
+ ("She works in big IT company in Lviv.", ["She works in a big IT company in Lviv.", "She works for a big IT company in Lviv."],
+  "One of many companies → <b>a</b>, and it goes before the adjective: <b>a</b> big IT company.", "<i>company</i> is a countable noun. Which article? Where does it go if there is an adjective?"),
+ ("My brother is engineer at a bank.", ["My brother is an engineer at a bank."],
+  "Jobs → <b>a / an</b>: an engineer (vowel sound → an).", "Before a job we always use an article. <i>engineer</i> starts with a vowel sound."),
+ ("Can you send me video from yesterday’s meeting?", ["Can you send me the video from yesterday's meeting?"],
+  "This exact video, we both know which → <b>the</b>.", "It’s one specific video – from yesterday’s meeting. Which article?"),
+ ("I need an advice about my CV.", ["I need some advice about my CV.", "I need advice about my CV.", "I need a piece of advice about my CV."],
+  "<b>advice</b> is uncountable → no a/an (some advice, a piece of advice).", "Can you count <i>advice</i>? Uncountable nouns don’t take a / an."),
+ ("I enjoy to work with international clients.", ["I enjoy working with international clients."],
+  "<b>enjoy + -ing</b> – always.", "After <i>enjoy</i> the second verb has one form only – not <i>to</i>."),
+ ("Set clear goals is important for every team.", ["Setting clear goals is important for every team."],
+  "A verb at the start of a sentence → <b>-ing</b>: Setting goals…", "The sentence starts with a verb as a subject. Which form do we use?"),
+ ("I tried fixing this bug all night, but it was too hard.", ["I tried to fix this bug all night, but it was too hard."],
+  "A big effort → <b>try to</b> (effor<b>t</b> → <b>t</b>o).", "Was it an effort or a quick test? Remember: effor<b>t</b> → <b>t</b>o."),
+ ("I don’t know what about this task.", ["I don't know what this task is about.", "I do not know what this task is about."],
+  "After <i>what</i> → normal order: <b>this task + is</b> about.", "Who → does what. After <i>what</i> we need a normal sentence: subject + verb."),
+ ("Yesterday I forget my laptop at the office.", ["Yesterday I forgot my laptop at the office.", "Yesterday I left my laptop at the office."],
+  "Past → <b>forgot</b>.", "<i>Yesterday</i> = past. <i>forget</i> has an irregular past form."),
+ ("I can’t open my colleague laptop.", ["I can't open my colleague's laptop."],
+  "Whose laptop? → <b>colleague’s</b> (’s = belongs to).", "The laptop belongs to the colleague. How do we show this?"),
+ ("He has good communication skill.", ["He has good communication skills."],
+  "A fixed phrase: <b>communication skills</b> (plural).", "This phrase is usually plural."),
+]
+import random as _rr
+_rr.Random(26).shuffle(EC)
+ECW = {}
+def ecfix(prefix, items, w=560):
+    h = ""
+    for i, (bad, good, okx, errx) in enumerate(items):
+        k = "%s_%d" % (prefix, i + 1); K[k] = v(*good); ECW[k] = [okx, errx]
+        h += '<div class="row">%d. <span style="color:#a33">“%s”</span><br>%s%s</div>' % (i + 1, bad, inp(k, w, "Write the correct sentence"), fb(k))
+    return h + '<div class="ctl"><button class="btn" onclick="chkEC(\'%s\')">Check</button><span class="res" id="r_%s"></span></div>' % (prefix, prefix)
+s1 = ('<div class="bsec">Error clinic <span class="sub">Find and fix the mistake</span></div>' +
+      '<div class="card" style="background:#fff8d6;border-left:4px solid #e0a100">🎯 <b>Why?</b> You said in our lesson: <i>“I already speak with mistakes – I need to re-learn.”</i> The best way is to learn to <b>catch mistakes</b> – first in other people’s English, then in your own.</div>' +
+      '<p class="ins">' + X(1, "A") + 'Colleagues wrote these sentences in Slack. Each one has <b>one</b> mistake – the topics we talked about in class. Write the correct sentence and press <b>Check</b>. If it’s wrong, read the hint and try again.</p>' + ecfix("ec", EC) +
+      '<p class="ins" style="margin-top:22px">' + X(1, "B") + 'Which of these mistakes do <b>you</b> make too? Write your own rule for it in 1–2 sentences – in English or Ukrainian.</p>' +
+      ta("ec_rule", "I also make the mistake with … My rule: …", 70))
 
 # ---------- 2 Articles ----------
 ART_EN = ("<b>Articles go in front of nouns.</b> They show that the word is a noun – some words can be a verb <i>and</i> a noun: <i>help</i>, <i>last</i> (<i>Last night we dined out.</i> / <i>The film lasts three hours.</i>).<br>"
@@ -224,11 +260,16 @@ s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 
       ta("r_ref", "In round 3 I fixed … I still say …", 80) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well can you notice and fix your own mistakes now?"))
 
-XJS = r"""function say(w){try{const u=new SpeechSynthesisUtterance(w);u.lang="en-GB";u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+XJS = r"""const ECW=__ECW__;const ECT={};
+function chkEC(p){let n=0,t=0;for(const k in KEY){if(k.replace(/_[^_]+$/,"")!==p)continue;const el=document.querySelector(`.g[data-k="${k}"]`);if(!el)continue;t++;const val=el.value.trim();const ok=!!val&&okv(k,val);if(ok)n++;else if(val)ECT[k]=(ECT[k]||0)+1;
+ el.classList.remove("right","wrong");el.classList.add(ok?"right":"wrong");const w=ECW[k]||["",""];fbk(k,ok,ok?"✓ <b>Well done!</b> "+w[0]:(!val?"✗ Write your sentence first.":"✗ <b>Not yet.</b> "+w[1]+(ECT[k]>=2?"<br>👉 Correct: <b>"+KEY[k][0]+"</b>":"")))}$("r_"+p).textContent=n+" / "+t+(n===t?" ✓ Well done!":"");save()}
+function say(w){try{const u=new SpeechSynthesisUtterance(w);u.lang="en-GB";u.rate=.8;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
 let _tv=null;function tmr(b,t){clearInterval(_tv);const o=b.parentElement.querySelector(".tmv");let l=t;const sh=()=>o.textContent=Math.floor(l/60)+":"+String(l%60).padStart(2,"0");sh();_tv=setInterval(()=>{l--;sh();if(l<=0){clearInterval(_tv);o.textContent="⏰ Stop!"}},1000)}
 """
 VOC = [("Clean English", ["I didn’t understand it.", "this week", "in a team", "what it is about", "I forgot", "I should think about it", "communication skills", "easier", "try to", "try -ing"]),
        ("Lesson words", ["a can-do attitude", "set goals", "determination", "integrity", "think outside the box", "critical thinking", "team player"])]
+import json as _j
+XJS = XJS.replace("__ECW__", _j.dumps(ECW, ensure_ascii=False))
 html = page("1.1", "Transferable skills", "HOMEWORK · CLEAN YOUR ENGLISH", "Notice and fix your own mistakes; use articles, to/-ing and Simple vs Continuous correctly.",
             "BP B1 1.1 Transferable skills · Clean English", CODE,
             [("1", s1), ("2", s2), ("3", s3), ("4", s4), ("5", s5), ("6", s6), ("7", s7)], K, VOC, extra_js=XJS)
