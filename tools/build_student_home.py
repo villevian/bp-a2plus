@@ -89,7 +89,7 @@ footer{color:var(--mut);font-size:12.5px;margin-top:30px}
 const D=__DATA__;const SB="https://zuegojpfhgigsvyrnymt.supabase.co",SK="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
 const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const rpc=(f,b)=>fetch(SB+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SK,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(r=>r.ok?r.json():Promise.reject(r.status));
-const NM={flip:"Before class",lesson:"Lesson",hw:"Homework",words:"Homework: video words",extra:"Extra practice",games:"Speaking & games",present:"Presentation kit",speak:"Speaking practice",drill:"Vocabulary drill",review:"Grammar review"};
+const NM={flip:"Before class",lesson:"Lesson",hw:"Homework",words:"Homework: video words",clean:"Homework: clean your English",extra:"Extra practice",games:"Speaking & games",present:"Presentation kit",speak:"Speaking practice",drill:"Vocabulary drill",review:"Grammar review"};
 const path=(n,tr,p)=>`lessons/${n.replace(".","-").toLowerCase()}/${tr}/${p}.html?v=${D.build}`;
 const first=D.student.name.split(" ")[0];$("av").textContent=first[0];$("nm").textContent=D.student.name;
 const h=new Date().getHours();$("hi").textContent=(h<12?"Good morning":h<18?"Good afternoon":"Good evening")+", "+first+"! 👋";
@@ -120,7 +120,7 @@ function render(){
  $("msg").innerHTML=CAB.note?`<div class="msg">💬 <b>From your teacher:</b> ${esc(CAB.note)}</div>`:"";
  // homework list
  let hwU=CAB.homework_url||"";if(!hwU&&CAB.homework){const m=String(CAB.homework).match(/\b(W?\d+\.\d+)\b/),L=(m&&OPEN.find(l=>l.n===m[1]))||cur;
-  if(L){const pg=/before|flip/i.test(CAB.homework)&&L.pages.includes("flip")?"flip":/word/i.test(CAB.homework)&&L.pages.includes("words")?"words":/extra/i.test(CAB.homework)&&L.pages.includes("extra")?"extra":L.pages.includes("hw")&&!/before/i.test(CAB.homework)?"hw":L.pages[0];hwU=path(L.n,L.tr,pg)}}
+  if(L){const pg=/before|flip/i.test(CAB.homework)&&L.pages.includes("flip")?"flip":/clean|mistake|error/i.test(CAB.homework)&&L.pages.includes("clean")?"clean":/word/i.test(CAB.homework)&&L.pages.includes("words")?"words":/extra/i.test(CAB.homework)&&L.pages.includes("extra")?"extra":L.pages.includes("hw")&&!/before/i.test(CAB.homework)?"hw":L.pages[0];hwU=path(L.n,L.tr,pg)}}
  const hl=[];if(CAB.homework||hwU)hl.push(`<div class="hw"><div><a href="${esc(hwU||"#")}">${esc(CAB.homework||"Homework")}</a><small>${CAB.homework_due?"Due "+new Date(CAB.homework_due+"T12:00").toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"}):"from your teacher"}</small></div><a class="btn" style="margin-left:auto;margin-right:8px;padding:6px 14px" href="${esc(hwU||"#")}">Open</a>${pill(HWD[(String(hwU).match(/lessons\/([^/]+)\//)||[])[1]?.replace("-",".")]?"done":"new")}</div>`);
  OPEN.slice().reverse().forEach(l=>{if(!l.pages.includes("hw"))return;if(hwU&&hwU.includes("/"+l.n.replace(".","-")+"/")&&/\/hw\.html/.test(hwU))return;hl.push(`<div class="hw"><div><a href="${path(l.n,l.tr,"hw")}">${esc(l.n)} ${esc(l.t)}</a><small>Homework</small></div>${HWD[l.n]?'<span class="pill p-ok">✓ Sent</span>':'<span class="pill p-wa">To do</span>'}</div>`)});
  $("hwl").innerHTML=hl.length?hl.join(""):'<p class="empty">No homework yet.</p>';

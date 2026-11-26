@@ -302,3 +302,23 @@ for (_n, _g), _ws in _ADD2.items():
     if _grp is None:
         _grp = (_g, []); _les[2].append(_grp)
     _grp[1].extend(_ws)
+
+# --- added 2026-11-26: Taras 1.1 "Clean English" chunks (homework after class) ---
+_ADD3 = {("1.1", "Clean English"): [
+  ("I didn’t understand it.", "Я цього не зрозумів.", "past negative: didn’t + verb (not “I not understand”)", "Sorry, I didn’t understand the last question."),
+  ("this week", "цього тижня", "no “in” before this / that / next / last week", "This week I’m working from home."),
+  ("in a team", "у команді", "team is countable → a", "I like working in a team."),
+  ("what it is about", "про що це", "word order after what: it + is", "I understood what it is about."),
+  ("I forgot", "я забув", "past of forget; “I forget” = I usually forget", "Sorry, I forgot to send the link."),
+  ("I should think about it", "мені треба про це подумати", "after should / can / must → just the verb", "Good question – I should think about it."),
+  ("communication skills", "комунікативні навички", "a fixed phrase, usually plural", "Good communication skills help you build relationships."),
+  ("easier", "легше", "short adjective + -er (not “more easier”)", "It makes my work easier and more comfortable."),
+  ("try to", "намагатися (докласти зусиль)", "try to do = make an effort (effort → to)", "I tried to fix the bug all night."),
+  ("try -ing", "спробувати (як експеримент)", "try doing = test something and see what happens", "Try changing the speed to 0.9."),
+]}
+for (_n, _g), _ws in _ADD3.items():
+    _les = next(x for x in VOCAB if x[0] == _n)
+    _grp = next((x for x in _les[2] if x[0] == _g), None)
+    if _grp is None:
+        _grp = (_g, []); _les[2].append(_grp)
+    _grp[1].extend(_ws)
