@@ -227,10 +227,10 @@ def yt(i):
             'style="width:100%%;height:100%%;border:0;border-radius:12px" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>') % i
 s5 = ('<div class="bsec">Sounds <span class="sub">Short /ɪ/ or long /iː/?</span></div>' +
       rule("Two English sounds for one Ukrainian «і»", SN_EN, SN_UA) +
-      '<p class="ins">' + X(5, "A") + '<b>Watch and repeat.</b> Two short videos about these two sounds. Pause and repeat every word after the speaker.</p>' +
+      '<p class="ins">' + X(5, "A") + '<b>Watch and repeat.</b> Choose <b>one</b> video – <b>British</b> or <b>American</b> pronunciation, the one you like more. Pause and repeat every word after the speaker.</p>' +
       '<div class="card" style="background:#fbfbfd"><b>Video 1 · British English</b> – a pronunciation coach explains the difference between <i>sheet</i> and a rude word 😉: how to hold your mouth for the long /iː/ and the short /ɪ/, with pairs of words to repeat.</div>' + yt("PjoMCw44KRI") +
       '<div class="card" style="background:#fbfbfd;margin-top:14px"><b>Video 2 · American English</b> – practice with Hadar, a pronunciation coach (English is not her first language either): <i>sheep – ship, leave – live</i>. You listen and repeat the pairs and then sentences with her.</div>' + yt("Xh-KHPHPVXg") +
-      '<p class="hint">🇺🇦 Дивись, зупиняй і повторюй кожне слово вголос. Перше відео – британська вимова, друге – американська.</p>' +
+      '<p class="hint">🇺🇦 Обери одне відео – британська чи американська вимова, як тобі більше подобається. Зупиняй і повторюй кожне слово вголос.</p>' +
       '<p class="ins" style="margin-top:22px">' + X(5, "B") + '<b>Listen and compare.</b> Press each button. Watch your mouth in a mirror or your camera: relaxed and short – or smile and long?</p>' +
       "".join(pair_row(i, a, b) for i, (a, b) in enumerate(SND[:6])) +
       '<p class="ins" style="margin-top:22px">' + X(5, "C") + '<b>Hear the difference.</b> Listen and choose the word you hear.</p>' + snd + ctl("sn") +
