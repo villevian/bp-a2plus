@@ -3,7 +3,7 @@ ACC, ACC2 = "#3b7dd8", "#e3eefb"          # blue
 GRAD = ("#2a5fb0", "#4f9be8")
 COLS = 5                                   # A2 book: 5 lessons per unit, x.5 = business workshop
 VARIANTS = {"1.1": ["all"], "1.2": ["all"], "1.3": ["all"], "7.2": ["all"], "7.3": ["all"], "7.4": ["all"], "7.5": ["all"]}
-PAGES = {"1.1": ["lesson", "hw"], "1.2": ["lesson", "hw"], "1.3": ["lesson", "hw", "extra"], "7.2": ["lesson", "hw", "extra", "games"], "7.3": ["lesson", "hw", "extra", "games"], "7.4": ["lesson", "hw", "extra", "present"], "7.5": ["lesson", "present"]}
+PAGES = {"1.1": ["lesson", "hw"], "1.2": ["lesson", "hw"], "1.3": ["lesson", "hw", "extra", "review"], "7.2": ["lesson", "hw", "extra", "games"], "7.3": ["lesson", "hw", "extra", "games"], "7.4": ["lesson", "hw", "extra", "present"], "7.5": ["lesson", "present"]}
 # (number, title, focus, tag kept|updated|new|both, status ready|soon[, classic focus])
 U = [
  ("1", "Working day", [
