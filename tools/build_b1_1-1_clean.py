@@ -222,17 +222,24 @@ sortr = ""
 for i, w in enumerate(SORTW):
     k = "so_%d" % (i + 1); K[k] = ["long /iː/" if w in LONG else "short /ɪ/"]
     sortr += '<span style="display:inline-block;margin:4px 14px 4px 0"><b>%s</b> %s%s</span>' % (w, sel(k, ["short /ɪ/", "long /iː/"], 120), fb(k))
+def yt(i):
+    return ('<div style="width:100%%;max-width:600px;aspect-ratio:16/9;margin:8px 0"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1" '
+            'style="width:100%%;height:100%%;border:0;border-radius:12px" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>') % i
 s5 = ('<div class="bsec">Sounds <span class="sub">Short /ɪ/ or long /iː/?</span></div>' +
       rule("Two English sounds for one Ukrainian «і»", SN_EN, SN_UA) +
-      '<p class="ins">' + X(5, "A") + '<b>Listen and compare.</b> Press each button. Watch your mouth in a mirror or your camera: relaxed and short – or smile and long?</p>' +
+      '<p class="ins">' + X(5, "A") + '<b>Watch and repeat.</b> Two short videos about these two sounds. Pause and repeat every word after the speaker.</p>' +
+      '<div class="card" style="background:#fbfbfd"><b>Video 1 · British English</b> – a pronunciation coach explains the difference between <i>sheet</i> and a rude word 😉: how to hold your mouth for the long /iː/ and the short /ɪ/, with pairs of words to repeat.</div>' + yt("PjoMCw44KRI") +
+      '<div class="card" style="background:#fbfbfd;margin-top:14px"><b>Video 2 · American English</b> – practice with Hadar, a pronunciation coach (English is not her first language either): <i>sheep – ship, leave – live</i>. You listen and repeat the pairs and then sentences with her.</div>' + yt("Xh-KHPHPVXg") +
+      '<p class="hint">🇺🇦 Дивись, зупиняй і повторюй кожне слово вголос. Перше відео – британська вимова, друге – американська.</p>' +
+      '<p class="ins" style="margin-top:22px">' + X(5, "B") + '<b>Listen and compare.</b> Press each button. Watch your mouth in a mirror or your camera: relaxed and short – or smile and long?</p>' +
       "".join(pair_row(i, a, b) for i, (a, b) in enumerate(SND[:6])) +
-      '<p class="ins" style="margin-top:22px">' + X(5, "B") + '<b>Hear the difference.</b> Listen and choose the word you hear.</p>' + snd + ctl("sn") +
-      '<p class="ins" style="margin-top:22px">' + X(5, "C") + '<b>Use the spelling rule.</b> Words from our lesson – short or long? Use the spelling rule – no listening here.</p>' + sortr + ctl("so") +
-      '<p class="ins" style="margin-top:22px">' + X(5, "D") + '<b>Say it.</b> Read these sentences aloud 3 times, slowly, then faster:</p>' +
+      '<p class="ins" style="margin-top:22px">' + X(5, "C") + '<b>Hear the difference.</b> Listen and choose the word you hear.</p>' + snd + ctl("sn") +
+      '<p class="ins" style="margin-top:22px">' + X(5, "D") + '<b>Use the spelling rule.</b> Words from our lesson – short or long? Use the spelling rule – no listening here.</p>' + sortr + ctl("so") +
+      '<p class="ins" style="margin-top:22px">' + X(5, "E") + '<b>Say it.</b> Read these sentences aloud 3 times, slowly, then faster:</p>' +
       '<div class="card" style="background:#fbfbfd;line-height:1.9">1 <i>Th<b>i</b>s sk<b>i</b>ll is important. Th<b>e</b>se sk<b>i</b>lls are important.</i><br>2 <i>I l<b>i</b>ve in Kyiv. I l<b>ea</b>ve work at six.</i><br>'
       '3 <i>Our t<b>ea</b>m n<b>ee</b>ds a qu<b>i</b>ck f<b>i</b>x.</i><br>4 <i>I th<b>i</b>nk the f<b>ee</b>dback from the m<b>ee</b>ting is useful.</i></div>' +
       '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record sentences 1–4 as a voice message and send it to your teacher in Telegram.</b></div>' +
-      '<p class="ins" style="margin-top:22px">' + X(5, "E") + '<b>Word order and “be”</b> – read the rule.</p>' + rule("What we said in class", WO_EN, WO_UA))
+      '<p class="ins" style="margin-top:22px">' + X(5, "F") + '<b>Word order and “be”</b> – read the rule.</p>' + rule("What we said in class", WO_EN, WO_UA))
 
 # ---------- 6 Shadowing ----------
 def clip(a, b):
