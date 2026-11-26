@@ -317,7 +317,7 @@ _ADD3 = {("1.1", "Clean English"): [
   ("try -ing", "спробувати (як експеримент)", "try doing = test something and see what happens", "Try changing the speed to 0.9."),
 ]}
 import os as _os
-for (_n, _g), _ws in (_ADD3.items() if _os.environ.get("BP_DRAFT") else []):  # DRAFT: template only until Vale approves
+for (_n, _g), _ws in _ADD3.items():
     _les = next(x for x in VOCAB if x[0] == _n)
     _grp = next((x for x in _les[2] if x[0] == _g), None)
     if _grp is None:

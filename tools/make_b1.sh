@@ -9,13 +9,13 @@ build() { D=$1; C=$2
   python3 build_b1_1-1_extra.py $D/lessons/1-1/all $C >/dev/null
   python3 build_b1_1-1_words.py $D/lessons/1-1/all $C >/dev/null
   python3 build_b1_1-1_speak.py $D/lessons/1-1/all $C >/dev/null
-  [ -z "$C" ] && python3 build_b1_1-1_clean.py $D/lessons/1-1/all >/dev/null  # DRAFT: template only until Vale approves
-  [ -z "$C" ] && mkdir -p $D/lessons/1-1/all/audio && cp audio/b1_1-1_clean/*.mp3 $D/lessons/1-1/all/audio/
+  python3 build_b1_1-1_clean.py $D/lessons/1-1/all $C >/dev/null
+  mkdir -p $D/lessons/1-1/all/audio && cp audio/b1_1-1_clean/*.mp3 $D/lessons/1-1/all/audio/
   python3 build_b1_4-2.py $D/lessons/4-2/all $C >/dev/null
   python3 build_b1_4-3.py $D/lessons/4-3/all $C >/dev/null
   python3 build_b1_4-4.py $D/lessons/4-4/all $C >/dev/null
   python3 build_b1_4-5.py $D/lessons/4-5 $C >/dev/null
-  BP_DRAFT=$([ -z "$C" ] && echo 1) python3 build_vocab.py $D/vocab.html vocab_b1 B1 "$C" >/dev/null
+  python3 build_vocab.py $D/vocab.html vocab_b1 B1 "$C" >/dev/null
   python3 build_glossary.py $D/glossary.html glossary_b1 ${L:-B1} "#e07a3f" "#fdf0e7" "#b85a24" >/dev/null
 }
 build $R/bp-b1 ""
