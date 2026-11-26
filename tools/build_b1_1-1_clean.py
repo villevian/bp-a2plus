@@ -260,16 +260,20 @@ s5 = ('<div class="bsec">Sounds <span class="sub">Short /ɪ/ or long /iː/?</spa
 def clip(a, b):
     return ('<div style="width:100%%;max-width:600px;aspect-ratio:16/9;margin:8px 0"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1&start=%d&end=%d" '
             'style="width:100%%;height:100%%;border:0;border-radius:12px" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>') % (EP, a, b)
-NCS = "3hPuSCHQ3wA"
-s6 = ('<div class="bsec">Shadowing <span class="sub">Speak like the speaker · imitate</span></div>' +
+BBC = "https://www.bbc.co.uk/learningenglish/english/features/office-english/260309"
+BBC_ALT = "https://pocketcasts.com/podcast/learning-english-for-work/89a46320-9ba1-013c-9fff-0acc26574db2/office-english-goals/230ba072-18ad-40a4-9963-802ac1499508"
+s6 = ('<div class="bsec">Shadowing <span class="sub">Speak like the speakers · imitate</span></div>' +
       '<div class="card" style="background:#f4f6ff;border-left:4px solid #5b5fc7">🧭 <b>Shadowing</b> = you repeat what the speaker says, like a shadow. It trains pronunciation, rhythm and ready-made phrases.<br>'
-      'This video is <b>slow and clear</b>: a UK careers adviser explains <b>transferable skills</b> – the topic of our lesson.<br>'
-      '<span class="hint">🇺🇦 Повторюй за спікером, як тінь. Відео повільне й чітке: кар’єрний консультант пояснює, що таке transferable skills – тема нашого уроку.</span></div>' +
-      '<p class="ins">' + X(6, "A") + '<b>Listen</b> to the whole video once with subtitles (CC). Just understand the ideas.</p>' + yt(NCS) +
-      '<p class="ins" style="margin-top:18px">' + X(6, "B") + '<b>Pause and repeat.</b> Watch again. After <b>every sentence</b> press pause and repeat it aloud – same speed, same stress, same pauses.</p>' +
-      '<p class="ins" style="margin-top:18px">' + X(6, "C") + '<b>Shadow.</b> Choose one minute of the video you like. Speak <b>together</b> with the speaker, without pausing: first whisper, then aloud.</p>' +
-      '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record your shadowing (6C) as a voice message and send it to your teacher in Telegram.</b></div>' +
-      '<p class="ins" style="margin-top:22px">' + X(6, "D") + 'Write down 3 phrases from the video you can now say <b>exactly like the speaker</b>.</p>' + ta("sh_ph", "1 …\n2 …\n3 …", 70))
+      'Today: <b>BBC Learning English – Office English: “Goals”</b> (about 7 minutes). Pippa and Phil speak <b>slowly and clearly</b> about how to talk about your goals and strengths at work – e.g. <i>“One thing I think I excel at is…”</i>. There is a <b>transcript</b> on the page.<br>'
+      '<span class="hint">🇺🇦 Повторюй за спікерами, як тінь. BBC говорить повільно й чітко – про те, як говорити про свої цілі та сильні сторони на роботі. На сторінці є текст.</span></div>' +
+      '<div class="card" style="margin-top:12px;text-align:center"><a class="btn" href="%s" target="_blank" rel="noopener" style="font-size:17px;padding:10px 22px">🎧 Open the episode: audio + transcript</a>'
+      '<div class="hint" style="margin-top:6px">If it doesn’t open, listen here: <a href="%s" target="_blank" rel="noopener">Office English: Goals (podcast)</a></div></div>' % (BBC, BBC_ALT) +
+      '<p class="ins" style="margin-top:18px">' + X(6, "A") + '<b>Listen</b> to the whole episode once. Just understand the ideas.</p>' +
+      '<p class="ins" style="margin-top:18px">' + X(6, "B") + '<b>Read and listen.</b> Open the transcript and listen again, reading along with the speakers.</p>' +
+      '<p class="ins" style="margin-top:18px">' + X(6, "C") + '<b>Pause and repeat.</b> After <b>every sentence</b> press pause and repeat it aloud – same speed, same stress, same pauses.</p>' +
+      '<p class="ins" style="margin-top:18px">' + X(6, "D") + '<b>Shadow.</b> Choose one minute you like and speak <b>together</b> with the speakers without pausing: first whisper, then aloud.</p>' +
+      '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record your shadowing (6D) as a voice message and send it to your teacher in Telegram.</b></div>' +
+      '<p class="ins" style="margin-top:22px">' + X(6, "E") + 'Write down 3 phrases from the episode that you can use to talk about <b>your</b> strengths and goals.</p>' + ta("sh_ph", "1 One thing I think I excel at is …\n2 …\n3 …", 70))
 
 # ---------- 7 4/3/2 ----------
 s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 / 1.5 / 1) · create → evaluate</span></div>' +
