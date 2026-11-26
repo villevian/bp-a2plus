@@ -52,6 +52,16 @@ D["a2"] = dict(
  cards=["What do you usually do on Monday morning?", "What are you working on this week?", "How often do you go to meetings?", "What are you doing right now? (Look around you!)",
         "Where do you usually take a break?", "Are you working from home today?", "What does a QA engineer do?", "Who usually sends out the agenda in your team?",
         "What is your team doing this month?", "How often do you answer messages after work?", "What do you never do at work?", "Is anyone in your family working right now? What are they doing?"],
+ s3b=[
+ "Hi! I’m Olha, a UX/UI designer at a small IT company in Lviv. ",
+ "[[On a normal day]], I ", ("gap","start","start","🔁 routine: on a normal day"), " work at 9. I [[usually]] ", ("gap","go","go","🔁 usually = habit"),
+ " to the stand-up meeting at 9:30, and then I ", ("gap","answer","answer","🔁 routine"), " messages in Slack. Our PM ", ("gap","send out","sends out","🔁 every Monday · he → +s"),
+ " the agenda [[every Monday]]. I [[never]] ", ("gap","have","have","🔁 never = habit"), " lunch at my desk — I ", ("gap","take","take","🔁 habit"), " a break in the kitchen area.\n\n",
+ "But [[this week]] is different! Our office is closed, so we ", ("gap","work","are working","▶️ this week = a short time"), " from home. [[Right now]] I ",
+ ("gap","sit","am sitting","▶️ right now"), " in my kitchen, and my cat ", ("gap","sleep","is sleeping","▶️ now · it → is"), " on my laptop bag 😺. [[Today]] I ",
+ ("gap","prepare","am preparing","▶️ today"), " a presentation for a new client, and my colleague Max ", ("gap","create","is creating","▶️ now · he → is"), " a brief. ",
+ "I ", ("gap","not / like","do not like","state verb: like → no -ing"), " working from home every day — I ", ("gap","miss","miss","state verb: miss → no -ing"), " my team!"
+],
  out="I can talk about my usual work and what is happening now.", acc=("#e8894a", "#fbeadb", "#c4642a", "#f2a66e"))
 D["a2plus"] = dict(
  num="1.1–1.3", title="Present Simple or Present Continuous?", key="BP A2+ Review 1.1–1.3 · Present Simple vs Continuous",
@@ -85,6 +95,16 @@ D["a2plus"] = dict(
  cards=["How often do you travel for work?", "What are you doing this week?", "Where do you usually stay on a business trip?", "What are you doing right now?",
         "What do you usually do on the plane or train?", "Is your company planning an event this year?", "What does an events manager do?", "Who usually organises events in your company?",
         "What are you reading or watching these days?", "What do you never do on a business trip?", "Do you usually make small talk with people you don’t know?", "Where are you staying on your next trip?"],
+ s3b=[
+ "Hi! I’m Marta, an events manager at a conference company in Kyiv. ",
+ "[[On a normal work trip]], I ", ("gap","stay","stay","🔁 routine: on a normal trip"), " in a business hotel near the venue. I [[usually]] ", ("gap","get up","get up","🔁 usually = habit"),
+ " at 6, and I ", ("gap","check","check","🔁 routine"), " the programme with the staff. My boss ", ("gap","manage","manages","🔁 every year · she → +s"),
+ " the budget, and she [[always]] ", ("gap","pay","pays","🔁 always · she → +s"), " attention to detail. I [[never]] ", ("gap","have","have","🔁 never = habit"), " time to see the city.\n\n",
+ "But [[this trip]] is different! [[This week]] we ", ("gap","organise","are organising","▶️ this week = a short time"), " a product launch in Barcelona, and I ",
+ ("gap","stay","am staying","▶️ this trip"), " in a small B&B. [[Right now]] I ", ("gap","sit","am sitting","▶️ right now"), " in a café, and the guests ",
+ ("gap","arrive","are arriving","▶️ now · they → are"), " at the venue. ",
+ "I ", ("gap","not / want","do not want","state verb: want → no -ing"), " to go home on Friday — I ", ("gap","love","love","state verb: love → no -ing"), " this city!"
+],
  out="I can talk about my usual work trips and what is happening now.", acc=("#3fa9ad", "#e6f4f4", "#2b8185", "#5cc1c4"))
 
 C = D[LEVEL]; K = {}
@@ -116,7 +136,25 @@ rows = ""
 for i, (a, v, b, ans) in enumerate(C["s3"], 1):
     k = "a3_%d" % i; K[k] = variants(ans)
     rows += '<div class="row">%d. %s %s <span class="hintv">%s</span> %s%s</div>' % (i, a, inp(k, 190, "…"), v, b, fb(k))
-S.append(("3", bloom("Apply", "Застосуй: постав дієслово у правильну форму") + '<p class="ins"><b class="x">3</b>Complete the sentences. Use the verb in brackets in Present Simple or Present Continuous.</p>' + rows + ctl("a3")))
+S.append(("3A", bloom("Apply", "Застосуй: постав дієслово у правильну форму") + '<p class="ins"><b class="x">3</b><b>A</b> Complete the sentences. Use the verb in brackets in Present Simple or Present Continuous.</p>' + rows + ctl("a3")))
+# 3B Apply in context: a text
+import html as _h
+txt, ann, gi = "", "", 0
+for tok in C["s3b"]:
+    if isinstance(tok, tuple):
+        gi += 1; _, hint, ans, why = tok; k = "t3_%d" % gi; K[k] = variants(ans)
+        txt += '<span class="gapw">%s <span class="hintv">(%s)</span>%s</span>' % (inp(k, 150, "…"), hint, fb(k))
+        ann += '<span class="answ">%s</span><sup class="why">%s</sup>' % (ans, why)
+    else:
+        t = tok.replace("\n", "<br>")
+        txt += re.sub(r"\[\[(.+?)\]\]", r"\1", t); ann += re.sub(r"\[\[(.+?)\]\]", r'<mark>\1</mark>', t)
+S.append(("3B", bloom("Apply", "Застосуй у тексті: як граматика працює в житті") +
+          '<p class="ins"><b class="x">3</b><b>B</b> Read the post. Put the verbs in brackets in Present Simple or Present Continuous.</p>'
+          '<div class="post"><div class="ph">%s</div>%s</div>' % ("👩‍🎨 Olha · Team blog" if LEVEL == "a2" else "👩‍💼 Marta · Company blog", txt) + ctl("t3") +
+          '<button class="btn l" id="howb" disabled onclick="model(\'howm\')">💡 See how it works (after you check)</button>'
+          '<div class="model" id="howm"><p><b>Look at the words in yellow.</b> They tell you which tense to use: 🔁 normal day, usually, every, never → Present Simple; ▶️ this week, right now, today → Present Continuous. '
+          '<b>like, love, want, miss</b> → always Present Simple.</p><div class="post">%s</div></div>'
+          '<div class="card">🗣 Tell your teacher: What does %s usually do? What is she doing this week? Is your week similar?</div>' % (ann, "Olha" if LEVEL == "a2" else "Marta")))
 # 4 Apply: questions
 rows = ""
 for i, (w, t, ans) in enumerate(C["s4"], 1):
@@ -157,6 +195,9 @@ JS = r"""document.head.insertAdjacentHTML("beforeend",`<style>
 .qcard{font-size:24px;font-weight:500;text-align:center;background:#f3f4f6;border-radius:12px;padding:26px 16px;margin:10px 0;min-height:110px;display:flex;align-items:center;justify-content:center}
 table.tb{border-collapse:collapse;width:100%;margin:10px 0;font-size:15.5px}table.tb th,table.tb td{border:1px solid #c8c9cb;padding:8px 12px;vertical-align:top;text-align:left}table.tb th{background:#f3f4f6}
 textarea.g{overflow:hidden;resize:vertical}
+.post{background:#fff;border:1px solid #e1e3e8;border-radius:12px;padding:14px 18px;line-height:2.3;font-size:17px;margin:8px 0}.post .ph{font-weight:600;color:#4d4d4f;margin-bottom:4px;line-height:1.4}
+.gapw{display:inline}.gapw .fb{display:inline;margin-left:4px}.gapw .fb:not(.show){display:none}
+.post mark{background:#fff1a8;border-radius:4px;padding:0 3px}.post .answ{font-weight:600;color:#2e7d4f}.post sup.why{font-size:11.5px;color:#8a8b8d;margin:0 6px 0 2px}
 </style>`);
 // shuffle select options on every load (first "—" stays)
 document.querySelectorAll("main select.g").forEach(s=>{const o=[...s.options].slice(1);o.sort(()=>Math.random()-.5);o.forEach(x=>s.appendChild(x))});
@@ -165,7 +206,7 @@ document.querySelectorAll("main .row,main .tf").forEach(r=>{const L=[...r.queryS
 const TRIES={};let REVEAL=false;
 function fbk(k,ok,txt){const f=$("fb_"+k);if(!f)return;f.className="fb show "+(ok?"ok":"no");f.querySelector(".h").innerHTML=ok?"✓":(REVEAL?txt:"✗ Try again")}
 const _cs=chkSet,_cr=chkRad;
-window.chkSet=function(p){TRIES[p]=(TRIES[p]||0)+1;REVEAL=TRIES[p]>1;_cs(p)};window.chkRad=function(p,w){TRIES[p]=(TRIES[p]||0)+1;REVEAL=TRIES[p]>1;_cr(p,w)};
+window.chkSet=function(p){TRIES[p]=(TRIES[p]||0)+1;REVEAL=TRIES[p]>1;_cs(p);if(p==="t3"&&$("howb")){$("howb").disabled=false;$("howb").textContent="💡 See how it works"}};window.chkRad=function(p,w){TRIES[p]=(TRIES[p]||0)+1;REVEAL=TRIES[p]>1;_cr(p,w)};
 // auto-grow textareas + word counter + model unlock
 function grow(t){t.style.height="auto";t.style.height=Math.max(t.scrollHeight+2,60)+"px"}
 function wc(){const t=document.querySelector('.g[data-k="c7"]');if(!t)return;const n=(t.value.trim().match(/\S+/g)||[]).length;$("c7n").textContent=n+" words";$("c7b").disabled=n<10}
