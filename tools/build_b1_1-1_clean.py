@@ -260,20 +260,17 @@ s5 = ('<div class="bsec">Sounds <span class="sub">Short /ɪ/ or long /iː/?</spa
 def clip(a, b):
     return ('<div style="width:100%%;max-width:600px;aspect-ratio:16/9;margin:8px 0"><iframe src="https://www.youtube-nocookie.com/embed/%s?rel=0&cc_load_policy=1&start=%d&end=%d" '
             'style="width:100%%;height:100%%;border:0;border-radius:12px" allow="encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe></div>') % (EP, a, b)
-BBC = "https://www.bbc.co.uk/learningenglish/english/features/office-english/260309"
-BBC_ALT = "https://pocketcasts.com/podcast/learning-english-for-work/89a46320-9ba1-013c-9fff-0acc26574db2/office-english-goals/230ba072-18ad-40a4-9963-802ac1499508"
-s6 = ('<div class="bsec">Shadowing <span class="sub">Speak like the speakers · imitate</span></div>' +
-      '<div class="card" style="background:#f4f6ff;border-left:4px solid #5b5fc7">🧭 <b>Shadowing</b> = you repeat what the speaker says, like a shadow. It trains pronunciation, rhythm and ready-made phrases.<br>'
-      'Today: <b>BBC Learning English – Office English: “Goals”</b> (about 7 minutes). Pippa and Phil speak <b>slowly and clearly</b> about how to talk about your goals and strengths at work – e.g. <i>“One thing I think I excel at is…”</i>. There is a <b>transcript</b> on the page.<br>'
-      '<span class="hint">🇺🇦 Повторюй за спікерами, як тінь. BBC говорить повільно й чітко – про те, як говорити про свої цілі та сильні сторони на роботі. На сторінці є текст.</span></div>' +
-      '<div class="card" style="margin-top:12px;text-align:center"><a class="btn" href="%s" target="_blank" rel="noopener" style="font-size:17px;padding:10px 22px">🎧 Open the episode: audio + transcript</a>'
-      '<div class="hint" style="margin-top:6px">If it doesn’t open, listen here: <a href="%s" target="_blank" rel="noopener">Office English: Goals (podcast)</a></div></div>' % (BBC, BBC_ALT) +
-      '<p class="ins" style="margin-top:18px">' + X(6, "A") + '<b>Listen</b> to the whole episode once. Just understand the ideas.</p>' +
-      '<p class="ins" style="margin-top:18px">' + X(6, "B") + '<b>Read and listen.</b> Open the transcript and listen again, reading along with the speakers.</p>' +
-      '<p class="ins" style="margin-top:18px">' + X(6, "C") + '<b>Pause and repeat.</b> After <b>every sentence</b> press pause and repeat it aloud – same speed, same stress, same pauses.</p>' +
-      '<p class="ins" style="margin-top:18px">' + X(6, "D") + '<b>Shadow.</b> Choose one minute you like and speak <b>together</b> with the speakers without pausing: first whisper, then aloud.</p>' +
-      '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record your shadowing (6D) as a voice message and send it to your teacher in Telegram.</b></div>' +
-      '<p class="ins" style="margin-top:22px">' + X(6, "E") + 'Write down 3 phrases from the episode that you can use to talk about <b>your</b> strengths and goals.</p>' + ta("sh_ph", "1 One thing I think I excel at is …\n2 …\n3 …", 70))
+SH1 = "FxTrsxWLSnE"   # Job Interview English Shadowing | Speak English With Me (slow, clear American English, speaker -> pause -> you repeat)
+SH2 = "Zf3UpMFCR6E"   # English Coach Chad: Job Interviews – Shadowing & Repeat After Me (American)
+s6 = ('<div class="bsec">Shadowing <span class="sub">Job interview English · imitate</span></div>' +
+      '<div class="card" style="background:#f4f6ff;border-left:4px solid #5b5fc7">🧭 <b>Shadowing</b> = you listen to a sentence and repeat it <b>exactly</b> like the speaker: the same sounds, stress, rhythm and pauses.<br>'
+      'This video is made for shadowing: <b>slow, clear American English</b>, job interview phrases. The speaker says a sentence – then there is a pause for <b>you</b>.<br>'
+      '<span class="hint">🇺🇦 Це відео створене саме для shadowing: повільна чітка американська англійська, фрази для співбесіди. Спікер каже речення – потім пауза, і ти повторюєш.</span></div>' +
+      '<p class="ins" style="margin-top:14px">' + X(6, "A") + '<b>Play → listen → repeat.</b> Start the video. After every sentence, repeat it aloud in the pause. If the pause is too short, press ⏸ and repeat.</p>' + yt(SH1) +
+      '<p class="ins" style="margin-top:18px">' + X(6, "B") + '<b>Again – faster.</b> Watch it a second time and try to speak <b>together</b> with the speaker, not after.</p>' +
+      '<div class="card" style="margin-top:12px;background:#eef7ff;border-left:4px solid #2a9df4">📲 <b>Record 1–2 minutes of your shadowing (6B) as a voice message and send it to your teacher in Telegram.</b></div>' +
+      '<p class="ins" style="margin-top:22px">' + X(6, "C") + 'Write down 3 interview phrases from the video that you want to use about <b>yourself</b>.</p>' + ta("sh_ph", "1 …\n2 …\n3 …", 70) +
+      '<div class="card" style="margin-top:22px;border-left:4px solid #e0a100;background:#fffaf0"><b style="color:#b26b00">★ More practice</b> – optional. Another American shadowing video about job interviews:</div>' + yt(SH2))
 
 # ---------- 7 4/3/2 ----------
 s7 = ('<div class="bsec">Speaking <span class="sub">Say it again – cleaner (2 / 1.5 / 1) · create → evaluate</span></div>' +
