@@ -113,12 +113,12 @@ s6 = (STAGE(6, "Evaluate", "оцінити й аргументувати") + '<p
 CHIPS = [w[0] for w in CORE]
 s7 = (STAGE(7, "Create", "створити власне") + '<p class="ins"><b class="x">7</b><b>My skills audit.</b> Audit your experience and write 90–120 words for the start of a job interview (<i>“Tell me about yourself”</i>). Use at least <b>six</b> phrases – they light up when you use them.</p>'
       '<div class="chips" id="chips7">%s</div>' % "".join('<span data-p="%s">%s</span>' % (c.lower(), c) for c in CHIPS) +
-      ta("w7", "I’ve worked as … When I audit my experience with fresh eyes, I see …", 190) + '<div class="res" id="cnt7"></div>' +
+      ta("w7", "I’ve worked as … When I look at my past jobs again, I see …", 190) + '<div class="res" id="cnt7"></div>' +
       '<p class="ins" style="margin-top:18px">Then <b>say it aloud</b> in one minute, without reading. Record it on your phone if you can – we’ll start the next lesson with it.</p>'
       '<label style="cursor:pointer"><input type="checkbox" class="yn" data-yn="w7_said"> I said it aloud in one minute</label><input class="g" data-k="w7_said" type="hidden" value="no">' +
       ADV("Your through line (video 7:05–9:56)", '<p>Watch <b>7:05–9:56</b> (<span style="cursor:pointer;color:#4044a8" onclick="jump(425)">▶ jump</span>). Match the phrases, then write 3 sentences about the <i>through line</i> of your career.</p>' +
           "".join('<div class="row"><b style="display:inline-block;min-width:240px;font-weight:500">%s</b>%s%s</div>' % (w[0], sel("w8_%d" % (i + 1), sorted(x[3] for x in ADVW), 460), fb("w8_%d" % (i + 1))) for i, w in enumerate(mix(ADVW, (3, 0, 5, 1, 6, 2, 4)))) + ctl("w8") +
-          ta("w8_story", "The through line of my career is … I’ve … I own it: …", 90)) +
+          ta("w8_story", "All my jobs are connected by … I’ve … I …", 90)) +
       '<div style="margin-top:20px">%s</div>' % (SELF % "How well do you know the phrases from the video?"))
 for i, w in enumerate(mix(ADVW, (3, 0, 5, 1, 6, 2, 4))): K["w8_%d" % (i + 1)] = [w[3]]
 

@@ -125,7 +125,7 @@ s7 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">7</b>Comple
       '<div class="two"><div>%s</div><div>%s</div></div>' % (tbl7(T7[:6], 1), tbl7(T7[6:], 7)) + ctl("v7") +
       '<p class="hint">💡 Word stress: <b>FLEX</b>ible – flexi<b>BIL</b>ity · <b>CON</b>fident – <b>CON</b>fidence · com<b>MU</b>nicate – communi<b>CA</b>tion</p>' +
       ADV("Negative prefixes", '<p>Make the adjectives negative with <b>in-</b>, <b>un-</b> or <b>dis-</b>. Then use two of them to describe the worst colleague you can imagine (no names!).</p>' + "".join('<div class="row">%d. %s → %s%s</div>' % (i + 1, a, inp("v7x_%d" % (i + 1), 170), fb("v7x_%d" % (i + 1))) for i, (a, n) in enumerate(NEG)) + ctl("v7x") + ta("v7x_use", "The worst colleague would be … and …", 50)))
-s8 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">9</b>Work with your teacher.</p>'
+s8 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">8</b>Work with your teacher.</p>'
       '<div class="card">1. Think of three or four more transferable skills that are important in tech in 2026. Use your dictionary if necessary.</div>' + ta("v8_1", "1 …\n2 …\n3 …", 90) +
       '<div class="card">2. For each skill, think of a way you could develop or demonstrate it at work.</div>' + ta("v8_2", "AI literacy – I could … / You can show it by …", 90) +
       mbtn("m8", "<b>AI literacy</b> – use AI tools every day, but always check the result; show it with a small project in your portfolio.\n"
@@ -304,7 +304,7 @@ fv = ('<div class="bsec">Before class <span class="sub">Vocabulary: IT work</spa
 f2 = ('<div class="bsec">Before class <span class="sub">Step 8 · Reading</span></div>' + GUIDE("Read the article for our lesson (or listen with 🔊). Answer the questions – use <b>Show answer</b> to check yourself.", "Прочитай статтю до уроку й відповідай на питання.") + BQ("Which skills survive AI – and do you have them?") + '<p class="ins"><b class="x">8</b><b>A</b> Read (or listen to) the article. Then answer the questions. Words in <b>bold</b> are the key vocabulary of the lesson.</p>' + article() +
       "".join('<div class="card" style="margin-top:12px">%s) %s</div>%s%s' % ("abc"[i], q.replace("Add them to the list of skills you discussed in Exercise 3.", "Add them to your list from Step 1E."), ta("f2_%d" % (i + 1), "", 60), mbtn("mf2_%d" % (i + 1), A4[i], "Show answer")) for i, q in enumerate(Q4)) +
       '<div class="card" style="margin-top:12px">d) Which skills are mentioned in <b>both</b> the video and the article?</div>' + ta("f2_4", "", 50) +
-      mbtn("mf2_4", "problem-solving, communication (skills), teamwork / being a team player") +
+      mbtn("mf2_4", "problem-solving, communication (skills), teamwork / being a team player", "Show answer") +
       '<p class="ins" style="margin-top:24px"><b class="x">8</b><b>B</b> ' + bt("E") + 'Your opinion.</p>' + think("f2_5", "The video and the article both give advice. Which piece of advice is the most useful for <b>you</b> right now – and which one would you ignore? Why?", "The most useful advice for me is … I would ignore … because …"))
 ALLPH = ["transferable skills", "previous experience", "audit your experience", "with fresh eyes", "AI-proof", "bridge the gap", "industry-specific terms", "connect the dots",
          "think in verbs, not titles", "side hustle", "skill gap", "every experience counts", "signal initiative", "industry-recognised credentials", "through line", "critical thinking", "team player", "can-do attitude"]
@@ -470,7 +470,7 @@ REC_T = ("I worked with Andrii for two years on our payments team, and I can hon
 for i, (a, _) in enumerate(REC): H["h1_%d" % (i + 1)] = [a]
 def rec():
     parts = REC_T.split("__"); h = parts[0]
-    for i, p in enumerate(parts[1:]): h += inp("h1_%d" % (i + 1), 130) + p
+    for i, p in enumerate(parts[1:]): h += inp("h1_%d" % (i + 1), 130) + fb("h1_%d" % (i + 1)).replace("<div", "<span").replace("</div>", "</span>") + p
     return '<div class="slack" style="line-height:2.1"><b>LinkedIn recommendation</b><span class="t">Olha K., Engineering Manager</span><br>%s</div>' % h
 h1 = ('<div class="bsec">Vocabulary</div><p class="ins"><b class="x">1</b>Complete the LinkedIn recommendation with the words in the box.</p>'
       '<div class="box">%s</div>' % " · ".join(sorted(a for a, _ in REC)) + rec() + ctl("h1"))
