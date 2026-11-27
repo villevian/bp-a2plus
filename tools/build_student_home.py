@@ -9,7 +9,7 @@ Usage: python3 build_student_home.py OUT.html cfg_taras
 import sys, json, importlib, time, os
 OUT = sys.argv[1]; CFG = importlib.import_module(sys.argv[2])
 OPTS = sys.argv[3:]                       # --theme=glass (design template) · --demo (sample data, no database)
-THEME = next((o.split("=", 1)[1] for o in OPTS if o.startswith("--theme=")), "")
+THEME = next((o.split("=", 1)[1] for o in OPTS if o.startswith("--theme=")), "glass")   # glass = default for students since 27.11.2026; --theme=classic = old look
 DEMO = "--demo" in OPTS
 ST = CFG.STUDENT; ASG = getattr(CFG, "ASSIGNED", {}) or {}
 units = []
@@ -46,6 +46,9 @@ if DEMO:  # sample data for design previews only: fictional student, nothing is 
     DEMO_DATA = {
         "CAB": {"current_lesson": "1.1", "note": "Great start! Next time: 60-second story without notes.", "lessons_left": 7, "payment": "private"},
         "SENT": {"1.1/flip": 1}, "PROG": {"1.1": "progress"},
+        "LOG": [{"kind": "done", "delta": -1, "note": "1.1 Transferable skills", "at": "2026-11-26T12:00:00Z"},
+                {"kind": "bonus", "delta": 0, "note": "speaking club", "at": "2026-11-25T12:00:00Z"},
+                {"kind": "paid", "delta": 8, "note": "", "at": "2026-11-20T12:00:00Z"}],
         "ASG": [{"lesson": "1.1", "page": "clean", "title": "Clean your English: fix the mistakes from our lesson", "due": None, "assigned": "2026-11-26"},
                 {"lesson": "1.1", "page": "flip", "title": "Before class 1.1: watch the video and prepare your notes", "due": "2026-11-25", "assigned": "2026-11-24"}],
         "SC": {"tasks": [
@@ -161,6 +164,7 @@ h2.sec{font-size:20px;margin:0 0 12px;letter-spacing:-.3px;scroll-margin-top:12p
 .rt{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
 .rt div{flex:1;min-width:150px;border-radius:11px;padding:9px 11px;background:#f1f3f7;font-size:13px;color:var(--ink2)}
 .rt div b{display:block;color:var(--ink);font-size:14px}.rt div.now{background:var(--bl2);color:var(--bl)}.rt div.now b{color:var(--bl)}
+.lhs{margin-top:10px;border-top:1px solid #eef0f5;padding-top:6px}.lh{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink2);padding:3px 0}.lh small{color:var(--mut)}
 .pl .row3{display:grid;grid-template-columns:1.4fr 1fr;gap:14px}
 .pg4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:14px}
 .pg2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;margin-bottom:14px}
@@ -302,13 +306,13 @@ $("av").textContent=first[0]; $("nm").textContent=D.student.name;
 $("xl").innerHTML='<div class="nvsep"></div>'+D.links.map(([u,i,t])=>`<a class="nv" href="${esc(u)}"><i aria-hidden="true">${i}</i>${esc(t)}</a>`).join("");
 
 // PROG: lesson status · HWD: homework sent · CAB: cabinet · SC: raw scores from get_my_scores
-let PROG={},HWD={},SENT={},CAB={},ASG=null,SC=null,teacher=false,TKEY="",dirty=false;
+let PROG={},HWD={},SENT={},CAB={},ASG=null,LOG=[],SC=null,teacher=false,TKEY="",dirty=false;
 let MANUAL=[],AUTO=[];            // MANUAL: rows the teacher grades · AUTO: checked exercises with a skill tag (read-only)
 const CACHE="home_"+D.student.code;
 const ALL=()=>MANUAL.concat(AUTO);
 
-function loadCache(){ try{const s=localStorage.getItem(CACHE); if(s){const d=JSON.parse(s); CAB=d.CAB||{}; PROG=d.PROG||{}; HWD=d.HWD||{}; SENT=d.SENT||{}; ASG=d.ASG||null; if(d.SC)applyScores(d.SC);}}catch(e){} }
-function saveCache(){ try{localStorage.setItem(CACHE,JSON.stringify({CAB,PROG,HWD,SENT,ASG,SC,at:Date.now()}));}catch(e){} }
+function loadCache(){ try{const s=localStorage.getItem(CACHE); if(s){const d=JSON.parse(s); CAB=d.CAB||{}; PROG=d.PROG||{}; HWD=d.HWD||{}; SENT=d.SENT||{}; ASG=d.ASG||null; LOG=d.LOG||[]; if(d.SC)applyScores(d.SC);}}catch(e){} }
+function saveCache(){ try{localStorage.setItem(CACHE,JSON.stringify({CAB,PROG,HWD,SENT,ASG,LOG,SC,at:Date.now()}));}catch(e){} }
 
 function autoTasks(rows){ const out=[];
  (rows||[]).forEach(r=>{ const m=r.meta||{}, sc=r.score||{}, ln=(String(r.lesson).match(/(\d+\.\d+|W\d+)/)||[])[1]||"";
@@ -336,6 +340,11 @@ function assignList(){ const lk=n=>String(n).toUpperCase();
  if(!rows.length&&CAB.homework){ const m=String(CAB.homework_url||"").match(/lessons\/([^/]+)\/[^/]+\/([a-z]+)\.html/i);
   rows=[{title:CAB.homework,lesson:m?lk(m[1].replace(/-/g,".")):"",page:m?m[2]:"",due:CAB.homework_due,url:CAB.homework_url||"#"}]; }
  return rows.map(a=>Object.assign(a,{sent:!!SENT[a.lesson+"/"+a.page]})); }
+// lesson journal (lesson_log): done −1, bonus 0, paid +N, fix ±N
+function histHtml(){ if(!LOG.length)return ""; const nb=LOG.filter(x=>x.kind==="bonus").length;
+ const row=x=>{const d=fdate(String(x.at).slice(0,10)),t=x.kind==="done"?"✓ Lesson":x.kind==="bonus"?"🎁 Bonus lesson":x.kind==="paid"?"💳 Payment · +"+x.delta+" lessons":(x.delta>0?"+":"")+x.delta+" "+(x.note||"correction");
+  return `<div class="lh"><span>${esc(t)}${x.note&&x.kind!=="fix"&&x.kind!=="paid"?' <small>· '+esc(x.note)+'</small>':""}</span><span>${d}</span></div>`};
+ return `<div class="lhs">${LOG.slice(0,3).map(row).join("")}${nb?`<div class="lh"><small>${nb} bonus lesson${nb>1?"s":""} — free, not counted</small></div>`:""}</div>`; }
 const pill=s=>s==="done"?'<span class="pill p-ok">✓ Done</span>':s==="progress"?'<span class="pill p-wa">In progress</span>':'<span class="pill p-new">New</span>';
 function pageLinks(l){ const out=[]; l.pages.forEach(p=>{ out.push(`<a href="${path(l.n,l.tr,p)}">${NM[p]||p}</a>`);
   if(l.classic&&p==="lesson") out.push(`<a href="${path(l.n,l.tr+"-classic",p)}">Lesson · email version</a>`); }); return out.join(""); }
@@ -401,7 +410,7 @@ function render(){
  S.push(`<a class="card" href="#assignments"><h3>📝 Assignments</h3><div class="num" style="color:${aLeft?"var(--wa)":"var(--ok)"}">${aLeft}</div><div class="sub">${AL.length?(aLeft?"to do":"all done — great!"):"nothing assigned yet"}${nxDue?" · due "+fdate(nxDue):""}</div></a>`);
 
  if((CAB.payment||"private")==="private"&&CAB.lessons_left!=null){ const n=CAB.lessons_left,c=n<=0?"var(--bad)":n<=2?"var(--wa)":"var(--ok)";
-  S.push(`<div class="card"><h3>🎟 Lessons left</h3><div class="num" style="color:${c}">${n}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,n*10))}%;background:${c}"></i></div><div class="sub" style="margin-top:6px">${n<=0?"Time to top up your package":n<=2?"Only a few lessons left":"in your package"}</div></div>`); }
+  S.push(`<div class="card"><h3>🎟 Lessons left</h3><div class="num" style="color:${c}">${n}</div><div class="bar"><i style="width:${Math.max(4,Math.min(100,n*10))}%;background:${c}"></i></div><div class="sub" style="margin-top:6px">${n<=0?"Time to top up your package":n<=2?"Only a few lessons left":"in your package"}</div>${histHtml()}</div>`); }
 
  S.push(`<div class="card"><h3>📈 Lessons done</h3><div class="num">${done}<span style="font-size:18px;color:var(--mut)"> / ${OPEN.length}</span></div><div class="bar"><i style="width:${pct}%"></i></div><div class="sub" style="margin-top:6px">of your open lessons</div></div>`);
  $("stats").innerHTML=S.join(""); $("stats").style.setProperty("--n",S.length);
@@ -612,7 +621,7 @@ function syncNav(){ const ids=["top","assignments","myplan","progress","course"]
  ids.forEach(id=>{ const el=$(id); if(el&&id!=="top"&&el.getBoundingClientRect().top<=140) cur=id; });
  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="course";
  const a=navs.find(x=>x.getAttribute("href")==="#"+cur); if(a)setCur(a); }
-if(D.demo){ CAB=D.demo.CAB; SENT=D.demo.SENT; PROG=D.demo.PROG; ASG=D.demo.ASG; applyScores(D.demo.SC);
+if(D.demo){ CAB=D.demo.CAB; SENT=D.demo.SENT; PROG=D.demo.PROG; ASG=D.demo.ASG; LOG=D.demo.LOG||[]; applyScores(D.demo.SC);
  const n=document.createElement("div"); n.className="warn on"; n.textContent="Design preview with sample data — not a real student, nothing is saved."; $("top").prepend(n); }
 else loadCache(); render();
 window.addEventListener("scroll",syncNav,{passive:true}); syncNav();
@@ -634,6 +643,7 @@ if(D.student.code&&!D.demo){
   w.textContent="⚠️ Couldn't reach the server just now, so this page shows what was saved on this device. Your answers are safe — reload in a minute.";
   if($("hwl").textContent.trim()==="Loading…") $("hwl").innerHTML='<p class="empty">Assignments will appear when the connection is back.</p>'; });
  // grades are separate: if the scores table is not set up yet, the rest of the page still works
+ rpc("get_my_lessons",{p_code:D.student.code}).then(r=>{ LOG=Array.isArray(r)?r:[]; saveCache(); render(); }).catch(()=>{});
  rpc("get_my_assignments",{p_code:D.student.code}).then(r=>{ ASG=Array.isArray(r)?r:[]; saveCache(); render(); }).catch(()=>{});
  rpc("get_my_scores",{p_code:D.student.code}).then(r=>{ if(teacher&&dirty)return; applyScores(r); saveCache(); renderProgress(); renderEditors(); }).catch(()=>{});
 }

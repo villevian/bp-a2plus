@@ -139,6 +139,11 @@ const ILLU=__ILLU__;
 function glassHero(){ const el=$("gh"); if(!el)return;
  const cur=OPEN.find(l=>CAB.current_lesson&&String(CAB.current_lesson).startsWith(l.n))||OPEN[OPEN.length-1];
  const h=new Date().getHours(), nx=nextLesson(), P=D.plan||{};
+ // lesson days: from the plan, or read from the cabinet text ("Wed, Fri 18:00", "Mon–Thu …")
+ const DS=["sun","mon","tue","wed","thu","fri","sat"]; let days=P.days||null;
+ if(!days&&CAB.schedule){ const t=String(CAB.schedule).toLowerCase(), r=t.match(/\b(mon|tue|wed|thu|fri|sat|sun)[a-z]*\s*[–-]\s*(mon|tue|wed|thu|fri|sat|sun)/);
+  if(r){ days=[]; for(let i=DS.indexOf(r[1]);;i=(i+1)%7){ days.push(i); if(i===DS.indexOf(r[2])||days.length>7)break; } }
+  else { const m=t.match(/\b(mon|tue|wed|thu|fri|sat|sun)/g); if(m) days=[...new Set(m.map(x=>DS.indexOf(x)))]; } }
  const next=assignList().find(a=>!a.sent);                                    // the one actionable next step
  const sp=D.progress.speech.slice().sort(byDate).filter(s=>s.wpm), last=sp[sp.length-1];
  const pts=sp.map(s=>s.wpm), lo=Math.min(...pts,100), hi=Math.max(...pts,150);
@@ -146,13 +151,13 @@ function glassHero(){ const el=$("gh"); if(!el)return;
  const rel=d=>{const ms=d-new Date(),d0=new Date();d0.setHours(0,0,0,0);const dd=Math.round((new Date(d).setHours(0,0,0,0)-d0)/864e5);return ms<0?"now":ms<36e5?"in "+Math.max(1,Math.round(ms/6e4))+" min":dd===0?"today":dd===1?"tomorrow":"in "+dd+" days"};
  // this week: Mon..Sun, lesson days from the plan, today outlined
  const now=new Date(), mon=new Date(now); mon.setHours(0,0,0,0); mon.setDate(mon.getDate()-((mon.getDay()+6)%7));
- const wk=[0,1,2,3,4,5,6].map(i=>{const d=new Date(mon);d.setDate(mon.getDate()+i);const isL=(P.days||[]).includes(d.getDay()),isT=d.toDateString()===now.toDateString();
+ const wk=[0,1,2,3,4,5,6].map(i=>{const d=new Date(mon);d.setDate(mon.getDate()+i);const isL=(days||[]).includes(d.getDay()),isT=d.toDateString()===now.toDateString();
   return `<span class="${isL?"on":""} ${isT?"td":""}" title="${isL?"Lesson day":""}">${d.toLocaleDateString("en-GB",{weekday:"short"}).slice(0,2)}<b>${d.getDate()}</b></span>`}).join("");
  el.innerHTML=`<div><div class="eb">${h<12?"Good morning":h<18?"Good afternoon":"Good evening"}</div><h1>${esc(first)}</h1>
   ${cur?`<h2>Lesson ${esc(cur.n)} · ${esc(cur.t)}</h2><p>${esc(cur.d)}</p>`:"<p>Your first lesson will appear here.</p>"}
   ${next?`<div class="ns"><div><small>Your next step${next.due?" · due "+fdate(next.due):""}</small><b>${esc(next.title)}</b></div><a class="btn" href="${esc(next.url)}">Start</a></div>`:""}
   ${cur?`<div class="bs">${cur.pages.slice(0,next?3:4).map((p,j)=>`<a class="btn ${next||j?"l":""}" href="${path(cur.n,cur.tr,p)}">${NM[p]||p}</a>`).join("")}<a class="btn l" href="#course">All pages</a></div>`:""}
-  ${P.days?`<div class="wk7" aria-label="This week">${wk}${nx?`<em>Next lesson: <b style="color:var(--ink)">${nx.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"})} · ${hm(nx)}</b> · ${rel(nx)}</em>`:""}</div>`:""}
+  ${days||nx||CAB.schedule?`<div class="wk7" aria-label="This week">${days?wk:""}${nx?`<em>Next lesson: <b style="color:var(--ink)">${nx.toLocaleDateString("en-GB",{weekday:"short",day:"numeric",month:"short"})} · ${hm(nx)}</b> · ${rel(nx)}</em>`:CAB.schedule?`<em>Lessons: <b style="color:var(--ink)">${esc(CAB.schedule)}</b></em>`:""}</div>`:""}
   ${CAB.note?`<div class="note">💬 <b>From your teacher:</b> ${esc(CAB.note)}</div>`:""}</div>
   <div class="gf"><div class="frame">${ILLU}</div>
    ${CAB.lessons_left!=null&&(CAB.payment||"private")==="private"?`<div class="fb t"><b>${CAB.lessons_left}</b>lessons left</div>`:""}
