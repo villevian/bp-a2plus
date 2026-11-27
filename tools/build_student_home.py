@@ -46,13 +46,18 @@ def _mix(h, w, t):  # mix colour h with w ("#fff"/"#000") by t (0..1)
     a = [int(h[i:i + 2], 16) for i in (1, 3, 5)]; b = [255, 255, 255] if w == "#fff" else [0, 0, 0]
     return "#%02x%02x%02x" % tuple(round(x + (y - x) * t) for x, y in zip(a, b))
 ACC = getattr(CFG, "HOME_ACC", None) or getattr(CFG, "ACC", "#ff6b3d")
-COLORS = {"__ACC__": ACC, "__ACC2__": _mix(ACC, "#fff", .92), "__ACC3__": _mix(ACC, "#fff", .8), "__ACCD__": _mix(ACC, "#000", .3)}
+def _lum(h):
+    c = [int(h[i:i + 2], 16) / 255 for i in (1, 3, 5)]; c = [x / 12.92 if x <= .03928 else ((x + .055) / 1.055) ** 2.4 for x in c]
+    return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]
+ACCB, _t = ACC, 0.0   # button colour: the accent, darkened only as much as needed for white text to read (contrast >= 4.5)
+while 1.05 / (_lum(ACCB) + .05) < 4.5 and _t < .6: _t += .02; ACCB = _mix(ACC, "#000", _t)
+COLORS = {"__ACCB__": ACCB, "__ACC__": ACC, "__ACC2__": _mix(ACC, "#fff", .92), "__ACC3__": _mix(ACC, "#fff", .8), "__ACCD__": _mix(ACC, "#000", .3)}
 
 HTML = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>__NAME__ · My English</title><meta name="robots" content="noindex">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--acc:__ACC__;--acc2:__ACC2__;--acc3:__ACC3__;--accd:__ACCD__;
+:root{--acc:__ACC__;--accb:__ACCB__;--acc2:__ACC2__;--acc3:__ACC3__;--accd:__ACCD__;
 --ink:#1b2235;--ink2:#4d566d;--mut:#737b90;--line:#e9ecf3;--bg:#f6f8fc;--pan:#fff;
 --ok:#1d7a47;--ok2:#e8f6ed;--wa:#a86500;--wa2:#fff5e3;--bl:#3558d4;--bl2:#eef2ff;--bad:#b8372b;--bad2:#fdeceb;
 --r:16px;--r2:12px;--sh:0 1px 2px rgba(27,34,53,.04),0 6px 20px rgba(27,34,53,.05)}
@@ -65,7 +70,7 @@ a{color:inherit}
 .app{display:grid;grid-template-columns:248px minmax(0,1fr);min-height:100vh}
 aside{background:var(--pan);border-right:1px solid var(--line);padding:20px 14px;position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:3px;overflow-y:auto}
 .me{display:flex;align-items:center;gap:11px;padding:0 8px 16px;border-bottom:1px solid var(--line);margin-bottom:12px}
-.av{width:42px;height:42px;border-radius:14px;background:var(--acc);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex:none}
+.av{width:42px;height:42px;border-radius:14px;background:var(--accb);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:17px;flex:none}
 .me b{display:block;font-size:15px}.me span{font-size:12.5px;color:var(--mut)}
 .nv{display:flex;align-items:center;gap:11px;text-decoration:none;color:var(--ink2);padding:9px 11px;border-radius:11px;font-weight:500;font-size:14.5px;min-height:44px}
 .nv:hover{background:var(--bg)}.nv[aria-current="true"]{background:var(--acc2);color:var(--accd);font-weight:600}
@@ -92,7 +97,7 @@ a.card{text-decoration:none;display:block}a.card:hover{border-color:var(--acc3)}
 .pill{display:inline-block;font-size:12.5px;font-weight:600;border-radius:8px;padding:2px 9px}
 .p-ok{background:var(--ok2);color:var(--ok)}.p-wa{background:var(--wa2);color:var(--wa)}
 .p-no{background:#f1f3f7;color:#5f677b}.p-new{background:var(--bl2);color:var(--bl)}.p-bad{background:var(--bad2);color:var(--bad)}
-.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;background:var(--acc);color:#fff;text-decoration:none;border-radius:11px;padding:10px 15px;font-weight:600;font-size:14px;border:0;cursor:pointer;min-height:44px}
+.btn{white-space:nowrap;display:inline-flex;align-items:center;gap:6px;background:var(--accb);color:#fff;text-decoration:none;border-radius:11px;padding:10px 15px;font-weight:600;font-size:14px;border:0;cursor:pointer;min-height:44px}
 .btn:hover{filter:brightness(.95)}
 .btn.l{background:var(--pan);color:var(--ink);border:1.5px solid var(--line)}
 .btn.l:hover{border-color:var(--acc);color:var(--accd);filter:none}
@@ -336,7 +341,7 @@ function render(){
  const cur=OPEN.find(l=>CAB.current_lesson&&String(CAB.current_lesson).startsWith(l.n))||OPEN[OPEN.length-1];
  const done=OPEN.filter(l=>status(l.n)==="done").length, pct=OPEN.length?Math.round(done/OPEN.length*100):0;
 
- $("ring").innerHTML=`<svg viewBox="0 0 36 36" role="img" aria-label="${pct} per cent of your open lessons are done"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#edf0f6" stroke-width="4"/><circle cx="18" cy="18" r="15.5" fill="none" stroke="var(--acc)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${pct*.974} 100" transform="rotate(-90 18 18)"/></svg><div><b>${pct}%</b><span>${done} of ${OPEN.length} lessons done</span></div>`;
+ $("ring").innerHTML=`<svg viewBox="0 0 36 36" role="img" aria-label="${pct} per cent of your open lessons are done"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#edf0f6" stroke-width="4"/><circle cx="18" cy="18" r="15.5" fill="none" style="stroke:var(--acc)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${pct*.974} 100" transform="rotate(-90 18 18)"/></svg><div><b>${pct}%</b><span>${done} of ${OPEN.length} lessons done</span></div>`;
 
  const S=[];
  const nx=dt(CAB.next_lesson);
@@ -365,7 +370,7 @@ function render(){
  if(CAB.homework||hwU){ const mm=String(hwU).match(/lessons\/([^/]+)\/[^/]+\/([a-z]+)\.html/i), key=mm?mm[1].replace(/-/g,".").toUpperCase()+"/"+mm[2]:null;
   hl.push(`<div class="hw"><div><a href="${esc(hwU||"#")}">${esc(CAB.homework||"Homework")}</a><small>${CAB.homework_due?"Due "+fdate(CAB.homework_due,{weekday:"short",day:"numeric",month:"short"}):"from your teacher"}</small></div><a class="btn" style="margin-left:auto;margin-right:8px;padding:7px 14px" href="${esc(hwU||"#")}">Open</a>${key&&SENT[key]?'<span class="pill p-ok">✓ Sent</span>':'<span class="pill p-wa">To do</span>'}</div>`); }
  OPEN.slice().reverse().forEach(l=>{ if(!l.pages.includes("hw"))return;
-  if(hwU&&hwU.includes("/"+l.n.replace(".","-")+"/")&&/\/hw\.html/.test(hwU))return;
+  if(hwU&&hwU.includes("/"+l.n.replace(".","-").toLowerCase()+"/")&&/\/hw\.html/.test(hwU))return;
   hl.push(`<div class="hw"><div><a href="${path(l.n,l.tr,"hw")}">${esc(l.n)} ${esc(l.t)}</a><small>Homework</small></div>${HWD[l.n]?'<span class="pill p-ok">✓ Sent</span>':'<span class="pill p-wa">To do</span>'}</div>`); });
  $("hwl").innerHTML=hl.length?hl.join(""):'<p class="empty">No homework yet.</p>';
 
@@ -377,7 +382,7 @@ function render(){
  document.querySelectorAll(".uh").forEach(b=>b.addEventListener("click",()=>{
   const u=b.parentNode, open=u.classList.toggle("open"); b.setAttribute("aria-expanded",open?"true":"false"); }));
 
- renderPlan(); renderProgress();
+ renderPlan(); renderProgress(); renderEditors();
 }
 
 function renderPlan(){ const P=D.plan;
@@ -402,12 +407,11 @@ function renderPlan(){ const P=D.plan;
   <div class="card"><h3>Next lessons · ${esc(P.rhythm||"Mon–Thu")}</h3><div class="wk">${wk}</div></div>
   <div class="card"><h3>🎯 My goal</h3><div class="big">${esc(P.goal_text||"")}</div><div class="sub">${goal?"by "+goal.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}${left!=null?' · <span class="pill p-new">'+left+" days left</span>":""}</div>
   <div class="bar"><i style="width:${Math.max(2,pct)}%"></i></div><div class="sub" style="margin-top:6px">${esc(P.level||"This level")}: ${done} of ${total} lessons done</div></div></div>${rt?`<div class="rt">${rt}</div>`:""}</div>`;
- if(window.observeSections) observeSections();
 }
 
 // cards are re-drawn on every change; the teacher tables only when rows are added / removed (so typing keeps the focus)
-function renderProgress(){ renderCards(); renderGrade(); renderSpeechEdit(); }
-function renderCards(){
+function renderEditors(){ renderGrade(); renderSpeechEdit(); }
+function renderProgress(){
  $("skills").innerHTML=D.progress.skillsShown.map(([k,nm])=>{
   const st=skillState(k); let big,note,w,src;
   if(st.status==="none"){ big="—"; note='<div class="src">no tasks yet</div>'; w=0; src="waiting for your first tasks"; }
@@ -431,8 +435,8 @@ function renderCards(){
   <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;margin-top:6px" role="img" aria-label="Your speaking pace: ${h.map(x=>x.wpm).join(", ")} words per minute">
    <rect x="${P}" y="${g1}" width="${W-2*P}" height="${Math.max(0,g2-g1)}" fill="rgba(29,122,71,.1)" rx="4"/>
    <text x="${W-P-2}" y="${g1-4}" font-size="9.5" fill="#1d7a47" text-anchor="end">natural range ${G[0]}–${G[1]}</text>
-   <polyline points="${h.map((x,i)=>X(i)+","+Y(x.wpm)).join(" ")}" fill="none" stroke="var(--acc)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-   ${h.map((x,i)=>`<circle cx="${X(i)}" cy="${Y(x.wpm)}" r="${i===h.length-1?4.5:3}" fill="${i===h.length-1?"var(--acc)":"#fff"}" stroke="var(--acc)" stroke-width="2"/>`).join("")}
+   <polyline points="${h.map((x,i)=>X(i)+","+Y(x.wpm)).join(" ")}" fill="none" style="stroke:var(--acc)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+   ${h.map((x,i)=>`<circle cx="${X(i)}" cy="${Y(x.wpm)}" r="${i===h.length-1?4.5:3}" style="fill:${i===h.length-1?"var(--acc)":"#fff"};stroke:var(--acc)" stroke-width="2"/>`).join("")}
    ${h.map((x,i)=>`<text x="${X(i)}" y="${Y(x.wpm)-9}" font-size="9.5" fill="#4d566d" text-anchor="middle">${x.wpm}</text>`).join("")}
    ${h.map((x,i)=>`<text x="${X(i)}" y="${H-4}" font-size="9.5" fill="#737b90" text-anchor="middle">${esc(x.lesson)}</text>`).join("")}</svg>`; }
  let bands="";
@@ -465,7 +469,7 @@ function renderCards(){
 }
 
 const SK2=[["listening","Listening"],["speaking","Speaking"],["reading","Reading"],["vocabulary","Vocabulary"],["grammar","Grammar"],["writing","Writing"],["pronunciation","Pronunciation"]];
-function changed(){ dirty=true; $("bSave").disabled=false; $("tinfo").textContent="· grading "+D.student.name+" · unsaved changes"; renderCards(); }
+function changed(){ dirty=true; $("bSave").disabled=false; $("tinfo").textContent="· grading "+D.student.name+" · unsaved changes"; renderProgress(); }
 function renderGrade(){
  const c=$("gradeCard"); if(!teacher){ c.style.display="none"; return; } c.style.display="block";
  const rows=MANUAL.slice().sort((a,b)=>a.date<b.date?1:-1).map(t=>`<tr data-id="${esc(t.id)}">
@@ -531,7 +535,7 @@ function renderSpeechEdit(){
 function setTeacher(on){ teacher=on; if(!on){ TKEY=""; dirty=false; } $("tb").classList.toggle("on",on);
  $("bTeacher").style.display=on?"none":"block"; $("bSave").disabled=!dirty;
  $("tinfo").textContent="· grading "+D.student.name;
- renderProgress(); if(on) $("progress").scrollIntoView(); }
+ renderProgress(); renderEditors(); if(on) $("progress").scrollIntoView(); }
 function openKey(){ if(!D.student.code)return; $("ov").classList.add("on"); $("pwErr").classList.remove("on");
  let k=""; try{k=localStorage.getItem("bp_admin_key")||""}catch(e){}   // same site as bp-admin: reuse the key if you are logged in there
  $("pw").value=k; $("pw").focus(); }
@@ -550,7 +554,7 @@ $("bOk").onclick=async()=>{ const v=$("pw").value.trim(), err=$("pwErr");
   else { err.textContent="Wrong key. Try again."; err.classList.add("on"); } }
  catch(e){ err.textContent="Couldn't check the key: "+e.message+". Is the database set up (supabase_v3_scores.sql)?"; err.classList.add("on"); }
  finally{ $("bOk").disabled=false; } };
-$("bExit").onclick=()=>{ if(dirty&&!confirm("You have unsaved grades. Exit without saving?"))return; setTeacher(false); applyScores(SC); renderProgress(); };
+$("bExit").onclick=()=>{ if(dirty&&!confirm("You have unsaved grades. Exit without saving?"))return; setTeacher(false); applyScores(SC); renderProgress(); renderEditors(); };
 $("bSave").onclick=async()=>{ $("bSave").disabled=true; $("tinfo").textContent="· saving…";
  const strip=t=>{const o=Object.assign({},t);delete o.auto;return o;};
  try{ await rpc("admin_set_scores",{p_key:TKEY,p_code:D.student.code,p_tasks:MANUAL.map(strip),p_speech:D.progress.speech});
@@ -564,13 +568,12 @@ if(!D.student.code){ $("bTeacher").style.display="none"; $("bTeacher2").style.di
 const navs=[...document.querySelectorAll("aside a.nv")].filter(a=>a.getAttribute("href").startsWith("#"));
 const setCur=a=>{ navs.forEach(x=>x.removeAttribute("aria-current")); a.setAttribute("aria-current","true"); };
 navs.forEach(a=>a.addEventListener("click",()=>setCur(a)));
-let io=null;
-window.observeSections=()=>{ if(!("IntersectionObserver" in window))return; if(io)io.disconnect();
- io=new IntersectionObserver(es=>{ es.forEach(e=>{ if(!e.isIntersecting)return;
-  const a=navs.find(x=>x.getAttribute("href")==="#"+e.target.id); if(a)setCur(a); }); },{rootMargin:"-30% 0px -60% 0px"});
- ["top","myplan","progress","course","homework"].forEach(id=>{ const el=$(id); if(el)io.observe(el); }); };
-
-loadCache(); render(); observeSections();
+function syncNav(){ const ids=["top","homework","myplan","progress","course"]; let cur="top";   // top to bottom in the document
+ ids.forEach(id=>{ const el=$(id); if(el&&id!=="top"&&el.getBoundingClientRect().top<=140) cur=id; });
+ if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="course";
+ const a=navs.find(x=>x.getAttribute("href")==="#"+cur); if(a)setCur(a); }
+loadCache(); render();
+window.addEventListener("scroll",syncNav,{passive:true}); syncNav();
 setInterval(greet,60000);
 
 if(D.student.code){
@@ -589,7 +592,7 @@ if(D.student.code){
   w.textContent="⚠️ Couldn't reach the server just now, so this page shows what was saved on this device. Your answers are safe — reload in a minute.";
   if($("hwl").textContent.trim()==="Loading…") $("hwl").innerHTML='<p class="empty">Homework will appear when the connection is back.</p>'; });
  // grades are separate: if the scores table is not set up yet, the rest of the page still works
- rpc("get_my_scores",{p_code:D.student.code}).then(r=>{ if(teacher&&dirty)return; applyScores(r); saveCache(); renderProgress(); }).catch(()=>{});
+ rpc("get_my_scores",{p_code:D.student.code}).then(r=>{ if(teacher&&dirty)return; applyScores(r); saveCache(); renderProgress(); renderEditors(); }).catch(()=>{});
 }
 </script></body></html>"""
 h = HTML
