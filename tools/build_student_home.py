@@ -531,7 +531,9 @@ function renderGrade(){
   <td style="width:70px"><input type="number" min="0" max="100" inputmode="numeric" value="${t.pct??""}" data-f="pct" style="text-align:center;font-weight:600" aria-label="Percent"></td>
   <td style="width:40px"><button class="del" type="button" data-del="${esc(t.id)}" aria-label="Remove task">×</button></td></tr>`).join("");
  const nA=AUTO.length;
- c.innerHTML=`<h3>✍️ Grading · only “Review” rows count towards the score</h3>
+ const mk=OPEN.map(l=>`<div style="margin:4px 0"><b>${esc(l.n)}</b> ${l.pages.map(p=>`<a href="${path(l.n,l.tr,p)}&teacher" target="_blank" rel="noopener" style="margin-right:10px;white-space:nowrap">${NM[p]||p}</a>`).join("")}</div>`).join("");
+ c.innerHTML=`<h3>✅ Mark exercises · opens the student's page with their answers (only you see the marks)</h3><div style="font-size:13.5px;margin-bottom:18px">${mk||'<span class="empty">No open lessons.</span>'}</div>
+  <h3>✍️ Grading · only “Review” rows count towards the score</h3>
   <div style="overflow-x:auto"><table class="g"><tr><th>Date</th><th>Lesson</th><th>Task</th><th>Skill</th><th>Topic</th><th>Stage</th><th>%</th><th></th></tr>${rows||'<tr><td colspan="8" class="empty">No tasks graded yet.</td></tr>'}</table></div>
   <div class="err" id="gErr" role="alert">Percent must be a number from 0 to 100.</div>
   <div class="note"><b>First time</b> — the student meets this material for the first time; the row is kept for your record only.<br><b>Review</b> — the student comes back to it later; these rows build the percentage.<br><b>Topic</b> matters for grammar: each topic is scored on its own.${nA?`<br><b>Automatic:</b> ${nA} checked exercise${nA===1?"":"s"} from the lesson pages also count (Before class and Lesson = first time, homework = review). They are not edited here.`:""}</div>
