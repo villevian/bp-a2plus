@@ -8,6 +8,9 @@ Usage: python3 build_student_home.py OUT.html cfg_taras
 """
 import sys, json, importlib, time, os
 OUT = sys.argv[1]; CFG = importlib.import_module(sys.argv[2])
+OPTS = sys.argv[3:]                       # --theme=glass (design template) · --demo (sample data, no database)
+THEME = next((o.split("=", 1)[1] for o in OPTS if o.startswith("--theme=")), "")
+DEMO = "--demo" in OPTS
 ST = CFG.STUDENT; ASG = getattr(CFG, "ASSIGNED", {}) or {}
 units = []
 for u, title, ls in CFG.U:
@@ -38,8 +41,28 @@ PROGRESS = {
     "tasks": [], "speech": [], "vocabStats": None,
 }
 PROGRESS.update(getattr(CFG, "PROGRESS", {}) or {})
+DEMO_DATA = None
+if DEMO:  # sample data for design previews only: fictional student, nothing is read from or sent to Supabase
+    DEMO_DATA = {
+        "CAB": {"current_lesson": "1.1", "note": "Great start! Next time: 60-second story without notes.", "lessons_left": 7, "payment": "private"},
+        "SENT": {"1.1/flip": 1}, "PROG": {"1.1": "progress"},
+        "ASG": [{"lesson": "1.1", "page": "clean", "title": "Clean your English: fix the mistakes from our lesson", "due": None, "assigned": "2026-11-26"},
+                {"lesson": "1.1", "page": "flip", "title": "Before class 1.1: watch the video and prepare your notes", "due": "2026-11-25", "assigned": "2026-11-24"}],
+        "SC": {"tasks": [
+            {"id": "t1", "date": "2026-11-20", "lesson": "1.1", "name": "Listening — job stories", "skill": "listening", "topic": "", "pct": 70, "stage": "first"},
+            {"id": "t2", "date": "2026-11-24", "lesson": "1.1", "name": "Listening — second pass", "skill": "listening", "topic": "", "pct": 85, "stage": "review"},
+            {"id": "t3", "date": "2026-11-26", "lesson": "1.1", "name": "Listening — interview", "skill": "listening", "topic": "", "pct": 81, "stage": "review"},
+            {"id": "t4", "date": "2026-11-26", "lesson": "1.1", "name": "Articles", "skill": "grammar", "topic": "Articles", "pct": 80, "stage": "review"},
+            {"id": "t5", "date": "2026-11-26", "lesson": "1.1", "name": "Present Simple vs Continuous", "skill": "grammar", "topic": "Present Simple vs Continuous", "pct": 68, "stage": "review"},
+            {"id": "t6", "date": "2026-11-26", "lesson": "1.1", "name": "Verb + to or -ing", "skill": "grammar", "topic": "Verb + to or -ing", "pct": 55, "stage": "first"}],
+            "speech": [{"id": "s1", "date": "2026-11-12", "lesson": "1.1", "wpm": 108, "fluency": 2, "accuracy": 2, "range": 2, "pron": 3},
+                       {"id": "s2", "date": "2026-11-19", "lesson": "1.1", "wpm": 117, "fluency": 2, "accuracy": 3, "range": 2, "pron": 3},
+                       {"id": "s3", "date": "2026-11-24", "lesson": "1.1", "wpm": 126, "fluency": 3, "accuracy": 3, "range": 3, "pron": 3},
+                       {"id": "s4", "date": "2026-11-26", "lesson": "1.1", "wpm": 134, "fluency": 3, "accuracy": 3, "range": 4, "pron": 4,
+                        "comment": "Your pace is right where it should be. Next step: fewer “emm” — pause silently instead."}],
+            "auto": [], "vocab": {"known": 168, "learning": 74, "total": 310, "at": "2026-11-26"}}}
 DATA = {"units": units, "student": {"name": ST["name"], "code": ST.get("code", "")}, "links": LINKS, "plan": getattr(CFG, "PLAN", None),
-        "progress": PROGRESS, "build": time.strftime("%Y%m%d%H%M")}
+        "progress": PROGRESS, "build": time.strftime("%Y%m%d%H%M"), "demo": DEMO_DATA}
 
 # ---- colours: one accent per level (cfg HOME_ACC, else ACC); light tints and a darker shade for text are derived ----
 def _mix(h, w, t):  # mix colour h with w ("#fff"/"#000") by t (0..1)
@@ -589,11 +612,13 @@ function syncNav(){ const ids=["top","assignments","myplan","progress","course"]
  ids.forEach(id=>{ const el=$(id); if(el&&id!=="top"&&el.getBoundingClientRect().top<=140) cur=id; });
  if(innerHeight+scrollY>=document.documentElement.scrollHeight-4) cur="course";
  const a=navs.find(x=>x.getAttribute("href")==="#"+cur); if(a)setCur(a); }
-loadCache(); render();
+if(D.demo){ CAB=D.demo.CAB; SENT=D.demo.SENT; PROG=D.demo.PROG; ASG=D.demo.ASG; applyScores(D.demo.SC);
+ const n=document.createElement("div"); n.className="warn on"; n.textContent="Design preview with sample data — not a real student, nothing is saved."; $("top").prepend(n); }
+else loadCache(); render();
 window.addEventListener("scroll",syncNav,{passive:true}); syncNav();
 setInterval(greet,60000);
 
-if(D.student.code){
+if(D.student.code&&!D.demo){
  Promise.all([ rpc("get_my_cabinet",{p_code:D.student.code}), rpc("get_my_progress",{p_code:D.student.code}) ])
  .then(([c,p])=>{
   CAB=(c&&c[0])||{}; PROG={}; HWD={}; SENT={};
@@ -614,6 +639,8 @@ if(D.student.code){
 }
 </script></body></html>"""
 h = HTML
+if THEME == "glass":
+    import home_glass; h = home_glass.apply(h)   # design template only
 for k, v in COLORS.items(): h = h.replace(k, v)
 open(OUT, "w").write(h.replace("__DATA__", json.dumps(DATA, ensure_ascii=False)).replace("__NAME__", ST["name"]))
 print("ok", OUT)
