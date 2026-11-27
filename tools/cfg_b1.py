@@ -1,5 +1,6 @@
 LEVEL = "B1"
 ACC, ACC2 = "#e8894a", "#fbeadb"
+HOME_ACC = "#ff6b3d"   # student home page accent for B1 (brighter orange than the lesson pages)
 VARIANTS = {"1.1": ["all"], "4.2": ["all"], "4.3": ["all"], "4.4": ["all"], "4.5": ["all"]}
 GRAD = ("#c4642a", "#f2a66e")
 PAGES = {"1.1": ["flip", "lesson", "speak", "hw", "words", "clean", "extra"], "4.2": ["lesson", "extra"], "4.3": ["lesson"], "4.4": ["lesson"], "4.5": ["lesson"]}

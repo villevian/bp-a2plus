@@ -4,7 +4,11 @@ Check helpers in the page: chkSet(prefix) for inputs/selects, chkRad(prefix) for
 """
 import json
 
-def page(num, title, tag, outcome, lesson_key, code, sections, key, vocab=None, acc="#e8894a", acc2="#fbeadb", dark="#c4642a", grad2="#f2a66e", footer="", extra_js=""):
+def page(num, title, tag, outcome, lesson_key, code, sections, key, vocab=None, acc="#e8894a", acc2="#fbeadb", dark="#c4642a", grad2="#f2a66e", footer="", extra_js="", skills=None, stage=None):
+    """skills: {exercise prefix: "listening" | "vocabulary" | "reading" | "grammar:<Topic>" | "pronunciation" …} — checked exercises
+    with a skill go to "My progress" on the student home page. stage: "first" (new material, kept for the record only) or "review";
+    by default BEFORE CLASS / LESSON / IN CLASS pages are "first", everything else (homework, extra, review) is "review"."""
+    if stage is None: stage = "first" if tag.upper().startswith(("BEFORE CLASS", "LESSON", "IN CLASS")) else "review"
     nav = "".join('<button data-s="s%d"%s>%s</button>' % (i + 1, ' class="on"' if i == 0 else "", lab) for i, (lab, _) in enumerate(sections))
     body = "".join('<section id="s%d" class="sec%s">%s</section>' % (i + 1, " on" if i == 0 else "", html) for i, (_, html) in enumerate(sections))
     voc = ""
@@ -13,9 +17,13 @@ def page(num, title, tag, outcome, lesson_key, code, sections, key, vocab=None, 
             '<div class="vg"><h4>%s</h4>%s</div>' % (t, "".join(('<span>%s <em class="tr">— %s</em></span>' % w) if isinstance(w, tuple) else "<span>%s</span>" % w for w in ws)) for t, ws in vocab)
     h = TPL
     for a, b in (("__NUM__", num), ("__TITLE__", title), ("__TAG__", tag), ("__OUT__", outcome), ("__VOC__", voc), ("__NAV__", nav), ("__BODY__", body),
-                 ("__FOOT__", footer), ("__LESSON__", lesson_key), ("__CODE__", code), ("__KEY__", json.dumps(key, ensure_ascii=False)), ("__XJS__", extra_js)):
+                 ("__FOOT__", footer), ("__SKILLS__", json.dumps(skills or {}, ensure_ascii=False)), ("__STAGE__", stage), ("__LESSON__", lesson_key), ("__CODE__", code), ("__KEY__", json.dumps(key, ensure_ascii=False)), ("__XJS__", extra_js)):
         h = h.replace(a, b)
     return h.replace("ACC2", acc2).replace("GRAD2", grad2).replace("ACC", acc).replace("DARK", dark)
+
+def tagged(skills, stage=None):
+    """page() with skill tags for "My progress": html = tagged({"v6": "vocabulary", "ar": "grammar:Articles"})(num, title, ...)"""
+    return lambda *a, **k: page(*a, skills=skills, stage=stage, **k)
 
 TPL = r"""<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>__NUM__ __TITLE__ — __TAG__</title><link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&display=swap" rel="stylesheet">
@@ -66,7 +74,7 @@ footer{max-width:1000px;margin:0 auto;padding:0 20px 30px;font-size:12px;color:#
 <footer>__FOOT__Valentyna Hordiienko · Middle Learning Architect</footer>
 <script>
 const SB_URL="https://zuegojpfhgigsvyrnymt.supabase.co",SB_KEY="sb_publishable__Xn8xRhne9Hp2ckaXu6xCQ_MOe52bng";
-const LESSON="__LESSON__";const STUDENT_CODE="__CODE__";const KEY=__KEY__;
+const SKILLS=__SKILLS__,STAGE="__STAGE__",CHECKED=new Set();const LESSON="__LESSON__";const STUDENT_CODE="__CODE__";const KEY=__KEY__;
 const rpc=(f,b)=>fetch(SB_URL+"/rest/v1/rpc/"+f,{method:"POST",headers:{apikey:SB_KEY,"Content-Type":"application/json"},body:JSON.stringify(b)}).then(async r=>{const t=await r.text();if(!r.ok)throw new Error(t);return t?JSON.parse(t):null});
 const $=id=>document.getElementById(id);let student="",timer=null,submitted=false,ready=false;
 const norm=s=>(s||"").toLowerCase().replace(/[’`]/g,"'").replace(/\s+/g," ").replace(/[.!?]+$/,"").trim();
@@ -85,8 +93,9 @@ function buildCtx(){const c={};let i=0;document.querySelectorAll("section.sec").
  sec.querySelectorAll("[data-k]").forEach(el=>{const k=el.dataset.k;if(!k||c[k])return;c[k]={s:st,q:_prompt(el),i:i++}})});
  c.self={s:"Self-assessment",q:"0–5",i:i++};c.q={s:"Questions for the teacher",q:"",i:i++};return c}
 function collect(){const a={};document.querySelectorAll("input.g[data-k],select.g[data-k],textarea.g[data-k]").forEach(x=>a[x.dataset.k]=x.value);
- document.querySelectorAll("input[type=radio][data-k]:checked").forEach(x=>a[x.dataset.k]=x.value);const s=document.querySelector("#score .on");a.self=s?+s.dataset.v:null;if(!CTX)CTX=buildCtx();a._ctx=CTX;a._page=location.href.split("?")[0];a._sent=sentBy;return a}
-function fill(a){document.querySelectorAll("input.g[data-k],select.g[data-k],textarea.g[data-k]").forEach(x=>{if(a[x.dataset.k]!=null)x.value=a[x.dataset.k]});
+ document.querySelectorAll("input[type=radio][data-k]:checked").forEach(x=>a[x.dataset.k]=x.value);const s=document.querySelector("#score .on");a.self=s?+s.dataset.v:null;if(!CTX)CTX=buildCtx();a._ctx=CTX;a._page=location.href.split("?")[0];a._sent=sentBy;
+ if(Object.keys(SKILLS).length){const nm={};for(const k in CTX){const p=k.replace(/_[^_]+$/,"");if(SKILLS[p]&&!nm[p])nm[p]=("Step "+(CTX[k].s||"")).replace(/[🔍💭✍️🔎⚖️🛠]\uFE0F?\s*(Remember|Understand|Apply|Analyse|Evaluate|Create)\s*/u,"").replace(/^Step (\S+) · \1 ([A-H]) /,"Step $1$2 · ").replace(/^Step (\S+) · \1 /,"Step $1 · ").slice(0,80)}a._meta={stage:STAGE,skills:SKILLS,names:nm,checked:[...CHECKED].filter(p=>SKILLS[p])}}return a}
+function fill(a){if(a&&a._meta&&a._meta.checked)a._meta.checked.forEach(p=>CHECKED.add(p));document.querySelectorAll("input.g[data-k],select.g[data-k],textarea.g[data-k]").forEach(x=>{if(a[x.dataset.k]!=null)x.value=a[x.dataset.k]});
  document.querySelectorAll("input[type=radio][data-k]").forEach(x=>x.checked=a[x.dataset.k]===x.value);document.querySelectorAll("#score button").forEach(b=>b.classList.toggle("on",a.self!=null&&+b.dataset.v===a.self));if(window.afterFill)afterFill()}
 function scores(){const a=collect(),r={};for(const k in KEY){const p=k.replace(/_[^_]+$/,"");r[p]=r[p]||[0,0];r[p][1]++;if(a[k]!=null&&okv(k,a[k]))r[p][0]++}const o={};for(const p in r)o[p]=r[p][0]+"/"+r[p][1];return o}
 function status(t,c=""){$("st").textContent=t;$("st").className="st "+c}
@@ -128,7 +137,7 @@ $("submit").onclick=async()=>{const e=emptyTasks();if(e.n&&!confirm(e.n+(e.n===1
  submitted=true;sentBy="button";await save();$("done").style.display="block";sentLabel()};
 __XJS__
 let sentBy="";
-document.addEventListener("click",e=>{if(typeof VIEW!=="undefined"&&VIEW)return;const b=e.target.closest("button");if(b&&b.id!=="submit"&&b.closest("main")&&/^check/i.test(b.textContent.trim())){submitted=true;if(!sentBy)sentBy="check";later()}},true);
+document.addEventListener("click",e=>{if(typeof VIEW!=="undefined"&&VIEW)return;const b=e.target.closest("button");if(b&&b.id!=="submit"&&b.closest("main")&&/^check/i.test(b.textContent.trim())){const m=(b.getAttribute("onclick")||"").match(/chk[A-Za-z]*\(\s*'([^']+)'/);if(m)CHECKED.add(m[1]);submitted=true;if(!sentBy)sentBy="check";later()}},true);
 function updSubmit(){const s=$("submit");if(!s)return;const w=s.closest(".ctl")||s.parentElement;const secs=[...document.querySelectorAll("section.sec")];const show=secs.length<2||secs[secs.length-1].classList.contains("on");w.style.display=show?"":"none";const d=$("done");if(d)d.style.display=(show&&sentBy==="button")?"block":"none"}
 document.addEventListener("click",e=>{if(e.target.closest("nav button"))setTimeout(updSubmit,0)});updSubmit();
 function navH(){const n=document.querySelector("nav.stk");return (n?n.offsetHeight:0)+10}

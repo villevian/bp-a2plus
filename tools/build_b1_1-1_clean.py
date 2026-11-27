@@ -1,7 +1,7 @@
 """B1 1.1 · Homework after class: Clean your English (Taras, 26.11). Usage: build_b1_1-1_clean.py OUTDIR CODE
 Teacher's explanations from the lesson (EN + UA toggle), error clinic from his own speech, shadowing, 4/3/2 retelling."""
 import sys, os
-from bp_page import page, fb, sel, inp, ta, ctl, SELF
+from bp_page import page, fb, sel, inp, ta, ctl, SELF, tagged
 
 OUTDIR = sys.argv[1]; CODE = sys.argv[2] if len(sys.argv) > 2 else ""
 os.makedirs(OUTDIR, exist_ok=True)
@@ -294,7 +294,7 @@ VOC = [("Clean English", ["I didn’t understand it.", "this week", "in a team",
        ("Lesson words", ["a can-do attitude", "set goals", "determination", "integrity", "think outside the box", "critical thinking", "team player"])]
 import json as _j
 XJS = XJS.replace("__ECW__", _j.dumps(ECW, ensure_ascii=False))
-html = page("1.1", "Transferable skills", "HOMEWORK · CLEAN YOUR ENGLISH", "Notice and fix your own mistakes; use articles, to/-ing and Simple vs Continuous correctly.",
+html = tagged({'ar': 'grammar:Articles', 'sc': 'grammar:Present Simple vs Present Continuous', 'ti': 'grammar:Verb + to or -ing', 'st': 'grammar:Uncountable nouns', 'ec': 'grammar:Fixing my mistakes', 'sn': 'pronunciation', 'so': 'pronunciation'})("1.1", "Transferable skills", "HOMEWORK · CLEAN YOUR ENGLISH", "Notice and fix your own mistakes; use articles, to/-ing and Simple vs Continuous correctly.",
             "BP B1 1.1 Transferable skills · Clean English", CODE,
             [("1", s2), ("2", s3), ("3", s4), ("4", s1), ("5", s5), ("6", s6), ("7", s7)], K, VOC, extra_js=XJS)
 open(os.path.join(OUTDIR, "clean.html"), "w").write(html)

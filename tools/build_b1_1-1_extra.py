@@ -2,7 +2,7 @@
 Optional material for students who want more. Usage: python3 build_b1_1-1_extra.py OUTDIR [STUDENT_CODE] -> OUTDIR/extra.html
 """
 import sys, os, json
-from bp_page import page, fb, sel, inp, ta, ctl, SELF
+from bp_page import page, fb, sel, inp, ta, ctl, SELF, tagged
 OUTDIR = sys.argv[1]; CODE = sys.argv[2] if len(sys.argv) > 2 else ""
 os.makedirs(OUTDIR, exist_ok=True)
 K = {}
@@ -72,7 +72,7 @@ function readArt(b){try{if(speechSynthesis.speaking){speechSynthesis.cancel();b.
 function wce(){const v=document.querySelector('[data-k=e4b]').value,n=(v.match(/\S+/g)||[]).length;document.getElementById("wce4").textContent=n+" words (60–80)"+(n>=60&&n<=80?" ✓":"")}
 document.querySelector('[data-k=e4b]').addEventListener("input",wce);window.afterFill=wce;"""
 VOC = [("Portfolio career", ["portfolio career", "client", "contractor", "contract", "rate", "invoice", "scope", "deadline", "onboarding", "manage expectations", "availability", "time zone", "side project", "portfolio"])]
-html = page("1.1", "Transferable skills", "EXTRA", "Extra: a portfolio career – freelance and contract work for international clients.", "BP B1 1.1 Transferable skills · Extra", CODE,
+html = tagged({'e1': 'reading', 'e2': 'vocabulary', 'e3': 'vocabulary'})("1.1", "Transferable skills", "EXTRA", "Extra: a portfolio career – freelance and contract work for international clients.", "BP B1 1.1 Transferable skills · Extra", CODE,
             [("1", e1), ("2", e2), ("3", e3), ("4", e4)], K, VOC, extra_js=XJS.replace("__ART__", json.dumps(PLAIN, ensure_ascii=False)).replace("__WHY__", json.dumps(WHY, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "extra.html"), "w").write(html)
 print("ok", OUTDIR)

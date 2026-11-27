@@ -3,7 +3,7 @@ Structure = coursebook p.8–9: Lead-in 1–2, Reading (replaces video 1.1.1) 3A
 Usage: python3 build_b1_1-1.py OUTDIR [STUDENT_CODE]   -> OUTDIR/flip.html (before class), OUTDIR/lesson.html, OUTDIR/hw.html
 """
 import sys, os, json
-from bp_page import page, fb, sel, inp, ta, ctl, radios, SELF
+from bp_page import page, fb, sel, inp, ta, ctl, radios, SELF, tagged
 OUTDIR = sys.argv[1]; CODE = sys.argv[2] if len(sys.argv) > 2 else ""
 os.makedirs(OUTDIR, exist_ok=True)
 K = {}
@@ -173,7 +173,7 @@ VOC_L = [("Transferable skills", ["transferable skills", "think outside the box"
          ("From the article", ["be applied to a range of tasks and roles", "old news", "tech stack", "double-check the output", "justify a choice", "distributed team", "time zone", "demo your work", "break the build", "admit", "hard to automate", "ship a product", "genuine", "stay employable", "the person behind the CV"]),
          ("2026 skills", ["AI literacy", "async communication", "ownership", "job description"])]
 NAV = [("1", s1), ("2", s2), ("3", s3), ("4", s4), ("5", s5), ("6", s6), ("7", s7), ("8", s8), ("9", s9), ("10", s10)]
-html = page("1.1", "Transferable skills", "LESSON", "Learners can use vocabulary related to skills and personal qualities.", "BP B1 1.1 Transferable skills · Lesson", CODE,
+html = tagged({'v6': 'vocabulary', 'v7': 'vocabulary', 'v7x': 'vocabulary'})("1.1", "Transferable skills", "LESSON", "Learners can use vocabulary related to skills and personal qualities.", "BP B1 1.1 Transferable skills · Lesson", CODE,
             NAV, K, VOC_L, extra_js=XJS.replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "lesson.html"), "w").write(html)
 
@@ -454,7 +454,7 @@ document.querySelectorAll('.recall').forEach(r=>{const sec=r.closest('section');
  const fold=()=>{if(document.body.classList.contains('tv'))return;cards.style.display='none';t.style.display='inline-block'};t.onclick=()=>{cards.style.display='';t.style.display='none'};r.addEventListener('focusin',fold)});
 const _af2=window.afterFill;window.afterFill=()=>{_af2&&_af2();document.querySelectorAll('textarea[data-need]').forEach(needUpd);suit();wc9()};
 """
-html = page("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
+html = tagged({'f0a': 'vocabulary', 'f0b': 'vocabulary', 'f0r': 'vocabulary', 'gA': 'vocabulary', 'gB': 'vocabulary', 'gC': 'vocabulary', 'gD': 'vocabulary', 'gAr': 'vocabulary', 'gBr': 'vocabulary', 'gCr': 'vocabulary', 'gDr': 'vocabulary', 'f1a': 'listening', 'g2': 'listening'})("1.1", "Transferable skills", "BEFORE CLASS", "Watch, read and prepare at home – class time is for speaking.", "BP B1 1.1 Transferable skills · Before class", CODE,
             [("1", f0), ("2", f1), ("3", g2), ("4", gA), ("5", gB), ("6", gC), ("7", gD), ("8", f2), ("9", f3)], F, VOC_F, extra_js=("const WHYF=%s;\n" % json.dumps(WHYF, ensure_ascii=False)) + "document.querySelectorAll('.yn').forEach(c=>{const h=document.querySelector(`.g[data-k='${c.dataset.yn}']`);c.onchange=()=>{h.value=c.checked?'yes':'no';later()}});const _af=window.afterFill;window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>{c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes'});_af&&_af()};\n" + NEEDJS + 'function jump(t){const f=document.getElementById("yt");if(!f)return;const d=f.closest("details");if(d)d.open=true;f.src=f.src.replace(/([?&])start=\\d+/,"$1start="+t)+"&autoplay=1";f.scrollIntoView({behavior:"smooth",block:"center"})}\n' + XJS.split("const T1=")[0].replace("__ART__", json.dumps(ART_PLAIN, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "flip.html"), "w").write(html)
 
@@ -502,7 +502,7 @@ XJS_H = r"""function wc4(){const v=document.querySelector('[data-k=h4]').value,n
 document.querySelector('[data-k=h4]').addEventListener("input",wc4);window.afterFill=wc4;"""
 VOC_H = [("Transferable skills", ["a can-do attitude", "team player", "critical thinking", "set goals", "integrity", "think outside the box", "determination", "communication skills"]),
          ("Word building", ["dependable", "flexibility", "confidence", "independent", "passion", "honest", "enthusiasm", "adaptable"])]
-html = page("1.1", "Transferable skills", "HOMEWORK", "Learners can use vocabulary related to skills and personal qualities.", "BP B1 1.1 Transferable skills · Homework", CODE,
+html = tagged({'h1': 'vocabulary', 'h2': 'vocabulary', 'h3': 'vocabulary'})("1.1", "Transferable skills", "HOMEWORK", "Learners can use vocabulary related to skills and personal qualities.", "BP B1 1.1 Transferable skills · Homework", CODE,
             [("1", h1), ("2", h2), ("3", h3), ("4", h4)], H, VOC_H, extra_js=XJS_H)
 open(os.path.join(OUTDIR, "hw.html"), "w").write(html)
 print("ok", OUTDIR)

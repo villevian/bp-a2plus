@@ -1,6 +1,6 @@
 """B1 1.1 Transferable skills · In class: speaking (soft skills 2026). Usage: build_b1_1-1_speak.py OUTDIR CODE"""
 import sys, os
-from bp_page import page, fb, sel, inp, ta, ctl, SELF
+from bp_page import page, fb, sel, inp, ta, ctl, SELF, tagged
 
 OUTDIR = sys.argv[1]; CODE = sys.argv[2] if len(sys.argv) > 2 else ""
 os.makedirs(OUTDIR, exist_ok=True)
@@ -82,7 +82,7 @@ s7 = ('<div class="bsec">Wrap-up</div>' + BIG +
 
 VOC = [("Video words", ["audit your experience", "with fresh eyes", "AI-proof skills", "bridge the gap", "industry-specific terms", "connect the dots", "skill gap", "side hustle", "signal initiative", "through line", "lead by example", "industry disruptions"]),
        ("Article", ["critical thinking", "team player", "flexibility", "a can-do attitude", "integrity", "think outside the box"])]
-html = page("1.1", "Transferable skills", "IN CLASS · SPEAKING", "Talk about your soft skills with real examples and tell your career story live.",
+html = tagged({'k6': 'grammar:Fixing my mistakes'})("1.1", "Transferable skills", "IN CLASS · SPEAKING", "Talk about your soft skills with real examples and tell your career story live.",
             "BP B1 1.1 Transferable skills · Speaking", CODE,
             [("1", s1), ("2", s2), ("3", s3), ("4", s4), ("5", s5), ("6", s6), ("7", s7)], K, VOC)
 open(os.path.join(OUTDIR, "speak.html"), "w").write(html)

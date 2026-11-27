@@ -3,7 +3,7 @@ Bloom ladder for vocabulary (meaning first → retrieval → controlled use → 
 Usage: python3 build_b1_1-1_words.py OUTDIR [STUDENT_CODE] -> OUTDIR/words.html
 """
 import sys, os, json
-from bp_page import page, fb, sel, inp, ta, ctl, SELF
+from bp_page import page, fb, sel, inp, ta, ctl, SELF, tagged
 from indeed_words import CORE, REC, ADVW, VIDEO_ID, VIDEO_TITLE, CHAPTERS
 OUTDIR = sys.argv[1]; CODE = sys.argv[2] if len(sys.argv) > 2 else ""
 os.makedirs(OUTDIR, exist_ok=True)
@@ -130,7 +130,7 @@ function u7(){const v=(T7.value||"").toLowerCase().replace(/[’']/g,"'");let n=
  const w=(T7.value.match(/\S+/g)||[]).length;document.getElementById("cnt7").textContent=w+" words (90–120) · "+n+" phrases used (6+)"+(w>=90&&w<=120&&n>=6?" ✓":"")}
 T7.addEventListener("input",u7);window.afterFill=()=>{document.querySelectorAll('.yn').forEach(c=>c.checked=document.querySelector(`.g[data-k='${c.dataset.yn}']`).value==='yes');u7()};"""
 VOC = [("Use these (active)", [w[0] for w in CORE]), ("Recognise these (listening)", [w[0] for w in REC]), ("★ Advanced", [w[0] for w in ADVW])]
-html = page("1.1", "Transferable skills", "HOMEWORK · VIDEO WORDS", "After the lesson: learn and use the key phrases from the Indeed video.", "BP B1 1.1 Transferable skills · Video words", CODE,
+html = tagged({'w1': 'vocabulary', 'w2': 'vocabulary', 'w2b': 'vocabulary', 'w3': 'vocabulary', 'w4': 'vocabulary', 'w5': 'vocabulary', 'w5b': 'vocabulary', 'w6a': 'vocabulary', 'w8': 'vocabulary'})("1.1", "Transferable skills", "HOMEWORK · VIDEO WORDS", "After the lesson: learn and use the key phrases from the Indeed video.", "BP B1 1.1 Transferable skills · Video words", CODE,
             [("1", s1), ("2", s2), ("3", s3), ("4", s4), ("5", s5), ("6", s6), ("7", s7)], K, VOC, extra_js=XJS.replace("__WHY__", json.dumps(WHY, ensure_ascii=False)))
 open(os.path.join(OUTDIR, "words.html"), "w").write(html)
 print("ok", OUTDIR)
