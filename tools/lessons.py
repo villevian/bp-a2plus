@@ -7,6 +7,7 @@ Needs the Supabase token (network secret for api.supabase.com, cloud environment
   python3 lessons.py bonus taras ["free extra lesson"] [--at …]            # bonus lesson: count unchanged
   python3 lessons.py fix   taras -1 "correction"                           # manual correction
   python3 lessons.py status                                                 # every student: left, last lesson, last payment
+  python3 lessons.py daily                                                  # morning report: lessons left ≤ 1, mismatches, overdue, sent in 24 h
   python3 lessons.py check                                                  # left == sum of the journal? (prints differences)
 """
 import sys, json, urllib.request
@@ -50,4 +51,19 @@ if __name__ == "__main__":
               left join public.lesson_log l on l.slug=c.slug group by c.slug, c.lessons_left
               having c.lessons_left is distinct from coalesce(sum(l.delta),0) and (c.lessons_left is not null or count(l.*) > 0)""")
         print("all counts match the journal" if not bad else json.dumps(bad, indent=1))
+    elif cmd == "daily":   # morning report (scheduled task); also keeps the free Supabase project awake
+        low = sql("""select s.name, c.lessons_left from public.students s join public.student_cabinet c on c.slug=s.slug
+              where coalesce(c.payment,'private')='private' and c.lessons_left is not null and c.lessons_left <= 1 order by c.lessons_left, s.name""")
+        bad = sql("""select c.slug from public.student_cabinet c left join public.lesson_log l on l.slug=c.slug group by c.slug, c.lessons_left
+              having c.lessons_left is distinct from coalesce(sum(l.delta),0) and (c.lessons_left is not null or count(l.*) > 0)""")
+        late = sql("""select s.name, a.title, a.due from public.student_assignments a join public.students s on s.slug=a.student_slug
+              where a.due < current_date and not exists (select 1 from public.homework_answers h where h.student_slug=a.student_slug and h.submitted
+                and h.lesson ilike '%' || a.lesson || '%' and h.lesson ilike '%' || (case a.page when 'flip' then 'Before class' when 'hw' then 'Homework' when 'words' then 'Video words'
+                when 'clean' then 'Clean' when 'extra' then 'Extra' when 'speak' then 'Speaking' else 'Lesson' end) || '%') order by a.due""")
+        new = sql("""select s.name, h.lesson from public.homework_answers h join public.students s on s.slug=h.student_slug
+              where h.submitted and h.updated_at > now() - interval '24 hours' and h.lesson not like '%Vocabulary' order by s.name""")
+        print("Lessons left ≤ 1:", ", ".join("%s (%s)" % (r["name"], r["lessons_left"]) for r in low) or "nobody")
+        print("Counts differ from the journal:", ", ".join(r["slug"] for r in bad) or "none")
+        print("Overdue assignments:", "; ".join("%s — %s (due %s)" % (r["name"], r["title"], r["due"]) for r in late) or "none")
+        print("Sent in the last 24 h:", "; ".join("%s — %s" % (r["name"], r["lesson"].replace("BP ", "")) for r in new) or "nothing")
     else: sys.exit(__doc__)
