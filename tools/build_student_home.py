@@ -257,6 +257,21 @@ const dnum=v=>(String(v).trim()!==""&&Number.isFinite(Number(v)))?Number(v):null
 function dt(v){ if(!v) return null; const s=String(v); const d=new Date(/^\d{4}-\d{2}-\d{2}$/.test(s)?s+"T12:00":s); return isNaN(d)?null:d; }
 function daysAgo(v){ const d=dt(v); return d?Math.round((Date.now()-d.getTime())/864e5):null; }
 const fdate=(v,o)=>{const d=dt(v);return d?d.toLocaleDateString("en-GB",o||{day:"numeric",month:"short"}):"";};
+// a wall-clock time in a time zone (e.g. 14:00 Europe/Kyiv) -> the real moment, shown later in the viewer's own zone
+function tzOff(ms,tz){ try{ const p={}; new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}).formatToParts(new Date(ms)).forEach(x=>p[x.type]=x.value);
+ return Date.UTC(+p.year,+p.month-1,+p.day,+p.hour,+p.minute,+p.second)-ms; }catch(e){ return -new Date(ms).getTimezoneOffset()*6e4; } }
+function zoned(y,m,d,hh,mm,tz){ const g=Date.UTC(y,m,d,hh,mm); let t=g-tzOff(g,tz); t=g-tzOff(t,tz); return new Date(t); }
+const DAYN=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+function dayRange(ds,sh){ const N=sh?["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]:DAYN; const a=ds.slice().sort((x,y)=>((x+6)%7)-((y+6)%7)); const run=a.every((x,i)=>!i||((x+6)%7)===((a[i-1]+6)%7)+1);
+ return a.length>2&&run?N[a[0]]+"–"+N[a[a.length-1]]:a.map(x=>N[x]).join(", "); }
+// next lesson: the cabinet date if it is still ahead, otherwise the next weekday+time from the plan (lesson counts as "now" for 60 min)
+function nextLesson(){ const c=dt(CAB.next_lesson); if(c&&c-Date.now()>-36e5) return c; const P=D.plan;
+ if(!P||!P.time||!(P.days&&P.days.length)) return null; const [hh,mm]=P.time.split(":").map(Number), tz=P.tz||Intl.DateTimeFormat().resolvedOptions().timeZone;
+ const st=P.start?dt(P.start):null; let d=new Date(Math.max(Date.now(),st?st.getTime()-864e5:0)-864e5);
+ for(let i=0;i<30;i++,d=new Date(d.getTime()+864e5)){ const p={}; new Intl.DateTimeFormat("en-US",{timeZone:tz,year:"numeric",month:"numeric",day:"numeric",weekday:"short"}).formatToParts(d).forEach(x=>p[x.type]=x.value);
+  const wd=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"].indexOf(p.weekday); if(!P.days.includes(wd))continue;
+  const t=zoned(+p.year,+p.month-1,+p.day,hh,mm,tz); if(t-Date.now()>-36e5&&(!st||t>=st)) return t; } return null; }
+const hm=d=>d.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"});
 const isoToday=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
 
 const first=D.student.name.split(" ")[0];
@@ -344,10 +359,12 @@ function render(){
  $("ring").innerHTML=`<svg viewBox="0 0 36 36" role="img" aria-label="${pct} per cent of your open lessons are done"><circle cx="18" cy="18" r="15.5" fill="none" stroke="#edf0f6" stroke-width="4"/><circle cx="18" cy="18" r="15.5" fill="none" style="stroke:var(--acc)" stroke-width="4" stroke-linecap="round" stroke-dasharray="${pct*.974} 100" transform="rotate(-90 18 18)"/></svg><div><b>${pct}%</b><span>${done} of ${OPEN.length} lessons done</span></div>`;
 
  const S=[];
- const nx=dt(CAB.next_lesson);
- if(nx){ const ms=nx-new Date(),dd=Math.round(ms/864e5);
-  const w=ms<0?"":ms<36e5?"in "+Math.max(1,Math.round(ms/6e4))+" min":ms<864e5?"in "+Math.round(ms/36e5)+" h":dd===1?"tomorrow":"in "+dd+" days";
-  S.push(`<div class="card"><h3>📅 Next lesson</h3><div class="big">${nx.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"short"})}</div><div class="sub">${nx.toLocaleTimeString("en-GB",{hour:"2-digit",minute:"2-digit"})}${w?' · <span class="pill p-new">'+w+"</span>":""}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank" rel="noopener">Join the call</a></div>`:""}</div>`); }
+ const nx=nextLesson(), P=D.plan||{};
+ if(nx){ const ms=nx-new Date(), day0=new Date(); day0.setHours(0,0,0,0); const dd=Math.round((new Date(nx).setHours(0,0,0,0)-day0)/864e5);
+  const w=ms<0?"now":ms<36e5?"in "+Math.max(1,Math.round(ms/6e4))+" min":dd===0?"today":dd===1?"tomorrow":"in "+dd+" days";
+  const myTz=Intl.DateTimeFormat().resolvedOptions().timeZone, other=P.tz&&tzOff(Date.now(),P.tz)!==tzOff(Date.now(),myTz);
+  const every=P.time&&P.days&&P.days.length?`Every ${dayRange(P.days)} at ${hm(nx)}${other?" ("+P.time+" "+P.tz.split("/").pop().replace(/_/g," ")+" time)":""}`:"";
+  S.push(`<div class="card"><h3>📅 Next lesson</h3><div class="big">${nx.toLocaleDateString("en-GB",{weekday:"long",day:"numeric",month:"short"})} · ${hm(nx)}</div><div class="sub"><span class="pill p-new">${w}</span></div>${every?`<div class="sub" style="margin-top:6px;font-size:13px">${esc(every)}</div>`:""}${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank" rel="noopener">Join the call</a></div>`:""}</div>`); }
  else S.push(`<div class="card"><h3>📅 Lessons</h3><div class="big">${esc(CAB.schedule||"—")}</div><div class="sub">${CAB.schedule?"your usual time":"Your teacher will set the next date"}</div>${CAB.meet_url?`<div style="margin-top:10px"><a class="btn" href="${esc(CAB.meet_url)}" target="_blank" rel="noopener">Join the call</a></div>`:""}</div>`);
 
  const hwOpen=OPEN.filter(l=>l.pages.includes("hw")), hwLeft=hwOpen.filter(l=>!HWD[l.n]).length;
@@ -392,7 +409,7 @@ function renderPlan(){ const P=D.plan;
  let i=seq.findIndex(l=>status(l.n)!=="done"); if(i<0)i=seq.length;
  const days=(P.days&&P.days.length)?P.days:[1,2,3,4], now=new Date();
  let d=new Date(now.getFullYear(),now.getMonth(),now.getDate());
- const nx=dt(CAB.next_lesson); if(nx) d=new Date(nx.getFullYear(),nx.getMonth(),nx.getDate());
+ const nx=nextLesson(); if(nx) d=new Date(nx.getFullYear(),nx.getMonth(),nx.getDate());
  const start=P.start?dt(P.start):null; if(start&&d<start)d=new Date(start.getFullYear(),start.getMonth(),start.getDate());
  const out=[]; let k=i, guard=0;
  while(out.length<4&&guard++<400){ if(days.includes(d.getDay())){ out.push([new Date(d),seq[k]]); k++; } d.setDate(d.getDate()+1); }
@@ -404,7 +421,7 @@ function renderPlan(){ const P=D.plan;
   return `<div class="${on?"now":""}"><b>${esc(r[0])}${on?" · now":""}</b>${fdate(r[1],{month:"short",year:"numeric"})} – ${fdate(r[2],{month:"short",year:"numeric"})}</div>`; }).join("");
  const pct=total?Math.round(done/total*100):0;
  $("plan").innerHTML=`<h2 class="sec" id="myplan">📆 My plan</h2><div class="pl"><div class="row3">
-  <div class="card"><h3>Next lessons · ${esc(P.rhythm||"Mon–Thu")}</h3><div class="wk">${wk}</div></div>
+  <div class="card"><h3>Next lessons · ${esc(P.time&&P.days?dayRange(P.days,1)+" · "+(nx?hm(nx):P.time):(P.rhythm||""))}</h3><div class="wk">${wk}</div></div>
   <div class="card"><h3>🎯 My goal</h3><div class="big">${esc(P.goal_text||"")}</div><div class="sub">${goal?"by "+goal.toLocaleDateString("en-GB",{day:"numeric",month:"long",year:"numeric"}):""}${left!=null?' · <span class="pill p-new">'+left+" days left</span>":""}</div>
   <div class="bar"><i style="width:${Math.max(2,pct)}%"></i></div><div class="sub" style="margin-top:6px">${esc(P.level||"This level")}: ${done} of ${total} lessons done</div></div></div>${rt?`<div class="rt">${rt}</div>`:""}</div>`;
 }
