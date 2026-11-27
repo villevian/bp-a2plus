@@ -11,3 +11,8 @@
 - `supabase.sql` — table homework_answers (project "Business Partner")
 
 Note: scripts were written in a Claude session; paths inside point to /home/claude/... — adjust when reusing.
+
+## Assignments (homework given to a student)
+- Table `student_assignments` (SQL: `supabase_v4_assignments.sql`, already run). The student home page shows them under **Assignments**.
+- After Vale approves a homework: `python3 assign.py taras 1.2 flip "Before class 1.2: …" 2026-12-01` (id = `<lesson>-<page>`; due date optional). `--list`, `--remove 1.2-flip`.
+- Needs the Supabase token (network secret for api.supabase.com in the "Vale courses" cloud environment).
